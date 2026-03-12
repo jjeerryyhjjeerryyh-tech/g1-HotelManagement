@@ -1,0 +1,86 @@
+/* General body and font styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    background-color: #ffffff;
+    color: #171717;
+}
+
+/* Header styles */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 2.5rem 5%; /* Approximating py-10 and container */
+    font-size: 1.25rem;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    font-weight: 900; /* font-black */
+    color: #F27405;
+    text-decoration: none;
+    font-size: 1.5rem; /* A bit larger to stand out */
+}
+
+.header-icons {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 0 1.25rem; /* ml-5 */
+}
+
+.header-icons li {
+    margin-left: 0.75rem; /* Approximating ml-2 for the second icon */
+}
+
+.header-icons a, .header-icons svg {
+    color: inherit;
+    cursor: pointer;
+}
+
+.header-nav {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 1.5rem; /* Spacing between nav items */
+}
+
+/* This handles the small screen where nav wraps */
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    .header-nav {
+        width: 100%;
+        justify-content: space-around;
+        margin-top: 1rem;
+    }
+}
+
+
+.header-nav a {
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.5s ease; /* transition-all duration-500 */
+    display: inline-block; /* Needed for transform */
+}
+
+.header-nav a:hover {
+    transform: translateY(-4px); /* hover:translate-y-2 (approximated) */
+}
+
+/* Main content styles */
+.content {
+    padding: 2rem 5%;
+    text-align: center;
+}
