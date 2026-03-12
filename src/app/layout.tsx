@@ -15,7 +15,7 @@ const poppins = Poppins({
 
 
 export const metadata: Metadata = {
-  title: "Group1 Hotel Management App",
+  title: "Group1 Hotel Management test",
   description: "Discover the best hotel rooms",
 };
 
