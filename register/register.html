@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Management System - Register</title>
+    <link rel="stylesheet" href="register.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="theme-switch-wrapper">
+            <i class="fas fa-sun"></i>
+            <label class="theme-switch" for="checkbox">
+                <input type="checkbox" id="checkbox" />
+                <div class="slider round"></div>
+            </label>
+            <i class="fas fa-moon"></i>
+        </div>
+
+        <div class="forms-container">
+            <div class="form-box register-form">
+                <form id="registerForm">
+                    <h2>Create Account</h2>
+                    <p class="subtitle">Join our hotel management system</p>
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" placeholder="Username" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-id-card"></i>
+                        <input type="text" placeholder="Full Name" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" placeholder="Email" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-phone"></i>
+                        <input type="tel" placeholder="Phone Number" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="btn">Sign Up</button>
+                    <p class="switch-text">Already have an account? <a href="../login/login.html" id="toLogin">Sign In</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="register.js"></script>
+</body>
+</html>

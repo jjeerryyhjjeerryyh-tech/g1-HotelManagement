@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotel Management System - Login & Register</title>
+    <title>Hotel Management System - Login</title>
     <link rel="stylesheet" href="login.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -32,40 +32,11 @@
                         <input type="password" placeholder="Password" required>
                     </div>
                     <button type="submit" class="btn">Sign In</button>
-                    <p class="switch-text">Don't have an account? <a href="#" id="toRegister">Sign Up</a></p>
-                </form>
-            </div>
-
-            <div class="form-box register-form hidden">
-                <form id="registerForm">
-                    <h2>Create Account</h2>
-                    <p class="subtitle">Join our hotel management system</p>
-                    <div class="input-group">
-                        <i class="fas fa-user"></i>
-                        <input type="text" placeholder="Username" required>
-                    </div>
-                    <div class="input-group">
-                        <i class="fas fa-id-card"></i>
-                        <input type="text" placeholder="Full Name" required>
-                    </div>
-                    <div class="input-group">
-                        <i class="fas fa-envelope"></i>
-                        <input type="email" placeholder="Email" required>
-                    </div>
-                    <div class="input-group">
-                        <i class="fas fa-phone"></i>
-                        <input type="tel" placeholder="Phone Number" required>
-                    </div>
-                    <div class="input-group">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" placeholder="Password" required>
-                    </div>
-                    <button type="submit" class="btn">Sign Up</button>
-                    <p class="switch-text">Already have an account? <a href="#" id="toLogin">Sign In</a></p>
+                    <p class="switch-text">Don't have an account? <a href="../register/register.html" id="toRegister">Sign Up</a></p>
                 </form>
             </div>
         </div>
     </div>
-    <script src="script.js"></script>
+    <script src="login.js"></script>
 </body>
 </html>

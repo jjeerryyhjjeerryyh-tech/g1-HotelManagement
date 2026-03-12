@@ -1,0 +1,223 @@
+/* 定义主题变量 */
+:root {
+    /* 日间模式: 蓝白科技 */
+    --bg-color: #f0f4f8;
+    --container-bg: rgba(255, 255, 255, 0.9);
+    --primary-color: #007bff;
+    --primary-glow: rgba(0, 123, 255, 0.5);
+    --text-color: #2d3436;
+    --subtitle-color: #636e72;
+    --input-bg: #ffffff;
+    --border-color: #dcdde1;
+    --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+[data-theme="dark"] {
+    /* 夜间模式: 赛博黑绿 */
+    --bg-color: #0a0a0a;
+    --container-bg: rgba(20, 20, 20, 0.85);
+    --primary-color: #00ff88; /* 荧光绿 */
+    --primary-glow: rgba(0, 255, 136, 0.6);
+    --text-color: #f0f0f0;
+    --subtitle-color: #a0a0a0;
+    --input-bg: #1a1a1a;
+    --border-color: #333333;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    background-image: 
+        radial-gradient(circle at 10% 20%, var(--primary-glow) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, var(--primary-glow) 0%, transparent 40%);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    transition: var(--transition);
+    overflow: hidden;
+}
+
+.container {
+    background-color: var(--container-bg);
+    backdrop-filter: blur(10px); /* 毛玻璃 */
+    padding: 50px 40px;
+    border-radius: 24px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+    width: 100%;
+    max-width: 420px;
+    position: relative;
+    transition: var(--transition);
+}
+
+/* 标题荧光效果 */
+h2 {
+    margin-bottom: 8px;
+    text-align: center;
+    font-size: 32px;
+    letter-spacing: -1px;
+    color: var(--primary-color);
+    transition: var(--transition);
+}
+
+h2:hover {
+    text-shadow: 0 0 15px var(--primary-glow);
+}
+
+.subtitle {
+    text-align: center;
+    color: var(--subtitle-color);
+    margin-bottom: 35px;
+    font-size: 14px;
+    font-weight: 300;
+}
+
+/* 输入框增强 */
+.input-group {
+    position: relative;
+    margin-bottom: 22px;
+}
+
+.input-group i {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--subtitle-color);
+    transition: var(--transition);
+}
+
+.input-group input {
+    width: 100%;
+    padding: 14px 14px 14px 50px;
+    border: 1px solid var(--border-color);
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    border-radius: 12px;
+    outline: none;
+    font-size: 15px;
+    transition: var(--transition);
+}
+
+.input-group input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px var(--primary-glow);
+}
+
+.input-group input:focus + i {
+    color: var(--primary-color);
+    text-shadow: 0 0 8px var(--primary-glow);
+}
+
+/* 按钮荧光光影 */
+.btn {
+    width: 100%;
+    padding: 14px;
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: var(--transition);
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px var(--primary-glow);
+    background-color: var(--primary-color);
+    filter: brightness(1.1);
+}
+
+/* 链接文字悬停荧光 */
+.switch-text {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 14px;
+}
+
+.switch-text a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 2px 4px;
+    transition: var(--transition);
+}
+
+.switch-text a:hover {
+    text-shadow: 0 0 10px var(--primary-glow);
+    opacity: 0.8;
+}
+
+/* 主题切换开关 */
+.theme-switch-wrapper {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 25px;
+    right: 30px;
+    gap: 8px;
+}
+
+.theme-switch-wrapper i {
+    font-size: 14px;
+    color: var(--subtitle-color);
+}
+
+.theme-switch {
+    display: inline-block;
+    height: 20px;
+    position: relative;
+    width: 40px;
+}
+
+.theme-switch input { display: none; }
+
+.slider {
+    background-color: var(--border-color);
+    bottom: 0;
+    cursor: pointer;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    background-color: #fff;
+    bottom: 3px;
+    content: "";
+    height: 14px;
+    left: 4px;
+    position: absolute;
+    transition: .4s;
+    width: 14px;
+    border-radius: 50%;
+}
+
+input:checked + .slider { background-color: var(--primary-color); }
+input:checked + .slider:before { transform: translateX(18px); }
+
+.hidden { display: none; opacity: 0; transform: scale(0.95); }
+
+/* 简单的淡入动画 */
+.form-box {
+    animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
