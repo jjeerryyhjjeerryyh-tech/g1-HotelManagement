@@ -5,38 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XX酒店 - 首页</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="homepageStyle.css">
 </head>
 <body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container navbar-container">
+            <a href="index.html" class="logo">🏨 XX酒店</a>
+            <div class="nav-buttons">
+                <a href="../loginInterface/login.html" class="nav-btn login-btn">登录</a>
+                <a href="../loginInterface/login.html" class="nav-btn register-btn">注册</a>
+            </div>
+        </div>
+    </nav>
+
     <!-- Hero Section with 轮播 -->
     <section class="hero-section">
         <div class="carousel-container">
             <div class="carousel-slides">
                 <!-- 幻灯片1 - 在这里放第一张图片 -->
                 <div class="slide active">
-                    <img src="../images/hotel1.png" alt="酒店外观" class="slide-image">
+                    <img src="images/hotel1.png" alt="酒店外观" class="slide-image">
                     <div class="slide-overlay"></div>
                     <div class="slide-content">
                         <div class="container">
                             <div class="hero-text">
                                 <h1 class="hero-title">
-                                    <span>文本</span>
-                                    <span class="highlight">文本</span>
+                                    <span>为您开启</span>
+                                    <span class="highlight">奢华住宿体验</span>
                                 </h1>
                                 <p class="hero-subtitle">
-                                    文本
+                                    在这里，每一处细节都为您精心打造，让您的旅程充满温馨与舒适。
                                 </p>
                                 <div class="features">
                                     <div class="feature-item">
                                         <div class="feature-icon">✓</div>
-                                        <span class="feature-text">文本</span>
+                                        <span class="feature-text">五星级服务</span>
                                     </div>
                                     <div class="feature-item">
                                         <div class="feature-icon">✓</div>
-                                        <span class="feature-text">文本</span>
+                                        <span class="feature-text">无敌海景</span>
                                     </div>
                                     <div class="feature-item">
                                         <div class="feature-icon">✓</div>
-                                        <span class="feature-text">文本</span>
+                                        <span class="feature-text">顶奢配套</span>
                                     </div>
                                 </div>
                             </div>
@@ -46,17 +58,17 @@
 
                 <!-- 幻灯片2 - 在这里放第二张图片 -->
                 <div class="slide">
-                    <img src="../images/hotel2.webp" alt="豪华客房" class="slide-image">
+                    <img src="images/hotel2.webp" alt="豪华客房" class="slide-image">
                     <div class="slide-overlay"></div>
                     <div class="slide-content">
                         <div class="container">
                             <div class="hero-text">
                                 <h1 class="hero-title">
-                                    <span>文本1</span>
-                                    <span class="highlight">文本</span>
+                                    <span>尽享</span>
+                                    <span class="highlight">宁静时光</span>
                                 </h1>
                                 <p class="hero-subtitle">
-                                    文本。
+                                    在我们的豪华客房中，您可以完全放松身心，感受家一般的温暖。
                                 </p>
                             </div>
                         </div>
@@ -65,17 +77,17 @@
 
                 <!-- 幻灯片3 - 在这里放第三张图片 -->
                 <div class="slide">
-                    <img src="../images/hotel3.jpg" alt="精致餐饮" class="slide-image">
+                    <img src="images/hotel3.jpg" alt="精致餐饮" class="slide-image">
                     <div class="slide-overlay"></div>
                     <div class="slide-content">
                         <div class="container">
                             <div class="hero-text">
                                 <h1 class="hero-title">
-                                    <span>文本</span>
-                                    <span class="highlight">文本</span>
+                                    <span>品味</span>
+                                    <span class="highlight">全球美食</span>
                                 </h1>
                                 <p class="hero-subtitle">
-                                    文本
+                                    我们的顶级厨师为您准备了各式佳肴，满足您挑剔的味蕾。
                                 </p>
                             </div>
                         </div>
@@ -177,47 +189,6 @@
         </div>
     </section>
 
-    <script>
-        // 轮播功能
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.slide');
-        const dots = document.querySelectorAll('.dot');
-        
-        function showSlide(index) {
-            if (index < 0) index = slides.length - 1;
-            if (index >= slides.length) index = 0;
-            
-            slides.forEach(s => s.classList.remove('active'));
-            dots.forEach(d => d.classList.remove('active'));
-            
-            slides[index].classList.add('active');
-            dots[index].classList.add('active');
-            currentSlide = index;
-        }
-        
-        document.querySelector('.prev').addEventListener('click', () => showSlide(currentSlide - 1));
-        document.querySelector('.next').addEventListener('click', () => showSlide(currentSlide + 1));
-        
-        dots.forEach((dot, i) => {
-            dot.addEventListener('click', () => showSlide(i));
-        });
-        
-        // 自动播放
-        setInterval(() => showSlide(currentSlide + 1), 5000);
-        
-        // 设置默认日期
-        const today = new Date();
-        const tomorrow = new Date(today);
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        
-        document.getElementById('checkIn').value = today.toISOString().split('T')[0];
-        document.getElementById('checkOut').value = tomorrow.toISOString().split('T')[0];
-        
-        // 表单提交
-        document.getElementById('bookingForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('正在查询可用房间...');
-        });
-    </script>
+    <script src="homepageScript.js"></script>
 </body>
 </html>
