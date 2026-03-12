@@ -1,0 +1,564 @@
+/* 导航栏样式 */
+.navbar {
+    position: fixed;
+    background-color: #2c2c2c;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    background-color: var(--container-bg);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+    padding: 15px 0;
+    transition: var(--transition);
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--text-color);
+    transition: var(--transition);
+}
+
+.logo:hover {
+    color: var(--primary-color);
+    text-shadow: 0 0 10px var(--primary-glow);
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.nav-btn {
+    padding: 8px 20px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--transition);
+    cursor: pointer;
+    display: inline-block;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.login-btn {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+}
+
+.login-btn:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px var(--primary-glow);
+}
+
+.register-btn {
+    background-color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.register-btn::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.register-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px var(--primary-glow), 0 2px 4px rgba(255,255,255,0.3) inset;
+}
+
+.register-btn:hover::after {
+    opacity: 1;
+}
+
+.register-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+/* 调整hero-section的内边距，避免被固定导航栏遮挡 */
+.hero-section {
+    margin-top: 70px; /* 与导航栏高度一致 */
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 10px 0;
+    }
+    .logo {
+        font-size: 20px;
+    }
+    .nav-btn {
+        padding: 6px 15px;
+        font-size: 13px;
+    }
+    .hero-section {
+        margin-top: 60px;
+    }
+}
+
+/* 定义主题变量 - 柔和大地色系 */
+:root {
+    /* 日间模式: 温暖米色 */
+    --bg-color: #faf7f2;        /* 柔和米白背景 */
+    --container-bg: rgba(255, 250, 240, 0.85); /* 半透奶油色 */
+    --primary-color: #e67e22;    /* 温暖橘 */
+    --primary-glow: rgba(230, 126, 34, 0.4);   /* 柔和橘色光晕 */
+    --text-color: #4a4a4a;       /* 深灰文字 */
+    --subtitle-color: #7f8c8d;   /* 柔和灰绿 */
+    --input-bg: #ffffff;
+    --border-color: #e0d6cc;     /* 浅米色边框 */
+    --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+[data-theme="dark"] {
+    /* 夜间模式: 深邃暖灰 */
+    --bg-color: #2c2c2c;         /* 深灰背景 */
+    --container-bg: rgba(44, 44, 44, 0.85);
+    --primary-color: #ffb347;    /* 柔和橘黄 */
+    --primary-glow: rgba(255, 179, 71, 0.5);
+    --text-color: #f0f0f0;
+    --subtitle-color: #b0b0b0;
+    --input-bg: #3a3a3a;
+    --border-color: #5a5a5a;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    background-image: 
+        radial-gradient(circle at 10% 20%, var(--primary-glow) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, var(--primary-glow) 0%, transparent 40%);
+    color: var(--text-color);
+    transition: var(--transition);
+    overflow-x: hidden;
+}
+
+/* Hero Section 样式 */
+.hero-section {
+    position: relative;
+    height: 100vh;
+    min-height: 600px;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* 轮播容器 */
+.carousel-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.carousel-slides {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    z-index: 1;
+}
+
+.slide.active {
+    opacity: 1;
+    z-index: 2;
+}
+
+/* 图片放置位置 */
+.slide-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.slide-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0.5), transparent);
+    z-index: 3;
+}
+
+.slide-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 4;
+    display: flex;
+    align-items: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.hero-text {
+    max-width: 600px;
+}
+
+.hero-title {
+    font-size: 48px;
+    font-weight: bold;
+    color: white; /* 保持白色以突出图片背景 */
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.hero-title span {
+    display: block;
+}
+
+.hero-title .highlight {
+    color: var(--primary-color);
+    transition: var(--transition);
+}
+
+.hero-title:hover .highlight {
+    text-shadow: 0 0 15px var(--primary-glow);
+}
+
+.hero-subtitle {
+    font-size: 18px;
+    color: #e5e5e5;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+/* 特性列表 */
+.features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-top: 40px;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.feature-icon {
+    width: 24px;
+    height: 24px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    transition: var(--transition);
+}
+
+.feature-item:hover .feature-icon {
+    box-shadow: 0 0 15px var(--primary-glow);
+    transform: scale(1.1);
+}
+
+.feature-text {
+    color: white;
+    font-size: 16px;
+}
+
+/* 轮播控制按钮 */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 50px;
+    height: 50px;
+    background-color: var(--container-bg);
+    backdrop-filter: blur(5px);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    color: var(--text-color);
+    font-size: 24px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.carousel-btn:hover {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    box-shadow: 0 8px 20px var(--primary-glow);
+    transform: translateY(-50%) scale(1.05);
+}
+
+.carousel-btn.prev {
+    left: 20px;
+}
+
+.carousel-btn.next {
+    right: 20px;
+}
+
+/* 轮播指示点 */
+.carousel-dots {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    gap: 12px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--border-color);
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.dot.active {
+    background-color: var(--primary-color);
+    transform: scale(1.2);
+    box-shadow: 0 0 15px var(--primary-glow);
+}
+
+/* ========== 搜索栏样式 ========== */
+.search-section {
+    background-color: var(--container-bg);
+    backdrop-filter: blur(10px); /* 毛玻璃 */
+    padding: 40px 20px 60px;
+    box-shadow: 0 -20px 40px rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 20;
+    border-top: 1px solid var(--border-color);
+    transition: var(--transition);
+}
+
+.hotel-info {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.hotel-name {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--text-color);
+    margin-bottom: 10px;
+    transition: var(--transition);
+}
+
+.hotel-address {
+    color: var(--subtitle-color);
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.hotel-address svg {
+    width: 20px;
+    height: 20px;
+    color: var(--subtitle-color);
+    transition: var(--transition);
+}
+
+.search-form {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr) auto;
+    gap: 15px;
+    background-color: transparent;
+    padding: 0;
+    border-radius: 0;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.input-wrapper input,
+.input-wrapper select {
+    width: 100%;
+    padding: 12px 12px 12px 40px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    font-size: 14px;
+    outline: none;
+    transition: var(--transition);
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.input-wrapper input:focus,
+.input-wrapper select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px var(--primary-glow), 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.input-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    color: var(--subtitle-color);
+    transition: var(--transition);
+}
+
+.input-wrapper:focus-within .input-icon {
+    color: var(--primary-color);
+    text-shadow: 0 0 8px var(--primary-glow);
+}
+
+/* 按钮光影效果增强 */
+.search-btn {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: 600;
+    padding: 0 30px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: var(--transition);
+    height: 45px;
+    align-self: flex-end;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15), 0 2px 4px rgba(255,255,255,0.3) inset;
+    position: relative;
+    overflow: hidden;
+}
+
+.search-btn::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.search-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px var(--primary-glow), 0 4px 8px rgba(0,0,0,0.2), 0 2px 4px rgba(255,255,255,0.4) inset;
+}
+
+.search-btn:hover::after {
+    opacity: 1;
+}
+
+.search-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2), 0 1px 3px rgba(255,255,255,0.2) inset;
+}
+
+/* 房间类型快速选择 */
+.room-types {
+    max-width: 1000px;
+    margin: 20px auto 0;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.room-type-btn {
+    padding: 8px 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 30px;
+    background: transparent;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 14px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.room-type-btn:hover,
+.room-type-btn.active {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+    box-shadow: 0 6px 15px var(--primary-glow), 0 2px 5px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+}
+
+/* 响应式 */
+@media (max-width: 1024px) {
+    .search-form {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 36px;
+    }
+    
+    .search-form {
+        grid-template-columns: 1fr;
+    }
+}

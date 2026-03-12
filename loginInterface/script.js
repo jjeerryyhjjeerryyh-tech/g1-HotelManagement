@@ -5,7 +5,7 @@ const toLogin = document.getElementById('toLogin');
 const loginForm = document.querySelector('.login-form');
 const registerForm = document.querySelector('.register-form');
 
-// 1. 主题切换逻辑 (系统功能 11)
+// 1. Theme switching logic (system function 11)
 if (currentTheme) {
     document.documentElement.setAttribute('data-theme', currentTheme);
     if (currentTheme === 'dark') {
@@ -25,7 +25,7 @@ function switchTheme(e) {
 
 toggleSwitch.addEventListener('change', switchTheme, false);
 
-// 2. 登录/注册切换逻辑
+// 2. Login/Register toggle logic
 toRegister.addEventListener('click', (e) => {
     e.preventDefault();
     loginForm.classList.add('hidden');
@@ -38,17 +38,17 @@ toLogin.addEventListener('click', (e) => {
     loginForm.classList.remove('hidden');
 });
 
-// 3. 基础表单提交处理 (系统功能 1)
+// 3. Basic form submission handling (system function 1)
 document.getElementById('loginForm').addEventListener('submit', (e) => {
     e.preventDefault();
-    alert('正在验证登录信息...');
+    alert('Verifying login credentials...');
 });
 
 document.getElementById('registerForm').addEventListener('submit', (e) => {
     e.preventDefault();
-    alert('正在创建您的酒店管理账户...');
+    alert('Creating your hotel management account...');
 });
-
+// 4. Optimized form switch animation
 function switchForm(hideForm, showForm) {
     hideForm.style.opacity = '0';
     setTimeout(() => {
@@ -67,3 +67,25 @@ toLogin.addEventListener('click', (e) => {
     e.preventDefault();
     switchForm(registerForm, loginForm);
 });
+
+function setupCustomValidation() {
+    const requiredFields = document.querySelectorAll('input[required]');
+    requiredFields.forEach(field => {
+        field.addEventListener('invalid', (e) => {
+
+            if (field.validity.valueMissing) {
+                field.setCustomValidity('Please fill out this field.');
+            } else if (field.validity.typeMismatch) {
+                if (field.type === 'email') {
+                    field.setCustomValidity('Please enter a valid email address.');
+                } else if (field.type === 'tel') {
+                    field.setCustomValidity('Please enter a valid phone number.');
+                }
+            }
+        });
+        field.addEventListener('input', () => {
+            field.setCustomValidity(''); 
+        });
+    });
+}
+document.addEventListener('DOMContentLoaded', setupCustomValidation);
