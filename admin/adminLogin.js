@@ -34,7 +34,13 @@ loginForm.addEventListener('submit', async (e) => {
             }
             sessionStorage.setItem('username', data.username || data.name);
             sessionStorage.setItem('role', data.role);
-            window.location.href = '../admin/admin.html';
+            
+            // 如果账号是 12345678，跳转到 admin_interface.html
+            if (username === '12345678') {
+                window.location.href = '../admin/admin_interface.html';
+            } else {
+                window.location.href = '../admin/admin.html';
+            }
         } else {
             alert(data.message);
         }
