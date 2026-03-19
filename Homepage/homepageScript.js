@@ -1,12 +1,12 @@
 // 主题切换功能
 const themeToggle = document.getElementById('theme-toggle');
-const currentTheme = localStorage.getItem('theme');
+// 如果 localStorage 没有主题，默认为 'light'
+const currentTheme = localStorage.getItem('theme') || 'light';
 
-if (currentTheme) {
-    document.documentElement.setAttribute('data-theme', currentTheme);
-    if (themeToggle) {
-        themeToggle.setAttribute('value', currentTheme);
-    }
+// 设置初始状态
+document.documentElement.setAttribute('data-theme', currentTheme);
+if (themeToggle) {
+    themeToggle.setAttribute('value', currentTheme);
 }
 
 if (themeToggle) {
