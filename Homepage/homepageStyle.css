@@ -477,7 +477,10 @@ body {
     background-color: var(--primary-color);
     color: white;
     font-weight: 600;
-    padding: 0 30px;
+    padding: 5px 30px;
+    display: flex;
+    align-items: center;         /* 垂直居中 */
+    justify-content: center;      /* 水平居中 */
     border: none;
     border-radius: 12px;
     font-size: 16px;

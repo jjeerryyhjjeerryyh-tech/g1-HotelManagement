@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>酒店预订系统 - Hotel Booking System</title>
+    <title>酒店预订系统 · 五星评分 + 评论</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="Book.css">
 </head>
@@ -136,7 +136,7 @@
             </div>
             <div class="section-body">
                 <div class="room-grid" id="roomGrid">
-                    <!-- Dynamic content will be inserted here -->
+                    <!-- 动态生成 -->
                 </div>
             </div>
         </div>
@@ -176,7 +176,7 @@
                         </tr>
                     </thead>
                     <tbody id="myBookingsTable">
-                        <!-- Dynamic content will be inserted here -->
+                        <!-- 动态生成 -->
                     </tbody>
                 </table>
             </div>
@@ -192,9 +192,7 @@
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <div class="modal-body" id="roomModalBody">
-                <!-- Dynamic content -->
-            </div>
+            <div class="modal-body" id="roomModalBody"></div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" onclick="closeRoomModal()">关闭</button>
                 <button class="btn btn-primary" onclick="proceedToBook()">
@@ -217,10 +215,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="fee-calculation" id="bookingSummary">
-                    <!-- Dynamic content -->
-                </div>
-                
+                <div class="fee-calculation" id="bookingSummary"></div>
                 <form id="bookingForm" onsubmit="submitBooking(event)">
                     <div class="form-row">
                         <div class="form-group">
@@ -253,12 +248,10 @@
                             <input type="text" class="form-input" name="specialRequests" placeholder="如无烟房、高层风景等">
                         </div>
                     </div>
-                    
                     <div class="policy-box">
                         <h4><i class="fas fa-info-circle"></i> 取消政策</h4>
                         <p id="bookingPolicyText">入住前48小时可免费取消，之后将收取首晚房费作为取消费用。</p>
                     </div>
-
                     <div class="checkbox-wrapper">
                         <input type="checkbox" id="agreeTerms" required>
                         <label for="agreeTerms">我已阅读并同意<a href="#">预订条款</a>和<a href="#">隐私政策</a></label>
@@ -280,18 +273,16 @@
             <div class="modal-header">
                 <div class="modal-title">
                     <i class="fas fa-times-circle" style="color: var(--danger);"></i>
-                    取消预订 (Cancel Booking)
+                    取消预订
                 </div>
                 <button class="modal-close" onclick="closeCancellationModal()">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <div class="modal-body" id="cancellationContent">
-                <!-- Dynamic content -->
-            </div>
+            <div class="modal-body" id="cancellationContent"></div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" onclick="closeCancellationModal()">保留预订</button>
-                <button class="btn btn-danger" id="confirmCancelBtn" onclick="confirmCancellation()">
+                <button class="btn btn-danger" onclick="confirmCancellation()">
                     <i class="fas fa-check"></i> 确认取消
                 </button>
             </div>
@@ -324,6 +315,47 @@
                 <button class="btn btn-secondary" onclick="closeLookupModal()">关闭</button>
                 <button class="btn btn-primary" onclick="lookupBooking()">
                     <i class="fas fa-search"></i> 查询
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rating Modal (含评论输入) -->
+    <div class="modal-overlay" id="ratingModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <i class="fas fa-star" style="color: var(--warning);"></i>
+                    评价此住宿
+                </div>
+                <button class="modal-close" onclick="closeRatingModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="ratingRoomName" style="font-weight: 600; margin-bottom: 1rem;"></p>
+                
+                <!-- 星星选择器 (默认灰色，点亮黄色) -->
+                <div class="rating-selector" id="ratingStars">
+                    <i class="fa-regular fa-star" data-value="1"></i>
+                    <i class="fa-regular fa-star" data-value="2"></i>
+                    <i class="fa-regular fa-star" data-value="3"></i>
+                    <i class="fa-regular fa-star" data-value="4"></i>
+                    <i class="fa-regular fa-star" data-value="5"></i>
+                </div>
+
+                <!-- 评论输入框 -->
+                <div class="form-group" style="margin-top: 1.5rem;">
+                    <label class="form-label">写点评论（选填）</label>
+                    <textarea class="form-textarea" id="ratingComment" placeholder="分享您的入住体验..." rows="3"></textarea>
+                </div>
+
+                <p style="text-align: center; color: var(--gray-600); font-size: 0.875rem; margin-top: 0.5rem;">点击星星选择分数</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeRatingModal()">取消</button>
+                <button class="btn btn-primary" onclick="submitRating()">
+                    <i class="fas fa-check"></i> 提交评分
                 </button>
             </div>
         </div>

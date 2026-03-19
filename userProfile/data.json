@@ -26,6 +26,15 @@
             "phone": "123456789",
             "password": "$2b$10$DPCW55mKXA2CPTppcH5fSeNZ/BATzwi8n1FuGMH3bIJx3lUgp/9iK",
             "role": "user"
+        },
+        {
+            "id": 1773909079955,
+            "username": "caonima",
+            "name": "nimabi",
+            "email": "456@qq.com",
+            "phone": "88888888",
+            "password": "$2b$10$1dTM.nBD6AatBDVrAbulKewun5BXVtw7ExDuXzQ7fWEoYiV5dKcge",
+            "role": "user"
         }
     ],
     "admins": [
