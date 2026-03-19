@@ -16,6 +16,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 18px;
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    min-width: 0;
 }
 
 .logo {
@@ -23,11 +31,63 @@
     font-weight: bold;
     color: var(--text-color);
     transition: var(--transition);
+    text-decoration: none;
+    white-space: nowrap;
 }
 
 .logo:hover {
     color: var(--primary-color);
     text-shadow: 0 0 10px var(--primary-glow);
+}
+
+.navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.navbar-links a {
+    text-decoration: none;
+    font-size: 13px;
+    color: var(--subtitle-color);
+    padding: 6px 10px;
+    border-radius: 999px;
+    transition: var(--transition);
+    border: 1px solid transparent;
+    white-space: nowrap;
+}
+
+.navbar-links a:hover {
+    color: var(--text-color);
+    border-color: var(--border-color);
+    background: rgba(255, 255, 255, 0.35);
+}
+
+[data-theme="dark"] .navbar-links a:hover {
+    background: rgba(44, 44, 44, 0.45);
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.navbar-auth {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
 }
 
 .nav-buttons {
@@ -46,6 +106,7 @@
     cursor: pointer;
     display: inline-block;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border: 1px solid transparent;
 }
 
 .search-btn-nav {
@@ -78,6 +139,37 @@
     color: white;
     position: relative;
     overflow: hidden;
+}
+
+.lang-select {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--border-color);
+    background: rgba(255, 255, 255, 0.35);
+    color: var(--text-color);
+    transition: var(--transition);
+}
+
+[data-theme="dark"] .lang-select {
+    background: rgba(44, 44, 44, 0.45);
+}
+
+.lang-label {
+    font-size: 12px;
+    color: var(--subtitle-color);
+}
+
+.lang-select select {
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--text-color);
+    font-weight: 600;
+    font-size: 12px;
+    cursor: pointer;
 }
 
 .register-btn::after {
@@ -121,6 +213,26 @@
     .nav-btn {
         padding: 6px 15px;
         font-size: 13px;
+    }
+    .navbar-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .navbar-left {
+        justify-content: space-between;
+        width: 100%;
+    }
+    .navbar-links {
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 6px;
+    }
+    .navbar-right {
+        width: 100%;
+        justify-content: space-between;
+    }
+    .lang-select {
+        padding: 6px 10px;
     }
     .hero-section {
         margin-top: 60px;
