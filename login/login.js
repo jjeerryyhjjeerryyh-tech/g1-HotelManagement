@@ -22,9 +22,26 @@ function switchTheme(e) {
 toggleSwitch.addEventListener('change', switchTheme, false);
 
 // 2. Login form submission handling
-document.getElementById('loginForm').addEventListener('submit', (e) => {
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    alert('Verifying login credentials...');
+    const inputs = e.target.querySelectorAll('input');
+    const [username, password] = [...inputs].map(i => i.value);
+
+    try {
+        const res = await fetch('http://localhost:3000/api/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+        });
+        const data = await res.json();
+        if (res.ok) {
+            window.location.href = '../homePage/index.html';
+        } else {
+            alert(data.message);
+        }
+    } catch (err) {
+        alert('无法连接服务器，请确认后端已启动');
+    }
 });
 
 function setupCustomValidation() {
