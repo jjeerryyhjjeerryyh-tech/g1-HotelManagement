@@ -49,14 +49,62 @@ const today = new Date();
 const tomorrow = new Date(today);
 tomorrow.setDate(tomorrow.getDate() + 1);
 
-document.getElementById('checkIn').value = today.toISOString().split('T')[0];
-document.getElementById('checkOut').value = tomorrow.toISOString().split('T')[0];
+const checkInEl = document.getElementById('checkIn');
+const checkOutEl = document.getElementById('checkOut');
+if (checkInEl && checkOutEl) {
+    checkInEl.value = today.toISOString().split('T')[0];
+    checkOutEl.value = tomorrow.toISOString().split('T')[0];
+}
 
-// 表单提交
-document.getElementById('bookingForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    alert('正在查询可用房间...');
+const searchModal = document.getElementById('hpSearchModal');
+const openSearchBtn = document.getElementById('openSearchBtn');
+const closeSearchBtn = document.getElementById('hpSearchCloseBtn');
+
+const closeSearchModal = () => {
+    if (!searchModal) return;
+    searchModal.classList.remove('active');
+    searchModal.setAttribute('aria-hidden', 'true');
+};
+
+const openSearchModal = () => {
+    if (!searchModal) return;
+    searchModal.classList.add('active');
+    searchModal.setAttribute('aria-hidden', 'false');
+    if (checkInEl && !checkInEl.value) checkInEl.value = today.toISOString().split('T')[0];
+    if (checkOutEl && !checkOutEl.value) checkOutEl.value = tomorrow.toISOString().split('T')[0];
+};
+
+if (openSearchBtn) openSearchBtn.addEventListener('click', openSearchModal);
+if (closeSearchBtn) closeSearchBtn.addEventListener('click', closeSearchModal);
+if (searchModal) {
+    searchModal.addEventListener('click', (e) => {
+        if (e.target === searchModal) closeSearchModal();
+    });
+}
+window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeSearchModal();
 });
+
+const bookingForm = document.getElementById('bookingForm');
+if (bookingForm) {
+    bookingForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const checkIn = checkInEl ? checkInEl.value : '';
+        const checkOut = checkOutEl ? checkOutEl.value : '';
+        const rooms = document.getElementById('rooms') ? document.getElementById('rooms').value : '1';
+        const guests = document.getElementById('guests') ? document.getElementById('guests').value : '2';
+
+        if (!checkIn || !checkOut) return;
+        if (new Date(checkIn) >= new Date(checkOut)) {
+            alert('离店日期必须晚于入住日期');
+            return;
+        }
+
+        sessionStorage.setItem('bookingSearch', JSON.stringify({ checkIn, checkOut, rooms, guests }));
+        closeSearchModal();
+        window.location.href = '../BookOut/Book.html';
+    });
+}
 
 // 显示登录用户名
 const username = sessionStorage.getItem('username');
@@ -72,3 +120,52 @@ document.getElementById('logoutBtn').addEventListener('click', () => {
     sessionStorage.removeItem('username');
     window.location.reload();
 });
+
+document.querySelectorAll('.hp-rooms .hp-btn-sm').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+        const u = sessionStorage.getItem('username');
+        if (u) return;
+        e.preventDefault();
+        window.location.href = '../login/login.html';
+    });
+});
+
+const subscribeForm = document.getElementById('hpSubscribeForm');
+if (subscribeForm) {
+    subscribeForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const emailEl = document.getElementById('hpSubscribeEmail');
+        const email = emailEl ? emailEl.value.trim() : '';
+        if (!email) return;
+        alert('已提交订阅：' + email);
+        subscribeForm.reset();
+    });
+}
+
+const activityTrack = document.getElementById('hpActivityTrack');
+const activityPrev = document.getElementById('hpActivityPrev');
+const activityNext = document.getElementById('hpActivityNext');
+const activityIndicator = document.getElementById('hpActivityIndicator');
+
+if (activityTrack && activityPrev && activityNext && activityIndicator) {
+    const total = activityTrack.children.length;
+    let index = 0;
+
+    const pad2 = (n) => String(n).padStart(2, '0');
+    const render = () => {
+        activityTrack.style.transform = `translateX(-${index * 100}%)`;
+        activityIndicator.textContent = `${pad2(index + 1)}/${pad2(total)}`;
+    };
+
+    activityPrev.addEventListener('click', () => {
+        index = (index - 1 + total) % total;
+        render();
+    });
+
+    activityNext.addEventListener('click', () => {
+        index = (index + 1) % total;
+        render();
+    });
+
+    render();
+}

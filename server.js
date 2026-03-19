@@ -101,10 +101,55 @@ app.post('/api/admin/register', async (req, res) => {
 // 获取所有用户（仅管理员用）
 app.get('/api/users', (req, res) => {
     const data = readData();
-    // 隐藏密码字段
     const users = data.users.map(({ password, ...u }) => u);
-    const admins = data.admins.map(({ password, ...u }) => u);
-    res.json({ users, admins });
+    res.json({ users });
+});
+
+// 新增用户
+app.post('/api/users', async (req, res) => {
+    const { username, fullName, email, phone, password } = req.body;
+    if (!username || !fullName || !email || !phone || !password)
+        return res.status(400).json({ message: 'Please fill in all fields' });
+
+    const data = readData();
+    if (data.users.find(u => u.username === username || u.email === email))
+        return res.status(409).json({ message: 'Username or email already exists' });
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    data.users.push({ id: Date.now(), username, name: fullName, email, phone, password: hashedPassword, role: 'user' });
+    writeData(data);
+    res.json({ message: 'User created successfully' });
+});
+
+// 更新用户
+app.put('/api/users/:id', async (req, res) => {
+    const id = parseInt(req.params.id);
+    const { username, fullName, email, phone, password } = req.body;
+    const data = readData();
+    const idx = data.users.findIndex(u => u.id === id);
+    if (idx === -1) return res.status(404).json({ message: 'User not found' });
+
+    data.users[idx] = {
+        ...data.users[idx],
+        username: username || data.users[idx].username,
+        name: fullName || data.users[idx].name,
+        email: email || data.users[idx].email,
+        phone: phone || data.users[idx].phone,
+        password: password ? await bcrypt.hash(password, 10) : data.users[idx].password
+    };
+    writeData(data);
+    res.json({ message: 'User updated successfully' });
+});
+
+// 删除用户
+app.delete('/api/users/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const data = readData();
+    const idx = data.users.findIndex(u => u.id === id);
+    if (idx === -1) return res.status(404).json({ message: 'User not found' });
+    data.users.splice(idx, 1);
+    writeData(data);
+    res.json({ message: 'User deleted successfully' });
 });
 
 app.listen(3000, () => console.log('服务器运行在 http://localhost:3000'));
