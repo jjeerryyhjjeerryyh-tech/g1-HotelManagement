@@ -39,7 +39,7 @@ loginForm.addEventListener('submit', async (e) => {
             if (username === '12345678') {
                 window.location.href = '../admin/admin_interface.html';
             } else {
-                window.location.href = '../admin/admin.html';
+                window.location.href = '../admin/admin_interface.html';
             }
         } else {
             alert(data.message);
