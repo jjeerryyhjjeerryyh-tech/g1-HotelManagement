@@ -69,7 +69,7 @@ app.post('/api/login', async (req, res) => {
         return res.status(401).json({ message: '密码错误' });
     }
 
-    res.json({ message: '登录成功', role: user.role, name: user.name });
+    res.json({ message: '登录成功', role: user.role, name: user.name, username: user.username });
 });
 
 app.listen(3000, () => console.log('服务器运行在 http://localhost:3000'));

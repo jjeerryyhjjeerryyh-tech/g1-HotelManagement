@@ -24,8 +24,9 @@ toggleSwitch.addEventListener('change', switchTheme, false);
 // 2. Login form submission handling
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const inputs = e.target.querySelectorAll('input');
-    const [username, password] = [...inputs].map(i => i.value);
+    const form = e.target;
+    const username = form.querySelector('input[name="username"]').value;
+    const password = form.querySelector('input[name="password"]').value;
 
     try {
         const res = await fetch('http://localhost:3000/api/login', {
@@ -35,6 +36,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         });
         const data = await res.json();
         if (res.ok) {
+            sessionStorage.setItem('username', data.name || data.username);
             window.location.href = '../homePage/index.html';
         } else {
             alert(data.message);
