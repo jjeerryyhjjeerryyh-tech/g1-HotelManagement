@@ -1,21 +1,12 @@
 {
     "users": [
         {
-            "id": 1773901443036,
-            "username": "yi",
-            "name": "yi",
-            "email": "11@163.com",
+            "id": 1773902177514,
+            "username": "yyy",
+            "name": "yyy",
+            "email": "b@gmail.com",
             "phone": "123",
-            "password": "$2b$10$02gmX95T1wkGIZKfptowt.DEATVaRuzenx0gQzPDgvC3ayyj5ldFG",
-            "role": "user"
-        },
-        {
-            "id": 1773901874871,
-            "username": "testuser",
-            "name": "Test User",
-            "email": "test@test.com",
-            "phone": "1234567890",
-            "password": "$2b$10$7HiD6nIdG72qkerg1rNIL.4zk0dsugPzmTtJ2bBjUd8vVHaOcJzxa",
+            "password": "$2b$10$vMDSuZI2loZ8LAsPWiWTkuS2NFxeKEQyLDjTcbGjIgtQMW9.v0kRq",
             "role": "user"
         }
     ],
@@ -23,7 +14,7 @@
         {
             "id": 1,
             "username": "admin",
-            "name": "[管理员姓名]",
+            "name": "Admin",
             "gender": "男",
             "email": "[admin_email]",
             "phone": "[phone_number]",
