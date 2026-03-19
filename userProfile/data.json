@@ -1,0 +1,25 @@
+{
+    "users": [
+        {
+            "id": 1773901443036,
+            "username": "yi",
+            "name": "yi",
+            "email": "11@163.com",
+            "phone": "123",
+            "password": "$2b$10$02gmX95T1wkGIZKfptowt.DEATVaRuzenx0gQzPDgvC3ayyj5ldFG",
+            "role": "user"
+        }
+    ],
+    "admins": [
+        {
+            "id": 1,
+            "username": "admin",
+            "name": "[管理员姓名]",
+            "gender": "男",
+            "email": "[admin_email]",
+            "phone": "[phone_number]",
+            "password": "$2a$10$Nzr1mBBSMdnPBMGMHFNMCuWoGpFQZ1e5W5e5W5e5W5e5W5e5W5e5W",
+            "role": "admin"
+        }
+    ]
+}

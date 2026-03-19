@@ -22,9 +22,27 @@ function switchTheme(e) {
 toggleSwitch.addEventListener('change', switchTheme, false);
 
 // 2. Register form submission handling
-document.getElementById('registerForm').addEventListener('submit', (e) => {
+document.getElementById('registerForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    alert('Creating your hotel management account...');
+    const inputs = e.target.querySelectorAll('input');
+    const [username, fullName, email, phone, password] = [...inputs].map(i => i.value);
+
+    try {
+        const res = await fetch('http://localhost:3000/api/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, fullName, email, phone, password })
+        });
+        const data = await res.json();
+        if (res.ok) {
+            alert('注册成功！');
+            window.location.href = '../login/login.html';
+        } else {
+            alert(data.message);
+        }
+    } catch (err) {
+        alert('无法连接服务器，请确认后端已启动');
+    }
 });
 
 function setupCustomValidation() {
