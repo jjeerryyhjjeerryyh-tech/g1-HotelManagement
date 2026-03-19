@@ -13,9 +13,11 @@
         <div class="container navbar-container">
             <div class="logo">🏨 XX Hotel</div>
             <div class="nav-buttons">
-            <a href="../register/register.html" class="nav-btn register-btn">Sign up</a>
-            <a href="../login/login.html" class="nav-btn login-btn">Log in</a>
-                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">🌙</button>
+                <a href="../register/register.html" class="nav-btn register-btn" id="registerBtn">Sign up</a>
+                <a href="../login/login.html" class="nav-btn login-btn" id="loginBtn">Log in</a>
+                <span id="userGreeting" style="display: none;"></span>
+                <button id="logoutBtn" class="nav-btn login-btn" style="display: none;">Logout</button>
+                <theme-button value="dark" id="theme-toggle" size="0.8"></theme-button>
             </div>
         </div>
     </header>
@@ -190,7 +192,7 @@
         </div>
     </section>
 
-    <script src="homepageScript.js"></script>
     <script src="../assets/js/theme-button.js"></script>
+    <script src="homepageScript.js"></script>
 </body>
 </html>
