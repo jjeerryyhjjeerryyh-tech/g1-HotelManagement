@@ -37,7 +37,12 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         const data = await res.json();
         if (res.ok) {
             sessionStorage.setItem('username', data.name || data.username);
-            window.location.href = '../homePage/index.html';
+            sessionStorage.setItem('role', data.role);
+            if (data.role === 'admin') {
+                window.location.href = '../admin/admin.html';
+            } else {
+                window.location.href = '../homePage/index.html';
+            }
         } else {
             alert(data.message);
         }
