@@ -8,6 +8,15 @@
             "phone": "123",
             "password": "$2b$10$02gmX95T1wkGIZKfptowt.DEATVaRuzenx0gQzPDgvC3ayyj5ldFG",
             "role": "user"
+        },
+        {
+            "id": 1773901874871,
+            "username": "testuser",
+            "name": "Test User",
+            "email": "test@test.com",
+            "phone": "1234567890",
+            "password": "$2b$10$7HiD6nIdG72qkerg1rNIL.4zk0dsugPzmTtJ2bBjUd8vVHaOcJzxa",
+            "role": "user"
         }
     ],
     "admins": [
