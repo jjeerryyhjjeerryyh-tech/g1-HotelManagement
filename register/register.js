@@ -24,8 +24,12 @@ toggleSwitch.addEventListener('change', switchTheme, false);
 // 2. Register form submission handling
 document.getElementById('registerForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const inputs = e.target.querySelectorAll('input');
-    const [username, fullName, email, phone, password] = [...inputs].map(i => i.value);
+    const form = e.target;
+    const username = form.querySelector('input[name="username"]').value;
+    const fullName = form.querySelector('input[name="fullName"]').value;
+    const email = form.querySelector('input[name="email"]').value;
+    const phone = form.querySelector('input[name="phone"]').value;
+    const password = form.querySelector('input[name="password"]').value;
 
     try {
         const res = await fetch('http://localhost:3000/api/register', {

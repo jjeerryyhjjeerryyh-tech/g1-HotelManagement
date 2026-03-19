@@ -1,12 +1,12 @@
 {
     "users": [
         {
-            "id": 1773901443036,
-            "username": "yi",
-            "name": "yi",
-            "email": "11@163.com",
+            "id": 1773902177514,
+            "username": "yyy",
+            "name": "yyy",
+            "email": "b@gmail.com",
             "phone": "123",
-            "password": "$2b$10$02gmX95T1wkGIZKfptowt.DEATVaRuzenx0gQzPDgvC3ayyj5ldFG",
+            "password": "$2b$10$vMDSuZI2loZ8LAsPWiWTkuS2NFxeKEQyLDjTcbGjIgtQMW9.v0kRq",
             "role": "user"
         }
     ],
@@ -14,11 +14,23 @@
         {
             "id": 1,
             "username": "admin",
-            "name": "[管理员姓名]",
+            "name": "Admin",
             "gender": "男",
             "email": "[admin_email]",
             "phone": "[phone_number]",
             "password": "$2a$10$Nzr1mBBSMdnPBMGMHFNMCuWoGpFQZ1e5W5e5W5e5W5e5W5e5W5e5W",
+            "role": "admin"
+        },
+        {
+            "id": 1773903909727,
+            "username": "testadmin",
+            "password": "$2b$10$q88BOWXoBruqP.UNKSTmyOwnLQevVS9rCelcyrdRTIPi2INcG/g7S",
+            "role": "admin"
+        },
+        {
+            "id": 1773903941471,
+            "username": "c",
+            "password": "$2b$10$o9g/8jZ/yi9iy5.oTsoPq.5y1DSGTpLv1UCOsTXpJXa8AJ5eEDYCK",
             "role": "admin"
         }
     ]

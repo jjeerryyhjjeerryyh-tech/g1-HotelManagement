@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal</title>
+    <link rel="stylesheet" href="../login/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <a href="../login/login.html" class="back-home">
+            <i class="fas fa-arrow-left"></i> Back to Login
+        </a>
+
+        <div class="forms-container">
+            <div class="form-box login-form">
+
+                <!-- 登录表单 -->
+                <form id="adminLoginForm">
+                    <h2>Admin Login</h2>
+                    <p class="subtitle">Sign in to your admin account</p>
+                    <div class="input-group">
+                        <i class="fas fa-user-shield"></i>
+                        <input type="text" name="username" placeholder="Username" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" name="password" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="btn">Sign In</button>
+                    <p class="switch-text">Don't have an admin account? <a href="#" id="toRegister">Register here</a></p>
+                </form>
+
+                <!-- 注册表单（默认隐藏） -->
+                <form id="adminRegisterForm" style="display:none;">
+                    <h2>Admin Register</h2>
+                    <p class="subtitle">Create a new admin account</p>
+                    <div class="input-group">
+                        <i class="fas fa-user-shield"></i>
+                        <input type="text" name="username" placeholder="Username" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" name="password" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="btn">Register</button>
+                    <p class="switch-text">Already have an account? <a href="#" id="toLogin">Sign In</a></p>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <script src="adminLogin.js"></script>
+</body>
+</html>

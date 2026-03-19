@@ -57,3 +57,18 @@ document.getElementById('bookingForm').addEventListener('submit', function(e) {
     e.preventDefault();
     alert('正在查询可用房间...');
 });
+
+// 显示登录用户名
+const username = sessionStorage.getItem('username');
+if (username) {
+    document.getElementById('registerBtn').style.display = 'none';
+    document.getElementById('loginBtn').style.display = 'none';
+    document.getElementById('userGreeting').style.display = 'inline';
+    document.getElementById('userGreeting').textContent = '👤 ' + username;
+    document.getElementById('logoutBtn').style.display = 'inline';
+}
+
+document.getElementById('logoutBtn').addEventListener('click', () => {
+    sessionStorage.removeItem('username');
+    window.location.reload();
+});

@@ -69,7 +69,42 @@ app.post('/api/login', async (req, res) => {
         return res.status(401).json({ message: '密码错误' });
     }
 
-    res.json({ message: '登录成功', role: user.role, name: user.name });
+    res.json({ message: '登录成功', role: user.role, name: user.name, username: user.username });
+});
+
+// 管理员注册
+app.post('/api/admin/register', async (req, res) => {
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+        return res.status(400).json({ message: 'Please fill in all fields' });
+    }
+
+    const data = readData();
+    const exists = data.admins.find(a => a.username === username);
+    if (exists) {
+        return res.status(409).json({ message: 'Admin username already exists' });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    data.admins.push({
+        id: Date.now(),
+        username,
+        password: hashedPassword,
+        role: 'admin'
+    });
+
+    writeData(data);
+    res.json({ message: 'Admin registered successfully' });
+});
+
+// 获取所有用户（仅管理员用）
+app.get('/api/users', (req, res) => {
+    const data = readData();
+    // 隐藏密码字段
+    const users = data.users.map(({ password, ...u }) => u);
+    const admins = data.admins.map(({ password, ...u }) => u);
+    res.json({ users, admins });
 });
 
 app.listen(3000, () => console.log('服务器运行在 http://localhost:3000'));
