@@ -191,6 +191,21 @@
             
             document.getElementById('checkInDate').value = formatDateInput(today);
             document.getElementById('checkOutDate').value = formatDateInput(tomorrow);
+
+            const storedSearch = sessionStorage.getItem('bookingSearch');
+            if (storedSearch) {
+                try {
+                    const { checkIn, checkOut, guests } = JSON.parse(storedSearch);
+                    if (checkIn) document.getElementById('checkInDate').value = checkIn;
+                    if (checkOut) document.getElementById('checkOutDate').value = checkOut;
+                    if (guests && document.getElementById('guestCount')) {
+                        document.getElementById('guestCount').value = String(guests);
+                    }
+                    selectedDates = { checkIn: checkIn || '', checkOut: checkOut || '' };
+                } catch (e) {
+                }
+                sessionStorage.removeItem('bookingSearch');
+            }
             
             // Render rooms
             renderRooms();
@@ -565,4 +580,3 @@ function filterMyBookings() {
     // Simplified
     renderMyBookings();
 }
-
