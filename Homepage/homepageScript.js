@@ -4,21 +4,18 @@ const currentTheme = localStorage.getItem('theme');
 
 if (currentTheme) {
     document.documentElement.setAttribute('data-theme', currentTheme);
-    themeToggle.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
+    if (themeToggle) {
+        themeToggle.setAttribute('value', currentTheme);
+    }
 }
 
-themeToggle.addEventListener('click', () => {
-    let theme = document.documentElement.getAttribute('data-theme');
-    if (theme === 'dark') {
-        document.documentElement.setAttribute('data-theme', 'light');
-        localStorage.setItem('theme', 'light');
-        themeToggle.textContent = '🌙';
-    } else {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        localStorage.setItem('theme', 'dark');
-        themeToggle.textContent = '☀️';
-    }
-});
+if (themeToggle) {
+    themeToggle.addEventListener('change', (e) => {
+        const newTheme = e.detail;
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+    });
+}
 
 // 轮播功能
 let currentSlide = 0;

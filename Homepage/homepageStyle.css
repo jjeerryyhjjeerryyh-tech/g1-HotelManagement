@@ -33,6 +33,7 @@
 
 .nav-buttons {
     display: flex;
+    align-items: center; /* 垂直居中对齐 */
     gap: 15px;
 }
 
