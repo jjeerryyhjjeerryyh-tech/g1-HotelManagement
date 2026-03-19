@@ -9,6 +9,75 @@ if (themeToggle) {
     themeToggle.setAttribute('value', currentTheme);
 }
 
+const i18n = {
+    zh: {
+        nav_rooms: '房型',
+        nav_offers: '优惠',
+        nav_events: '活动',
+        nav_news: '资讯',
+        nav_about: '关于',
+        lang: '语言',
+        search_rooms: '查询房间',
+        signup: '注册',
+        login: '登录',
+        logout: '退出',
+        checkin: '入住日期',
+        checkout: '离店日期',
+        room_count: '房间数',
+        guest_count: '入住人数',
+        search_available: '查询空房',
+        alert_invalid_date: '离店日期必须晚于入住日期'
+    },
+    en: {
+        nav_rooms: 'Rooms',
+        nav_offers: 'Offers',
+        nav_events: 'Events',
+        nav_news: 'News',
+        nav_about: 'About',
+        lang: 'Language',
+        search_rooms: 'Search',
+        signup: 'Sign up',
+        login: 'Log in',
+        logout: 'Logout',
+        checkin: 'Check-in',
+        checkout: 'Check-out',
+        room_count: 'Rooms',
+        guest_count: 'Guests',
+        search_available: 'Search availability',
+        alert_invalid_date: 'Check-out date must be after check-in date.'
+    }
+};
+
+let currentLang = localStorage.getItem('lang') || 'zh';
+if (!i18n[currentLang]) currentLang = 'zh';
+
+const langSelect = document.getElementById('langSelect');
+if (langSelect) langSelect.value = currentLang;
+document.documentElement.setAttribute('lang', currentLang === 'zh' ? 'zh-CN' : 'en');
+document.documentElement.setAttribute('data-lang', currentLang);
+
+const applyI18n = () => {
+    const dict = i18n[currentLang] || i18n.zh;
+    document.querySelectorAll('[data-i18n]').forEach((el) => {
+        const key = el.getAttribute('data-i18n');
+        if (!key) return;
+        if (dict[key]) el.textContent = dict[key];
+    });
+};
+
+applyI18n();
+
+if (langSelect) {
+    langSelect.addEventListener('change', () => {
+        const next = langSelect.value;
+        currentLang = i18n[next] ? next : 'zh';
+        localStorage.setItem('lang', currentLang);
+        document.documentElement.setAttribute('lang', currentLang === 'zh' ? 'zh-CN' : 'en');
+        document.documentElement.setAttribute('data-lang', currentLang);
+        applyI18n();
+    });
+}
+
 if (themeToggle) {
     themeToggle.addEventListener('change', (e) => {
         const newTheme = e.detail;
@@ -96,7 +165,8 @@ if (bookingForm) {
 
         if (!checkIn || !checkOut) return;
         if (new Date(checkIn) >= new Date(checkOut)) {
-            alert('离店日期必须晚于入住日期');
+            const dict = i18n[currentLang] || i18n.zh;
+            alert(dict.alert_invalid_date);
             return;
         }
 
