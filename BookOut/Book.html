@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>酒店预订系统 - Hotel Booking System</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="Book.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-hotel"></i>
+                <span>HotelBook 客户预订系统</span>
+            </div>
+            <nav class="nav-tabs">
+                <div class="nav-tab active" onclick="switchTab('search')">
+                    <i class="fas fa-search"></i> 查询预订
+                </div>
+                <div class="nav-tab" onclick="switchTab('rooms')">
+                    <i class="fas fa-bed"></i> 客房预订
+                </div>
+                <div class="nav-tab" onclick="switchTab('mybookings')">
+                    <i class="fas fa-calendar-check"></i> 我的预订
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Search Section -->
+        <div class="search-section" id="searchSection">
+            <div class="search-grid">
+                <div class="search-field">
+                    <label><i class="fas fa-calendar-check"></i> 入住日期</label>
+                    <input type="date" class="search-input" id="checkInDate">
+                </div>
+                <div class="search-field">
+                    <label><i class="fas fa-calendar-times"></i> 退房日期</label>
+                    <input type="date" class="search-input" id="checkOutDate">
+                </div>
+                <div class="search-field">
+                    <label><i class="fas fa-user-friends"></i> 入住人数</label>
+                    <select class="search-select" id="guestCount">
+                        <option value="1">1位成人</option>
+                        <option value="2" selected>2位成人</option>
+                        <option value="3">3位成人</option>
+                        <option value="4">4位成人</option>
+                    </select>
+                </div>
+                <div class="search-field">
+                    <label><i class="fas fa-filter"></i> 房型筛选</label>
+                    <select class="search-select" id="roomTypeFilter" onchange="filterRooms()">
+                        <option value="all">全部房型</option>
+                        <option value="standard">标准客房</option>
+                        <option value="deluxe">豪华客房</option>
+                        <option value="suite">套房</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" onclick="searchRooms()">
+                    <i class="fas fa-search"></i> 查询空房
+                </button>
+            </div>
+        </div>
+
+        <!-- Stats Dashboard -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon available">
+                    <i class="fas fa-door-open"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="stat-available">24</h3>
+                    <p>可预订客房</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon popular">
+                    <i class="fas fa-fire"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="stat-popular">156</h3>
+                    <p>本周热门</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon booked">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="stat-booked">8</h3>
+                    <p>我的预订</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon saved">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="stat-saved">3</h3>
+                    <p>收藏客房</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rooms Section -->
+        <div class="section-card" id="roomsSection">
+            <div class="section-header">
+                <div class="section-title">
+                    <i class="fas fa-list"></i>
+                    可预订客房 (Available Rooms)
+                </div>
+                <div class="filters">
+                    <div class="filter-group">
+                        <select class="filter-select" id="priceFilter" onchange="filterRooms()">
+                            <option value="all">全部价格</option>
+                            <option value="0-500">¥500以下</option>
+                            <option value="500-1000">¥500-1000</option>
+                            <option value="1000+">¥1000以上</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <select class="filter-select" id="sortFilter" onchange="sortRooms()">
+                            <option value="default">默认排序</option>
+                            <option value="price-asc">价格从低到高</option>
+                            <option value="price-desc">价格从高到低</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-secondary" onclick="refreshRooms()">
+                        <i class="fas fa-sync-alt"></i> 刷新
+                    </button>
+                </div>
+            </div>
+            <div class="section-body">
+                <div class="room-grid" id="roomGrid">
+                    <!-- Dynamic content will be inserted here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- My Bookings Section -->
+        <div class="section-card" id="bookingsSection" style="display: none;">
+            <div class="section-header">
+                <div class="section-title">
+                    <i class="fas fa-calendar-check"></i>
+                    我的预订 (My Bookings)
+                </div>
+                <div class="filters">
+                    <div class="filter-group">
+                        <select class="filter-select" id="bookingStatusFilter" onchange="filterMyBookings()">
+                            <option value="all">全部状态</option>
+                            <option value="confirmed">已确认</option>
+                            <option value="completed">已完成</option>
+                            <option value="cancelled">已取消</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-secondary" onclick="showLookupModal()">
+                        <i class="fas fa-search"></i> 查询其他预订
+                    </button>
+                </div>
+            </div>
+            <div class="section-body">
+                <table class="booking-table">
+                    <thead>
+                        <tr>
+                            <th>预订号</th>
+                            <th>客房信息</th>
+                            <th>入住日期</th>
+                            <th>退房日期</th>
+                            <th>总价</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="myBookingsTable">
+                        <!-- Dynamic content will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Room Detail Modal -->
+    <div class="modal-overlay" id="roomModal">
+        <div class="modal modal-lg">
+            <div class="modal-header">
+                <div class="modal-title" id="roomModalTitle">客房详情</div>
+                <button class="modal-close" onclick="closeRoomModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="roomModalBody">
+                <!-- Dynamic content -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeRoomModal()">关闭</button>
+                <button class="btn btn-primary" onclick="proceedToBook()">
+                    <i class="fas fa-calendar-plus"></i> 立即预订
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Form Modal -->
+    <div class="modal-overlay" id="bookingModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <i class="fas fa-calendar-check" style="color: var(--primary);"></i>
+                    填写预订信息
+                </div>
+                <button class="modal-close" onclick="closeBookingModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="fee-calculation" id="bookingSummary">
+                    <!-- Dynamic content -->
+                </div>
+                
+                <form id="bookingForm" onsubmit="submitBooking(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">入住人姓名 *</label>
+                            <input type="text" class="form-input" name="guestName" required placeholder="请输入真实姓名">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">联系电话 *</label>
+                            <input type="tel" class="form-input" name="guestPhone" required placeholder="138****8888">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">电子邮箱 *</label>
+                        <input type="email" class="form-input" name="guestEmail" required placeholder="example@email.com">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">预计到达时间</label>
+                            <select class="form-select" name="arrivalTime">
+                                <option value="">请选择</option>
+                                <option value="14:00-15:00">14:00-15:00</option>
+                                <option value="15:00-16:00">15:00-16:00</option>
+                                <option value="16:00-17:00">16:00-17:00</option>
+                                <option value="17:00-18:00">17:00-18:00</option>
+                                <option value="18:00以后">18:00以后</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">特殊要求</label>
+                            <input type="text" class="form-input" name="specialRequests" placeholder="如无烟房、高层风景等">
+                        </div>
+                    </div>
+                    
+                    <div class="policy-box">
+                        <h4><i class="fas fa-info-circle"></i> 取消政策</h4>
+                        <p id="bookingPolicyText">入住前48小时可免费取消，之后将收取首晚房费作为取消费用。</p>
+                    </div>
+
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" id="agreeTerms" required>
+                        <label for="agreeTerms">我已阅读并同意<a href="#">预订条款</a>和<a href="#">隐私政策</a></label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeBookingModal()">返回</button>
+                <button type="submit" form="bookingForm" class="btn btn-primary">
+                    <i class="fas fa-check"></i> 确认预订
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cancellation Modal -->
+    <div class="modal-overlay" id="cancellationModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <i class="fas fa-times-circle" style="color: var(--danger);"></i>
+                    取消预订 (Cancel Booking)
+                </div>
+                <button class="modal-close" onclick="closeCancellationModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="cancellationContent">
+                <!-- Dynamic content -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeCancellationModal()">保留预订</button>
+                <button class="btn btn-danger" id="confirmCancelBtn" onclick="confirmCancellation()">
+                    <i class="fas fa-check"></i> 确认取消
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Lookup Modal -->
+    <div class="modal-overlay" id="lookupModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <i class="fas fa-search" style="color: var(--primary);"></i>
+                    查询预订
+                </div>
+                <button class="modal-close" onclick="closeLookupModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">预订号 / 手机号</label>
+                    <input type="text" class="form-input" id="lookupInput" placeholder="请输入预订号或手机号">
+                </div>
+                <div class="policy-box">
+                    <h4><i class="fas fa-info-circle"></i> 提示</h4>
+                    <p>输入预订号或预订时使用的手机号即可查询您的预订信息。</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeLookupModal()">关闭</button>
+                <button class="btn btn-primary" onclick="lookupBooking()">
+                    <i class="fas fa-search"></i> 查询
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="Book.js"></script>
+</body>
+</html>
