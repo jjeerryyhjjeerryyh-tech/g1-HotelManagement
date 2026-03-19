@@ -41,6 +41,12 @@
             "username": "c",
             "password": "$2b$10$o9g/8jZ/yi9iy5.oTsoPq.5y1DSGTpLv1UCOsTXpJXa8AJ5eEDYCK",
             "role": "admin"
+        },
+        {
+            "id": 1773905743925,
+            "username": "12345678",
+            "password": "$2b$10$NQPU1TBACDZe9ie9hIwcVOVTSBJp88hUsr3JuN/CqJPUlt8JLzyn2",
+            "role": "admin"
         }
     ]
 }
