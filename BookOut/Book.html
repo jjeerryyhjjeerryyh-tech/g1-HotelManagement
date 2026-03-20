@@ -29,82 +29,51 @@
         </div>
     </header>
 
-    <!-- Main Container -->
-    <div class="container">
-        <!-- Search Section -->
-        <div class="search-section" id="searchSection">
-            <div class="search-grid">
-                <div class="search-field">
-                    <label><i class="fas fa-calendar-check"></i> 入住日期</label>
-                    <input type="date" class="search-input" id="checkInDate">
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-inner">
+            <div class="hero-copy">
+                直接选择入住与退房日期，即可享受专属礼遇与优惠。
+            </div>
+            <div class="search-section search-hero" id="searchSection">
+                <div class="search-grid">
+                    <div class="search-field">
+                        <label><i class="fas fa-calendar-check"></i> 入住日期</label>
+                        <input type="date" class="search-input" id="checkInDate">
+                    </div>
+                    <div class="search-field">
+                        <label><i class="fas fa-calendar-times"></i> 退房日期</label>
+                        <input type="date" class="search-input" id="checkOutDate">
+                    </div>
+                    <div class="search-field">
+                        <label><i class="fas fa-user-friends"></i> 入住人数</label>
+                        <select class="search-select" id="guestCount">
+                            <option value="1">1位成人</option>
+                            <option value="2" selected>2位成人</option>
+                            <option value="3">3位成人</option>
+                            <option value="4">4位成人</option>
+                        </select>
+                    </div>
+                    <div class="search-field">
+                        <label><i class="fas fa-filter"></i> 房型筛选</label>
+                        <select class="search-select" id="roomTypeFilter" onchange="filterRooms()">
+                            <option value="all">全部房型</option>
+                            <option value="standard">标准客房</option>
+                            <option value="deluxe">豪华客房</option>
+                            <option value="suite">套房</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" onclick="searchRooms()">
+                        <i class="fas fa-search"></i> 查询空房
+                    </button>
                 </div>
-                <div class="search-field">
-                    <label><i class="fas fa-calendar-times"></i> 退房日期</label>
-                    <input type="date" class="search-input" id="checkOutDate">
-                </div>
-                <div class="search-field">
-                    <label><i class="fas fa-user-friends"></i> 入住人数</label>
-                    <select class="search-select" id="guestCount">
-                        <option value="1">1位成人</option>
-                        <option value="2" selected>2位成人</option>
-                        <option value="3">3位成人</option>
-                        <option value="4">4位成人</option>
-                    </select>
-                </div>
-                <div class="search-field">
-                    <label><i class="fas fa-filter"></i> 房型筛选</label>
-                    <select class="search-select" id="roomTypeFilter" onchange="filterRooms()">
-                        <option value="all">全部房型</option>
-                        <option value="standard">标准客房</option>
-                        <option value="deluxe">豪华客房</option>
-                        <option value="suite">套房</option>
-                    </select>
-                </div>
-                <button class="btn btn-primary" onclick="searchRooms()">
-                    <i class="fas fa-search"></i> 查询空房
-                </button>
             </div>
         </div>
+    </section>
 
-        <!-- Stats Dashboard -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-icon available">
-                    <i class="fas fa-door-open"></i>
-                </div>
-                <div class="stat-info">
-                    <h3 id="stat-available">24</h3>
-                    <p>可预订客房</p>
-                </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon popular">
-                    <i class="fas fa-fire"></i>
-                </div>
-                <div class="stat-info">
-                    <h3 id="stat-popular">156</h3>
-                    <p>本周热门</p>
-                </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon booked">
-                    <i class="fas fa-calendar-check"></i>
-                </div>
-                <div class="stat-info">
-                    <h3 id="stat-booked">8</h3>
-                    <p>我的预订</p>
-                </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon saved">
-                    <i class="fas fa-heart"></i>
-                </div>
-                <div class="stat-info">
-                    <h3 id="stat-saved">3</h3>
-                    <p>收藏客房</p>
-                </div>
-            </div>
-        </div>
+    <div class="container">
+        <div class="layout">
+            <div class="layout-main">
 
         <!-- Rooms Section -->
         <div class="section-card" id="roomsSection">
@@ -180,6 +149,64 @@
                     </tbody>
                 </table>
             </div>
+        </div>
+            </div>
+            <aside class="layout-aside">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon available">
+                            <i class="fas fa-door-open"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="stat-available">24</h3>
+                            <p>可预订客房</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon popular">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="stat-popular">156</h3>
+                            <p>本周热门</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon booked">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="stat-booked">8</h3>
+                            <p>我的预订</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon saved">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="stat-saved">3</h3>
+                            <p>收藏客房</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="aside-card">
+                    <div class="aside-title">需要帮助吗？</div>
+                    <div class="aside-text">我们将竭诚为您提供预订协助与咨询服务。</div>
+                    <div class="aside-list">
+                        <div class="aside-item"><i class="fas fa-phone"></i><span>+852 2910 1628</span></div>
+                        <div class="aside-item"><i class="fas fa-envelope"></i><span>reservation@xxhotel.com</span></div>
+                    </div>
+                </div>
+                <div class="aside-card">
+                    <div class="aside-title">专属礼遇</div>
+                    <div class="aside-list">
+                        <div class="aside-item"><i class="fas fa-clock"></i><span>延迟退房</span></div>
+                        <div class="aside-item"><i class="fas fa-wifi"></i><span>高速 Wi‑Fi</span></div>
+                        <div class="aside-item"><i class="fas fa-mug-hot"></i><span>早餐礼遇</span></div>
+                    </div>
+                </div>
+            </aside>
         </div>
     </div>
 
