@@ -9,39 +9,86 @@
 </head>
 <body>
     <!-- 导航栏 -->
-    <header class="navbar">
-        <div class="container navbar-container">
+    <header class="navbar" id="navbar">
+        <div class="navbar-container">
             <div class="navbar-left">
-                <a class="logo" href="#" aria-label="首页">🏨 XX Hotel</a>
-                <nav class="navbar-links" aria-label="站内导航">
-                    <a href="#roomsShowcase" data-i18n="nav_rooms">房型</a>
-                    <a href="#offers" data-i18n="nav_offers">优惠</a>
-                    <a href="#events" data-i18n="nav_events">活动</a>
-                    <a href="#news" data-i18n="nav_news">资讯</a>
-                    <a href="#about" data-i18n="nav_about">关于</a>
-                </nav>
+                <button class="menu-btn" id="menuBtn" type="button" aria-label="Menu">
+                    <span class="hamburger-icon">
+                        <span></span><span></span><span></span>
+                    </span>
+                    <span class="menu-text" data-i18n="menu">MENU</span>
+                </button>
+            </div>
+            <div class="navbar-center">
+                <a class="logo" href="#" aria-label="首页">
+                    <div class="logo-main">91酒店</div>
+                    <div class="logo-sub">HONG KONG</div>
+                </a>
             </div>
             <div class="navbar-right">
                 <div class="navbar-actions">
+                    <a href="#about" class="nav-link" data-i18n="contact_us">CONTACT US</a>
+                    <span class="nav-divider">|</span>
                     <label class="lang-select" for="langSelect">
-                        <span class="lang-label" data-i18n="lang">语言</span>
+                        <span class="lang-icon">🌐</span>
                         <select id="langSelect" aria-label="Language">
+                            <option value="en">ENGLISH</option>
                             <option value="zh">中文</option>
-                            <option value="en">English</option>
                         </select>
                     </label>
-                    <theme-button value="light" id="theme-toggle" size="0.8"></theme-button>
-                    <button class="nav-btn search-btn-nav" id="openSearchBtn" type="button" data-i18n="search_rooms">查询房间</button>
-                </div>
-                <div class="navbar-auth">
-                    <a href="../register/register.html" class="nav-btn register-btn" id="registerBtn" data-i18n="signup">注册</a>
-                    <a href="../login/login.html" class="nav-btn login-btn" id="loginBtn" data-i18n="login">登录</a>
-                    <span id="userGreeting" style="display: none;"></span>
-                    <button id="logoutBtn" class="nav-btn login-btn" style="display: none;" data-i18n="logout">退出</button>
+                    <theme-button value="light" id="theme-toggle" size="0.6"></theme-button>
+                    <button class="nav-btn reserve-btn" id="openSearchBtn" type="button" data-i18n="reserve">RESERVE</button>
+                    <div class="navbar-auth" style="display: none;">
+                        <a href="../register/register.html" class="nav-btn register-btn" id="registerBtn" data-i18n="signup">注册</a>
+                        <a href="../login/login.html" class="nav-btn login-btn" id="loginBtn" data-i18n="login">登录</a>
+                        <span id="userGreeting" style="display: none;"></span>
+                        <button id="logoutBtn" class="nav-btn login-btn" style="display: none;" data-i18n="logout">退出</button>
+                    </div>
                 </div>
             </div>
         </div>
     </header>
+
+    <!-- 侧边栏 Menu -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-panel">
+            <div class="sidebar-top">
+                <a class="sidebar-logo" href="#">
+                    <div class="logo-main">91酒店</div>
+                    <div class="logo-sub">HONG KONG</div>
+                </a>
+                <button class="sidebar-close" id="sidebarCloseBtn" type="button" aria-label="Close menu">✕</button>
+            </div>
+            <div class="sidebar-body">
+                <div class="sidebar-left-col">
+                    <ul class="sidebar-menu" id="sidebarMenu">
+                        <li><button type="button" class="sidebar-item active" data-menu="rooms" data-i18n="nav_rooms">Rooms & Suites</button></li>
+                        <li><button type="button" class="sidebar-item" data-menu="dining" data-i18n="nav_dining">Dining</button></li>
+                        <li><button type="button" class="sidebar-item" data-menu="wellness" data-i18n="nav_wellness">Wellness</button></li>
+                        <li><button type="button" class="sidebar-item" data-menu="offers" data-i18n="nav_offers">Offers</button></li>
+                        <li><button type="button" class="sidebar-item" data-menu="academy" data-i18n="nav_academy">Academy</button></li>
+                        <li><button type="button" class="sidebar-item" data-menu="city" data-i18n="nav_city">Our City</button></li>
+                        <li><button type="button" class="sidebar-item" data-menu="events" data-i18n="nav_events">Events</button></li>
+                        <li><button type="button" class="sidebar-item" data-menu="shops" data-i18n="nav_shops">Shops</button></li>
+                        <li><button type="button" class="sidebar-item" data-menu="gifts" data-i18n="nav_gifts">Gifts</button></li>
+                        <li><button type="button" class="sidebar-item" data-menu="perspectives" data-i18n="nav_perspectives">Perspectives</button></li>
+                        <li><button type="button" class="sidebar-item" data-menu="sustainability" data-i18n="nav_sustainability">Sustainability</button></li>
+                    </ul>
+                    <div class="sidebar-footer">
+                        <a href="#" class="sidebar-footer-link" data-i18n="global_homepage">GLOBAL HOMEPAGE ></a>
+                        <a href="#" class="sidebar-footer-link" data-i18n="select_hotel">SELECT A HOTEL ></a>
+                    </div>
+                </div>
+                <div class="sidebar-right-col">
+                    <div class="sidebar-right-head">
+                        <a class="sidebar-explore" id="sidebarExploreLink" href="#" target="_self">EXPLORE ALL</a>
+                    </div>
+                    <div class="sidebar-right-content" id="sidebarRightContent"></div>
+                </div>
+            </div>
+        </div>
+    </aside>
 
     <!-- Hero Section with 轮播 -->
     <section class="hero-section">

@@ -178,10 +178,260 @@
         let selectedDates = { checkIn: '', checkOut: '' };
         let currentBooking = null;
 
+        const i18n = {
+            zh: {
+                brand: 'HotelBook 客户预订系统',
+                tab_search: '查询预订',
+                tab_rooms: '客房预订',
+                tab_mybookings: '我的预订',
+                lang: '语言',
+                hero_copy: '直接选择入住与退房日期，即可享受专属礼遇与优惠。',
+                checkin: '入住日期',
+                checkout: '退房日期',
+                guests: '入住人数',
+                guests_1: '1位成人',
+                guests_2: '2位成人',
+                guests_3: '3位成人',
+                guests_4: '4位成人',
+                room_type: '房型筛选',
+                room_type_all: '全部房型',
+                room_type_standard: '标准客房',
+                room_type_deluxe: '豪华客房',
+                room_type_suite: '套房',
+                search_available: '查询空房',
+                rooms_title: '可预订客房',
+                price_all: '全部价格',
+                price_0_500: '¥500以下',
+                price_500_1000: '¥500-1000',
+                price_1000_plus: '¥1000以上',
+                sort_default: '默认排序',
+                sort_price_asc: '价格从低到高',
+                sort_price_desc: '价格从高到低',
+                refresh: '刷新',
+                mybookings_title: '我的预订',
+                status_all: '全部状态',
+                status_confirmed: '已确认',
+                status_completed: '已完成',
+                status_cancelled: '已取消',
+                lookup_other: '查询其他预订',
+                th_booking_id: '预订号',
+                th_room: '客房信息',
+                th_checkin: '入住日期',
+                th_checkout: '退房日期',
+                th_total: '总价',
+                th_status: '状态',
+                th_action: '操作',
+                stat_available: '可预订客房',
+                stat_popular: '本周热门',
+                stat_booked: '我的预订',
+                stat_saved: '收藏客房',
+                help_title: '需要帮助吗？',
+                help_text: '我们将竭诚为您提供预订协助与咨询服务。',
+                perks_title: '专属礼遇',
+                perk_late_checkout: '延迟退房',
+                perk_wifi: '高速 Wi‑Fi',
+                perk_breakfast: '早餐礼遇',
+                room_detail_title: '客房详情',
+                close: '关闭',
+                book_now: '立即预订',
+                booking_form_title: '填写预订信息',
+                guest_name: '入住人姓名',
+                guest_name_ph: '请输入真实姓名',
+                guest_phone: '联系电话',
+                guest_email: '电子邮箱',
+                arrival_time: '预计到达时间',
+                select: '请选择',
+                special_requests: '特殊要求',
+                special_requests_ph: '如无烟房、高层风景等',
+                back: '返回',
+                confirm_booking: '确认预订',
+                view_detail: '查看详情',
+                only_left: '仅剩{count}间',
+                up_to_guests: '最多{count}人',
+                per_night: '/晚',
+                fee_room: '房型',
+                fee_checkin: '入住日期',
+                fee_checkout: '退房日期',
+                fee_price: '单价',
+                fee_nights: '天数',
+                fee_total: '总计',
+                nights: '{count} 晚',
+                cancel: '取消',
+                toast_select_dates: '请选择入住和退房日期',
+                toast_checkout_after: '退房日期必须晚于入住日期',
+                toast_searching: '正在查询可用客房...',
+                toast_found_rooms: '找到 {count} 间可用客房',
+                toast_refresh_success: '刷新成功',
+                toast_fav_added: '已添加到收藏',
+                toast_fav_removed: '已取消收藏',
+                toast_booking_success: '预订成功！',
+                toast_enter_lookup: '请输入查询信息',
+                toast_lookup_loading: '查询中...',
+                toast_lookup_not_found: '未找到相关预订',
+                toast_booking_cancelled: '预订已取消',
+                toast_not_implemented: '功能暂未实现',
+                amenities_title: '客房设施',
+                booking_policy_title: '预订政策'
+            },
+            en: {
+                brand: 'HotelBook Booking',
+                tab_search: 'Search',
+                tab_rooms: 'Rooms',
+                tab_mybookings: 'My Bookings',
+                lang: 'Language',
+                hero_copy: 'Select check-in and check-out dates to enjoy exclusive privileges.',
+                checkin: 'Check-in',
+                checkout: 'Check-out',
+                guests: 'Guests',
+                guests_1: '1 adult',
+                guests_2: '2 adults',
+                guests_3: '3 adults',
+                guests_4: '4 adults',
+                room_type: 'Room Type',
+                room_type_all: 'All',
+                room_type_standard: 'Standard',
+                room_type_deluxe: 'Deluxe',
+                room_type_suite: 'Suite',
+                search_available: 'Search',
+                rooms_title: 'Available Rooms',
+                price_all: 'All Prices',
+                price_0_500: 'Below ¥500',
+                price_500_1000: '¥500-1000',
+                price_1000_plus: 'Above ¥1000',
+                sort_default: 'Default',
+                sort_price_asc: 'Price: Low to High',
+                sort_price_desc: 'Price: High to Low',
+                refresh: 'Refresh',
+                mybookings_title: 'My Bookings',
+                status_all: 'All Status',
+                status_confirmed: 'Confirmed',
+                status_completed: 'Completed',
+                status_cancelled: 'Cancelled',
+                lookup_other: 'Lookup Booking',
+                th_booking_id: 'Booking ID',
+                th_room: 'Room',
+                th_checkin: 'Check-in',
+                th_checkout: 'Check-out',
+                th_total: 'Total',
+                th_status: 'Status',
+                th_action: 'Action',
+                stat_available: 'Available',
+                stat_popular: 'Popular',
+                stat_booked: 'My Bookings',
+                stat_saved: 'Saved',
+                help_title: 'Need help?',
+                help_text: 'We are here to help with booking and inquiries.',
+                perks_title: 'Perks',
+                perk_late_checkout: 'Late checkout',
+                perk_wifi: 'High-speed Wi‑Fi',
+                perk_breakfast: 'Breakfast',
+                room_detail_title: 'Room Details',
+                close: 'Close',
+                book_now: 'Book Now',
+                booking_form_title: 'Booking Details',
+                guest_name: 'Guest Name',
+                guest_name_ph: 'Enter your name',
+                guest_phone: 'Phone',
+                guest_email: 'Email',
+                arrival_time: 'Arrival Time',
+                select: 'Select',
+                special_requests: 'Special Requests',
+                special_requests_ph: 'e.g. non-smoking, high floor',
+                back: 'Back',
+                confirm_booking: 'Confirm',
+                view_detail: 'View',
+                only_left: 'Only {count} left',
+                up_to_guests: 'Up to {count} guests',
+                per_night: '/night',
+                fee_room: 'Room',
+                fee_checkin: 'Check-in',
+                fee_checkout: 'Check-out',
+                fee_price: 'Rate',
+                fee_nights: 'Nights',
+                fee_total: 'Total',
+                nights: '{count} nights',
+                cancel: 'Cancel',
+                toast_select_dates: 'Please select check-in and check-out dates',
+                toast_checkout_after: 'Check-out must be later than check-in',
+                toast_searching: 'Searching available rooms...',
+                toast_found_rooms: 'Found {count} available rooms',
+                toast_refresh_success: 'Refreshed',
+                toast_fav_added: 'Added to favorites',
+                toast_fav_removed: 'Removed from favorites',
+                toast_booking_success: 'Booking successful!',
+                toast_enter_lookup: 'Please enter lookup info',
+                toast_lookup_loading: 'Searching...',
+                toast_lookup_not_found: 'No booking found',
+                toast_booking_cancelled: 'Booking cancelled',
+                toast_not_implemented: 'Not implemented',
+                amenities_title: 'Amenities',
+                booking_policy_title: 'Booking Policy'
+            }
+        };
+
+        let currentLang = localStorage.getItem('lang') || 'zh';
+
+        function t(key, params = {}) {
+            const dict = i18n[currentLang] || i18n.zh;
+            const raw = dict[key] ?? i18n.zh[key] ?? key;
+            return String(raw).replace(/\{(\w+)\}/g, (_, k) => (params[k] ?? `{${k}}`));
+        }
+
+        function applyI18n(lang) {
+            currentLang = lang === 'en' ? 'en' : 'zh';
+            localStorage.setItem('lang', currentLang);
+            document.documentElement.setAttribute('data-lang', currentLang);
+            document.documentElement.lang = currentLang === 'en' ? 'en' : 'zh-CN';
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const k = el.getAttribute('data-i18n');
+                if (k) el.textContent = t(k);
+            });
+
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const k = el.getAttribute('data-i18n-placeholder');
+                if (k) el.setAttribute('placeholder', t(k));
+            });
+
+            renderRooms();
+            renderMyBookings();
+        }
+
+        function setTheme(theme) {
+            const next = theme === 'dark' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+        }
+
+        function mountThemeToggle() {
+            const mount = document.getElementById('themeToggleMount');
+            if (!mount) return;
+            mount.innerHTML = '';
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            setTheme(savedTheme);
+            const btn = document.createElement('theme-button');
+            btn.setAttribute('value', savedTheme);
+            btn.setAttribute('id', 'theme-toggle');
+            btn.setAttribute('size', '0.8');
+            btn.addEventListener('change', (e) => setTheme(e.detail));
+            mount.appendChild(btn);
+        }
+
+        function initHeaderControls() {
+            mountThemeToggle();
+            const langSelect = document.getElementById('langSelect');
+            if (langSelect) {
+                langSelect.value = currentLang;
+                langSelect.addEventListener('change', (e) => applyI18n(e.target.value));
+            }
+            applyI18n(currentLang);
+        }
+
         // ============================================
         // Initialization
         // ============================================
         document.addEventListener('DOMContentLoaded', function() {
+            initHeaderControls();
             // Set default dates
             const today = new Date();
             const tomorrow = new Date(today);
@@ -265,28 +515,28 @@
                         <img src="${room.image}" alt="${room.name}">
                         <div class="room-badges">
                             ${discount > 0 ? `<span class="room-badge badge-discount">-${discount}%</span>` : ''}
-                            ${room.available < 5 ? `<span class="room-badge badge-limited">仅剩${room.available}间</span>` : ''}
+                            ${room.available < 5 ? `<span class="room-badge badge-limited">${t('only_left', { count: room.available })}</span>` : ''}
                         </div>
                         <button class="room-favorite" onclick="toggleFavorite(this, '${room.id}')">
                             <i class="far fa-heart"></i>
                         </button>
                     </div>
                     <div class="room-content">
-                        <div class="room-type">${room.type === 'standard' ? '标准客房' : room.type === 'deluxe' ? '豪华客房' : '套房'}</div>
+                        <div class="room-type">${room.type === 'standard' ? t('room_type_standard') : room.type === 'deluxe' ? t('room_type_deluxe') : t('room_type_suite')}</div>
                         <h3 class="room-name">${room.name}</h3>
                         <div class="room-features">
                             <span><i class="fas fa-ruler-combined"></i> ${room.size}</span>
                             <span><i class="fas fa-bed"></i> ${room.bed}</span>
-                            <span><i class="fas fa-user"></i> 最多${room.guests}人</span>
+                            <span><i class="fas fa-user"></i> ${t('up_to_guests', { count: room.guests })}</span>
                         </div>
                         <div class="room-footer">
                             <div class="room-price">
                                 <span class="price-original">¥${room.originalPrice}</span>
                                 <span class="price-current">¥${room.price}</span>
-                                <span class="price-unit">/晚</span>
+                                <span class="price-unit">${t('per_night')}</span>
                             </div>
                             <button class="btn btn-primary" onclick="viewRoomDetail('${room.id}')">
-                                查看详情
+                                ${t('view_detail')}
                             </button>
                         </div>
                     </div>
@@ -335,26 +585,26 @@
             const checkOut = document.getElementById('checkOutDate').value;
             
             if (!checkIn || !checkOut) {
-                showToast('请选择入住和退房日期', 'error');
+                showToast(t('toast_select_dates'), 'error');
                 return;
             }
             
             if (new Date(checkIn) >= new Date(checkOut)) {
-                showToast('退房日期必须晚于入住日期', 'error');
+                showToast(t('toast_checkout_after'), 'error');
                 return;
             }
             
             selectedDates = { checkIn, checkOut };
             
-            showToast('正在查询可用客房...', 'info');
+            showToast(t('toast_searching'), 'info');
             setTimeout(() => {
                 filterRooms();
-                showToast(`找到 ${roomsData.length} 间可用客房`, 'success');
+                showToast(t('toast_found_rooms', { count: roomsData.length }), 'success');
             }, 500);
         }
 
         function refreshRooms() {
-            showToast('刷新成功', 'success');
+            showToast(t('toast_refresh_success'), 'success');
             renderRooms();
         }
 
@@ -364,11 +614,11 @@
             if (btn.classList.contains('active')) {
                 icon.classList.remove('far');
                 icon.classList.add('fas');
-                showToast('已添加到收藏', 'success');
+                showToast(t('toast_fav_added'), 'success');
             } else {
                 icon.classList.remove('fas');
                 icon.classList.add('far');
-                showToast('已取消收藏', 'info');
+                showToast(t('toast_fav_removed'), 'info');
             }
         }
 
@@ -406,14 +656,14 @@
                 <div class="room-features" style="margin-top: 0.5rem;">
                     <span><i class="fas fa-ruler-combined"></i> ${currentRoom.size}</span>
                     <span><i class="fas fa-bed"></i> ${currentRoom.bed}</span>
-                    <span><i class="fas fa-user"></i> 最多${currentRoom.guests}人</span>
+                    <span><i class="fas fa-user"></i> ${t('up_to_guests', { count: currentRoom.guests })}</span>
                 </div>
             </div>
             <div class="room-price">
                 <span class="price-original">¥${currentRoom.originalPrice}</span>
                 <div>
                     <span class="price-current" style="font-size: 2rem;">¥${currentRoom.price}</span>
-                    <span class="price-unit">/晚</span>
+                    <span class="price-unit">${t('per_night')}</span>
                 </div>
             </div>
         </div>
@@ -422,13 +672,13 @@
             ${currentRoom.description}
         </p>
         
-        <h4 style="margin-bottom: 0.75rem;">客房设施</h4>
+        <h4 style="margin-bottom: 0.75rem;">${t('amenities_title')}</h4>
         <div class="amenities-list">
             ${currentRoom.amenities.map(a => `<span class="amenity-tag"><i class="fas fa-check"></i> ${a}</span>`).join('')}
         </div>
         
         <div class="policy-box">
-            <h4><i class="fas fa-info-circle"></i> 预订政策</h4>
+            <h4><i class="fas fa-info-circle"></i> ${t('booking_policy_title')}</h4>
             <p>${currentRoom.policy}</p>
         </div>
     `;  // ← 确保这里有闭合的反引号和分号
@@ -455,27 +705,27 @@ function proceedToBook() {
     
     summary.innerHTML = `
         <div class="fee-row">
-            <span>房型</span>
+            <span>${t('fee_room')}</span>
             <span>${currentRoom.name}</span>
         </div>
         <div class="fee-row">
-            <span>入住日期</span>
+            <span>${t('fee_checkin')}</span>
             <span>${checkIn}</span>
         </div>
         <div class="fee-row">
-            <span>退房日期</span>
+            <span>${t('fee_checkout')}</span>
             <span>${checkOut}</span>
         </div>
         <div class="fee-row">
-            <span>单价</span>
-            <span>¥${currentRoom.price} / 晚</span>
+            <span>${t('fee_price')}</span>
+            <span>¥${currentRoom.price} ${t('per_night')}</span>
         </div>
         <div class="fee-row">
-            <span>天数</span>
-            <span>${nights} 晚</span>
+            <span>${t('fee_nights')}</span>
+            <span>${t('nights', { count: nights })}</span>
         </div>
         <div class="fee-row">
-            <span>总计</span>
+            <span>${t('fee_total')}</span>
             <span>¥${total}</span>
         </div>
     `;
@@ -489,7 +739,7 @@ function closeBookingModal() {
 
 function submitBooking(event) {
     event.preventDefault();
-    showToast('预订成功！', 'success');
+    showToast(t('toast_booking_success'), 'success');
     closeBookingModal();
     
     // Add to mock bookings
@@ -518,12 +768,12 @@ function closeLookupModal() {
 function lookupBooking() {
     const input = document.getElementById('lookupInput').value;
     if (!input) {
-        showToast('请输入查询信息', 'error');
+        showToast(t('toast_enter_lookup'), 'error');
         return;
     }
-    showToast('查询中...', 'info');
+    showToast(t('toast_lookup_loading'), 'info');
     setTimeout(() => {
-        showToast('未找到相关预订', 'error');
+        showToast(t('toast_lookup_not_found'), 'error');
     }, 1000);
 }
 
@@ -532,7 +782,7 @@ function closeCancellationModal() {
 }
 
 function confirmCancellation() {
-    showToast('预订已取消', 'success');
+    showToast(t('toast_booking_cancelled'), 'success');
     closeCancellationModal();
 }
 
@@ -567,9 +817,9 @@ function renderMyBookings() {
             <td>${b.checkIn}</td>
             <td>${b.checkOut}</td>
             <td>¥${b.totalAmount}</td>
-            <td><span class="status-badge status-${b.status}">${b.status}</span></td>
+            <td><span class="status-badge status-${b.status}">${b.status === 'confirmed' ? t('status_confirmed') : b.status === 'completed' ? t('status_completed') : b.status === 'cancelled' ? t('status_cancelled') : b.status}</span></td>
             <td>
-                <button class="btn btn-danger btn-sm" onclick="showToast('功能暂未实现', 'info')">取消</button>
+                <button class="btn btn-danger btn-sm" onclick="showToast(t('toast_not_implemented'), 'info')">${t('cancel')}</button>
             </td>
         </tr>
     `).join('');
