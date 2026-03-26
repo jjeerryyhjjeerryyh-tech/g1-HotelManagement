@@ -11,35 +11,120 @@
     <!-- Header -->
     <header class="header">
         <div class="header-content">
-            <div class="logo">
-                <i class="fas fa-hotel"></i>
-                <span data-i18n="brand">HotelBook 客户预订系统</span>
-            </div>
+            <a class="logo" href="../homePage/index.html" aria-label="首页">
+                <div class="logo-main">91酒店</div>
+                <div class="logo-sub">HONG KONG</div>
+            </a>
+            
             <div class="header-right">
-                <nav class="nav-tabs">
-                    <div class="nav-tab active" onclick="switchTab('search')">
-                        <i class="fas fa-search"></i>
-                        <span data-i18n="tab_search">查询预订</span>
+                <nav class="header-links">
+                    <a href="#" class="header-link" onclick="switchTab('mybookings')" data-i18n="tab_mybookings">我的预订</a>
+                    
+                    <div class="currency-menu-container">
+                        <a href="#" class="header-link" id="currencyBtn">
+                            <span data-i18n="currency">港币</span> <i class="fas fa-chevron-down"></i>
+                        </a>
+                        <!-- Currency Dropdown -->
+                        <div class="currency-dropdown" id="currencyDropdown" style="display: none;">
+                            <div class="currency-header">
+                                <h3 data-i18n="currency_title">货币</h3>
+                                <button class="close-dropdown" id="closeCurrencyBtn"><i class="fas fa-times"></i></button>
+                            </div>
+                            <div class="currency-body">
+                                <div class="currency-group">
+                                    <h4 data-i18n="currency_popular">热门货币</h4>
+                                    <ul class="currency-list">
+                                        <li><a href="#" class="currency-item active" data-currency="HKD" data-i18n="currency_hkd">港币</a></li>
+                                        <li><a href="#" class="currency-item" data-currency="CNY" data-i18n="currency_cny">人民币 (CNY)</a></li>
+                                        <li><a href="#" class="currency-item" data-currency="USD" data-i18n="currency_usd">美元</a></li>
+                                        <li><a href="#" class="currency-item" data-currency="EUR" data-i18n="currency_eur">欧元</a></li>
+                                        <li><a href="#" class="currency-item" data-currency="GBP" data-i18n="currency_gbp">英镑</a></li>
+                                        <li><a href="#" class="currency-item" data-currency="SGD" data-i18n="currency_sgd">新加坡元 (SGD)</a></li>
+                                        <li><a href="#" class="currency-item" data-currency="AUD" data-i18n="currency_aud">澳币</a></li>
+                                    </ul>
+                                </div>
+                                <div class="currency-group">
+                                    <h4 data-i18n="currency_all">所有货币</h4>
+                                    <div class="currency-search">
+                                        <input type="text" placeholder="筛选" data-i18n-placeholder="currency_filter">
+                                    </div>
+                                    <ul class="currency-list">
+                                        <li><a href="#" class="currency-item" data-currency="JPY" data-i18n="currency_jpy">JPY - 日元</a></li>
+                                        <li><a href="#" class="currency-item" data-currency="KRW" data-i18n="currency_krw">KRW - 韩元</a></li>
+                                        <li><a href="#" class="currency-item" data-currency="THB" data-i18n="currency_thb">THB - 泰铢</a></li>
+                                        <li><a href="#" class="currency-item" data-currency="MYR" data-i18n="currency_myr">MYR - 马来西亚林吉特</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="nav-tab" onclick="switchTab('rooms')">
-                        <i class="fas fa-bed"></i>
-                        <span data-i18n="tab_rooms">客房预订</span>
+                    
+                    <div class="lang-menu-container">
+                        <a href="#" class="header-link" id="langBtn">
+                            <span data-i18n="lang_display">中文</span> <i class="fas fa-chevron-down"></i>
+                        </a>
+                        <div class="lang-dropdown" id="langDropdown" style="display: none;">
+                            <div class="lang-header">
+                                <h3 data-i18n="lang_title">语言</h3>
+                                <button class="close-dropdown" id="closeLangBtn"><i class="fas fa-times"></i></button>
+                            </div>
+                            <div class="lang-body">
+                                <ul class="lang-list">
+                                    <li><a href="#" class="lang-item active" data-lang="zh">简体中文</a></li>
+                                    <li><a href="#" class="lang-item" data-lang="en">英语 - 英国</a></li>
+                                    <li><a href="#" class="lang-item" data-lang="fr">法语</a></li>
+                                    <li><a href="#" class="lang-item" data-lang="ja">日本语</a></li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                    <div class="nav-tab" onclick="switchTab('mybookings')">
-                        <i class="fas fa-calendar-check"></i>
-                        <span data-i18n="tab_mybookings">我的预订</span>
-                    </div>
-                </nav>
-                <div class="header-actions">
-                    <label class="lang-select" for="langSelect">
-                        <span class="lang-label" data-i18n="lang">语言</span>
-                        <select id="langSelect" aria-label="Language">
-                            <option value="zh">中文</option>
-                            <option value="en">English</option>
-                        </select>
-                    </label>
+                    
                     <div id="themeToggleMount"></div>
-                </div>
+                    
+                    <div class="user-menu-container">
+                        <button class="icon-btn" id="userBtn" aria-label="User profile">
+                            <i class="far fa-user"></i>
+                        </button>
+                        <!-- User Dropdown (Hidden by default) -->
+                        <div class="user-dropdown" id="userDropdown" style="display: none;">
+                            <!-- 未登录状态 -->
+                            <div id="loginFormContainer">
+                                <div class="dropdown-header">
+                                    <h3 data-i18n="account_login">帐号登入</h3>
+                                    <button class="close-dropdown" id="closeLoginBtn"><i class="fas fa-times"></i></button>
+                                </div>
+                                <div class="dropdown-body">
+                                    <div class="form-group">
+                                        <input type="text" id="dropdownUsername" placeholder="使用者名称" data-i18n-placeholder="username_placeholder">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" id="dropdownPassword" placeholder="密码" data-i18n-placeholder="password_placeholder">
+                                    </div>
+                                    <button class="btn btn-secondary full-width" id="dropdownLoginBtn" data-i18n="login">登入</button>
+                                    
+                                    <div class="dropdown-links">
+                                        <a href="#" class="forgot-link" data-i18n="forgot_password">忘记密码？</a>
+                                    </div>
+                                    
+                                    <div class="dropdown-footer">
+                                        <p data-i18n="no_account_desc">还没有帐号？建立帐号，储存您的订单历史记录，享受更快速的结帐体验。</p>
+                                        <a href="../register/register.html" class="create-account-link" data-i18n="create_account">建立一个帐户</a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 已登录状态 -->
+                            <div id="loggedInContainer" style="display: none;">
+                                <a href="../profile/profile.html" class="dropdown-item" data-i18n="update_profile">更新个人资料</a>
+                                <a href="#" class="dropdown-item" id="logoutBtn" data-i18n="logout_login">登出登入</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="icon-btn" aria-label="Cart">
+                        <i class="fas fa-shopping-cart"></i>
+                    </button>
+                </nav>
             </div>
         </div>
     </header>

@@ -271,7 +271,35 @@
                 toast_booking_cancelled: '预订已取消',
                 toast_not_implemented: '功能暂未实现',
                 amenities_title: '客房设施',
-                booking_policy_title: '预订政策'
+                booking_policy_title: '预订政策',
+                select_hotel: '选择饭店',
+                currency: '港币',
+                update_profile: '更新个人资料',
+                logout_login: '登出登入',
+                account_login: '帐号登入',
+                login: '登入',
+                forgot_password: '忘记密码？',
+                no_account_desc: '还没有帐号？建立帐号，储存您的订单历史记录，享受更快速的结帐体验。',
+                create_account: '建立一个帐户',
+                username_placeholder: '使用者名称',
+                password_placeholder: '密码',
+                currency_title: '货币',
+                currency_popular: '热门货币',
+                currency_hkd: '港币',
+                currency_cny: '人民币 (CNY)',
+                currency_usd: '美元',
+                currency_eur: '欧元',
+                currency_gbp: '英镑',
+                currency_sgd: '新加坡元 (SGD)',
+                currency_aud: '澳币',
+                currency_all: '所有货币',
+                currency_filter: '筛选',
+                currency_jpy: 'JPY - 日元',
+                currency_krw: 'KRW - 韩元',
+                currency_thb: 'THB - 泰铢',
+                currency_myr: 'MYR - 马来西亚林吉特',
+                lang_display: '简体中文',
+                lang_title: '语言'
             },
             en: {
                 brand: 'HotelBook Booking',
@@ -363,9 +391,37 @@
                 toast_lookup_loading: 'Searching...',
                 toast_lookup_not_found: 'No booking found',
                 toast_booking_cancelled: 'Booking cancelled',
-                toast_not_implemented: 'Not implemented',
+                toast_not_implemented: 'Not implemented yet',
                 amenities_title: 'Amenities',
-                booking_policy_title: 'Booking Policy'
+                booking_policy_title: 'Booking Policy',
+                select_hotel: 'Select Hotel',
+                currency: 'HKD',
+                update_profile: 'Update Profile',
+                logout_login: 'Logout / Login',
+                account_login: 'Account Login',
+                login: 'Login',
+                forgot_password: 'Forgot Password?',
+                no_account_desc: 'Don\'t have an account? Create one to store your booking history and enjoy faster checkout.',
+                create_account: 'Create an Account',
+                username_placeholder: 'Username',
+                password_placeholder: 'Password',
+                currency_title: 'Currency',
+                currency_popular: 'POPULAR CURRENCIES',
+                currency_hkd: 'HKD',
+                currency_cny: 'CNY',
+                currency_usd: 'USD',
+                currency_eur: 'EUR',
+                currency_gbp: 'GBP',
+                currency_sgd: 'SGD',
+                currency_aud: 'AUD',
+                currency_all: 'ALL CURRENCIES',
+                currency_filter: 'Filter',
+                currency_jpy: 'JPY',
+                currency_krw: 'KRW',
+                currency_thb: 'THB',
+                currency_myr: 'MYR',
+                lang_display: 'English - UK',
+                lang_title: 'Language'
             }
         };
 
@@ -498,6 +554,46 @@
             }
         }
 
+        let currentCurrency = 'CNY';
+        const exchangeRates = {
+            'CNY': 1,
+            'HKD': 1.1,
+            'USD': 0.14,
+            'EUR': 0.13,
+            'GBP': 0.11,
+            'SGD': 0.19,
+            'AUD': 0.21,
+            'JPY': 21.0,
+            'KRW': 188.0,
+            'THB': 5.0,
+            'MYR': 0.66
+        };
+        const currencySymbols = {
+            'CNY': '¥',
+            'HKD': 'HK$',
+            'USD': '$',
+            'EUR': '€',
+            'GBP': '£',
+            'SGD': 'S$',
+            'AUD': 'A$',
+            'JPY': '¥',
+            'KRW': '₩',
+            'THB': '฿',
+            'MYR': 'RM'
+        };
+
+        function formatPrice(price) {
+            const rate = exchangeRates[currentCurrency] || 1;
+            const symbol = currencySymbols[currentCurrency] || '¥';
+            const converted = price * rate;
+            
+            // JPY and KRW usually don't show decimals
+            if (currentCurrency === 'JPY' || currentCurrency === 'KRW') {
+                return `${symbol}${Math.round(converted).toLocaleString()}`;
+            }
+            return `${symbol}${converted.toFixed(2)}`;
+        }
+
         // ============================================
         // Room Functions
         // ============================================
@@ -531,8 +627,8 @@
                         </div>
                         <div class="room-footer">
                             <div class="room-price">
-                                <span class="price-original">¥${room.originalPrice}</span>
-                                <span class="price-current">¥${room.price}</span>
+                                <span class="price-original">${formatPrice(room.originalPrice)}</span>
+                                <span class="price-current">${formatPrice(room.price)}</span>
                                 <span class="price-unit">${t('per_night')}</span>
                             </div>
                             <button class="btn btn-primary" onclick="viewRoomDetail('${room.id}')">
@@ -816,7 +912,7 @@ function renderMyBookings() {
             <td>${b.roomName}</td>
             <td>${b.checkIn}</td>
             <td>${b.checkOut}</td>
-            <td>¥${b.totalAmount}</td>
+            <td>${formatPrice(b.totalAmount)}</td>
             <td><span class="status-badge status-${b.status}">${b.status === 'confirmed' ? t('status_confirmed') : b.status === 'completed' ? t('status_completed') : b.status === 'cancelled' ? t('status_cancelled') : b.status}</span></td>
             <td>
                 <button class="btn btn-danger btn-sm" onclick="showToast(t('toast_not_implemented'), 'info')">${t('cancel')}</button>
@@ -830,3 +926,194 @@ function filterMyBookings() {
     // Simplified
     renderMyBookings();
 }
+
+// User Authentication & Dropdown Logic
+document.addEventListener('DOMContentLoaded', () => {
+    // --- Lang Logic ---
+    const langBtn = document.getElementById('langBtn');
+    const langDropdown = document.getElementById('langDropdown');
+    const closeLangBtn = document.getElementById('closeLangBtn');
+    
+    if (langBtn && langDropdown) {
+        langBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            langDropdown.style.display = langDropdown.style.display === 'flex' ? 'none' : 'flex';
+            if (userDropdown) userDropdown.style.display = 'none';
+            if (currencyDropdown) currencyDropdown.style.display = 'none';
+        });
+        
+        if (closeLangBtn) {
+            closeLangBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                langDropdown.style.display = 'none';
+            });
+        }
+        
+        langDropdown.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+        
+        const langItems = document.querySelectorAll('.lang-item');
+        langItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                const nextLang = e.currentTarget.getAttribute('data-lang');
+                if (nextLang === 'zh' || nextLang === 'en') {
+                    // Update active state
+                    langItems.forEach(i => i.classList.remove('active'));
+                    e.currentTarget.classList.add('active');
+                    
+                    // Switch lang
+                    currentLang = nextLang;
+                    localStorage.setItem('lang', currentLang);
+                    document.documentElement.setAttribute('lang', currentLang === 'zh' ? 'zh-CN' : 'en');
+                    document.documentElement.setAttribute('data-lang', currentLang);
+                    applyI18n();
+                    
+                    // Update text node while keeping chevron
+                    const span = langBtn.querySelector('span');
+                    if(span) span.textContent = currentLang === 'zh' ? '简体中文' : 'English - UK';
+                    
+                    langDropdown.style.display = 'none';
+                } else {
+                    showToast('暂不支持此语言', 'info');
+                }
+            });
+        });
+    }
+
+    // --- Currency Logic ---
+    const currencyBtn = document.getElementById('currencyBtn');
+    const currencyDropdown = document.getElementById('currencyDropdown');
+    const closeCurrencyBtn = document.getElementById('closeCurrencyBtn');
+    
+    if (currencyBtn && currencyDropdown) {
+        currencyBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            currencyDropdown.style.display = currencyDropdown.style.display === 'flex' ? 'none' : 'flex';
+            if (userDropdown) userDropdown.style.display = 'none'; // Close user dropdown if open
+            if (langDropdown) langDropdown.style.display = 'none';
+        });
+        
+        if (closeCurrencyBtn) {
+            closeCurrencyBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                currencyDropdown.style.display = 'none';
+            });
+        }
+        
+        currencyDropdown.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+        
+        // Handle currency selection
+        const currencyItems = document.querySelectorAll('.currency-item');
+        currencyItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                // Update active state
+                currencyItems.forEach(i => i.classList.remove('active'));
+                e.currentTarget.classList.add('active');
+                
+                // Update current currency
+                currentCurrency = e.currentTarget.getAttribute('data-currency');
+                
+                // Update button text
+                const currencyName = e.currentTarget.getAttribute('data-i18n') ? 
+                    t(e.currentTarget.getAttribute('data-i18n')) : 
+                    e.currentTarget.textContent;
+                
+                // Replace text node but keep the icon
+                const span = currencyBtn.querySelector('span');
+                if(span) span.textContent = currencyName;
+                
+                // Close dropdown
+                currencyDropdown.style.display = 'none';
+                
+                // Optional: Update prices across the site based on rate
+                renderRooms(); // Re-render rooms to update prices
+                renderMyBookings(); // Re-render bookings to update prices
+                
+                showToast(`已切换至 ${currencyName}`, 'success');
+            });
+        });
+    }
+
+    // --- User Logic ---
+    const userBtn = document.getElementById('userBtn');
+    const userDropdown = document.getElementById('userDropdown');
+    const loginFormContainer = document.getElementById('loginFormContainer');
+    const loggedInContainer = document.getElementById('loggedInContainer');
+    const closeLoginBtn = document.getElementById('closeLoginBtn');
+    const dropdownLoginBtn = document.getElementById('dropdownLoginBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    
+    function checkLoginState() {
+        const username = sessionStorage.getItem('username');
+        if (username) {
+            loginFormContainer.style.display = 'none';
+            loggedInContainer.style.display = 'block';
+        } else {
+            loginFormContainer.style.display = 'block';
+            loggedInContainer.style.display = 'none';
+        }
+    }
+    
+    userBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        checkLoginState();
+        userDropdown.style.display = userDropdown.style.display === 'block' ? 'none' : 'block';
+        if (currencyDropdown) currencyDropdown.style.display = 'none'; // Close currency dropdown if open
+        if (langDropdown) langDropdown.style.display = 'none';
+    });
+    
+    closeLoginBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        userDropdown.style.display = 'none';
+    });
+    
+    document.addEventListener('click', (e) => {
+        if (userBtn && userDropdown && !userBtn.contains(e.target) && !userDropdown.contains(e.target)) {
+            userDropdown.style.display = 'none';
+        }
+        if (currencyBtn && currencyDropdown && !currencyBtn.contains(e.target) && !currencyDropdown.contains(e.target)) {
+            currencyDropdown.style.display = 'none';
+        }
+        if (langBtn && langDropdown && !langBtn.contains(e.target) && !langDropdown.contains(e.target)) {
+            langDropdown.style.display = 'none';
+        }
+    });
+    
+    userDropdown.addEventListener('click', (e) => {
+        e.stopPropagation();
+    });
+    
+    dropdownLoginBtn.addEventListener('click', () => {
+        const usernameInput = document.getElementById('dropdownUsername').value;
+        const passwordInput = document.getElementById('dropdownPassword').value;
+        
+        if (usernameInput && passwordInput) {
+            sessionStorage.setItem('username', usernameInput);
+            showToast('登录成功', 'success');
+            checkLoginState();
+            setTimeout(() => {
+                userDropdown.style.display = 'none';
+            }, 1000);
+        } else {
+            showToast('请输入用户名和密码', 'error');
+        }
+    });
+    
+    logoutBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        sessionStorage.removeItem('username');
+        sessionStorage.removeItem('role');
+        showToast('已登出', 'success');
+        checkLoginState();
+        setTimeout(() => {
+            userDropdown.style.display = 'none';
+        }, 1000);
+    });
+});

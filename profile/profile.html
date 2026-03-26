@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>您的个人资料 - XX酒店</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../BookOut/Book.css">
+    <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+    <!-- Header (Similar to Book.html) -->
+    <header class="header">
+        <div class="header-content">
+            <a class="logo" href="../homePage/index.html" aria-label="首页">
+                <div class="logo-main">91酒店</div>
+                <div class="logo-sub">HONG KONG</div>
+            </a>
+            <div class="header-right">
+                <nav class="header-links">
+                    <a href="../BookOut/Book.html" class="header-link">增加房间</a>
+                    <a href="#" class="header-link">选择饭店 <i class="fas fa-chevron-down"></i></a>
+                    <a href="../BookOut/Book.html" class="header-link">我的预订</a>
+                    <a href="#" class="header-link">港币 <i class="fas fa-chevron-down"></i></a>
+                    
+                    <label class="lang-select" for="langSelect">
+                        <select id="langSelect" aria-label="Language">
+                            <option value="zh">中文</option>
+                            <option value="en">English</option>
+                        </select>
+                    </label>
+                    
+                    <div class="user-menu-container">
+                        <button class="icon-btn" id="userBtn" aria-label="User profile">
+                            <i class="far fa-user"></i>
+                        </button>
+                    </div>
+                    
+                    <button class="icon-btn" aria-label="Cart">
+                        <i class="fas fa-shopping-cart"></i>
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="profile-container">
+        <h1 class="profile-title">您的个人资料</h1>
+        
+        <form id="profileForm">
+            <!-- 个人资料 -->
+            <div class="form-section">
+                <div class="section-header">
+                    <h2>个人资料</h2>
+                    <span class="required-note">*必需的</span>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>名 *</label>
+                        <input type="text" id="firstName" value="pao" required>
+                    </div>
+                    <div class="form-group">
+                        <label>姓 *</label>
+                        <input type="text" id="lastName" value="leng" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>电子邮件地址 *</label>
+                        <input type="email" id="email" value="lengpao@gmail.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>确认电子邮件地址 *</label>
+                        <input type="email" id="confirmEmail" value="lengpao@gmail.com" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 密码 -->
+            <div class="form-section">
+                <h2>密码</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>建立密码</label>
+                        <input type="password" id="newPassword">
+                    </div>
+                    <div class="form-group">
+                        <label>确认密码</label>
+                        <input type="password" id="confirmPassword">
+                    </div>
+                </div>
+                <p class="password-hint">至少 8 个字符，区分大小写，可以包含 !@#%，不包含空格，不能与先前的密码或登入名称相同。</p>
+            </div>
+
+            <!-- 致谢 -->
+            <div class="form-section highlight-section">
+                <h2>致谢</h2>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="marketing">
+                    <label for="marketing">我希望透过邮寄、电子邮件、电话、简讯或其他即时通讯工具接收来自香港上海大酒店有限公司（「HSH」）及其关联公司（「HSH集团」）的促销、活动邀请、特别优惠和通讯资讯。</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="terms" required>
+                    <label for="terms">*我确认我已年满18岁，并且我已阅读并同意适用的隐私权条款。<br><a href="#" class="policy-link">资料隐私和安全政策</a></label>
+                </div>
+            </div>
+
+            <!-- 按钮 -->
+            <div class="form-actions">
+                <button type="button" class="btn btn-outline" id="cancelBtn">取消</button>
+                <button type="submit" class="btn btn-primary" id="updateBtn">更新</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="profile.js"></script>
+</body>
+</html>
