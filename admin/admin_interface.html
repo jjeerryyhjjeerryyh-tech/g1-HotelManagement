@@ -63,48 +63,64 @@
             <nav class="py-4 flex-1">
                 <ul>
                     <li>
-                        <a href="#dashboard" class="sidebar-item-active flex items-center px-6 py-3 text-sm">
-                            <i class="fa fa-dashboard w-5 text-center"></i>
-                            <span class="ml-3">仪表盘</span>
-                        </a>
+                        <button type="button" data-section="dashboard" class="sidebar-link sidebar-item-active w-full flex items-center px-6 py-3 text-sm">
+                            <i class="fa fa-home w-5 text-center"></i>
+                            <span class="ml-3">首页</span>
+                        </button>
                     </li>
                     <li>
-                        <a href="#rooms" class="flex items-center px-6 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200">
-                            <i class="fa fa-bed w-5 text-center"></i>
-                            <span class="ml-3">客房管理</span>
-                            <span class="ml-auto bg-danger text-white text-xs px-1.5 py-0.5 rounded-full">12</span>
-                        </a>
+                        <button type="button" data-section="admins" class="sidebar-link w-full flex items-center px-6 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200">
+                            <i class="fa fa-user-secret w-5 text-center"></i>
+                            <span class="ml-3">管理员管理</span>
+                        </button>
                     </li>
                     <li>
-                        <a href="#customers" onclick="scrollToUsers()" class="flex items-center px-6 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200">
+                        <button type="button" data-section="users" class="sidebar-link w-full flex items-center px-6 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200">
                             <i class="fa fa-users w-5 text-center"></i>
-                            <span class="ml-3">客户管理</span>
-                        </a>
+                            <span class="ml-3">用户管理</span>
+                        </button>
                     </li>
                     <li>
-                        <a href="#orders" class="flex items-center px-6 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200">
+                        <button type="button" data-section="roomtypes" class="sidebar-link w-full flex items-center px-6 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200">
+                            <i class="fa fa-th-large w-5 text-center"></i>
+                            <span class="ml-3">房型管理</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" data-section="rooms" class="sidebar-link w-full flex items-center px-6 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200">
                             <i class="fa fa-file-text w-5 text-center"></i>
-                            <span class="ml-3">订单管理</span>
-                            <span class="ml-auto bg-warning text-white text-xs px-1.5 py-0.5 rounded-full">8</span>
-                        </a>
+                            <span class="ml-3">房间管理</span>
+                        </button>
                     </li>
                     <li>
-                        <a href="#cleaning" class="flex items-center px-6 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200">
-                            <i class="fa fa-broom w-5 text-center"></i>
-                            <span class="ml-3">清洁管理</span>
-                        </a>
+                        <button type="button" data-section="bookings" class="sidebar-link w-full flex items-center px-6 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200">
+                            <i class="fa fa-calendar-check-o w-5 text-center"></i>
+                            <span class="ml-3">预定管理</span>
+                        </button>
                     </li>
                     <li>
-                        <a href="#reports" class="flex items-center px-6 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200">
+                        <button type="button" data-section="checkins" class="sidebar-link w-full flex items-center px-6 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200">
+                            <i class="fa fa-key w-5 text-center"></i>
+                            <span class="ml-3">入住管理</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" data-section="messages" class="sidebar-link w-full flex items-center px-6 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200">
+                            <i class="fa fa-comments w-5 text-center"></i>
+                            <span class="ml-3">留言管理</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" data-section="announcements" class="sidebar-link w-full flex items-center px-6 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200">
+                            <i class="fa fa-bullhorn w-5 text-center"></i>
+                            <span class="ml-3">公告管理</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" data-section="reviews" class="sidebar-link w-full flex items-center px-6 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200">
                             <i class="fa fa-bar-chart w-5 text-center"></i>
-                            <span class="ml-3">数据报表</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#settings" class="flex items-center px-6 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200">
-                            <i class="fa fa-cog w-5 text-center"></i>
-                            <span class="ml-3">系统设置</span>
-                        </a>
+                            <span class="ml-3">评价管理</span>
+                        </button>
                     </li>
                 </ul>
             </nav>
@@ -132,7 +148,7 @@
                             <ol class="flex items-center space-x-2">
                                 <li><a href="#" class="text-primary">首页</a></li>
                                 <li><i class="fa fa-angle-right text-gray-400"></i></li>
-                                <li class="text-gray-500">仪表盘</li>
+                                <li class="text-gray-500" id="breadcrumbCurrent">首页</li>
                             </ol>
                         </nav>
                     </div>
@@ -178,11 +194,11 @@
             <div class="p-6">
                 <!-- 页面标题 -->
                 <div class="mb-6">
-                    <h2 class="text-[clamp(1.25rem,2vw,1.75rem)] font-bold">仪表盘</h2>
-                    <p class="text-gray-500 mt-1">欢迎回来，管理员！这是您的酒店运营概览</p>
+                    <h2 class="text-[clamp(1.25rem,2vw,1.75rem)] font-bold" id="pageTitle">首页</h2>
+                    <p class="text-gray-500 mt-1" id="pageSubtitle">欢迎回来，管理员！这是您的酒店运营概览</p>
                 </div>
                 
-                <!-- 数据统计卡片 -->
+                <section id="section-dashboard">
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
                     <!-- 总客房数 -->
                     <div class="bg-white rounded-lg p-6 card-shadow">
@@ -248,14 +264,46 @@
                         </div>
                     </div>
                 </div>
+                </section>
                 
-                <!-- 客户管理 CRUD -->
-                <div class="bg-white rounded-lg card-shadow" id="section-users">
+                <section id="section-admins" class="hidden">
+                    <div class="bg-white rounded-lg card-shadow">
+                        <div class="p-6 border-b border-gray-200 flex items-center justify-between">
+                            <h3 class="font-bold text-lg">管理员管理</h3>
+                            <button class="btn-primary text-sm px-4 py-2"><i class="fa fa-plus mr-1"></i>新增管理员</button>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="bg-gray-50 text-left text-sm text-gray-600">
+                                        <th class="px-6 py-3">账号</th>
+                                        <th class="px-6 py-3">姓名</th>
+                                        <th class="px-6 py-3">邮箱</th>
+                                        <th class="px-6 py-3">角色</th>
+                                        <th class="px-6 py-3">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200">
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-6 py-4 text-sm">admin</td>
+                                        <td class="px-6 py-4 text-sm">系统管理员</td>
+                                        <td class="px-6 py-4 text-sm">admin@hotel.com</td>
+                                        <td class="px-6 py-4 text-sm">admin</td>
+                                        <td class="px-6 py-4 text-sm text-gray-400">（仅界面）</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="section-users" class="hidden">
+                <div class="bg-white rounded-lg card-shadow">
                     <div class="p-6 border-b border-gray-200">
                         <div class="flex items-center justify-between">
-                            <h3 class="font-bold text-lg">Customer Management</h3>
+                            <h3 class="font-bold text-lg">用户管理</h3>
                             <button onclick="openModal()" class="btn-primary text-sm px-4 py-2">
-                                <i class="fa fa-plus mr-1"></i> Add User
+                                <i class="fa fa-plus mr-1"></i> 新增用户
                             </button>
                         </div>
                     </div>
@@ -263,23 +311,275 @@
                         <table class="w-full">
                             <thead>
                                 <tr class="bg-gray-50 text-left text-sm text-gray-600">
-                                    <th class="px-6 py-3">Username</th>
-                                    <th class="px-6 py-3">Full Name</th>
-                                    <th class="px-6 py-3">Email</th>
-                                    <th class="px-6 py-3">Phone</th>
-                                    <th class="px-6 py-3">Actions</th>
+                                    <th class="px-6 py-3">账号</th>
+                                    <th class="px-6 py-3">姓名</th>
+                                    <th class="px-6 py-3">邮箱</th>
+                                    <th class="px-6 py-3">电话</th>
+                                    <th class="px-6 py-3">操作</th>
                                 </tr>
                             </thead>
                             <tbody id="userTableBody" class="divide-y divide-gray-200"></tbody>
                         </table>
                     </div>
                 </div>
+                </section>
+
+                <section id="section-roomtypes" class="hidden">
+                    <div class="bg-white rounded-lg card-shadow">
+                        <div class="p-6 border-b border-gray-200 flex items-center justify-between">
+                            <h3 class="font-bold text-lg">房型管理</h3>
+                            <button class="btn-primary text-sm px-4 py-2"><i class="fa fa-plus mr-1"></i>新增房型</button>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="bg-gray-50 text-left text-sm text-gray-600">
+                                        <th class="px-6 py-3">房型名称</th>
+                                        <th class="px-6 py-3">可住人数</th>
+                                        <th class="px-6 py-3">基础价格</th>
+                                        <th class="px-6 py-3">状态</th>
+                                        <th class="px-6 py-3">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200">
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-6 py-4 text-sm">豪华客房</td>
+                                        <td class="px-6 py-4 text-sm">2</td>
+                                        <td class="px-6 py-4 text-sm">¥899</td>
+                                        <td class="px-6 py-4 text-sm"><span class="px-2 py-1 rounded-full text-xs bg-success/10 text-success">启用</span></td>
+                                        <td class="px-6 py-4 text-sm text-gray-400">（仅界面）</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="section-rooms" class="hidden">
+                    <div class="bg-white rounded-lg card-shadow">
+                        <div class="p-6 border-b border-gray-200 flex items-center justify-between">
+                            <h3 class="font-bold text-lg">房间管理</h3>
+                            <button class="btn-primary text-sm px-4 py-2"><i class="fa fa-plus mr-1"></i>新增房间</button>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="bg-gray-50 text-left text-sm text-gray-600">
+                                        <th class="px-6 py-3">房号</th>
+                                        <th class="px-6 py-3">房型</th>
+                                        <th class="px-6 py-3">楼层</th>
+                                        <th class="px-6 py-3">状态</th>
+                                        <th class="px-6 py-3">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200">
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-6 py-4 text-sm">1208</td>
+                                        <td class="px-6 py-4 text-sm">豪华客房</td>
+                                        <td class="px-6 py-4 text-sm">12</td>
+                                        <td class="px-6 py-4 text-sm"><span class="px-2 py-1 rounded-full text-xs bg-warning/10 text-warning">已入住</span></td>
+                                        <td class="px-6 py-4 text-sm text-gray-400">（仅界面）</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="section-bookings" class="hidden">
+                    <!-- 统计卡片 -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                        <div class="bg-white rounded-lg p-6 card-shadow border-l-4 border-warning">
+                            <p class="text-gray-500 text-sm">待确认预订</p>
+                            <h3 class="text-2xl font-bold mt-2" id="count-pending">0</h3>
+                        </div>
+                        <div class="bg-white rounded-lg p-6 card-shadow border-l-4 border-success">
+                            <p class="text-gray-500 text-sm">已确认预订</p>
+                            <h3 class="text-2xl font-bold mt-2" id="count-confirmed">0</h3>
+                        </div>
+                        <div class="bg-white rounded-lg p-6 card-shadow border-l-4 border-accent">
+                            <p class="text-gray-500 text-sm">已入住</p>
+                            <h3 class="text-2xl font-bold mt-2" id="count-checkedin">0</h3>
+                        </div>
+                        <div class="bg-white rounded-lg p-6 card-shadow border-l-4 border-danger">
+                            <p class="text-gray-500 text-sm">已取消预订</p>
+                            <h3 class="text-2xl font-bold mt-2" id="count-cancelled">0</h3>
+                        </div>
+                    </div>
+
+                    <!-- 预订列表面板 -->
+                    <div class="bg-white rounded-lg card-shadow">
+                        <div class="p-6 border-b border-gray-200">
+                            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                                <h3 class="font-bold text-lg">预订管理</h3>
+                                <div class="flex items-center gap-3">
+                                    <select id="bookingStatusFilter" onchange="filterBookings()" class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-accent">
+                                        <option value="all">所有状态</option>
+                                        <option value="pending">待确认</option>
+                                        <option value="confirmed">已确认</option>
+                                        <option value="checked-in">已入住</option>
+                                        <option value="cancelled">已取消</option>
+                                    </select>
+                                    <div class="relative">
+                                        <input type="text" id="bookingSearchInput" placeholder="搜索订单号/姓名/手机..." onkeyup="filterBookings()" class="pl-9 pr-3 py-2 border border-gray-300 rounded-md text-sm w-64 focus:outline-none focus:ring-1 focus:ring-accent">
+                                        <i class="fa fa-search absolute left-3 top-3 text-gray-400"></i>
+                                    </div>
+                                    <button onclick="refreshBookings()" class="btn-secondary text-sm px-4 py-2">
+                                        <i class="fa fa-refresh mr-1"></i> 刷新
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="bg-gray-50 text-left text-sm text-gray-600">
+                                        <th class="px-6 py-3">订单号</th>
+                                        <th class="px-6 py-3">预订人</th>
+                                        <th class="px-6 py-3">房型/房号</th>
+                                        <th class="px-6 py-3">入住/退房日期</th>
+                                        <th class="px-6 py-3">总金额</th>
+                                        <th class="px-6 py-3">状态</th>
+                                        <th class="px-6 py-3">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="bookingTableBody" class="divide-y divide-gray-200">
+                                    <!-- 数据由 JS 渲染 -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="section-checkins" class="hidden">
+                    <div class="bg-white rounded-lg card-shadow">
+                        <div class="p-6 border-b border-gray-200 flex items-center justify-between">
+                            <h3 class="font-bold text-lg">入住管理</h3>
+                            <button class="btn-primary text-sm px-4 py-2"><i class="fa fa-plus mr-1"></i>新增入住</button>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="bg-gray-50 text-left text-sm text-gray-600">
+                                        <th class="px-6 py-3">入住单号</th>
+                                        <th class="px-6 py-3">姓名</th>
+                                        <th class="px-6 py-3">房号</th>
+                                        <th class="px-6 py-3">入住时间</th>
+                                        <th class="px-6 py-3">状态</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200">
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-6 py-4 text-sm">CI-20260327-001</td>
+                                        <td class="px-6 py-4 text-sm">张三</td>
+                                        <td class="px-6 py-4 text-sm">1208</td>
+                                        <td class="px-6 py-4 text-sm">2026-03-27 15:10</td>
+                                        <td class="px-6 py-4 text-sm"><span class="px-2 py-1 rounded-full text-xs bg-success/10 text-success">已入住</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="section-messages" class="hidden">
+                    <div class="bg-white rounded-lg card-shadow">
+                        <div class="p-6 border-b border-gray-200 flex items-center justify-between">
+                            <h3 class="font-bold text-lg">留言管理</h3>
+                            <button class="btn-primary text-sm px-4 py-2"><i class="fa fa-filter mr-1"></i>筛选</button>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="bg-gray-50 text-left text-sm text-gray-600">
+                                        <th class="px-6 py-3">留言人</th>
+                                        <th class="px-6 py-3">内容</th>
+                                        <th class="px-6 py-3">时间</th>
+                                        <th class="px-6 py-3">状态</th>
+                                        <th class="px-6 py-3">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200">
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-6 py-4 text-sm">李四</td>
+                                        <td class="px-6 py-4 text-sm">请问可以提前入住吗？</td>
+                                        <td class="px-6 py-4 text-sm">2026-03-27</td>
+                                        <td class="px-6 py-4 text-sm"><span class="px-2 py-1 rounded-full text-xs bg-warning/10 text-warning">未回复</span></td>
+                                        <td class="px-6 py-4 text-sm text-gray-400">（仅界面）</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="section-announcements" class="hidden">
+                    <div class="bg-white rounded-lg card-shadow">
+                        <div class="p-6 border-b border-gray-200 flex items-center justify-between">
+                            <h3 class="font-bold text-lg">公告管理</h3>
+                            <button class="btn-primary text-sm px-4 py-2"><i class="fa fa-plus mr-1"></i>发布公告</button>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="bg-gray-50 text-left text-sm text-gray-600">
+                                        <th class="px-6 py-3">标题</th>
+                                        <th class="px-6 py-3">发布时间</th>
+                                        <th class="px-6 py-3">发布人</th>
+                                        <th class="px-6 py-3">状态</th>
+                                        <th class="px-6 py-3">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200">
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-6 py-4 text-sm">系统维护通知</td>
+                                        <td class="px-6 py-4 text-sm">2026-03-27</td>
+                                        <td class="px-6 py-4 text-sm">管理员</td>
+                                        <td class="px-6 py-4 text-sm"><span class="px-2 py-1 rounded-full text-xs bg-success/10 text-success">已发布</span></td>
+                                        <td class="px-6 py-4 text-sm text-gray-400">（仅界面）</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="section-reviews" class="hidden">
+                    <div class="bg-white rounded-lg card-shadow">
+                        <div class="p-6 border-b border-gray-200 flex items-center justify-between">
+                            <h3 class="font-bold text-lg">评价管理</h3>
+                            <button class="btn-primary text-sm px-4 py-2"><i class="fa fa-filter mr-1"></i>筛选</button>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="bg-gray-50 text-left text-sm text-gray-600">
+                                        <th class="px-6 py-3">预订号</th>
+                                        <th class="px-6 py-3">评分</th>
+                                        <th class="px-6 py-3">内容</th>
+                                        <th class="px-6 py-3">时间</th>
+                                        <th class="px-6 py-3">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200">
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-6 py-4 text-sm">BK-20260327-088</td>
+                                        <td class="px-6 py-4 text-sm"><span class="text-warning"><i class="fa fa-star"></i> 5</span></td>
+                                        <td class="px-6 py-4 text-sm">房间很干净，服务很好。</td>
+                                        <td class="px-6 py-4 text-sm">2026-03-27</td>
+                                        <td class="px-6 py-4 text-sm text-gray-400">（仅界面）</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
 
                 <!-- 弹窗 -->
                 <div id="userModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
                     <div class="bg-white rounded-lg shadow-xl w-full max-w-md p-6">
                         <div class="flex items-center justify-between mb-4">
-                            <h3 id="modalTitle" class="font-bold text-lg">Add User</h3>
+                            <h3 id="modalTitle" class="font-bold text-lg">新增用户</h3>
                             <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600">
                                 <i class="fa fa-times text-xl"></i>
                             </button>
@@ -287,28 +587,28 @@
                         <form id="userForm" class="space-y-4">
                             <input type="hidden" id="userId">
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">账号</label>
                                 <input id="fieldUsername" type="text" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" required>
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">姓名</label>
                                 <input id="fieldFullName" type="text" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" required>
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">邮箱</label>
                                 <input id="fieldEmail" type="email" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" required>
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">电话</label>
                                 <input id="fieldPhone" type="tel" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" required>
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Password <span id="passwordHint" class="text-gray-400 font-normal">(leave blank to keep current)</span></label>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">密码 <span id="passwordHint" class="text-gray-400 font-normal">（留空表示不修改）</span></label>
                                 <input id="fieldPassword" type="password" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary">
                             </div>
                             <div class="flex justify-end space-x-3 pt-2">
-                                <button type="button" onclick="closeModal()" class="btn-secondary px-4 py-2 text-sm">Cancel</button>
-                                <button type="submit" class="btn-primary px-4 py-2 text-sm">Save</button>
+                                <button type="button" onclick="closeModal()" class="btn-secondary px-4 py-2 text-sm">取消</button>
+                                <button type="submit" class="btn-primary px-4 py-2 text-sm">保存</button>
                             </div>
                         </form>
                     </div>
@@ -318,6 +618,24 @@
     </div>
     
     <!-- JavaScript -->
+    <!-- 预订详情弹窗 -->
+    <div id="bookingDetailsModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-lg w-full max-w-2xl mx-4 card-shadow">
+            <div class="flex justify-between items-center p-6 border-b border-gray-200">
+                <h2 class="text-xl font-bold">预订详情</h2>
+                <button onclick="closeBookingModal()" class="text-gray-400 hover:text-gray-600">
+                    <i class="fa fa-times text-xl"></i>
+                </button>
+            </div>
+            <div class="p-6 max-h-[70vh] overflow-y-auto" id="bookingDetailsContent">
+                <!-- 动态内容 -->
+            </div>
+            <div class="flex justify-end gap-3 p-6 border-t border-gray-200 bg-gray-50 rounded-b-lg">
+                <button type="button" onclick="closeBookingModal()" class="btn-secondary px-6 py-2">关闭</button>
+            </div>
+        </div>
+    </div>
+
     <script src="admin.js"></script>
 </body>
 </html> 
