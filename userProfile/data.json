@@ -66,6 +66,18 @@
             "role": "admin"
         }
     ],
-    "bookings": [],
+    "bookings": [
+        {
+            "id": "BK1775112929083",
+            "username": "user0",
+            "roomType": "豪华海景房",
+            "checkIn": "2026-04-02",
+            "checkOut": "2026-04-03",
+            "guests": "2",
+            "totalAmount": 988,
+            "status": "confirmed",
+            "createdAt": "2026-04-02T06:55:29.083Z"
+        }
+    ],
     "reviews": []
 }

@@ -835,22 +835,43 @@ function closeBookingModal() {
 
 function submitBooking(event) {
     event.preventDefault();
-    showToast(t('toast_booking_success'), 'success');
-    closeBookingModal();
-    
-    // Add to mock bookings
+
+    const checkIn = document.getElementById('checkInDate').value;
+    const checkOut = document.getElementById('checkOutDate').value;
+    const nights = Math.ceil((new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24));
+    const totalAmount = currentRoom.price * nights;
+    const username = sessionStorage.getItem('username') || 'guest';
+
     const newBooking = {
         id: 'GB' + Date.now(),
-        roomId: currentRoom.id,
-        roomName: currentRoom.name,
-        checkIn: document.getElementById('checkInDate').value,
-        checkOut: document.getElementById('checkOutDate').value,
-        totalAmount: 0, // Simplified
+        username,
+        roomType: currentRoom.name,
+        checkIn,
+        checkOut,
+        guests: document.getElementById('guestCount') ? document.getElementById('guestCount').value : 1,
+        totalAmount,
         status: 'confirmed'
     };
-    myBookings.unshift(newBooking);
-    updateStats();
-    renderMyBookings();
+
+    // 发送到后端
+    fetch('http://localhost:3000/api/bookings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newBooking)
+    }).then(res => res.json()).then(() => {
+        showToast(t('toast_booking_success'), 'success');
+        closeBookingModal();
+        myBookings.unshift(newBooking);
+        updateStats();
+        renderMyBookings();
+    }).catch(() => {
+        // 后端不可用时仍然本地显示
+        showToast(t('toast_booking_success'), 'success');
+        closeBookingModal();
+        myBookings.unshift(newBooking);
+        updateStats();
+        renderMyBookings();
+    });
 }
 
 function showLookupModal() {
