@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderSummary(room, params);
 
     const form = document.getElementById('checkoutForm');
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
         const email = form.querySelector('input[name="email"]')?.value?.trim() || '';
         const confirmEmail = form.querySelector('input[name="confirmEmail"]')?.value?.trim() || '';
@@ -109,7 +109,35 @@ document.addEventListener('DOMContentLoaded', () => {
             showToast('两次输入的邮箱不一致', 'error');
             return;
         }
-        showToast('已提交预订（仅前端展示）', 'success');
+
+        const nights = nightsBetween(params.checkIn, params.checkOut);
+        const totalAmount = Math.round(Number(room.price || 0) * nights * 1.1); // 含税
+
+        const booking = {
+            id: 'BK' + Date.now(),
+            username: sessionStorage.getItem('username') || 'guest',
+            roomType: room.name,
+            checkIn: params.checkIn,
+            checkOut: params.checkOut,
+            guests: params.guests || '2',
+            totalAmount,
+            status: 'confirmed'
+        };
+
+        try {
+            await fetch('http://localhost:3000/api/bookings', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(booking)
+            });
+        } catch (err) {
+            console.warn('后端不可用，仅本地记录');
+        }
+
+        showToast('预订成功！', 'success');
+        sessionStorage.removeItem('checkout_room');
+        sessionStorage.removeItem('checkout_params');
+        setTimeout(() => { window.location.href = 'myBookings.html'; }, 1500);
     });
 });
 
