@@ -32,8 +32,8 @@
                     <label class="lang-select" for="langSelect">
                         <span class="lang-icon">🌐</span>
                         <select id="langSelect" aria-label="Language">
-                            <option value="en">ENGLISH</option>
-                            <option value="zh">中文</option>
+                            <option value="en" data-i18n="lang_opt_en">ENGLISH</option>
+                            <option value="zh" data-i18n="lang_opt_zh">中文</option>
                         </select>
                     </label>
                     <theme-button value="light" id="theme-toggle" size="0.6"></theme-button>
@@ -102,24 +102,24 @@
                         <div class="container">
                             <div class="hero-text">
                                 <h1 class="hero-title">
-                                    <span>为您开启</span>
-                                    <span class="highlight">奢华住宿体验</span>
+                                    <span data-i18n="hero1_line1">为您开启</span>
+                                    <span class="highlight" data-i18n="hero1_line2">奢华住宿体验</span>
                                 </h1>
-                                <p class="hero-subtitle">
+                                <p class="hero-subtitle" data-i18n="hero1_subtitle">
                                     在这里，每一处细节都为您精心打造，让您的旅程充满温馨与舒适。
                                 </p>
                                 <div class="features">
                                     <div class="feature-item">
                                         <div class="feature-icon">✓</div>
-                                        <span class="feature-text">五星级服务</span>
+                                        <span class="feature-text" data-i18n="hero1_feat_service">五星级服务</span>
                                     </div>
                                     <div class="feature-item">
                                         <div class="feature-icon">✓</div>
-                                        <span class="feature-text">无敌海景</span>
+                                        <span class="feature-text" data-i18n="hero1_feat_view">无敌海景</span>
                                     </div>
                                     <div class="feature-item">
                                         <div class="feature-icon">✓</div>
-                                        <span class="feature-text">顶奢配套</span>
+                                        <span class="feature-text" data-i18n="hero1_feat_lux">顶奢配套</span>
                                     </div>
                                 </div>
                             </div>
@@ -135,10 +135,10 @@
                         <div class="container">
                             <div class="hero-text">
                                 <h1 class="hero-title">
-                                    <span>尽享</span>
-                                    <span class="highlight">宁静时光</span>
+                                    <span data-i18n="hero2_line1">尽享</span>
+                                    <span class="highlight" data-i18n="hero2_line2">宁静时光</span>
                                 </h1>
-                                <p class="hero-subtitle">
+                                <p class="hero-subtitle" data-i18n="hero2_subtitle">
                                     在我们的豪华客房中，您可以完全放松身心，感受家一般的温暖。
                                 </p>
                             </div>
@@ -154,10 +154,10 @@
                         <div class="container">
                             <div class="hero-text">
                                 <h1 class="hero-title">
-                                    <span>品味</span>
-                                    <span class="highlight">全球美食</span>
+                                    <span data-i18n="hero3_line1">品味</span>
+                                    <span class="highlight" data-i18n="hero3_line2">全球美食</span>
                                 </h1>
-                                <p class="hero-subtitle">
+                                <p class="hero-subtitle" data-i18n="hero3_subtitle">
                                     我们的顶级厨师为您准备了各式佳肴，满足您挑剔的味蕾。
                                 </p>
                             </div>
@@ -210,11 +210,11 @@
                                 <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke-width="2"/>
                             </svg>
                             <select id="rooms">
-                                <option value="1">1 间</option>
-                                <option value="2">2 间</option>
-                                <option value="3">3 间</option>
-                                <option value="4">4 间</option>
-                                <option value="5">5 间</option>
+                                <option value="1" data-i18n="rooms_opt_1">1 间</option>
+                                <option value="2" data-i18n="rooms_opt_2">2 间</option>
+                                <option value="3" data-i18n="rooms_opt_3">3 间</option>
+                                <option value="4" data-i18n="rooms_opt_4">4 间</option>
+                                <option value="5" data-i18n="rooms_opt_5">5 间</option>
                             </select>
                         </div>
                     </div>
@@ -225,12 +225,12 @@
                                 <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-width="2"/>
                             </svg>
                             <select id="guests">
-                                <option value="1">1 人</option>
-                                <option value="2" selected>2 人</option>
-                                <option value="3">3 人</option>
-                                <option value="4">4 人</option>
-                                <option value="5">5 人</option>
-                                <option value="6">6 人</option>
+                                <option value="1" data-i18n="guests_opt_1">1 人</option>
+                                <option value="2" selected data-i18n="guests_opt_2">2 人</option>
+                                <option value="3" data-i18n="guests_opt_3">3 人</option>
+                                <option value="4" data-i18n="guests_opt_4">4 人</option>
+                                <option value="5" data-i18n="guests_opt_5">5 人</option>
+                                <option value="6" data-i18n="guests_opt_6">6 人</option>
                             </select>
                         </div>
                     </div>
@@ -243,103 +243,103 @@
     <section class="hp-section hp-rooms" id="roomsShowcase">
         <div class="container">
             <div class="hp-section-title hp-section-title-row">
-                <h2>房型介绍</h2>
-                <a class="hp-btn" href="../BookOut/Book.html">查看全部房型</a>
+                <h2 data-i18n="section_rooms">房型介绍</h2>
+                <a class="hp-btn" href="../BookOut/Book.html" data-i18n="view_all_rooms">查看全部房型</a>
             </div>
             <div class="hp-room-grid">
                 <article class="hp-room-card">
                     <div class="hp-room-media">
                         <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800" alt="舒适标准间">
-                        <span class="hp-room-badge">标准客房</span>
+                        <span class="hp-room-badge" data-i18n="badge_standard">标准客房</span>
                     </div>
                     <div class="hp-room-body">
-                        <h3>舒适标准间</h3>
+                        <h3 data-i18n="room_name_standard">舒适标准间</h3>
                         <div class="hp-room-features">
-                            <span>28㎡</span><span>大床/双床</span><span>2人</span>
+                            <span>28㎡</span><span data-i18n="bed_king_twin">大床/双床</span><span data-i18n="guests_2">2人</span>
                         </div>
                         <div class="hp-room-footer">
-                            <div class="hp-room-price"><strong>¥588</strong><span>/晚</span></div>
-                            <a class="hp-btn-sm" href="../BookOut/Book.html">预订</a>
+                            <div class="hp-room-price"><strong>¥588</strong><span data-i18n="per_night">/晚</span></div>
+                            <a class="hp-btn-sm" href="../BookOut/Book.html" data-i18n="book_btn">预订</a>
                         </div>
                     </div>
                 </article>
                 <article class="hp-room-card">
                     <div class="hp-room-media">
                         <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800" alt="豪华海景房">
-                        <span class="hp-room-badge">豪华客房</span>
+                        <span class="hp-room-badge" data-i18n="badge_deluxe">豪华客房</span>
                     </div>
                     <div class="hp-room-body">
-                        <h3>豪华海景房</h3>
+                        <h3 data-i18n="room_name_seaview">豪华海景房</h3>
                         <div class="hp-room-features">
-                            <span>45㎡</span><span>特大床</span><span>2人</span>
+                            <span>45㎡</span><span data-i18n="bed_king">特大床</span><span data-i18n="guests_2">2人</span>
                         </div>
                         <div class="hp-room-footer">
-                            <div class="hp-room-price"><strong>¥988</strong><span>/晚</span></div>
-                            <a class="hp-btn-sm" href="../BookOut/Book.html">预订</a>
+                            <div class="hp-room-price"><strong>¥988</strong><span data-i18n="per_night">/晚</span></div>
+                            <a class="hp-btn-sm" href="../BookOut/Book.html" data-i18n="book_btn">预订</a>
                         </div>
                     </div>
                 </article>
                 <article class="hp-room-card">
                     <div class="hp-room-media">
                         <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800" alt="行政套房">
-                        <span class="hp-room-badge">套房</span>
+                        <span class="hp-room-badge" data-i18n="badge_suite">套房</span>
                     </div>
                     <div class="hp-room-body">
-                        <h3>行政套房</h3>
+                        <h3 data-i18n="room_name_suite">行政套房</h3>
                         <div class="hp-room-features">
-                            <span>75㎡</span><span>特大床</span><span>3人</span>
+                            <span>75㎡</span><span data-i18n="bed_king">特大床</span><span data-i18n="guests_3">3人</span>
                         </div>
                         <div class="hp-room-footer">
-                            <div class="hp-room-price"><strong>¥1888</strong><span>/晚</span></div>
-                            <a class="hp-btn-sm" href="../BookOut/Book.html">预订</a>
+                            <div class="hp-room-price"><strong>¥1888</strong><span data-i18n="per_night">/晚</span></div>
+                            <a class="hp-btn-sm" href="../BookOut/Book.html" data-i18n="book_btn">预订</a>
                         </div>
                     </div>
                 </article>
                 <article class="hp-room-card">
                     <div class="hp-room-media">
                         <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800" alt="商务双床房">
-                        <span class="hp-room-badge">标准客房</span>
+                        <span class="hp-room-badge" data-i18n="badge_standard">标准客房</span>
                     </div>
                     <div class="hp-room-body">
-                        <h3>商务双床房</h3>
+                        <h3 data-i18n="room_name_twin">商务双床房</h3>
                         <div class="hp-room-features">
-                            <span>32㎡</span><span>双床</span><span>2人</span>
+                            <span>32㎡</span><span data-i18n="bed_twin">双床</span><span data-i18n="guests_2">2人</span>
                         </div>
                         <div class="hp-room-footer">
-                            <div class="hp-room-price"><strong>¥628</strong><span>/晚</span></div>
-                            <a class="hp-btn-sm" href="../BookOut/Book.html">预订</a>
+                            <div class="hp-room-price"><strong>¥628</strong><span data-i18n="per_night">/晚</span></div>
+                            <a class="hp-btn-sm" href="../BookOut/Book.html" data-i18n="book_btn">预订</a>
                         </div>
                     </div>
                 </article>
                 <article class="hp-room-card">
                     <div class="hp-room-media">
                         <img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=800" alt="总统套房">
-                        <span class="hp-room-badge">套房</span>
+                        <span class="hp-room-badge" data-i18n="badge_suite">套房</span>
                     </div>
                     <div class="hp-room-body">
-                        <h3>总统套房</h3>
+                        <h3 data-i18n="room_name_presidential">总统套房</h3>
                         <div class="hp-room-features">
-                            <span>200㎡</span><span>特大床</span><span>4人</span>
+                            <span>200㎡</span><span data-i18n="bed_king">特大床</span><span data-i18n="guests_4">4人</span>
                         </div>
                         <div class="hp-room-footer">
-                            <div class="hp-room-price"><strong>¥8888</strong><span>/晚</span></div>
-                            <a class="hp-btn-sm" href="../BookOut/Book.html">预订</a>
+                            <div class="hp-room-price"><strong>¥8888</strong><span data-i18n="per_night">/晚</span></div>
+                            <a class="hp-btn-sm" href="../BookOut/Book.html" data-i18n="book_btn">预订</a>
                         </div>
                     </div>
                 </article>
                 <article class="hp-room-card">
                     <div class="hp-room-media">
                         <img src="https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=800" alt="花园景观房">
-                        <span class="hp-room-badge">豪华客房</span>
+                        <span class="hp-room-badge" data-i18n="badge_deluxe">豪华客房</span>
                     </div>
                     <div class="hp-room-body">
-                        <h3>花园景观房</h3>
+                        <h3 data-i18n="room_name_garden">花园景观房</h3>
                         <div class="hp-room-features">
-                            <span>38㎡</span><span>大床</span><span>2人</span>
+                            <span>38㎡</span><span data-i18n="bed_queen">大床</span><span data-i18n="guests_2">2人</span>
                         </div>
                         <div class="hp-room-footer">
-                            <div class="hp-room-price"><strong>¥788</strong><span>/晚</span></div>
-                            <a class="hp-btn-sm" href="../BookOut/Book.html">预订</a>
+                            <div class="hp-room-price"><strong>¥788</strong><span data-i18n="per_night">/晚</span></div>
+                            <a class="hp-btn-sm" href="../BookOut/Book.html" data-i18n="book_btn">预订</a>
                         </div>
                     </div>
                 </article>
@@ -350,56 +350,56 @@
     <section class="hp-section hp-offers" id="offers">
         <div class="container">
             <div class="hp-section-title">
-                <h2>精选优惠</h2>
+                <h2 data-i18n="section_offers">精选优惠</h2>
             </div>
             <div class="hp-grid hp-grid-4">
                 <article class="hp-card">
                     <div class="hp-card-media">
                         <img src="images/hotel1.png" alt="半岛春日限定之旅">
-                        <span class="hp-tag">住宿</span>
+                        <span class="hp-tag" data-i18n="tag_stay">住宿</span>
                     </div>
                     <div class="hp-card-body">
-                        <h3>半岛春日限定之旅</h3>
-                        <p>含早餐、下午茶与城市精选体验，让每一次入住都值得纪念。</p>
-                        <a class="hp-link" href="#">了解更多 →</a>
+                        <h3 data-i18n="offer_1_title">半岛春日限定之旅</h3>
+                        <p data-i18n="offer_1_desc">含早餐、下午茶与城市精选体验，让每一次入住都值得纪念。</p>
+                        <a class="hp-link" href="#" data-i18n="learn_more">了解更多 →</a>
                     </div>
                 </article>
                 <article class="hp-card">
                     <div class="hp-card-media">
                         <img src="images/hotel2.png" alt="连住优享">
-                        <span class="hp-tag">住宿</span>
+                        <span class="hp-tag" data-i18n="tag_stay">住宿</span>
                     </div>
                     <div class="hp-card-body">
-                        <h3>连住优享</h3>
-                        <p>连住两晚及以上享专属折扣，含自助早餐与延迟退房权益。</p>
-                        <a class="hp-link" href="#">了解更多 →</a>
+                        <h3 data-i18n="offer_2_title">连住优享</h3>
+                        <p data-i18n="offer_2_desc">连住两晚及以上享专属折扣，含自助早餐与延迟退房权益。</p>
+                        <a class="hp-link" href="#" data-i18n="learn_more">了解更多 →</a>
                     </div>
                 </article>
                 <article class="hp-card">
                     <div class="hp-card-media">
                         <img src="images/hotel3.png" alt="用餐体验">
-                        <span class="hp-tag">餐饮</span>
+                        <span class="hp-tag" data-i18n="tag_dining">餐饮</span>
                     </div>
                     <div class="hp-card-body">
-                        <h3>用餐体验 · 住店优惠</h3>
-                        <p>精选餐厅与下午茶套餐，住店宾客尊享折扣与礼遇。</p>
-                        <a class="hp-link" href="#">了解更多 →</a>
+                        <h3 data-i18n="offer_3_title">用餐体验 · 住店优惠</h3>
+                        <p data-i18n="offer_3_desc">精选餐厅与下午茶套餐，住店宾客尊享折扣与礼遇。</p>
+                        <a class="hp-link" href="#" data-i18n="learn_more">了解更多 →</a>
                     </div>
                 </article>
                 <article class="hp-card">
                     <div class="hp-card-media">
                         <img src="images/hotel2.png" alt="亲子礼遇">
-                        <span class="hp-tag">活动</span>
+                        <span class="hp-tag" data-i18n="tag_event">活动</span>
                     </div>
                     <div class="hp-card-body">
-                        <h3>亲子礼遇 · 周末计划</h3>
-                        <p>亲子主题房布置、儿童欢迎礼与体验课程，打造难忘家庭时光。</p>
-                        <a class="hp-link" href="#">了解更多 →</a>
+                        <h3 data-i18n="offer_4_title">亲子礼遇 · 周末计划</h3>
+                        <p data-i18n="offer_4_desc">亲子主题房布置、儿童欢迎礼与体验课程，打造难忘家庭时光。</p>
+                        <a class="hp-link" href="#" data-i18n="learn_more">了解更多 →</a>
                     </div>
                 </article>
             </div>
             <div class="hp-center">
-                <a class="hp-btn-outline" href="#">查看更多</a>
+                <a class="hp-btn-outline" href="#" data-i18n="view_more">查看更多</a>
             </div>
         </div>
     </section>
@@ -408,11 +408,11 @@
         <div class="hp-comm-bg"></div>
         <div class="container">
             <div class="hp-comm-content">
-                <h2>畅享沟通</h2>
-                <p>订阅酒店电子报，第一时间获取专属优惠、旅行灵感以及精彩活动资讯。</p>
+                <h2 data-i18n="section_connect">畅享沟通</h2>
+                <p data-i18n="connect_desc">订阅酒店电子报，第一时间获取专属优惠、旅行灵感以及精彩活动资讯。</p>
                 <form class="hp-comm-form" id="hpSubscribeForm">
-                    <input type="email" id="hpSubscribeEmail" placeholder="输入您的邮箱地址" required>
-                    <button type="submit">注册</button>
+                    <input type="email" id="hpSubscribeEmail" placeholder="输入您的邮箱地址" data-i18n-placeholder="subscribe_placeholder" required>
+                    <button type="submit" data-i18n="subscribe_btn">注册</button>
                 </form>
             </div>
         </div>
@@ -421,7 +421,7 @@
     <section class="hp-section hp-activities" id="events">
         <div class="container">
             <div class="hp-section-title hp-section-title-row">
-                <h2>活动</h2>
+                <h2 data-i18n="section_events">活动</h2>
                 <div class="hp-activity-controls">
                     <button class="hp-icon-btn" type="button" id="hpActivityPrev">←</button>
                     <span class="hp-activity-indicator" id="hpActivityIndicator">01/03</span>
@@ -436,10 +436,10 @@
                                 <img src="images/hotel3.png" alt="艺术回响">
                             </div>
                             <div class="hp-activity-body">
-                                <div class="hp-meta">XX酒店集团</div>
-                                <h3>艺术回响</h3>
-                                <p>在音乐与灯光的氛围中，感受城市夜色与酒店空间的艺术对话。</p>
-                                <a class="hp-link" href="#">了解更多 →</a>
+                                <div class="hp-meta" data-i18n="meta_group">XX酒店集团</div>
+                                <h3 data-i18n="event_1_title">艺术回响</h3>
+                                <p data-i18n="event_1_desc">在音乐与灯光的氛围中，感受城市夜色与酒店空间的艺术对话。</p>
+                                <a class="hp-link" href="#" data-i18n="learn_more">了解更多 →</a>
                             </div>
                         </div>
                     </article>
@@ -449,10 +449,10 @@
                                 <img src="images/hotel2.png" alt="周末早午餐">
                             </div>
                             <div class="hp-activity-body">
-                                <div class="hp-meta">美食体验</div>
-                                <h3>周末早午餐</h3>
-                                <p>主厨限定菜单与甜品吧台，搭配现场演奏，让周末更松弛。</p>
-                                <a class="hp-link" href="#">了解更多 →</a>
+                                <div class="hp-meta" data-i18n="meta_dining">美食体验</div>
+                                <h3 data-i18n="event_2_title">周末早午餐</h3>
+                                <p data-i18n="event_2_desc">主厨限定菜单与甜品吧台，搭配现场演奏，让周末更松弛。</p>
+                                <a class="hp-link" href="#" data-i18n="learn_more">了解更多 →</a>
                             </div>
                         </div>
                     </article>
@@ -462,10 +462,10 @@
                                 <img src="images/hotel1.png" alt="亲子手作日">
                             </div>
                             <div class="hp-activity-body">
-                                <div class="hp-meta">家庭时光</div>
-                                <h3>亲子手作日</h3>
-                                <p>亲子烘焙、绘画与趣味课程，让孩子在旅途中收获快乐与成长。</p>
-                                <a class="hp-link" href="#">了解更多 →</a>
+                                <div class="hp-meta" data-i18n="meta_family">家庭时光</div>
+                                <h3 data-i18n="event_3_title">亲子手作日</h3>
+                                <p data-i18n="event_3_desc">亲子烘焙、绘画与趣味课程，让孩子在旅途中收获快乐与成长。</p>
+                                <a class="hp-link" href="#" data-i18n="learn_more">了解更多 →</a>
                             </div>
                         </div>
                     </article>
@@ -477,7 +477,7 @@
     <section class="hp-section hp-news" id="news">
         <div class="container">
             <div class="hp-section-title">
-                <h2>全新资讯与精彩时刻</h2>
+                <h2 data-i18n="section_news">全新资讯与精彩时刻</h2>
             </div>
             <div class="hp-news-grid">
                 <article class="hp-news-feature">
@@ -485,10 +485,10 @@
                         <img src="images/hotel1.png" alt="Shanghai For One">
                     </div>
                     <div class="hp-news-body">
-                        <div class="hp-meta">酒店资讯</div>
+                        <div class="hp-meta" data-i18n="meta_news">酒店资讯</div>
                         <h3>Shanghai For One</h3>
-                        <p>也许独自旅行是沉浸式探索城市的最佳方式。这里为您准备灵感与路线。</p>
-                        <a class="hp-link" href="#">了解详情 →</a>
+                        <p data-i18n="news_feature_desc">也许独自旅行是沉浸式探索城市的最佳方式。这里为您准备灵感与路线。</p>
+                        <a class="hp-link" href="#" data-i18n="learn_detail">了解详情 →</a>
                     </div>
                 </article>
                 <div class="hp-news-list">
@@ -497,9 +497,9 @@
                             <img src="images/hotel3.png" alt="商务出行灵感">
                         </div>
                         <div class="hp-news-card-body">
-                            <div class="hp-meta">酒店资讯</div>
+                            <div class="hp-meta" data-i18n="meta_news">酒店资讯</div>
                             <h4>How To Make The Most Of Your Business Trip</h4>
-                            <a class="hp-link" href="#">了解详情 →</a>
+                            <a class="hp-link" href="#" data-i18n="learn_detail">了解详情 →</a>
                         </div>
                     </article>
                     <article class="hp-news-card">
@@ -507,9 +507,9 @@
                             <img src="images/hotel2.png" alt="艺术文化">
                         </div>
                         <div class="hp-news-card-body">
-                            <div class="hp-meta">艺术文化</div>
+                            <div class="hp-meta" data-i18n="meta_art">艺术文化</div>
                             <h4>Art In Resonance</h4>
-                            <a class="hp-link" href="#">了解详情 →</a>
+                            <a class="hp-link" href="#" data-i18n="learn_detail">了解详情 →</a>
                         </div>
                     </article>
                     <article class="hp-news-card">
@@ -517,9 +517,9 @@
                             <img src="images/hotel2.png" alt="音乐早午餐">
                         </div>
                         <div class="hp-news-card-body">
-                            <div class="hp-meta">餐饮体验</div>
+                            <div class="hp-meta" data-i18n="meta_dining">餐饮体验</div>
                             <h4>Best Live Music Brunch Spots</h4>
-                            <a class="hp-link" href="#">了解详情 →</a>
+                            <a class="hp-link" href="#" data-i18n="learn_detail">了解详情 →</a>
                         </div>
                     </article>
                     <article class="hp-news-card">
@@ -527,9 +527,9 @@
                             <img src="images/hotel1.png" alt="亲子活动">
                         </div>
                         <div class="hp-news-card-body">
-                            <div class="hp-meta">家庭时光</div>
+                            <div class="hp-meta" data-i18n="meta_family">家庭时光</div>
                             <h4>Explore Pet Friendly Activities</h4>
-                            <a class="hp-link" href="#">了解详情 →</a>
+                            <a class="hp-link" href="#" data-i18n="learn_detail">了解详情 →</a>
                         </div>
                     </article>
                 </div>
@@ -541,51 +541,51 @@
         <div class="container">
             <div class="hp-footer-top">
                 <div class="hp-footer-col">
-                    <h4>环球宾客中心</h4>
-                    <a href="#">客房预订与咨询</a>
-                    <a href="#">会员权益说明</a>
-                    <a href="#">交通与周边</a>
+                    <h4 data-i18n="footer_guest_center">环球宾客中心</h4>
+                    <a href="#" data-i18n="footer_guest_booking">客房预订与咨询</a>
+                    <a href="#" data-i18n="footer_guest_membership">会员权益说明</a>
+                    <a href="#" data-i18n="footer_guest_transport">交通与周边</a>
                     <a href="#">+852 2926 2888</a>
                     <a href="#">reservations@xxhotel.com</a>
                 </div>
                 <div class="hp-footer-col">
-                    <h4>XX酒店集团</h4>
-                    <a href="#">关于我们</a>
-                    <a href="#">住宿服务</a>
-                    <a href="#">餐饮美食</a>
-                    <a href="#">联系我们</a>
+                    <h4 data-i18n="footer_group">XX酒店集团</h4>
+                    <a href="#" data-i18n="footer_about">关于我们</a>
+                    <a href="#" data-i18n="footer_services">住宿服务</a>
+                    <a href="#" data-i18n="footer_food">餐饮美食</a>
+                    <a href="#" data-i18n="footer_contact">联系我们</a>
                 </div>
                 <div class="hp-footer-col">
-                    <h4>媒体</h4>
-                    <a href="#">新闻中心</a>
-                    <a href="#">媒体联系人</a>
-                    <a href="#">品牌资料</a>
+                    <h4 data-i18n="footer_media">媒体</h4>
+                    <a href="#" data-i18n="footer_newsroom">新闻中心</a>
+                    <a href="#" data-i18n="footer_media_contact">媒体联系人</a>
+                    <a href="#" data-i18n="footer_brand_assets">品牌资料</a>
                 </div>
                 <div class="hp-footer-col">
-                    <h4>企业</h4>
-                    <a href="#">会议与宴会</a>
-                    <a href="#">可持续发展</a>
-                    <a href="#">招聘与工作</a>
-                    <a href="#">供应商合作</a>
+                    <h4 data-i18n="footer_corporate">企业</h4>
+                    <a href="#" data-i18n="footer_meetings">会议与宴会</a>
+                    <a href="#" data-i18n="footer_sustainability">可持续发展</a>
+                    <a href="#" data-i18n="footer_careers">招聘与工作</a>
+                    <a href="#" data-i18n="footer_suppliers">供应商合作</a>
                 </div>
             </div>
             <div class="hp-footer-bottom">
                 <div class="hp-footer-legal">
-                    <span>© 2026 XX酒店</span>
-                    <a href="#">隐私政策</a>
-                    <a href="#">条款与条件</a>
-                    <a href="#">Cookie 设置</a>
+                    <span data-i18n="footer_copyright">© 2026 XX酒店</span>
+                    <a href="#" data-i18n="footer_privacy">隐私政策</a>
+                    <a href="#" data-i18n="footer_terms">条款与条件</a>
+                    <a href="#" data-i18n="footer_cookie">Cookie 设置</a>
                 </div>
                 <div class="hp-footer-lang">
-                    <span>语言</span>
-                    <a href="#">中文</a>
-                    <a href="#">English</a>
+                    <span data-i18n="footer_lang">语言</span>
+                    <a href="#" data-i18n="lang_link_zh">中文</a>
+                    <a href="#" data-i18n="lang_link_en">English</a>
                 </div>
             </div>
         </div>
     </footer>
 
     <script src="../assets/js/theme-button.js"></script>
-    <script src="homepageScript.js"></script>
+    <script src="homepageScript.js?v=20260402"></script>
 </body>
 </html>
