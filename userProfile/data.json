@@ -35,6 +35,24 @@
             "phone": "88888888",
             "password": "$2b$10$1dTM.nBD6AatBDVrAbulKewun5BXVtw7ExDuXzQ7fWEoYiV5dKcge",
             "role": "user"
+        },
+        {
+            "id": 1775111141517,
+            "username": "91godwen",
+            "name": "ks",
+            "email": "donk666@gmail.com",
+            "phone": "66667777",
+            "password": "$2b$10$PCv0C/Z1YKGc3H.j8StBE.mU.OBqChFx.uMqScihP9ijHZ6zHxNgK",
+            "role": "user"
+        },
+        {
+            "id": 1775111773499,
+            "username": "goat",
+            "name": "donk",
+            "email": "iamtest@gmail.com",
+            "phone": "123",
+            "password": "$2b$10$0N.2x8iPq0TtacOWHnqxh.QGChRF3q06kSvh30BhKeQ.Zted8.R0u",
+            "role": "user"
         }
     ],
     "admins": [

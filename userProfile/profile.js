@@ -23,3 +23,13 @@ function renderTable(title, list, containerId) {
     html += '</tbody></table>';
     container.innerHTML = html;
 }
+
+function validatePhoneNumber(phone) {
+  // 检查是否为8位数字
+  const phoneRegex = /^\d{8}$/;
+  if (!phoneRegex.test(phone)) {
+    alert('请输入八位数的电话号码');
+    return false;
+  }
+  return true;
+}
