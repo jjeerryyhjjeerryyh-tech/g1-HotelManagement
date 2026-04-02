@@ -788,45 +788,23 @@ function closeRoomModal() {
 
 function proceedToBook() {
     if (!currentRoom) return;
-    
-    closeRoomModal();
-    const modal = document.getElementById('bookingModal');
-    const summary = document.getElementById('bookingSummary');
-    
     const checkIn = document.getElementById('checkInDate').value;
     const checkOut = document.getElementById('checkOutDate').value;
-    
-    const nights = Math.ceil((new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24));
-    const total = currentRoom.price * nights;
-    
-    summary.innerHTML = `
-        <div class="fee-row">
-            <span>${t('fee_room')}</span>
-            <span>${currentRoom.name}</span>
-        </div>
-        <div class="fee-row">
-            <span>${t('fee_checkin')}</span>
-            <span>${checkIn}</span>
-        </div>
-        <div class="fee-row">
-            <span>${t('fee_checkout')}</span>
-            <span>${checkOut}</span>
-        </div>
-        <div class="fee-row">
-            <span>${t('fee_price')}</span>
-            <span>¥${currentRoom.price} ${t('per_night')}</span>
-        </div>
-        <div class="fee-row">
-            <span>${t('fee_nights')}</span>
-            <span>${t('nights', { count: nights })}</span>
-        </div>
-        <div class="fee-row">
-            <span>${t('fee_total')}</span>
-            <span>¥${total}</span>
-        </div>
-    `;
-    
-    modal.classList.add('active');
+    const guests = document.getElementById('guestCount')?.value || '2';
+
+    if (!checkIn || !checkOut) {
+        showToast(t('toast_select_dates'), 'error');
+        return;
+    }
+    if (new Date(checkIn) >= new Date(checkOut)) {
+        showToast(t('toast_checkout_after'), 'error');
+        return;
+    }
+
+    sessionStorage.setItem('checkout_room', JSON.stringify(currentRoom));
+    sessionStorage.setItem('checkout_params', JSON.stringify({ checkIn, checkOut, guests }));
+    closeRoomModal();
+    window.location.href = 'checkout.html';
 }
 
 function closeBookingModal() {

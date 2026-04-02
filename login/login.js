@@ -35,7 +35,11 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         });
         const data = await res.json();
         if (res.ok) {
-            window.location.href = '../homePage/index.html';
+            sessionStorage.setItem('isLoggedIn', 'true');
+            sessionStorage.setItem('username', data.username);
+            sessionStorage.setItem('role', data.role);
+            sessionStorage.setItem('name', data.name);
+            window.location.href = '../BookOut/Book.html';
         } else {
             alert(data.message);
         }
