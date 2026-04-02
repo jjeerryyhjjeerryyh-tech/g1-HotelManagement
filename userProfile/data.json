@@ -104,26 +104,14 @@
     ],
     "bookings": [
         {
-            "id": "BK1775112929083",
-            "username": "user0",
-            "roomType": "豪华海景房",
-            "checkIn": "2026-04-02",
-            "checkOut": "2026-04-03",
-            "guests": "2",
-            "totalAmount": 988,
-            "status": "confirmed",
-            "createdAt": "2026-04-02T06:55:29.083Z"
-        },
-        {
-            "id": "BK1775113273083",
-            "username": "user0",
+            "id": "BK1775118588277",
+            "username": "guest",
             "roomType": "舒适标准间",
             "checkIn": "2026-04-02",
             "checkOut": "2026-04-03",
-            "guests": "2",
-            "totalAmount": 588,
+            "totalAmount": 647,
             "status": "confirmed",
-            "createdAt": "2026-04-02T07:01:13.083Z"
+            "createdAt": "2026-04-02T08:29:48.277Z"
         },
         {
             "id": "BK1775114450607",

@@ -152,10 +152,13 @@ async function loadBookings() {
     tbody.innerHTML = data.bookings.map(b => `
         <tr class="hover:bg-gray-50">
             <td class="px-6 py-4 text-sm font-medium">${b.id}</td>
-            <td class="px-6 py-4 text-sm">${b.username}</td>
+            <td class="px-6 py-4 text-sm">
+                <div>${b.guestName || b.username}</div>
+                ${b.guestName && b.username !== 'guest' ? `<div class="text-xs text-gray-400">@${b.username}</div>` : ''}
+            </td>
             <td class="px-6 py-4 text-sm">${b.roomName || b.roomType || '-'}</td>
             <td class="px-6 py-4 text-sm">${b.checkIn} / ${b.checkOut}</td>
-            <td class="px-6 py-4 text-sm">¥${b.totalAmount || '-'}</td>
+            <td class="px-6 py-4 text-sm">${b.totalDisplay || ('¥' + (b.totalAmount || '-'))}</td>
             <td class="px-6 py-4 text-sm">${statusMap[b.status] || b.status}</td>
             <td class="px-6 py-4 text-sm">
                 <button onclick="deleteBooking('${b.id}')" class="text-danger hover:text-danger/80">
