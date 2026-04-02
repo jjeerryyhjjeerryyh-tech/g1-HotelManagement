@@ -176,7 +176,15 @@
         container.style.cssText = 'position: relative; display: inline-block; margin: 0 0.5rem;';
 
         const button = document.createElement('a');
-        button.href = getBasePath() + 'notifications/notifications.html';
+        // 确保正确的绝对路径，避免相对路径问题
+        const currentPath = window.location.pathname;
+        let notificationPath;
+        if (currentPath.includes('/homePage/') || currentPath.includes('/Homepage/')) {
+            notificationPath = '/notifications/notifications.html';
+        } else {
+            notificationPath = getBasePath() + 'notifications/notifications.html';
+        }
+        button.href = notificationPath;
         button.innerHTML = '📬 消息提醒';
         button.style.cssText = `
             position: relative;
