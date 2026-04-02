@@ -554,7 +554,7 @@
             }
         }
 
-        let currentCurrency = 'CNY';
+        let currentCurrency = localStorage.getItem('currency') || 'CNY';
         const exchangeRates = {
             'CNY': 1,
             'HKD': 1.1,
@@ -756,9 +756,9 @@
                 </div>
             </div>
             <div class="room-price">
-                <span class="price-original">¥${currentRoom.originalPrice}</span>
+                <span class="price-original">${formatPrice(currentRoom.originalPrice)}</span>
                 <div>
-                    <span class="price-current" style="font-size: 2rem;">¥${currentRoom.price}</span>
+                    <span class="price-current" style="font-size: 2rem;">${formatPrice(currentRoom.price)}</span>
                     <span class="price-unit">${t('per_night')}</span>
                 </div>
             </div>
@@ -788,6 +788,14 @@ function closeRoomModal() {
 
 function proceedToBook() {
     if (!currentRoom) return;
+
+    // 未登录则跳转登录页
+    if (!sessionStorage.getItem('isLoggedIn')) {
+        showToast('请先登录才能预订房间', 'error');
+        setTimeout(() => { window.location.href = '../login/login.html'; }, 1200);
+        return;
+    }
+
     const checkIn = document.getElementById('checkInDate').value;
     const checkOut = document.getElementById('checkOutDate').value;
     const guests = document.getElementById('guestCount')?.value || '2';
@@ -803,6 +811,8 @@ function proceedToBook() {
 
     sessionStorage.setItem('checkout_room', JSON.stringify(currentRoom));
     sessionStorage.setItem('checkout_params', JSON.stringify({ checkIn, checkOut, guests }));
+    // 同步当前货币到 sessionStorage，确保 checkout 页面读取一致
+    if (!localStorage.getItem('currency')) localStorage.setItem('currency', currentCurrency);
     closeRoomModal();
     window.location.href = 'checkout.html';
 }
@@ -964,15 +974,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     e.currentTarget.classList.add('active');
                     
                     // Switch lang
-                    currentLang = nextLang;
-                    localStorage.setItem('lang', currentLang);
-                    document.documentElement.setAttribute('lang', currentLang === 'zh' ? 'zh-CN' : 'en');
-                    document.documentElement.setAttribute('data-lang', currentLang);
-                    applyI18n();
+                    applyI18n(nextLang);
                     
                     // Update text node while keeping chevron
                     const span = langBtn.querySelector('span');
-                    if(span) span.textContent = currentLang === 'zh' ? '简体中文' : 'English - UK';
+                    if(span) span.textContent = t('lang_display');
                     
                     langDropdown.style.display = 'none';
                 } else {
@@ -1018,6 +1024,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 // Update current currency
                 currentCurrency = e.currentTarget.getAttribute('data-currency');
+                
+                // 保存到 localStorage，让 checkout.html 也能读取
+                localStorage.setItem('currency', currentCurrency);
                 
                 // Update button text
                 const currencyName = e.currentTarget.getAttribute('data-i18n') ? 
