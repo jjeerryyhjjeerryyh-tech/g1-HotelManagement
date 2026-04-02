@@ -102,8 +102,19 @@
         return 'generic';
     }
 
+    // 检查是否应该显示通知按钮
+    function shouldShowNotificationButton() {
+        const currentPage = detectCurrentPage();
+        // 主页不显示通知按钮
+        return currentPage !== 'homepage';
+    }
+
     // 添加通知按钮到页面
     function addNotificationButton() {
+        // 检查是否应该显示通知按钮
+        if (!shouldShowNotificationButton()) {
+            return;
+        }
         // 尝试多种选择器找到合适的位置
         const possibleSelectors = [
             // BookOut页面
