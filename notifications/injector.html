@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>通知系统注入器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .method {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: #fafafa;
+        }
+        .method h3 {
+            color: #2c3e50;
+            margin-top: 0;
+        }
+        .btn {
+            background: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+        .btn:hover {
+            background: #2980b9;
+        }
+        .btn-success {
+            background: #27ae60;
+        }
+        .btn-success:hover {
+            background: #229954;
+        }
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            display: none;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏨 酒店管理系统通知功能注入器</h1>
+        
+        <div class="method">
+            <h3>方法1：一键注入（推荐）</h3>
+            <p>点击下面的按钮，将通知系统注入到当前打开的酒店管理系统页面中。</p>
+            <button class="btn btn-success" onclick="injectToCurrentPage()">🚀 立即注入通知系统</button>
+            <div id="status1" class="status"></div>
+        </div>
+        
+        <div class="method">
+            <h3>方法2：浏览器书签</h3>
+            <p>将下面的代码添加为浏览器书签，然后在任何酒店管理系统页面点击书签即可注入。</p>
+            <button class="btn" onclick="copyBookmarklet()">📋 复制书签代码</button>
+            <button class="btn" onclick="showBookmarkletInstructions()">📖 查看使用说明</button>
+            <div class="code-block" id="bookmarkletCode" style="display: none;"></div>
+            <div id="bookmarkletInstructions" style="display: none;">
+                <h4>使用步骤：</h4>
+                <ol>
+                    <li>复制上面的代码</li>
+                    <li>在浏览器中添加新书签</li>
+                    <li>将复制的代码粘贴到书签的URL字段</li>
+                    <li>保存书签</li>
+                    <li>在酒店管理系统页面点击该书签</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="method">
+            <h3>方法3：用户脚本（高级用户）</h3>
+            <p>如果您使用Tampermonkey或Greasemonkey扩展，可以安装用户脚本实现自动注入。</p>
+            <button class="btn" onclick="downloadUserScript()">⬇️ 下载用户脚本</button>
+            <button class="btn" onclick="showUserScriptInstructions()">📖 查看安装说明</button>
+            <div id="userScriptInstructions" style="display: none;">
+                <h4>安装步骤：</h4>
+                <ol>
+                    <li>安装Tampermonkey浏览器扩展</li>
+                    <li>点击"下载用户脚本"</li>
+                    <li>在Tampermonkey中安装脚本</li>
+                    <li>访问酒店管理系统，脚本将自动运行</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="method">
+            <h3>方法4：手动集成</h3>
+            <p>如果您有代码修改权限，可以手动将通知系统集成到页面中。</p>
+            <button class="btn" onclick="showManualInstructions()">📝 查看集成代码</button>
+            <div id="manualInstructions" style="display: none;">
+                <h4>在页面底部添加以下代码：</h4>
+                <div class="code-block">
+&lt;script src="notifications/notificationSystem.js"&gt;&lt;/script&gt;
+&lt;script src="notifications/autoInject.js"&gt;&lt;/script&gt;
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 方法1：直接注入
+        function injectToCurrentPage() {
+            const status = document.getElementById('status1');
+            
+            try {
+                // 检查是否在同一域名下
+                if (window.opener && window.opener.location.hostname === window.location.hostname) {
+                    // 在父窗口中注入
+                    injectIntoWindow(window.opener);
+                    showStatus('status1', 'success', '✅ 通知系统已成功注入到酒店管理系统页面！');
+                } else {
+                    showStatus('status1', 'error', '❌ 请先打开酒店管理系统页面，然后再使用此功能。');
+                }
+            } catch (error) {
+                showStatus('status1', 'error', '❌ 注入失败：' + error.message);
+            }
+        }
+        
+        // 注入到指定窗口
+        function injectIntoWindow(targetWindow) {
+            const script1 = targetWindow.document.createElement('script');
+            script1.src = 'notifications/notificationSystem.js';
+            targetWindow.document.head.appendChild(script1);
+            
+            script1.onload = function() {
+                const script2 = targetWindow.document.createElement('script');
+                script2.src = 'notifications/autoInject.js';
+                targetWindow.document.head.appendChild(script2);
+            };
+        }
+        
+        // 方法2：复制书签代码
+        function copyBookmarklet() {
+            const code = `javascript:(function(){var s=document.createElement('script');s.src='notifications/notificationSystem.js';document.head.appendChild(s);s.onload=function(){var s2=document.createElement('script');s2.src='notifications/autoInject.js';document.head.appendChild(s2);};})();`;
+            
+            navigator.clipboard.writeText(code).then(function() {
+                document.getElementById('bookmarkletCode').textContent = code;
+                document.getElementById('bookmarkletCode').style.display = 'block';
+                alert('书签代码已复制到剪贴板！');
+            });
+        }
+        
+        function showBookmarkletInstructions() {
+            const instructions = document.getElementById('bookmarkletInstructions');
+            instructions.style.display = instructions.style.display === 'none' ? 'block' : 'none';
+        }
+        
+        // 方法3：下载用户脚本
+        function downloadUserScript() {
+            const script = \`// ==UserScript==
+// @name         酒店管理系统通知功能
+// @namespace    http://localhost:8080/
+// @version      1.1
+// @description  为酒店管理系统自动添加通知功能
+// @author       You
+// @match        http://localhost:8080/*
+// @match        http://127.0.0.1:8080/*
+// @grant        none
+// @run-at       document-end
+// ==/UserScript==
+
+(function() {
+    'use strict';
+    
+    function loadScript(src) {
+        return new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = src;
+            script.onload = resolve;
+            script.onerror = reject;
+            document.head.appendChild(script);
+        });
+    }
+    
+    async function init() {
+        try {
+            const basePath = window.location.pathname.includes('/') ? '../' : './';
+            await loadScript(basePath + 'notifications/notificationSystem.js');
+            await new Promise(resolve => setTimeout(resolve, 200));
+            await loadScript(basePath + 'notifications/autoInject.js');
+        } catch (error) {
+            console.error('通知系统加载失败:', error);
+        }
+    }
+    
+    init();
+})();\`;
+            
+            const blob = new Blob([script], { type: 'text/javascript' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'hotel-notification-system.user.js';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+        
+        function showUserScriptInstructions() {
+            const instructions = document.getElementById('userScriptInstructions');
+            instructions.style.display = instructions.style.display === 'none' ? 'block' : 'none';
+        }
+        
+        // 方法4：显示手动集成说明
+        function showManualInstructions() {
+            const instructions = document.getElementById('manualInstructions');
+            instructions.style.display = instructions.style.display === 'none' ? 'block' : 'none';
+        }
+        
+        // 显示状态消息
+        function showStatus(elementId, type, message) {
+            const element = document.getElementById(elementId);
+            element.className = 'status ' + type;
+            element.textContent = message;
+            element.style.display = 'block';
+            
+            setTimeout(() => {
+                element.style.display = 'none';
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
