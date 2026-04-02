@@ -434,13 +434,9 @@
         }
 
         function applyI18n(lang) {
-            currentLang = lang;
+            currentLang = lang === 'en' ? 'en' : 'zh';
             localStorage.setItem('lang', currentLang);
             document.documentElement.setAttribute('data-lang', currentLang);
-            updateUI();
-        }
-
-        function updateUI() {
             document.documentElement.lang = currentLang === 'en' ? 'en' : 'zh-CN';
 
             document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -452,12 +448,6 @@
                 const k = el.getAttribute('data-i18n-placeholder');
                 if (k) el.setAttribute('placeholder', t(k));
             });
-
-            // Update dynamic elements
-            renderRooms();
-            renderMyBookings();
-            updateStats();
-        }
 
             renderRooms();
             renderMyBookings();
@@ -824,15 +814,6 @@ function closeBookingModal() {
 function submitBooking(event) {
     event.preventDefault();
 
-    const form = document.getElementById('bookingForm');
-    const guestPhone = form.querySelector('[name="guestPhone"]').value;
-
-    // 前端验证：8位数字
-    if (!/^\d{8}$/.test(guestPhone)) {
-        showToast('电话号码必须是8位数字', 'error');
-        return;
-    }
-
     const checkIn = document.getElementById('checkInDate').value;
     const checkOut = document.getElementById('checkOutDate').value;
     const nights = Math.ceil((new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24));
@@ -842,16 +823,10 @@ function submitBooking(event) {
     const newBooking = {
         id: 'GB' + Date.now(),
         username,
-        roomId: currentRoom.id,
-        roomName: currentRoom.name,
-        guestName: form.querySelector('[name="guestName"]').value,
-        guestPhone,
-        guestEmail: form.querySelector('[name="guestEmail"]').value,
-        arrivalTime: form.querySelector('[name="arrivalTime"]').value,
-        specialRequests: form.querySelector('[name="specialRequests"]').value,
+        roomType: currentRoom.name,
         checkIn,
         checkOut,
-        nights,
+        guests: document.getElementById('guestCount') ? document.getElementById('guestCount').value : 1,
         totalAmount,
         status: 'confirmed'
     };
@@ -953,7 +928,6 @@ function filterMyBookings() {
 
 // User Authentication & Dropdown Logic
 document.addEventListener('DOMContentLoaded', () => {
-        applyI18n(currentLang);
     // --- Lang Logic ---
     const langBtn = document.getElementById('langBtn');
     const langDropdown = document.getElementById('langDropdown');
