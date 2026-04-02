@@ -434,9 +434,13 @@
         }
 
         function applyI18n(lang) {
-            currentLang = lang === 'en' ? 'en' : 'zh';
+            currentLang = lang;
             localStorage.setItem('lang', currentLang);
             document.documentElement.setAttribute('data-lang', currentLang);
+            updateUI();
+        }
+
+        function updateUI() {
             document.documentElement.lang = currentLang === 'en' ? 'en' : 'zh-CN';
 
             document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -448,6 +452,12 @@
                 const k = el.getAttribute('data-i18n-placeholder');
                 if (k) el.setAttribute('placeholder', t(k));
             });
+
+            // Update dynamic elements
+            renderRooms();
+            renderMyBookings();
+            updateStats();
+        }
 
             renderRooms();
             renderMyBookings();
@@ -928,6 +938,7 @@ function filterMyBookings() {
 
 // User Authentication & Dropdown Logic
 document.addEventListener('DOMContentLoaded', () => {
+        applyI18n(currentLang);
     // --- Lang Logic ---
     const langBtn = document.getElementById('langBtn');
     const langDropdown = document.getElementById('langDropdown');
