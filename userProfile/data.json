@@ -37,62 +37,16 @@
             "role": "user"
         },
         {
-            "id": 1775111141517,
-            "username": "91godwen",
-            "name": "ks",
-            "email": "donk666@gmail.com",
-            "phone": "66667777",
-            "password": "$2b$10$PCv0C/Z1YKGc3H.j8StBE.mU.OBqChFx.uMqScihP9ijHZ6zHxNgK",
-            "role": "user"
-        },
-        {
-            "id": 1775111773499,
-            "username": "goat",
-            "name": "donk",
-            "email": "iamtest@gmail.com",
+            "id": 1775111423790,
+            "username": "user0",
+            "name": "yyy",
+            "email": "Ybc@gmail.com",
             "phone": "123",
-            "password": "$2b$10$0N.2x8iPq0TtacOWHnqxh.QGChRF3q06kSvh30BhKeQ.Zted8.R0u",
-            "role": "user"
-        },
-        {
-            "id": 1775112184181,
-            "username": "8888",
-            "name": "uu",
-            "email": "8888@gmail.com",
-            "phone": "8888",
-            "password": "$2b$10$CZXOC5ifTVjKcaanFn4/1eduEd5gLIo0RNETFEZxGgr9wruJZ22jK",
-            "role": "user"
-        },
-        {
-            "id": 1775112296523,
-            "username": "88888",
-            "name": "oo",
-            "email": "88888@gmail.com",
-            "phone": "88888888",
-            "password": "$2b$10$KymhYmWK94IYMepmT/wRDOWUe7A2uT4.cIQnq/hxVeiiriyQQLCRC",
-            "role": "user"
-        },
-        {
-            "id": 1775112412408,
-            "username": "0000",
-            "name": "pp",
-            "email": "0000@gmail.com",
-            "phone": "0000",
-            "password": "$2b$10$bS1rCItz7oiJspLF1AQDQ.YIM4E5hAS0cKpaoOUxdd6tvzzYTi8oy",
+            "password": "$2b$10$zkAlp/xEZkWV3at47DdHnep58Owox6wVERt.YfsNzqV9IbbEkQheq",
             "role": "user"
         }
     ],
     "admins": [
-        {
-            "id": 1,
-            "username": "admin",
-            "name": "Admin",
-            "gender": "男",
-            "email": "[admin_email]",
-            "phone": "[phone_number]",
-            "password": "$2a$10$Nzr1mBBSMdnPBMGMHFNMCuWoGpFQZ1e5W5e5W5e5W5e5W5e5W5e5W",
-            "role": "admin"
-        },
         {
             "id": 1773903909727,
             "username": "testadmin",
@@ -106,10 +60,35 @@
             "role": "admin"
         },
         {
-            "id": 1773905743925,
-            "username": "12345678",
-            "password": "$2b$10$NQPU1TBACDZe9ie9hIwcVOVTSBJp88hUsr3JuN/CqJPUlt8JLzyn2",
+            "id": 1775110309437,
+            "username": "bbb",
+            "password": "$2b$10$TYgkK5J.N6tFR0yHUU0uBOcHlTT/CBJaGau0Wz/F0GvaDXuT4gHuy",
             "role": "admin"
         }
-    ]
+    ],
+    "bookings": [
+        {
+            "id": "BK1775112929083",
+            "username": "user0",
+            "roomType": "豪华海景房",
+            "checkIn": "2026-04-02",
+            "checkOut": "2026-04-03",
+            "guests": "2",
+            "totalAmount": 988,
+            "status": "confirmed",
+            "createdAt": "2026-04-02T06:55:29.083Z"
+        },
+        {
+            "id": "BK1775113273083",
+            "username": "user0",
+            "roomType": "舒适标准间",
+            "checkIn": "2026-04-02",
+            "checkOut": "2026-04-03",
+            "guests": "2",
+            "totalAmount": 588,
+            "status": "confirmed",
+            "createdAt": "2026-04-02T07:01:13.083Z"
+        }
+    ],
+    "reviews": []
 }
