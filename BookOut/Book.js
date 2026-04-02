@@ -964,15 +964,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     e.currentTarget.classList.add('active');
                     
                     // Switch lang
-                    currentLang = nextLang;
-                    localStorage.setItem('lang', currentLang);
-                    document.documentElement.setAttribute('lang', currentLang === 'zh' ? 'zh-CN' : 'en');
-                    document.documentElement.setAttribute('data-lang', currentLang);
-                    applyI18n();
+                    applyI18n(nextLang);
                     
                     // Update text node while keeping chevron
                     const span = langBtn.querySelector('span');
-                    if(span) span.textContent = currentLang === 'zh' ? '简体中文' : 'English - UK';
+                    if(span) span.textContent = t('lang_display');
                     
                     langDropdown.style.display = 'none';
                 } else {

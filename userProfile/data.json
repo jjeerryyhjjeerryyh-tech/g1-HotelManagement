@@ -146,6 +146,18 @@
             "totalAmount": 867,
             "status": "confirmed",
             "createdAt": "2026-04-02T08:43:22.930Z"
+        },
+        {
+            "id": "BK1775119461454",
+            "username": "kskbl",
+            "roomName": "舒适标准间",
+            "roomType": "舒适标准间",
+            "checkIn": "2026-04-02",
+            "checkOut": "2026-04-03",
+            "nights": "2",
+            "totalAmount": 647,
+            "status": "confirmed",
+            "createdAt": "2026-04-02T08:44:21.455Z"
         }
     ],
     "reviews": []
