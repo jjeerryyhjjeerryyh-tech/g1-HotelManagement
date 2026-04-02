@@ -788,45 +788,23 @@ function closeRoomModal() {
 
 function proceedToBook() {
     if (!currentRoom) return;
-    
-    closeRoomModal();
-    const modal = document.getElementById('bookingModal');
-    const summary = document.getElementById('bookingSummary');
-    
     const checkIn = document.getElementById('checkInDate').value;
     const checkOut = document.getElementById('checkOutDate').value;
-    
-    const nights = Math.ceil((new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24));
-    const total = currentRoom.price * nights;
-    
-    summary.innerHTML = `
-        <div class="fee-row">
-            <span>${t('fee_room')}</span>
-            <span>${currentRoom.name}</span>
-        </div>
-        <div class="fee-row">
-            <span>${t('fee_checkin')}</span>
-            <span>${checkIn}</span>
-        </div>
-        <div class="fee-row">
-            <span>${t('fee_checkout')}</span>
-            <span>${checkOut}</span>
-        </div>
-        <div class="fee-row">
-            <span>${t('fee_price')}</span>
-            <span>¥${currentRoom.price} ${t('per_night')}</span>
-        </div>
-        <div class="fee-row">
-            <span>${t('fee_nights')}</span>
-            <span>${t('nights', { count: nights })}</span>
-        </div>
-        <div class="fee-row">
-            <span>${t('fee_total')}</span>
-            <span>¥${total}</span>
-        </div>
-    `;
-    
-    modal.classList.add('active');
+    const guests = document.getElementById('guestCount')?.value || '2';
+
+    if (!checkIn || !checkOut) {
+        showToast(t('toast_select_dates'), 'error');
+        return;
+    }
+    if (new Date(checkIn) >= new Date(checkOut)) {
+        showToast(t('toast_checkout_after'), 'error');
+        return;
+    }
+
+    sessionStorage.setItem('checkout_room', JSON.stringify(currentRoom));
+    sessionStorage.setItem('checkout_params', JSON.stringify({ checkIn, checkOut, guests }));
+    closeRoomModal();
+    window.location.href = 'checkout.html';
 }
 
 function closeBookingModal() {
@@ -835,22 +813,43 @@ function closeBookingModal() {
 
 function submitBooking(event) {
     event.preventDefault();
-    showToast(t('toast_booking_success'), 'success');
-    closeBookingModal();
-    
-    // Add to mock bookings
+
+    const checkIn = document.getElementById('checkInDate').value;
+    const checkOut = document.getElementById('checkOutDate').value;
+    const nights = Math.ceil((new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24));
+    const totalAmount = currentRoom.price * nights;
+    const username = sessionStorage.getItem('username') || 'guest';
+
     const newBooking = {
         id: 'GB' + Date.now(),
-        roomId: currentRoom.id,
-        roomName: currentRoom.name,
-        checkIn: document.getElementById('checkInDate').value,
-        checkOut: document.getElementById('checkOutDate').value,
-        totalAmount: 0, // Simplified
+        username,
+        roomType: currentRoom.name,
+        checkIn,
+        checkOut,
+        guests: document.getElementById('guestCount') ? document.getElementById('guestCount').value : 1,
+        totalAmount,
         status: 'confirmed'
     };
-    myBookings.unshift(newBooking);
-    updateStats();
-    renderMyBookings();
+
+    // 发送到后端
+    fetch('http://localhost:3000/api/bookings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newBooking)
+    }).then(res => res.json()).then(() => {
+        showToast(t('toast_booking_success'), 'success');
+        closeBookingModal();
+        myBookings.unshift(newBooking);
+        updateStats();
+        renderMyBookings();
+    }).catch(() => {
+        // 后端不可用时仍然本地显示
+        showToast(t('toast_booking_success'), 'success');
+        closeBookingModal();
+        myBookings.unshift(newBooking);
+        updateStats();
+        renderMyBookings();
+    });
 }
 
 function showLookupModal() {

@@ -3,8 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const username = sessionStorage.getItem('username');
     if (username) {
         // Just mock some data based on username
-        document.getElementById('firstName').value = username;
-        document.getElementById('lastName').value = '';
+        document.getElementById('fullName').value = username;
     } else {
         // Redirect to login or home if not logged in
         showToast('请先登入', 'error');
@@ -33,10 +32,9 @@ document.addEventListener('DOMContentLoaded', () => {
         
         showToast('个人资料已更新', 'success');
         
-        // Mock save logic
-        const firstName = document.getElementById('firstName').value;
-        if (firstName) {
-            sessionStorage.setItem('username', firstName);
+        const fullName = document.getElementById('fullName').value;
+        if (fullName) {
+            sessionStorage.setItem('username', fullName);
         }
     });
 });

@@ -6,10 +6,10 @@ const path = require('path');
 
 const app = express();
 const DATA_FILE = path.join(__dirname, 'userProfile', 'data.json');
+const BOOKINGS_FILE = path.join(__dirname, 'BookOut', 'bookings.json');
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static(__dirname));
 
 // 读取数据
 function readData() {
@@ -151,5 +151,92 @@ app.delete('/api/users/:id', (req, res) => {
     writeData(data);
     res.json({ message: 'User deleted successfully' });
 });
+
+// ===== 预订 API =====
+app.get('/api/bookings', (req, res) => {
+    const data = readData();
+    res.json({ bookings: data.bookings || [] });
+});
+
+app.post('/api/bookings', (req, res) => {
+    const { roomId, roomName, roomType, guestName, guestPhone, guestEmail, checkIn, checkOut, nights, guests, totalAmount, arrivalTime, specialRequests } = req.body;
+    const username = req.body.username || 'guest';
+    const data = readData();
+    const booking = {
+        id: 'BK' + Date.now(),
+        username,
+        roomId,
+        roomName: roomName || roomType || '-',   // 统一用 roomName，兼容旧字段
+        roomType: roomType || roomName || '-',   // 保留 roomType 兼容管理员界面
+        guestName, guestPhone, guestEmail,
+        checkIn, checkOut,
+        nights: nights || guests,
+        totalAmount,
+        arrivalTime, specialRequests,
+        status: 'confirmed',
+        createdAt: new Date().toISOString()
+    };
+    if (!data.bookings) data.bookings = [];
+    data.bookings.push(booking);
+    writeData(data);
+    res.json({ message: 'Booking created', booking });
+});
+
+app.put('/api/bookings/:id/status', (req, res) => {
+    const { status } = req.body;
+    const data = readData();
+    const idx = data.bookings.findIndex(b => b.id === req.params.id);
+    if (idx === -1) return res.status(404).json({ message: 'Booking not found' });
+    data.bookings[idx].status = status;
+    writeData(data);
+    res.json({ message: 'Status updated' });
+});
+
+app.delete('/api/bookings/:id', (req, res) => {
+    const data = readData();
+    const idx = data.bookings.findIndex(b => b.id === req.params.id);
+    if (idx === -1) return res.status(404).json({ message: 'Booking not found' });
+    data.bookings.splice(idx, 1);
+    writeData(data);
+    res.json({ message: 'Booking deleted' });
+});
+
+// ===== 评价 API =====
+app.get('/api/reviews', (req, res) => {
+    const data = readData();
+    res.json({ reviews: data.reviews || [] });
+});
+
+app.post('/api/reviews', (req, res) => {
+    const { username, rating, comment, roomType } = req.body;
+    if (!username || !rating || !comment)
+        return res.status(400).json({ message: 'Please fill in all fields' });
+    const data = readData();
+    const review = {
+        id: Date.now(),
+        username,
+        roomType: roomType || '',
+        rating: parseInt(rating),
+        comment,
+        createdAt: new Date().toISOString()
+    };
+    if (!data.reviews) data.reviews = [];
+    data.reviews.push(review);
+    writeData(data);
+    res.json({ message: 'Review submitted', review });
+});
+
+app.delete('/api/reviews/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const data = readData();
+    const idx = data.reviews.findIndex(r => r.id === id);
+    if (idx === -1) return res.status(404).json({ message: 'Review not found' });
+    data.reviews.splice(idx, 1);
+    writeData(data);
+    res.json({ message: 'Review deleted' });
+});
+
+// 静态文件放在所有API路由之后
+app.use(express.static(__dirname));
 
 app.listen(3000, () => console.log('服务器运行在 http://localhost:3000'));
