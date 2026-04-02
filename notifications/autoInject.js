@@ -34,13 +34,18 @@
     // 获取基础路径
     function getBasePath() {
         const currentPath = window.location.pathname;
+        
+        // 根据当前路径确定相对路径
         if (currentPath.includes('/BookOut/')) {
             return '../';
         } else if (currentPath.includes('/login/') || currentPath.includes('/register/') || 
-                   currentPath.includes('/Homepage/') || currentPath.includes('/admin/') ||
-                   currentPath.includes('/profile/') || currentPath.includes('/userProfile/')) {
+                   currentPath.includes('/admin/') || currentPath.includes('/profile/') || 
+                   currentPath.includes('/userProfile/')) {
+            return '../';
+        } else if (currentPath.includes('/Homepage/')) {
             return '../';
         } else {
+            // 根目录或其他情况
             return './';
         }
     }
@@ -97,8 +102,19 @@
         return 'generic';
     }
 
+    // 检查是否应该显示通知按钮
+    function shouldShowNotificationButton() {
+        const currentPage = detectCurrentPage();
+        // 主页不显示通知按钮
+        return currentPage !== 'homepage';
+    }
+
     // 添加通知按钮到页面
     function addNotificationButton() {
+        // 检查是否应该显示通知按钮
+        if (!shouldShowNotificationButton()) {
+            return;
+        }
         // 尝试多种选择器找到合适的位置
         const possibleSelectors = [
             // BookOut页面
@@ -171,7 +187,15 @@
         container.style.cssText = 'position: relative; display: inline-block; margin: 0 0.5rem;';
 
         const button = document.createElement('a');
-        button.href = getBasePath() + 'notifications/notifications.html';
+        // 确保正确的绝对路径，避免相对路径问题
+        const currentPath = window.location.pathname;
+        let notificationPath;
+        if (currentPath.includes('/homePage/') || currentPath.includes('/Homepage/')) {
+            notificationPath = '/notifications/notifications.html';
+        } else {
+            notificationPath = getBasePath() + 'notifications/notifications.html';
+        }
+        button.href = notificationPath;
         button.innerHTML = '📬 消息提醒';
         button.style.cssText = `
             position: relative;
