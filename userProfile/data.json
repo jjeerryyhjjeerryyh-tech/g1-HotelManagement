@@ -44,6 +44,24 @@
             "phone": "123",
             "password": "$2b$10$zkAlp/xEZkWV3at47DdHnep58Owox6wVERt.YfsNzqV9IbbEkQheq",
             "role": "user"
+        },
+        {
+            "id": 1775112979088,
+            "username": "99999",
+            "name": "llll",
+            "email": "888@gmail.com",
+            "phone": "999",
+            "password": "$2b$10$l75AGb3Y62xR5hBi3mbYxekTjQ0wR1bkzdByQiB1DlY4a2ZDkVB4S",
+            "role": "user"
+        },
+        {
+            "id": 1775113904223,
+            "username": "22222",
+            "name": "kun",
+            "email": "22222@gmail.com",
+            "phone": "22222",
+            "password": "$2b$10$IuC4nlhrnRybVrQoJ316DeoJNZ9GDU73jd4D5z4/bcRwD2EsX8ip6",
+            "role": "user"
         }
     ],
     "admins": [
