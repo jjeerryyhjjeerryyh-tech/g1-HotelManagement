@@ -34,13 +34,18 @@
     // 获取基础路径
     function getBasePath() {
         const currentPath = window.location.pathname;
+        
+        // 根据当前路径确定相对路径
         if (currentPath.includes('/BookOut/')) {
             return '../';
         } else if (currentPath.includes('/login/') || currentPath.includes('/register/') || 
-                   currentPath.includes('/Homepage/') || currentPath.includes('/admin/') ||
-                   currentPath.includes('/profile/') || currentPath.includes('/userProfile/')) {
+                   currentPath.includes('/admin/') || currentPath.includes('/profile/') || 
+                   currentPath.includes('/userProfile/')) {
+            return '../';
+        } else if (currentPath.includes('/Homepage/')) {
             return '../';
         } else {
+            // 根目录或其他情况
             return './';
         }
     }

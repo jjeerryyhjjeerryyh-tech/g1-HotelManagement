@@ -14,8 +14,9 @@ javascript:(function(){
     function getBasePath() {
         const currentPath = window.location.pathname;
         if (currentPath.includes('/BookOut/') || currentPath.includes('/login/') || 
-            currentPath.includes('/Homepage/') || currentPath.includes('/admin/') ||
-            currentPath.includes('/register/') || currentPath.includes('/profile/')) {
+            currentPath.includes('/Homepage/') || currentPath.includes('/homePage/') ||
+            currentPath.includes('/admin/') || currentPath.includes('/register/') || 
+            currentPath.includes('/profile/')) {
             return '../';
         }
         return './';
