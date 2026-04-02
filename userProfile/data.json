@@ -124,6 +124,17 @@
             "totalAmount": 1888,
             "status": "confirmed",
             "createdAt": "2026-04-02T07:20:50.607Z"
+        },
+        {
+            "id": "BK1775119402930",
+            "username": "user0",
+            "roomType": "花园景观房",
+            "checkIn": "2026-04-02",
+            "checkOut": "2026-04-03",
+            "guests": "2",
+            "totalAmount": 867,
+            "status": "confirmed",
+            "createdAt": "2026-04-02T08:43:22.930Z"
 =======
             "id": "BK1775118887326",
             "username": "guest",
