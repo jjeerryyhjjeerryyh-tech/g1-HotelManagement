@@ -35,6 +35,15 @@
             "phone": "88888888",
             "password": "$2b$10$1dTM.nBD6AatBDVrAbulKewun5BXVtw7ExDuXzQ7fWEoYiV5dKcge",
             "role": "user"
+        },
+        {
+            "id": 1775111164393,
+            "username": "12345678",
+            "name": "gg",
+            "email": "12345678@gmail.com",
+            "phone": "123456789",
+            "password": "$2b$10$De4l4..SBfBDvBriqp4tCOBFcECsqjyMeZocTgeqdtOanb5upE7DC",
+            "role": "user"
         }
     ],
     "admins": [
