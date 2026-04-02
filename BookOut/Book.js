@@ -788,6 +788,13 @@ function closeRoomModal() {
 
 function proceedToBook() {
     if (!currentRoom) return;
+
+    // 检查登录状态，未登录则跳转登录页
+    if (!sessionStorage.getItem('isLoggedIn')) {
+        alert('请先登录才能预订房间');
+        window.location.href = '../login/login.html';
+        return;
+    }
     
     closeRoomModal();
     const modal = document.getElementById('bookingModal');

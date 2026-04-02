@@ -39,7 +39,7 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
         });
         const data = await res.json();
         if (res.ok) {
-            alert('注册成功！');
+            alert('注册成功！请登录');
             window.location.href = '../login/login.html';
         } else {
             alert(data.message);
