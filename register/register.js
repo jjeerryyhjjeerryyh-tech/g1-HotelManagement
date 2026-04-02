@@ -50,22 +50,58 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
 });
 
 function setupCustomValidation() {
-    const requiredFields = document.querySelectorAll('input[required]');
-    requiredFields.forEach(field => {
-        field.addEventListener('invalid', (e) => {
-            if (field.validity.valueMissing) {
-                field.setCustomValidity('Please fill out this field.');
-            } else if (field.validity.typeMismatch) {
-                if (field.type === 'email') {
-                    field.setCustomValidity('Please enter a valid email address.');
-                } else if (field.type === 'tel') {
-                    field.setCustomValidity('Please enter a valid phone number.');
-                }
-            }
-        });
-        field.addEventListener('input', () => {
-            field.setCustomValidity(''); 
-        });
+   const requiredFields = document.querySelectorAll('input[required]');  // 注意改成 querySelectorAll
+  
+  requiredFields.forEach(field => {
+    field.addEventListener('invalid', (e) => {
+      if (field.validity.valueMissing) {
+        field.setCustomValidity('Please fill out this field.');
+      } else if (field.validity.typeMismatch) {
+        if (field.type === 'email') {
+          field.setCustomValidity('Please enter a valid email address.');
+        } else if (field.type === 'tel') {
+          field.setCustomValidity('Please enter a valid phone number.');
+        }
+      }
+     
+      if (field.type === 'tel' && field.value.trim()) {
+        const phoneRegex = /^\d{8}$/;
+        if (!phoneRegex.test(field.value.trim())) {
+          field.setCustomValidity('请输入八位数的电话号码');
+        }
+      }
     });
+    
+  
+    field.addEventListener('input', () => {
+      field.setCustomValidity('');
+      
+      
+      if (field.type === 'tel' && field.value.trim()) {
+        const phoneRegex = /^\d{8}$/;
+        if (!phoneRegex.test(field.value.trim())) {
+          field.setCustomValidity('请输入八位数的电话号码');
+        } else {
+          field.setCustomValidity('');
+        }
+      }
+    });
+    
+ 
+    if (field.type === 'tel') {
+      field.addEventListener('input', function(e) {
+      
+        this.value = this.value.replace(/[^\d]/g, '').slice(0, 8);
+        
+       
+        if (this.value.length === 8) {
+          this.setCustomValidity('');
+        } else if (this.value.length > 0) {
+          this.setCustomValidity('请输入八位数的电话号码');
+        }
+      });
+    }
+  });
 }
+
 document.addEventListener('DOMContentLoaded', setupCustomValidation);
