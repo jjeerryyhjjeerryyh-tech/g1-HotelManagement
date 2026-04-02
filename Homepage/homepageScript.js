@@ -389,15 +389,6 @@ document.getElementById('logoutBtn').addEventListener('click', () => {
     window.location.reload();
 });
 
-document.querySelectorAll('.hp-rooms .hp-btn-sm').forEach((btn) => {
-    btn.addEventListener('click', (e) => {
-        const u = sessionStorage.getItem('username');
-        if (u) return;
-        e.preventDefault();
-        window.location.href = '../login/login.html';
-    });
-});
-
 const subscribeForm = document.getElementById('hpSubscribeForm');
 if (subscribeForm) {
     subscribeForm.addEventListener('submit', (e) => {
