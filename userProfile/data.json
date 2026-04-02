@@ -88,6 +88,28 @@
             "totalAmount": 588,
             "status": "confirmed",
             "createdAt": "2026-04-02T07:01:13.083Z"
+        },
+        {
+            "id": "BK1775113427720",
+            "username": "yyy",
+            "roomType": "舒适标准间",
+            "checkIn": "2026-04-02",
+            "checkOut": "2026-04-03",
+            "guests": "2",
+            "totalAmount": 588,
+            "status": "confirmed",
+            "createdAt": "2026-04-02T07:03:47.721Z"
+        },
+        {
+            "id": "BK1775113644568",
+            "username": "bbb",
+            "roomType": "舒适标准间",
+            "checkIn": "2026-04-02",
+            "checkOut": "2026-04-03",
+            "guests": "2",
+            "totalAmount": 588,
+            "status": "confirmed",
+            "createdAt": "2026-04-02T07:07:24.568Z"
         }
     ],
     "reviews": []
