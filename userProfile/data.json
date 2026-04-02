@@ -35,6 +35,42 @@
             "phone": "88888888",
             "password": "$2b$10$1dTM.nBD6AatBDVrAbulKewun5BXVtw7ExDuXzQ7fWEoYiV5dKcge",
             "role": "user"
+        },
+        {
+            "id": 1775111164393,
+            "username": "12345678",
+            "name": "gg",
+            "email": "12345678@gmail.com",
+            "phone": "123456789",
+            "password": "$2b$10$De4l4..SBfBDvBriqp4tCOBFcECsqjyMeZocTgeqdtOanb5upE7DC",
+            "role": "user"
+        },
+        {
+            "id": 1775112184181,
+            "username": "8888",
+            "name": "uu",
+            "email": "8888@gmail.com",
+            "phone": "8888",
+            "password": "$2b$10$CZXOC5ifTVjKcaanFn4/1eduEd5gLIo0RNETFEZxGgr9wruJZ22jK",
+            "role": "user"
+        },
+        {
+            "id": 1775112296523,
+            "username": "88888",
+            "name": "oo",
+            "email": "88888@gmail.com",
+            "phone": "88888888",
+            "password": "$2b$10$KymhYmWK94IYMepmT/wRDOWUe7A2uT4.cIQnq/hxVeiiriyQQLCRC",
+            "role": "user"
+        },
+        {
+            "id": 1775112412408,
+            "username": "0000",
+            "name": "pp",
+            "email": "0000@gmail.com",
+            "phone": "0000",
+            "password": "$2b$10$bS1rCItz7oiJspLF1AQDQ.YIM4E5hAS0cKpaoOUxdd6tvzzYTi8oy",
+            "role": "user"
         }
     ],
     "admins": [
