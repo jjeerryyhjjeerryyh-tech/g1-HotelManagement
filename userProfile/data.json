@@ -114,7 +114,6 @@
             "createdAt": "2026-04-02T08:29:48.277Z"
         },
         {
-<<<<<<< Updated upstream
             "id": "BK1775114450607",
             "username": "yyy",
             "roomType": "行政套房",
@@ -135,56 +134,6 @@
             "totalAmount": 867,
             "status": "confirmed",
             "createdAt": "2026-04-02T08:43:22.930Z"
-=======
-            "id": "BK1775118887326",
-            "username": "guest",
-            "roomType": "舒适标准间",
-            "checkIn": "2026-04-02",
-            "checkOut": "2026-04-03",
-            "totalAmount": 646.8,
-            "status": "confirmed",
-            "createdAt": "2026-04-02T08:34:47.326Z"
-        },
-        {
-            "id": "BK1775118932085",
-            "username": "guest",
-            "roomType": "舒适标准间",
-            "checkIn": "2026-04-02",
-            "checkOut": "2026-04-03",
-            "totalAmount": 646.8,
-            "status": "confirmed",
-            "createdAt": "2026-04-02T08:35:32.085Z"
-        },
-        {
-            "id": "BK1775118979776",
-            "username": "user1",
-            "roomType": "舒适标准间",
-            "checkIn": "2026-04-02",
-            "checkOut": "2026-04-03",
-            "totalAmount": 646.8,
-            "status": "confirmed",
-            "createdAt": "2026-04-02T08:36:19.776Z"
-        },
-        {
-            "id": "BK1775119014689",
-            "username": "guest",
-            "roomType": "舒适标准间",
-            "checkIn": "2026-04-02",
-            "checkOut": "2026-04-03",
-            "totalAmount": 646.8,
-            "status": "confirmed",
-            "createdAt": "2026-04-02T08:36:54.689Z"
-        },
-        {
-            "id": "BK1775119114554",
-            "username": "user1",
-            "roomType": "行政套房",
-            "checkIn": "2026-04-02",
-            "checkOut": "2026-04-03",
-            "totalAmount": 2076.8,
-            "status": "confirmed",
-            "createdAt": "2026-04-02T08:38:34.554Z"
->>>>>>> Stashed changes
         }
     ],
     "reviews": []
