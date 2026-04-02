@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>预订信息 - 91酒店</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="Book.css">
+    <link rel="stylesheet" href="checkout.css">
+</head>
+<body>
+    <div class="checkout-topbar">
+        <div class="checkout-topbar-inner">
+            <a class="checkout-back" href="Book.html">
+                <i class="fas fa-arrow-left"></i>
+                <span>查看</span>
+            </a>
+            <div class="checkout-topbar-right">
+                <div id="themeToggleMount"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="checkout-container">
+        <div class="checkout-grid">
+            <div class="checkout-main">
+                <div class="section-card">
+                    <div class="section-header">
+                        <div class="section-title"><i class="fas fa-user"></i><span>联系信息</span></div>
+                    </div>
+                    <div class="section-body">
+                        <form id="checkoutForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">称谓 *</label>
+                                    <select class="form-select" name="title" required>
+                                        <option value="">请选择</option>
+                                        <option value="mr">先生</option>
+                                        <option value="ms">女士</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">姓名 *</label>
+                                    <input class="form-input" name="fullName" required placeholder="姓名（与证件一致）">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">电子邮箱地址 *</label>
+                                    <input type="email" class="form-input" name="email" required placeholder="name@example.com">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">确认电子邮箱地址 *</label>
+                                    <input type="email" class="form-input" name="confirmEmail" required placeholder="name@example.com">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">联系电话 *</label>
+                                    <input class="form-input" name="phone" required placeholder="请输入手机号码">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">预计到达时间</label>
+                                    <select class="form-select" name="arrivalTime">
+                                        <option value="">请选择</option>
+                                        <option value="14:00-15:00">14:00-15:00</option>
+                                        <option value="15:00-16:00">15:00-16:00</option>
+                                        <option value="16:00-17:00">16:00-17:00</option>
+                                        <option value="17:00-18:00">17:00-18:00</option>
+                                        <option value="18:00+">18:00 以后</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">特殊要求（可选）</label>
+                                <input class="form-input" name="specialRequests" placeholder="如无烟房、高层、靠近电梯等">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="section-card">
+                    <div class="section-header">
+                        <div class="section-title"><i class="fas fa-location-dot"></i><span>地址</span></div>
+                    </div>
+                    <div class="section-body">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">国家/地区 *</label>
+                                <select class="form-select" form="checkoutForm" name="country" required>
+                                    <option value="">请选择</option>
+                                    <option value="CN">中国</option>
+                                    <option value="HK">中国香港</option>
+                                    <option value="MO">中国澳门</option>
+                                    <option value="SG">新加坡</option>
+                                    <option value="JP">日本</option>
+                                    <option value="US">美国</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">城市 *</label>
+                                <input class="form-input" form="checkoutForm" name="city" required placeholder="城市">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">地址 *</label>
+                            <input class="form-input" form="checkoutForm" name="address" required placeholder="街道、门牌号">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-card">
+                    <div class="section-header">
+                        <div class="section-title"><i class="fas fa-credit-card"></i><span>付款</span></div>
+                    </div>
+                    <div class="section-body">
+                        <div class="policy-box">
+                            <h4><i class="fas fa-lock"></i> 安全提示</h4>
+                            <p>我们使用加密方式处理支付信息。此页面为前端展示，暂不进行真实扣款。</p>
+                        </div>
+                        <div class="checkout-pay-icons">
+                            <i class="fab fa-cc-visa"></i>
+                            <i class="fab fa-cc-mastercard"></i>
+                            <i class="fab fa-cc-amex"></i>
+                            <i class="fab fa-cc-jcb"></i>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">卡号 *</label>
+                            <input class="form-input" form="checkoutForm" name="cardNumber" required placeholder="**** **** **** ****">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">有效期 (MM/YY) *</label>
+                                <input class="form-input" form="checkoutForm" name="expiry" required placeholder="MM/YY">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">持卡人姓名 *</label>
+                                <input class="form-input" form="checkoutForm" name="cardName" required placeholder="姓名">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-card">
+                    <div class="section-header">
+                        <div class="section-title"><i class="fas fa-file-lines"></i><span>政策</span></div>
+                    </div>
+                    <div class="section-body">
+                        <div class="checkout-policy">
+                            <div class="checkout-policy-item">
+                                <div class="checkout-policy-title">入住</div>
+                                <div class="checkout-policy-value" id="policyCheckIn">下午 2:00 之后</div>
+                            </div>
+                            <div class="checkout-policy-item">
+                                <div class="checkout-policy-title">退房</div>
+                                <div class="checkout-policy-value">中午 12:00 之前</div>
+                            </div>
+                        </div>
+                        <div class="policy-box">
+                            <h4><i class="fas fa-info-circle"></i> 取消条款</h4>
+                            <p>入住前 48 小时可免费取消，之后将收取首晚房费作为取消费用。</p>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="agreeTerms" form="checkoutForm" required>
+                            <label for="agreeTerms">我已阅读并同意<a href="#">预订条款</a>和<a href="#">隐私政策</a></label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="checkout-actions">
+                    <button class="btn btn-secondary" type="button" onclick="window.location.href='Book.html'">返回</button>
+                    <button class="btn btn-primary" type="submit" form="checkoutForm">
+                        <i class="fas fa-check"></i> 确认预订
+                    </button>
+                </div>
+            </div>
+
+            <aside class="checkout-aside">
+                <div class="section-card">
+                    <div class="section-header">
+                        <div class="section-title"><i class="fas fa-receipt"></i><span>价格详情</span></div>
+                    </div>
+                    <div class="section-body">
+                        <div class="checkout-summary-room">
+                            <div class="checkout-summary-name" id="summaryRoomName">-</div>
+                            <div class="checkout-summary-sub" id="summaryRoomMeta">-</div>
+                        </div>
+                        <div class="fee-calculation" id="summaryFees"></div>
+                        <div class="checkout-benefits">
+                            <div class="checkout-benefits-title">直接预订，专享礼遇</div>
+                            <div class="checkout-benefit"><i class="fas fa-clock"></i><span>灵活的入住和退房时间</span></div>
+                            <div class="checkout-benefit"><i class="fas fa-repeat"></i><span>灵活预订，区域任选</span></div>
+                            <div class="checkout-benefit"><i class="fas fa-tag"></i><span>专享优惠和价格</span></div>
+                            <div class="checkout-benefit"><i class="fas fa-graduation-cap"></i><span>体验独特策划活动</span></div>
+                        </div>
+                        <div class="checkout-help">
+                            <div class="checkout-help-title">需要帮助？</div>
+                            <div class="checkout-help-text">我们的专业预订团队随时为您服务：</div>
+                            <div class="checkout-help-text">+86 (21) 2327 6588</div>
+                            <div class="checkout-help-text">reservation@xxhotel.com</div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="../assets/js/theme-button.js"></script>
+    <script src="checkout.js"></script>
+</body>
+</html>

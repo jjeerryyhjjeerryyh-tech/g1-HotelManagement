@@ -788,52 +788,23 @@ function closeRoomModal() {
 
 function proceedToBook() {
     if (!currentRoom) return;
-
-    // 检查登录状态，未登录则跳转登录页
-    if (!sessionStorage.getItem('isLoggedIn')) {
-        alert('请先登录才能预订房间');
-        window.location.href = '../login/login.html';
-        return;
-    }
-    
-    closeRoomModal();
-    const modal = document.getElementById('bookingModal');
-    const summary = document.getElementById('bookingSummary');
-    
     const checkIn = document.getElementById('checkInDate').value;
     const checkOut = document.getElementById('checkOutDate').value;
-    
-    const nights = Math.ceil((new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24));
-    const total = currentRoom.price * nights;
-    
-    summary.innerHTML = `
-        <div class="fee-row">
-            <span>${t('fee_room')}</span>
-            <span>${currentRoom.name}</span>
-        </div>
-        <div class="fee-row">
-            <span>${t('fee_checkin')}</span>
-            <span>${checkIn}</span>
-        </div>
-        <div class="fee-row">
-            <span>${t('fee_checkout')}</span>
-            <span>${checkOut}</span>
-        </div>
-        <div class="fee-row">
-            <span>${t('fee_price')}</span>
-            <span>¥${currentRoom.price} ${t('per_night')}</span>
-        </div>
-        <div class="fee-row">
-            <span>${t('fee_nights')}</span>
-            <span>${t('nights', { count: nights })}</span>
-        </div>
-        <div class="fee-row">
-            <span>${t('fee_total')}</span>
-            <span>¥${total}</span>
-        </div>
-    `;
-    
-    modal.classList.add('active');
+    const guests = document.getElementById('guestCount')?.value || '2';
+
+    if (!checkIn || !checkOut) {
+        showToast(t('toast_select_dates'), 'error');
+        return;
+    }
+    if (new Date(checkIn) >= new Date(checkOut)) {
+        showToast(t('toast_checkout_after'), 'error');
+        return;
+    }
+
+    sessionStorage.setItem('checkout_room', JSON.stringify(currentRoom));
+    sessionStorage.setItem('checkout_params', JSON.stringify({ checkIn, checkOut, guests }));
+    closeRoomModal();
+    window.location.href = 'checkout.html';
 }
 
 function closeBookingModal() {
@@ -842,6 +813,15 @@ function closeBookingModal() {
 
 function submitBooking(event) {
     event.preventDefault();
+
+    const form = document.getElementById('bookingForm');
+    const guestPhone = form.querySelector('[name="guestPhone"]').value;
+
+    // 前端验证：8位数字
+    if (!/^\d{8}$/.test(guestPhone)) {
+        showToast('电话号码必须是8位数字', 'error');
+        return;
+    }
 
     const checkIn = document.getElementById('checkInDate').value;
     const checkOut = document.getElementById('checkOutDate').value;
@@ -852,10 +832,16 @@ function submitBooking(event) {
     const newBooking = {
         id: 'GB' + Date.now(),
         username,
-        roomType: currentRoom.name,
+        roomId: currentRoom.id,
+        roomName: currentRoom.name,
+        guestName: form.querySelector('[name="guestName"]').value,
+        guestPhone,
+        guestEmail: form.querySelector('[name="guestEmail"]').value,
+        arrivalTime: form.querySelector('[name="arrivalTime"]').value,
+        specialRequests: form.querySelector('[name="specialRequests"]').value,
         checkIn,
         checkOut,
-        guests: document.getElementById('guestCount') ? document.getElementById('guestCount').value : 1,
+        nights,
         totalAmount,
         status: 'confirmed'
     };
