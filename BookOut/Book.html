@@ -121,13 +121,33 @@
                         </div>
                     </div>
                     
-                    <button class="icon-btn" aria-label="Cart">
+                    <a href="checkout.html" class="icon-btn shopping-cart-link" id="cartLink" aria-label="Cart">
                         <i class="fas fa-shopping-cart"></i>
-                    </button>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </a>
                 </nav>
             </div>
         </div>
     </header>
+
+    <div class="shopping-cart-popup" id="cartPopup">
+        <div class="cart-header">
+            <h3>您的购物车: <span id="cartPopupCount">0</span> 件商品</h3>
+            <button class="cart-close-btn" id="cartCloseBtn">&times;</button>
+        </div>
+        <div class="cart-body" id="cartBody">
+            <div class="cart-empty" id="cartEmptyMsg">
+                <p>您的购物车是空的。</p>
+            </div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-summary">
+                <p>全部的</p>
+                <p id="cartTotal">0.00 人民币</p>
+            </div>
+            <a href="checkout.html" class="btn-checkout">查看</a>
+        </div>
+    </div>
 
     <section class="hero">
         <div class="hero-bg"></div>
@@ -540,5 +560,6 @@
 
     <script src="../assets/js/theme-button.js"></script>
     <script src="Book.js"></script>
+    <script src="shoppingCart.js"></script>
 </body>
 </html>

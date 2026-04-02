@@ -38,6 +38,10 @@
                     </label>
                     <theme-button value="light" id="theme-toggle" size="0.6"></theme-button>
                     <button class="nav-btn reserve-btn" id="openSearchBtn" type="button" data-i18n="reserve">RESERVE</button>
+                    <a href="../BookOut/checkout.html" class="shopping-cart-link" id="cartLink">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </a>
                     <div class="navbar-auth" style="display: none;">
                         <a href="../register/register.html" class="nav-btn register-btn" id="registerBtn" data-i18n="signup">注册</a>
                         <a href="../login/login.html" class="nav-btn login-btn" id="loginBtn" data-i18n="login">登录</a>
@@ -585,11 +589,33 @@
         </div>
     </footer>
 
+    <div class="shopping-cart-popup" id="cartPopup">
+        <div class="cart-header">
+            <h3 data-i18n="cart_title">您的购物车: <span id="cartPopupCount">0</span> 件商品</h3>
+            <button class="cart-close-btn" id="cartCloseBtn">×</button>
+        </div>
+        <div class="cart-body" id="cartBody">
+            <!-- 购物车为空时的消息 -->
+            <div class="cart-empty" id="cartEmptyMsg">
+                <p data-i18n="cart_empty">您的购物车是空的。</p>
+            </div>
+            <!-- 购物车项目将在这里动态添加 -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-summary">
+                <p data-i18n="cart_total">全部的</p>
+                <p id="cartTotal">0.00 人民币</p>
+            </div>
+            <a href="../BookOut/checkout.html" class="btn-checkout" data-i18n="cart_checkout">查看</a>
+        </div>
+    </div>
+
     <script src="../assets/js/theme-button.js"></script>
     <script src="homepageScript.js?v=20260402"></script>
     
     <!-- 通知系统 - 独立模块 -->
     <script src="../notifications/notificationSystem.js"></script>
     <script src="../notifications/autoInject.js"></script>
+    <script src="shoppingCart.js"></script>
 </body>
 </html>
