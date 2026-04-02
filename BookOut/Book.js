@@ -824,6 +824,15 @@ function closeBookingModal() {
 function submitBooking(event) {
     event.preventDefault();
 
+    const form = document.getElementById('bookingForm');
+    const guestPhone = form.querySelector('[name="guestPhone"]').value;
+
+    // 前端验证：8位数字
+    if (!/^\d{8}$/.test(guestPhone)) {
+        showToast('电话号码必须是8位数字', 'error');
+        return;
+    }
+
     const checkIn = document.getElementById('checkInDate').value;
     const checkOut = document.getElementById('checkOutDate').value;
     const nights = Math.ceil((new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24));
@@ -833,10 +842,16 @@ function submitBooking(event) {
     const newBooking = {
         id: 'GB' + Date.now(),
         username,
-        roomType: currentRoom.name,
+        roomId: currentRoom.id,
+        roomName: currentRoom.name,
+        guestName: form.querySelector('[name="guestName"]').value,
+        guestPhone,
+        guestEmail: form.querySelector('[name="guestEmail"]').value,
+        arrivalTime: form.querySelector('[name="arrivalTime"]').value,
+        specialRequests: form.querySelector('[name="specialRequests"]').value,
         checkIn,
         checkOut,
-        guests: document.getElementById('guestCount') ? document.getElementById('guestCount').value : 1,
+        nights,
         totalAmount,
         status: 'confirmed'
     };

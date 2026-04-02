@@ -6,6 +6,7 @@ const path = require('path');
 
 const app = express();
 const DATA_FILE = path.join(__dirname, 'userProfile', 'data.json');
+const BOOKINGS_FILE = path.join(__dirname, 'BookOut', 'bookings.json');
 
 app.use(cors());
 app.use(express.json());
@@ -158,17 +159,20 @@ app.get('/api/bookings', (req, res) => {
 });
 
 app.post('/api/bookings', (req, res) => {
-    const { roomType, checkIn, checkOut, guests, totalAmount } = req.body;
+    const { roomId, roomName, roomType, guestName, guestPhone, guestEmail, checkIn, checkOut, nights, guests, totalAmount, arrivalTime, specialRequests } = req.body;
     const username = req.body.username || 'guest';
     const data = readData();
     const booking = {
         id: 'BK' + Date.now(),
         username,
-        roomType,
-        checkIn,
-        checkOut,
-        guests,
+        roomId,
+        roomName: roomName || roomType || '-',   // 统一用 roomName，兼容旧字段
+        roomType: roomType || roomName || '-',   // 保留 roomType 兼容管理员界面
+        guestName, guestPhone, guestEmail,
+        checkIn, checkOut,
+        nights: nights || guests,
         totalAmount,
+        arrivalTime, specialRequests,
         status: 'confirmed',
         createdAt: new Date().toISOString()
     };
