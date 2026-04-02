@@ -153,7 +153,7 @@ async function loadBookings() {
         <tr class="hover:bg-gray-50">
             <td class="px-6 py-4 text-sm font-medium">${b.id}</td>
             <td class="px-6 py-4 text-sm">${b.username}</td>
-            <td class="px-6 py-4 text-sm">${b.roomType || '-'}</td>
+            <td class="px-6 py-4 text-sm">${b.roomName || b.roomType || '-'}</td>
             <td class="px-6 py-4 text-sm">${b.checkIn} / ${b.checkOut}</td>
             <td class="px-6 py-4 text-sm">¥${b.totalAmount || '-'}</td>
             <td class="px-6 py-4 text-sm">${statusMap[b.status] || b.status}</td>

@@ -328,7 +328,7 @@
             </div>
         </div>
     </div>
-
+//111
     <!-- Booking Form Modal -->
     <div class="modal-overlay" id="bookingModal">
         <div class="modal">
@@ -351,7 +351,12 @@
                         </div>
                         <div class="form-group">
                             <label class="form-label"><span data-i18n="guest_phone">联系电话</span> *</label>
-                            <input type="tel" class="form-input" name="guestPhone" required placeholder="138****8888">
+                            <input type="tel" class="form-input" name="guestPhone" required
+                                placeholder="请输入8位电话号码"
+                                pattern="\d{8}"
+                                maxlength="8"
+                                title="电话号码必须是8位数字"
+                                oninput="this.value=this.value.replace(/\D/g,'').slice(0,8)">
                         </div>
                     </div>
                     <div class="form-group">
