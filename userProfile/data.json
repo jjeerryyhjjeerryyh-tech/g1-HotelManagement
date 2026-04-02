@@ -108,26 +108,15 @@
             "createdAt": "2026-04-02T07:01:13.083Z"
         },
         {
-            "id": "BK1775113427720",
+            "id": "BK1775114450607",
             "username": "yyy",
-            "roomType": "舒适标准间",
+            "roomType": "行政套房",
             "checkIn": "2026-04-02",
             "checkOut": "2026-04-03",
             "guests": "2",
-            "totalAmount": 588,
+            "totalAmount": 1888,
             "status": "confirmed",
-            "createdAt": "2026-04-02T07:03:47.721Z"
-        },
-        {
-            "id": "BK1775113644568",
-            "username": "bbb",
-            "roomType": "舒适标准间",
-            "checkIn": "2026-04-02",
-            "checkOut": "2026-04-03",
-            "guests": "2",
-            "totalAmount": 588,
-            "status": "confirmed",
-            "createdAt": "2026-04-02T07:07:24.568Z"
+            "createdAt": "2026-04-02T07:20:50.607Z"
         }
     ],
     "reviews": []
