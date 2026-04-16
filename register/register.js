@@ -30,12 +30,13 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
     const email = form.querySelector('input[name="email"]').value;
     const phone = form.querySelector('input[name="phone"]').value;
     const password = form.querySelector('input[name="password"]').value;
+    const subscribed = form.querySelector('input[name="subscribe"]').checked;
 
     try {
         const res = await fetch('http://localhost:3000/api/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, fullName, email, phone, password })
+            body: JSON.stringify({ username, fullName, email, phone, password, subscribed })
         });
         const data = await res.json();
         if (res.ok) {

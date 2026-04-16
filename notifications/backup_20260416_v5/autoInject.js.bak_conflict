@@ -1,5 +1,5 @@
 /**
- * 通知系统自动注入脚本 v2.3
+ * 通知系统自动注入脚本 v2.2
  *
  * 工作流程：
  *   1. login.html    → 拦截 /api/login → 写 __justLoggedIn 标志
@@ -12,7 +12,7 @@
  *   <script src="../notifications/notificationSystem.js"></script>
  *   <script src="../notifications/autoInject.js"></script>
  *
- * v2.3 新增：i18n 支持（通过 lang.js 获取语言，监听 notifLangChanged 事件）
+ * v2.2 修复：预订数据读取顺序错误（Bug #1）
  */
 
 (function () {
@@ -101,7 +101,7 @@
         }
 
         // 预订成功通知
-        // 先读取数据，再删除 sessionStorage（防止读取到空值）
+        // 【Bug #1 修复】先读取数据，再删除 sessionStorage
         if (sessionStorage.getItem('__justBooked') === '1') {
             var bookingData = {
                 roomType:  sessionStorage.getItem('__bookingRoom')  || '',
@@ -122,8 +122,41 @@
     // ============================================
     // UI：添加消息提醒按钮
     // ============================================
+    function addNotificationButton() {
+        if (document.querySelector('.notif-btn')) return;
+
+        var container = document.querySelector('.header-links');
+        if (!container) return;
+
+<<<<<<< HEAD
+        var badge = '<span class="notification-badge" style="display:none;background:#e74c3c;color:#fff;border-radius:50%;width:18px;height:18px;font-size:11px;line-height:18px;text-align:center;position:absolute;top:-6px;right:-6px;font-weight:bold;">0</span>';
+        var btnText = getNotifBtnText();
+=======
+        var currentLang = localStorage.getItem('lang') || 'zh';
+        var btnText = currentLang === 'en' ? 'Notifications' : '消息提醒';
+>>>>>>> 7623f637cb1d3c575ef866db66acdf09e90c24ba
+
+        var a = document.createElement('a');
+        a.href = notifBase() + 'notifications.html';
+        a.className = 'notif-btn header-link';
+<<<<<<< HEAD
+        a.id = 'notifBtn';
+        a.innerHTML = '&#128231; <span id="notifBtnText">' + btnText + '</span>' + badge;
+=======
+        a.setAttribute('data-i18n', 'nav_notifications');
+        a.innerHTML = '&#128231; <span class="notif-text">' + btnText + '</span><span class="notification-badge" style="display:none;background:#e74c3c;color:#fff;border-radius:50%;width:18px;height:18px;font-size:11px;line-height:18px;text-align:center;position:absolute;top:-6px;right:-6px;font-weight:bold;">0</span>';
+>>>>>>> 7623f637cb1d3c575ef866db66acdf09e90c24ba
+        a.style.cssText = 'position:relative;display:inline-flex;align-items:center;gap:4px;';
+
+        var userMenu = container.querySelector('.user-menu-container');
+        if (userMenu && userMenu.parentNode === container) {
+            container.insertBefore(a, userMenu);
+        } else {
+            container.appendChild(a);
+        }
+    }
+
     function getNotifBtnText() {
-        // 优先通过 lang.js 获取语言
         if (window.__notifLang && window.__notifLang.getLang) {
             var lang = window.__notifLang.getLang();
             return lang === 'en' ? 'Notifications' : '消息提醒';
@@ -136,33 +169,6 @@
     function updateNotifBtnText() {
         var textEl = document.getElementById('notifBtnText');
         if (textEl) textEl.textContent = getNotifBtnText();
-        var notifText = document.querySelector('.notif-text');
-        if (notifText) notifText.textContent = getNotifBtnText();
-    }
-
-    function addNotificationButton() {
-        if (document.querySelector('.notif-btn')) return;
-
-        var container = document.querySelector('.header-links');
-        if (!container) return;
-
-        var btnText = getNotifBtnText();
-        var badge = '<span class="notification-badge" style="display:none;background:#e74c3c;color:#fff;border-radius:50%;width:18px;height:18px;font-size:11px;line-height:18px;text-align:center;position:absolute;top:-6px;right:-6px;font-weight:bold;">0</span>';
-
-        var a = document.createElement('a');
-        a.href = notifBase() + 'notifications.html';
-        a.className = 'notif-btn header-link';
-        a.id = 'notifBtn';
-        a.setAttribute('data-i18n', 'nav_notifications');
-        a.innerHTML = '&#128231; <span id="notifBtnText" class="notif-text">' + btnText + '</span>' + badge;
-        a.style.cssText = 'position:relative;display:inline-flex;align-items:center;gap:4px;';
-
-        var userMenu = container.querySelector('.user-menu-container');
-        if (userMenu && userMenu.parentNode === container) {
-            container.insertBefore(a, userMenu);
-        } else {
-            container.appendChild(a);
-        }
     }
 
     function updateBadge() {
@@ -170,7 +176,7 @@
         var user = sessionStorage.getItem('username');
         if (!user) return;
         var count = window.notificationSystem.getUnreadCount(user);
-        // 使用 .notification-badge 与 notificationSystem.js 保持一致
+        // 【Bug #2 修复】使用 .notification-badge 与 notificationSystem.js 保持一致
         document.querySelectorAll('.notification-badge').forEach(function (b) {
             b.textContent = count > 99 ? '99+' : (count > 0 ? count : '');
             b.style.display = count > 0 ? 'inline-block' : 'none';
@@ -204,7 +210,7 @@
                 updateBadge();
             });
 
-            // 兼容 localStorage storage 事件（多标签页同步）
+            // 兼容 localStorage storage 事件
             window.addEventListener('storage', function (e) {
                 if (e.key === 'lang') {
                     updateNotifBtnText();

@@ -1,0 +1,288 @@
+/**
+ * 通知系统核心模块 v1.2
+ * 支持中英文国际化（与 Book.html 语言切换同步）
+ * 翻译语言通过 localStorage.getItem('lang') 获取，默认 zh
+ */
+
+(function () {
+    'use strict';
+
+    // ============================================
+    // 翻译字典
+    // ============================================
+    var I18N = {
+        zh: {
+            // 通知类型标题
+            login_success_title:    '登录成功',
+            booking_success_title:   '预订成功',
+            profile_update_title:   '信息更新',
+            admin_login_title:      '管理员登录',
+            first_login_title:      '欢迎加入',
+
+            // 通知正文（{name}、{room}、{checkIn}、{checkOut} 为占位符）
+            login_success_body:    '{name}，欢迎回来！您已成功登录系统。',
+            first_login_body:       '{name}，感谢您注册我们的酒店管理系统。',
+            booking_success_body:  '您已成功预订 {room}，入住：{checkIn}，退房：{checkOut}。',
+            profile_update_body:    '您的个人信息已成功更新。如非本人操作，请及时联系客服。',
+            admin_login_body:      '管理员账户登录成功。您现在可以访问系统管理功能。',
+
+            // 通知类型标签
+            type_login_success:   '登录通知',
+            type_booking_success: '预订通知',
+            type_profile_update: '信息更新',
+            type_admin_login:    '管理员',
+            type_first_login:    '欢迎消息',
+            type_default:        '系统通知'
+        },
+        en: {
+            login_success_title:    'Login Successful',
+            booking_success_title:   'Booking Confirmed',
+            profile_update_title:   'Profile Updated',
+            admin_login_title:      'Admin Login',
+            first_login_title:      'Welcome!',
+
+            login_success_body:    'Welcome back, {name}! You have successfully logged in.',
+            first_login_body:       'Welcome, {name}! Thank you for registering with our hotel management system.',
+            booking_success_body:  'You have successfully booked {room}. Check-in: {checkIn}, Check-out: {checkOut}.',
+            profile_update_body:   'Your profile has been updated successfully. If this was not you, please contact support immediately.',
+            admin_login_body:      'Admin account logged in successfully. You now have access to the system management features.',
+
+            type_login_success:   'Login Notification',
+            booking_success_type:  'Booking Notification',
+            type_booking_success: 'Booking Notification',
+            type_profile_update: 'Profile Update',
+            type_admin_login:    'Admin',
+            type_first_login:    'Welcome',
+            type_default:        'System Notification'
+        }
+    };
+
+    // 获取当前语言，默认为 zh
+    function getLang() {
+        return localStorage.getItem('lang') || 'zh';
+    }
+
+    // 翻译某个 key，替换占位符 {name} 等
+    function t(key, params) {
+        var lang = getLang();
+        var dict = I18N[lang] || I18N.zh;
+        var text = dict[key] || I18N.zh[key] || key;
+        if (params) {
+            Object.keys(params).forEach(function (k) {
+                text = text.replace(new RegExp('\\{' + k + '\\}', 'g'), params[k]);
+            });
+        }
+        return text;
+    }
+
+    // ============================================
+    // NotificationSystem 核心类
+    // ============================================
+    var storageKey = 'hotel_notifications';
+    var maxNotifications = 10;
+
+    function init() {
+        if (!localStorage.getItem(storageKey)) {
+            localStorage.setItem(storageKey, '[]');
+        }
+    }
+
+    function getNotifications(userId) {
+        var all = JSON.parse(localStorage.getItem(storageKey) || '[]');
+        if (userId) return all.filter(function (n) { return n.userId === userId; });
+        return all;
+    }
+
+    function addNotification(notification) {
+        var notifications = getNotifications();
+        notifications.unshift(notification);
+        if (notifications.length > maxNotifications) {
+            notifications = notifications.slice(0, maxNotifications);
+        }
+        localStorage.setItem(storageKey, JSON.stringify(notifications));
+        updateNotificationBadge();
+    }
+
+    function getUnreadCount(userId) {
+        return getNotifications(userId).filter(function (n) { return !n.isRead; }).length;
+    }
+
+    function markAsRead(notificationId) {
+        var notifications = getNotifications();
+        var found = notifications.find(function (n) { return n.id == notificationId; });
+        if (found) {
+            found.isRead = true;
+            localStorage.setItem(storageKey, JSON.stringify(notifications));
+            updateNotificationBadge();
+        }
+    }
+
+    function markAllAsRead(userId) {
+        var notifications = getNotifications();
+        notifications.forEach(function (n) {
+            if (n.userId === userId) n.isRead = true;
+        });
+        localStorage.setItem(storageKey, JSON.stringify(notifications));
+        updateNotificationBadge();
+    }
+
+    function deleteNotification(notificationId) {
+        var notifications = getNotifications();
+        notifications = notifications.filter(function (n) { return n.id != notificationId; });
+        localStorage.setItem(storageKey, JSON.stringify(notifications));
+        updateNotificationBadge();
+    }
+
+    // 更新所有页面的通知徽章
+    function updateNotificationBadge() {
+        var currentUser = sessionStorage.getItem('username');
+        if (!currentUser || !document) return;
+
+        var unreadCount = getUnreadCount(currentUser);
+        document.querySelectorAll('.notification-badge').forEach(function (badge) {
+            if (unreadCount > 0) {
+                badge.textContent = unreadCount > 99 ? '99+' : unreadCount;
+                badge.style.display = 'inline-block';
+            } else {
+                badge.style.display = 'none';
+            }
+        });
+    }
+
+    // 占位符替换
+    function format(template, params) {
+        var result = template;
+        if (params) {
+            Object.keys(params).forEach(function (k) {
+                result = result.replace(new RegExp('\\{' + k + '\\}', 'g'), params[k] || '');
+            });
+        }
+        return result;
+    }
+
+    // ============================================
+    // 快捷通知方法（已内置 i18n）
+    // ============================================
+    var NotificationTypes = {
+        LOGIN_SUCCESS:    'login_success',
+        BOOKING_SUCCESS:  'booking_success',
+        PROFILE_UPDATE:   'profile_update',
+        ADMIN_LOGIN:      'admin_login',
+        FIRST_LOGIN:      'first_login'
+    };
+
+    function notifyLoginSuccess(username, isFirstLogin) {
+        var userId   = username;
+        var type     = isFirstLogin ? NotificationTypes.FIRST_LOGIN : NotificationTypes.LOGIN_SUCCESS;
+        var titleKey = isFirstLogin ? 'first_login_title' : 'login_success_title';
+        var bodyKey  = isFirstLogin ? 'first_login_body'  : 'login_success_body';
+        var title    = t(titleKey);
+        var message  = format(t(bodyKey), { name: username });
+
+        var notification = {
+            id:        Date.now() + Math.random(),
+            userId:    userId,
+            type:      type,
+            title:     title,
+            message:   message,
+            timestamp: new Date().toISOString(),
+            isRead:    false
+        };
+        addNotification(notification);
+        return notification;
+    }
+
+    function notifyBookingSuccess(username, bookingDetails) {
+        var userId  = username;
+        var title   = t('booking_success_title');
+        var message = format(t('booking_success_body'), {
+            name:    username,
+            room:    bookingDetails.roomType  || '',
+            checkIn: bookingDetails.checkIn   || '',
+            checkOut:bookingDetails.checkOut  || ''
+        });
+
+        var notification = {
+            id:           Date.now() + Math.random(),
+            userId:       userId,
+            type:         NotificationTypes.BOOKING_SUCCESS,
+            title:        title,
+            message:      message,
+            timestamp:    new Date().toISOString(),
+            isRead:       false,
+            bookingDetails: bookingDetails
+        };
+        addNotification(notification);
+        return notification;
+    }
+
+    function notifyProfileUpdate(username) {
+        var userId  = username;
+        var title   = t('profile_update_title');
+        var message = t('profile_update_body');
+
+        var notification = {
+            id:        Date.now() + Math.random(),
+            userId:    userId,
+            type:      NotificationTypes.PROFILE_UPDATE,
+            title:     title,
+            message:   message,
+            timestamp: new Date().toISOString(),
+            isRead:    false
+        };
+        addNotification(notification);
+        return notification;
+    }
+
+    function notifyAdminLogin(username) {
+        var userId  = username;
+        var title   = t('admin_login_title');
+        var message = t('admin_login_body');
+
+        var notification = {
+            id:        Date.now() + Math.random(),
+            userId:    userId,
+            type:      NotificationTypes.ADMIN_LOGIN,
+            title:     title,
+            message:   message,
+            timestamp: new Date().toISOString(),
+            isRead:    false
+        };
+        addNotification(notification);
+        return notification;
+    }
+
+    // ============================================
+    // 初始化 & 暴露到全局
+    // ============================================
+    init();
+
+    // 页面加载时更新徽章
+    document.addEventListener('DOMContentLoaded', updateNotificationBadge);
+
+    // 每 3 秒检查一次语言变化并刷新徽章（配合 Book 的语言切换）
+    setInterval(function () { updateNotificationBadge(); }, 3000);
+
+    // 监听语言切换事件（Book 改变 lang 时通知页面）
+    window.addEventListener('storage', function (e) {
+        if (e.key === 'lang') updateNotificationBadge();
+    });
+
+    // 对外暴露
+    window.notificationSystem = {
+        NotificationTypes:    NotificationTypes,
+        getNotifications:     getNotifications,
+        getUnreadCount:       getUnreadCount,
+        markAsRead:           markAsRead,
+        markAllAsRead:        markAllAsRead,
+        deleteNotification:   deleteNotification,
+        updateNotificationBadge: updateNotificationBadge,
+        notifyLoginSuccess:   notifyLoginSuccess,
+        notifyBookingSuccess: notifyBookingSuccess,
+        notifyProfileUpdate:  notifyProfileUpdate,
+        notifyAdminLogin:     notifyAdminLogin,
+        t:                    t,
+        getLang:              getLang
+    };
+
+})();
