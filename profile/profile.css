@@ -412,3 +412,107 @@ body {
         padding: 0 16px;
     }
 }
+
+/* ===== 新导航栏（index.html 风格） ===== */
+.pf-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--header-bg);
+    border-bottom: 1px solid var(--header-border);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    padding: 0;
+}
+
+.pf-navbar-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    height: 64px;
+}
+
+.pf-navbar-left,
+.pf-navbar-right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.pf-navbar-right {
+    justify-content: flex-end;
+    gap: 4px;
+}
+
+.pf-navbar-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Logo */
+.pf-logo {
+    text-decoration: none;
+    color: var(--text-primary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.1;
+    transition: opacity 0.2s;
+}
+.pf-logo:hover { opacity: 0.75; }
+
+.pf-logo-main {
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    color: var(--primary-color);
+}
+
+.pf-logo-sub {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+/* 返回链接 */
+.pf-nav-back {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+}
+.pf-nav-back:hover { color: var(--primary-color); }
+
+/* 右侧链接 */
+.pf-nav-link {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    padding: 4px 8px;
+    transition: color 0.2s;
+}
+.pf-nav-link:hover { color: var(--primary-color); }
+
+.pf-nav-divider {
+    color: var(--border-color);
+    font-size: 0.75rem;
+    user-select: none;
+}
+
+.pf-logout-btn { text-transform: uppercase; }
+
+/* body 顶部留出导航栏高度 */
+body { padding-top: 0; }
