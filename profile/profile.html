@@ -10,37 +10,26 @@
     <link rel="stylesheet" href="profile.css">
 </head>
 <body>
-    <!-- 头部导航 (与 Book.html 风格一致) -->
-    <header class="header">
-        <div class="header-content">
-            <a class="logo" href="../homePage/index.html" aria-label="首页">
-                <div class="logo-main">91酒店</div>
-                <div class="logo-sub">HONG KONG</div>
-            </a>
-            <div class="header-right">
-                <nav class="header-links">
-                    <a href="../BookOut/Book.html" class="header-link">增加房间</a>
-                    <a href="#" class="header-link">选择饭店 <i class="fas fa-chevron-down"></i></a>
-                    <a href="../BookOut/Book.html" class="header-link">我的预订</a>
-                    <a href="#" class="header-link" id="currencyDisplay">港币 <i class="fas fa-chevron-down"></i></a>
-                    
-                    <label class="lang-select" for="langSelect">
-                        <select id="langSelect" aria-label="Language">
-                            <option value="zh">中文</option>
-                            <option value="en">English</option>
-                        </select>
-                    </label>
-                    
-                    <div class="user-menu-container">
-                        <button class="icon-btn" id="userBtn" aria-label="User profile">
-                            <i class="far fa-user"></i>
-                        </button>
-                    </div>
-                    <!-- 主题切换按钮 -->
-                    <button class="icon-btn" id="themeToggle" aria-label="切换主题">
-                        <i class="fas fa-moon"></i>
-                    </button>
-                </nav>
+    <!-- 导航栏（与 index.html 风格一致） -->
+    <header class="pf-navbar" id="pfNavbar">
+        <div class="pf-navbar-container">
+            <div class="pf-navbar-left">
+                <a href="../homePage/index.html" class="pf-nav-back">
+                    <i class="fas fa-arrow-left"></i> 首页
+                </a>
+            </div>
+            <div class="pf-navbar-center">
+                <a class="pf-logo" href="../homePage/index.html" aria-label="首页">
+                    <div class="pf-logo-main">91酒店</div>
+                    <div class="pf-logo-sub">HONG KONG</div>
+                </a>
+            </div>
+            <div class="pf-navbar-right">
+                <a href="../BookOut/Book.html" class="pf-nav-link">客房预订</a>
+                <span class="pf-nav-divider">|</span>
+                <a href="../BookOut/myBookings.html" class="pf-nav-link">我的预订</a>
+                <span class="pf-nav-divider">|</span>
+                <button class="pf-nav-link pf-logout-btn" id="pfLogoutBtn">退出</button>
             </div>
         </div>
     </header>
@@ -157,5 +146,12 @@
 
     <script src="../notifications/notificationSystem.js"></script>
     <script src="profile.js"></script>
+    <script>
+        // 退出登录
+        document.getElementById('pfLogoutBtn').addEventListener('click', function() {
+            sessionStorage.clear();
+            window.location.href = '../homePage/index.html';
+        });
+    </script>
 </body>
 </html>

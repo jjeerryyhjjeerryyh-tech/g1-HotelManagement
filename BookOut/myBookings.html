@@ -50,6 +50,22 @@
         }
         .submit-review-btn:hover { background: #d66304; }
         .review-hint { font-size: 13px; color: #9ca3af; padding: 8px 0; }
+
+        /* 取消预订按钮 */
+        .cancel-btn {
+            background: none;
+            border: 1px solid #f5222d;
+            color: #f5222d;
+            padding: 7px 18px;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .cancel-btn:hover { background: #fff1f0; }
     </style>
 </head>
 <body>
@@ -107,6 +123,7 @@
                 const statusClass = 'status-' + (b.status || 'confirmed').replace(/\s/g, '-');
                 const statusText  = STATUS_LABEL[b.status] || b.status;
                 const isCheckedOut = b.status === 'checked-out';
+                const isCancellable = b.status === 'confirmed' || b.status === 'pending';
 
                 // 查找该预订是否已有评价（按 bookingId 或 roomId+username）
                 const existingReview = reviews.find(r =>
@@ -163,6 +180,12 @@
                             <div class="info-item"><label>预订时间</label><span>${new Date(b.createdAt).toLocaleDateString('zh-CN')}</span></div>
                         </div>
                         ${reviewHtml}
+                        ${isCancellable ? `
+                        <div style="margin-top:16px;padding-top:16px;border-top:1px solid #f0f0f0;display:flex;justify-content:flex-end;">
+                            <button class="cancel-btn" onclick="cancelBooking('${b.id}')">
+                                <i class="fas fa-times-circle"></i> 取消预订
+                            </button>
+                        </div>` : ''}
                     </div>`;
             }).join('');
         }
@@ -201,6 +224,22 @@
                 loadPage();
             } else {
                 alert(data.message || '提交失败');
+            }
+        }
+
+        async function cancelBooking(bookingId) {
+            if (!confirm('确认取消此预订？取消后无法恢复。')) return;
+            const res  = await fetch(`${API}/api/bookings/${bookingId}/status`, {
+                method:  'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body:    JSON.stringify({ status: 'cancelled' })
+            });
+            const data = await res.json();
+            if (res.ok) {
+                alert('预订已取消');
+                loadPage();
+            } else {
+                alert(data.message || '取消失败，请重试');
             }
         }
     </script>
