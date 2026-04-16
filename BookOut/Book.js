@@ -300,13 +300,39 @@
                 currency_myr: 'MYR - 马来西亚林吉特',
                 lang_display: '简体中文',
                 lang_title: '语言',
+                nav_notifications: '消息提醒',
                 section_connect: '畅享沟通',
                 connect_desc: '订阅酒店电子报，第一时间获取专属优惠、旅行灵感以及精彩活动资讯。',
                 subscribe_placeholder: '输入您的邮箱地址',
                 subscribe_btn: '注册',
                 subscribe_success: '已订阅: {email}',
                 subscribe_thanks: '感谢您的订阅！',
-                subscribe_success_msg: '您将第一时间收到我们的最新资讯和专属优惠。'
+                subscribe_success_msg: '您将第一时间收到我们的最新资讯和专属优惠。',
+                footer_guest_center: '环球宾客中心',
+                footer_guest_booking: '客房预订与咨询',
+                footer_guest_membership: '会员权益说明',
+                footer_guest_transport: '交通与周边',
+                footer_group: 'XX酒店集团',
+                footer_about: '关于我们',
+                footer_services: '住宿服务',
+                footer_food: '餐饮美食',
+                footer_contact: '联系我们',
+                footer_media: '媒体',
+                footer_newsroom: '新闻中心',
+                footer_media_contact: '媒体联系人',
+                footer_brand_assets: '品牌资料',
+                footer_corporate: '企业',
+                footer_meetings: '会议与宴会',
+                footer_sustainability: '可持续发展',
+                footer_careers: '招聘与工作',
+                footer_suppliers: '供应商合作',
+                footer_copyright: '© 2026 XX酒店',
+                footer_privacy: '隐私政策',
+                footer_terms: '条款与条件',
+                footer_cookie: 'Cookie 设置',
+                footer_lang: '语言',
+                lang_link_zh: '中文',
+                lang_link_en: 'English'
             },
             en: {
                 brand: 'HotelBook Booking',
@@ -429,13 +455,39 @@
                 currency_myr: 'MYR',
                 lang_display: 'English - UK',
                 lang_title: 'Language',
+                nav_notifications: 'Notifications',
                 section_connect: 'Stay Connected',
                 connect_desc: 'Subscribe to our newsletter for exclusive offers, travel inspiration, and event highlights.',
                 subscribe_placeholder: 'Enter your email address',
                 subscribe_btn: 'Subscribe',
                 subscribe_success: 'Subscribed: {email}',
                 subscribe_thanks: 'Thank You for Subscribing!',
-                subscribe_success_msg: 'You will be the first to receive our latest updates and exclusive offers.'
+                subscribe_success_msg: 'You will be the first to receive our latest updates and exclusive offers.',
+                footer_guest_center: 'Global Guest Center',
+                footer_guest_booking: 'Room Reservations',
+                footer_guest_membership: 'Membership Benefits',
+                footer_guest_transport: 'Transport & Surrounding',
+                footer_group: 'XX Hotel Group',
+                footer_about: 'About Us',
+                footer_services: 'Stay Services',
+                footer_food: 'Dining',
+                footer_contact: 'Contact Us',
+                footer_media: 'Media',
+                footer_newsroom: 'Newsroom',
+                footer_media_contact: 'Media Contacts',
+                footer_brand_assets: 'Brand Assets',
+                footer_corporate: 'Corporate',
+                footer_meetings: 'Meetings & Events',
+                footer_sustainability: 'Sustainability',
+                footer_careers: 'Careers',
+                footer_suppliers: 'Suppliers',
+                footer_copyright: '© 2026 XX Hotel',
+                footer_privacy: 'Privacy Policy',
+                footer_terms: 'Terms & Conditions',
+                footer_cookie: 'Cookie Settings',
+                footer_lang: 'Language',
+                lang_link_zh: 'Chinese',
+                lang_link_en: 'English'
             }
         };
 
@@ -669,11 +721,12 @@
 
         function createRoomCard(room) {
             const discount = Math.round((1 - room.price / room.originalPrice) * 100);
+            const roomName = typeof room.name === 'object' ? (room.name[currentLang] || room.name.zh) : room.name;
             
             return `
                 <div class="room-card">
                     <div class="room-image">
-                        <img src="${room.image}" alt="${room.name}">
+                        <img src="${room.image}" alt="${roomName}">
                         <div class="room-badges">
                             ${discount > 0 ? `<span class="room-badge badge-discount">-${discount}%</span>` : ''}
                             ${room.available < 5 ? `<span class="room-badge badge-limited">${t('only_left', { count: room.available })}</span>` : ''}
@@ -684,10 +737,10 @@
                     </div>
                     <div class="room-content">
                         <div class="room-type">${room.type === 'standard' ? t('room_type_standard') : room.type === 'deluxe' ? t('room_type_deluxe') : t('room_type_suite')}</div>
-                        <h3 class="room-name">${room.name}</h3>
+                        <h3 class="room-name">${roomName}</h3>
                         <div class="room-features">
                             <span><i class="fas fa-ruler-combined"></i> ${room.size}</span>
-                            <span><i class="fas fa-bed"></i> ${room.bed}</span>
+                            <span><i class="fas fa-bed"></i> ${typeof room.bed === 'object' ? (room.bed[currentLang] || room.bed.zh) : room.bed}</span>
                             <span><i class="fas fa-user"></i> ${t('up_to_guests', { count: room.guests })}</span>
                         </div>
                         <div style="margin:6px 0 4px;font-size:0.82rem;display:flex;align-items:center;gap:4px;">
@@ -803,16 +856,17 @@
     
     if (!modal || !title || !body) return;
 
-    title.textContent = currentRoom.name;
+    const roomName = typeof currentRoom.name === 'object' ? (currentRoom.name[currentLang] || currentRoom.name.zh) : currentRoom.name;
+    title.textContent = roomName;
     
     // 处理可能缺失的 gallery
     const gallery = currentRoom.gallery || [currentRoom.image];
-    const description = currentRoom.description || '暂无详细描述。';
+    const description = typeof currentRoom.description === 'object' ? (currentRoom.description[currentLang] || currentRoom.description.zh) : (currentRoom.description || '暂无详细描述。');
 
     body.innerHTML = `
         <div class="gallery-grid">
             <div class="gallery-main">
-                <img src="${gallery[0]}" alt="${currentRoom.name}">
+                <img src="${gallery[0]}" alt="${roomName}">
             </div>
             <div class="gallery-thumbs">
                 ${gallery.length > 1 ? gallery.slice(1).map((img, i) => `
@@ -825,10 +879,10 @@
         
         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
             <div>
-                <h3>${currentRoom.name}</h3>
+                <h3>${roomName}</h3>
                 <div class="room-features" style="margin-top: 0.5rem;">
                     <span><i class="fas fa-ruler-combined"></i> ${currentRoom.size}</span>
-                    <span><i class="fas fa-bed"></i> ${currentRoom.bed}</span>
+                    <span><i class="fas fa-bed"></i> ${typeof currentRoom.bed === 'object' ? (currentRoom.bed[currentLang] || currentRoom.bed.zh) : currentRoom.bed}</span>
                     <span><i class="fas fa-user"></i> ${t('up_to_guests', { count: currentRoom.guests })}</span>
                 </div>
             </div>
@@ -847,12 +901,12 @@
         
         <h4 style="margin-bottom: 0.75rem;">${t('amenities_title')}</h4>
         <div class="amenities-list">
-            ${(currentRoom.amenities || []).map(a => `<span class="amenity-tag"><i class="fas fa-check"></i> ${a}</span>`).join('')}
+            ${(Array.isArray(currentRoom.amenities) ? currentRoom.amenities : (currentRoom.amenities[currentLang] || currentRoom.amenities.zh || [])).map(a => `<span class="amenity-tag"><i class="fas fa-check"></i> ${a}</span>`).join('')}
         </div>
         
         <div class="policy-box">
             <h4><i class="fas fa-info-circle"></i> ${t('booking_policy_title')}</h4>
-            <p>${currentRoom.policy || '暂无政策说明。'}</p>
+            <p>${typeof currentRoom.policy === 'object' ? (currentRoom.policy[currentLang] || currentRoom.policy.zh) : (currentRoom.policy || '暂无政策说明。')}</p>
         </div>
 
         <div id="reviewSection" style="margin-top:1.5rem;border-top:1px solid var(--gray-200);padding-top:1rem;">

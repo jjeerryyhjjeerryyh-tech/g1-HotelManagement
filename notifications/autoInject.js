@@ -128,10 +128,14 @@
         var container = document.querySelector('.header-links');
         if (!container) return;
 
+        var currentLang = localStorage.getItem('lang') || 'zh';
+        var btnText = currentLang === 'en' ? 'Notifications' : '消息提醒';
+
         var a = document.createElement('a');
         a.href = notifBase() + 'notifications.html';
         a.className = 'notif-btn header-link';
-        a.innerHTML = '&#128231; 消息提醒<span class="notification-badge" style="display:none;background:#e74c3c;color:#fff;border-radius:50%;width:18px;height:18px;font-size:11px;line-height:18px;text-align:center;position:absolute;top:-6px;right:-6px;font-weight:bold;">0</span>';
+        a.setAttribute('data-i18n', 'nav_notifications');
+        a.innerHTML = '&#128231; <span class="notif-text">' + btnText + '</span><span class="notification-badge" style="display:none;background:#e74c3c;color:#fff;border-radius:50%;width:18px;height:18px;font-size:11px;line-height:18px;text-align:center;position:absolute;top:-6px;right:-6px;font-weight:bold;">0</span>';
         a.style.cssText = 'position:relative;display:inline-flex;align-items:center;gap:4px;';
 
         var userMenu = container.querySelector('.user-menu-container');
