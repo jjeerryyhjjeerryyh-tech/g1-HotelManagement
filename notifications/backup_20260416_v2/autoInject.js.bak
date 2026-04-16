@@ -1,5 +1,5 @@
 /**
- * 通知系统自动注入脚本 v2.2
+ * 通知系统自动注入脚本 v2.1
  *
  * 工作流程：
  *   1. login.html    → 拦截 /api/login → 写 __justLoggedIn 标志
@@ -11,8 +11,6 @@
  * HTML 引入方式（各页面 </body> 前）：
  *   <script src="../notifications/notificationSystem.js"></script>
  *   <script src="../notifications/autoInject.js"></script>
- *
- * v2.2 修复：预订数据读取顺序错误（Bug #1）
  */
 
 (function () {
@@ -101,20 +99,17 @@
         }
 
         // 预订成功通知
-        // 【Bug #1 修复】先读取数据，再删除 sessionStorage
         if (sessionStorage.getItem('__justBooked') === '1') {
-            var bookingData = {
-                roomType:  sessionStorage.getItem('__bookingRoom')  || '',
-                checkIn:   sessionStorage.getItem('__bookingCheckIn')   || '',
-                checkOut:  sessionStorage.getItem('__bookingCheckOut')  || ''
-            };
-
             sessionStorage.removeItem('__justBooked');
             sessionStorage.removeItem('__bookingRoom');
             sessionStorage.removeItem('__bookingCheckIn');
             sessionStorage.removeItem('__bookingCheckOut');
 
-            window.notificationSystem.notifyBookingSuccess(user, bookingData);
+            window.notificationSystem.notifyBookingSuccess(user, {
+                roomType: sessionStorage.getItem('__bookingRoom') || '',
+                checkIn:   sessionStorage.getItem('__bookingCheckIn') || '',
+                checkOut:  sessionStorage.getItem('__bookingCheckOut') || ''
+            });
             updateBadge();
         }
     }
@@ -131,7 +126,7 @@
         var a = document.createElement('a');
         a.href = notifBase() + 'notifications.html';
         a.className = 'notif-btn header-link';
-        a.innerHTML = '&#128231; 消息提醒<span class="notification-badge" style="display:none;background:#e74c3c;color:#fff;border-radius:50%;width:18px;height:18px;font-size:11px;line-height:18px;text-align:center;position:absolute;top:-6px;right:-6px;font-weight:bold;">0</span>';
+        a.innerHTML = '&#128231; 消息提醒<span class="notif-badge" style="display:none;background:#e74c3c;color:#fff;border-radius:50%;width:18px;height:18px;font-size:11px;line-height:18px;text-align:center;position:absolute;top:-6px;right:-6px;font-weight:bold;">0</span>';
         a.style.cssText = 'position:relative;display:inline-flex;align-items:center;gap:4px;';
 
         var userMenu = container.querySelector('.user-menu-container');
@@ -147,8 +142,7 @@
         var user = sessionStorage.getItem('username');
         if (!user) return;
         var count = window.notificationSystem.getUnreadCount(user);
-        // 【Bug #2 修复】使用 .notification-badge 与 notificationSystem.js 保持一致
-        document.querySelectorAll('.notification-badge').forEach(function (b) {
+        document.querySelectorAll('.notif-badge').forEach(function (b) {
             b.textContent = count > 99 ? '99+' : (count > 0 ? count : '');
             b.style.display = count > 0 ? 'inline-block' : 'none';
         });
@@ -183,5 +177,5 @@
         init();
     }
 
-    console.log('[Notification] autoInject.js v2.2 已加载');
+    console.log('[Notification] autoInject.js v2.1 已加载');
 })();
