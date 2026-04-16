@@ -801,20 +801,25 @@
     const title = document.getElementById('roomModalTitle');
     const body = document.getElementById('roomModalBody');
     
+    if (!modal || !title || !body) return;
+
     title.textContent = currentRoom.name;
     
-    // 确保这个模板字符串完整闭合
+    // 处理可能缺失的 gallery
+    const gallery = currentRoom.gallery || [currentRoom.image];
+    const description = currentRoom.description || '暂无详细描述。';
+
     body.innerHTML = `
         <div class="gallery-grid">
             <div class="gallery-main">
-                <img src="${currentRoom.gallery[0]}" alt="${currentRoom.name}">
+                <img src="${gallery[0]}" alt="${currentRoom.name}">
             </div>
             <div class="gallery-thumbs">
-                ${currentRoom.gallery.slice(1).map((img, i) => `
-                    <div class="gallery-thumb ${i === 1 ? 'more' : ''}">
+                ${gallery.length > 1 ? gallery.slice(1).map((img, i) => `
+                    <div class="gallery-thumb ${i === 1 && gallery.length > 3 ? 'more' : ''}">
                         <img src="${img}" alt="">
                     </div>
-                `).join('')}
+                `).join('') : ''}
             </div>
         </div>
         
@@ -837,17 +842,17 @@
         </div>
         
         <p style="color: var(--gray-600); line-height: 1.6; margin-bottom: 1rem;">
-            ${currentRoom.description}
+            ${description}
         </p>
         
         <h4 style="margin-bottom: 0.75rem;">${t('amenities_title')}</h4>
         <div class="amenities-list">
-            ${currentRoom.amenities.map(a => `<span class="amenity-tag"><i class="fas fa-check"></i> ${a}</span>`).join('')}
+            ${(currentRoom.amenities || []).map(a => `<span class="amenity-tag"><i class="fas fa-check"></i> ${a}</span>`).join('')}
         </div>
         
         <div class="policy-box">
             <h4><i class="fas fa-info-circle"></i> ${t('booking_policy_title')}</h4>
-            <p>${currentRoom.policy}</p>
+            <p>${currentRoom.policy || '暂无政策说明。'}</p>
         </div>
 
         <div id="reviewSection" style="margin-top:1.5rem;border-top:1px solid var(--gray-200);padding-top:1rem;">
@@ -855,7 +860,7 @@
             <div id="reviewList"><p style="color:#9ca3af;font-size:0.875rem;">加载中...</p></div>
             <div id="reviewFormArea"></div>
         </div>
-    `;  // ← 确保这里有闭合的反引号和分号
+    `;
 
     modal.classList.add('active');
     loadRoomReviews(currentRoom.id);
