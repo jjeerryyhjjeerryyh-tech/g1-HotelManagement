@@ -67,8 +67,6 @@
             </div>
         </div>
     </div>
-    <script src="../notifications/notificationSystem.js"></script>
-    <script src="../notifications/autoInject.js"></script>
     <script src="login.js"></script>
 </body>
 </html>

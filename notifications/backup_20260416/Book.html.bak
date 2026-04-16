@@ -120,7 +120,7 @@
                             </div>
                         </div>
                     </div>
-
+                    
                     <a href="checkout.html" class="icon-btn shopping-cart-link" id="cartLink" aria-label="Cart">
                         <i class="fas fa-shopping-cart"></i>
                         <span class="cart-count" id="cartCount">0</span>
@@ -148,7 +148,6 @@
             <a href="checkout.html" class="btn-checkout">查看</a>
         </div>
     </div>
-
 
     <section class="hero">
         <div class="hero-bg"></div>
@@ -562,7 +561,5 @@
     <script src="../assets/js/theme-button.js"></script>
     <script src="Book.js"></script>
     <script src="shoppingCart.js"></script>
-    <script src="../notifications/notificationSystem.js"></script>
-    <script src="../notifications/autoInject.js"></script>
 </body>
 </html>

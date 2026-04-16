@@ -80,6 +80,15 @@
             "phone": "12233447",
             "password": "$2b$10$jbR6uI6/HpxpmuoNlwmW9OMPorH1F3OGiawH0GbnmISSH4Zxk2Qpm",
             "role": "user"
+        },
+        {
+            "id": 1776322418473,
+            "username": "xxx",
+            "name": "t",
+            "email": "iamtest@qq.com",
+            "phone": "12345876",
+            "password": "$2b$10$GMTIp4ZvGnrMwb6.rEcfj.FGCLRN7uS7ZAPNmSjr9nR9OXnhots6K",
+            "role": "user"
         }
     ],
     "admins": [
@@ -146,6 +155,60 @@
             "totalAmount": 867,
             "status": "confirmed",
             "createdAt": "2026-04-02T08:43:22.930Z"
+        },
+        {
+            "id": "BK1776321092145",
+            "username": "yyy",
+            "roomId": "R001",
+            "roomName": "舒适标准间",
+            "roomType": "舒适标准间",
+            "guestName": "AI in Education: A Systematic Literature Review",
+            "guestPhone": "13123456",
+            "guestEmail": "donk666@gmail.com",
+            "checkIn": "2026-04-16",
+            "checkOut": "2026-04-17",
+            "nights": 1,
+            "totalAmount": 646.8,
+            "arrivalTime": "16:00-17:00",
+            "specialRequests": "",
+            "status": "confirmed",
+            "createdAt": "2026-04-16T06:31:32.145Z"
+        },
+        {
+            "id": "BK1776321210645",
+            "username": "yyy",
+            "roomId": "R005",
+            "roomName": "总统套房",
+            "roomType": "总统套房",
+            "guestName": "test1",
+            "guestPhone": "12345678",
+            "guestEmail": "wuyuhan92@gmail.com",
+            "checkIn": "2026-04-16",
+            "checkOut": "2026-04-17",
+            "nights": 1,
+            "totalAmount": 9776.8,
+            "arrivalTime": "18:00+",
+            "specialRequests": "",
+            "status": "confirmed",
+            "createdAt": "2026-04-16T06:33:30.646Z"
+        },
+        {
+            "id": "BK1776321272359",
+            "username": "yyy",
+            "roomId": "R002",
+            "roomName": "豪华海景房",
+            "roomType": "豪华海景房",
+            "guestName": "test1",
+            "guestPhone": "12345678",
+            "guestEmail": "wuyuhan92@gmail.com",
+            "checkIn": "2026-04-16",
+            "checkOut": "2026-04-17",
+            "nights": 1,
+            "totalAmount": 1086.8,
+            "arrivalTime": "17:00-18:00",
+            "specialRequests": "",
+            "status": "confirmed",
+            "createdAt": "2026-04-16T06:34:32.359Z"
         }
     ],
     "reviews": [],
