@@ -81,6 +81,15 @@
                                         <option value="18:00+">18:00 以后</option>
                                     </select>
                                 </div>
+                                <div class="form-group">
+                                    <label class="form-label">入住人数 *</label>
+                                    <select class="form-select" name="guests" id="guestsSelect" required>
+                                        <option value="1">1 位成人</option>
+                                        <option value="2" selected>2 位成人</option>
+                                        <option value="3">3 位成人</option>
+                                        <option value="4">4 位成人</option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label class="form-label">特殊要求（可选）</label>
@@ -172,13 +181,6 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="checkout-actions">
-                    <button class="btn btn-secondary" type="button" onclick="window.location.href='Book.html'">返回</button>
-                    <button class="btn btn-primary" type="submit" form="checkoutForm">
-                        <i class="fas fa-check"></i> 确认预订
-                    </button>
-                </div>
             </div>
 
             <aside class="checkout-aside">
@@ -204,6 +206,12 @@
                             <div class="checkout-help-text">我们的专业预订团队随时为您服务：</div>
                             <div class="checkout-help-text">+86 (21) 2327 6588</div>
                             <div class="checkout-help-text">reservation@xxhotel.com</div>
+                        </div>
+                        <div class="checkout-sidebar-actions">
+                            <button class="btn btn-primary btn-block" type="submit" form="checkoutForm">
+                                <i class="fas fa-check"></i> 确认预订
+                            </button>
+                            <button class="btn btn-link btn-block" type="button" onclick="window.location.href='Book.html'">返回修改</button>
                         </div>
                     </div>
                 </div>

@@ -24,7 +24,7 @@ function writeData(data) {
 
 // 注册
 app.post('/api/register', async (req, res) => {
-    const { username, fullName, email, phone, password } = req.body;
+    const { username, fullName, email, phone, password, subscribed } = req.body;
 
     if (!username || !fullName || !email || !phone || !password) {
         return res.status(400).json({ message: '请填写所有字段' });
@@ -44,10 +44,20 @@ app.post('/api/register', async (req, res) => {
         email,
         phone,
         password: hashedPassword,
-        role: 'user'
+        role: 'user',
+        subscribed: !!subscribed
     };
 
     data.users.push(newUser);
+
+    // 如果注册时勾选了订阅，也加入全局订阅列表
+    if (subscribed) {
+        if (!data.subscribers) data.subscribers = [];
+        if (!data.subscribers.includes(email)) {
+            data.subscribers.push(email);
+        }
+    }
+
     writeData(data);
     res.json({ message: '注册成功' });
 });
@@ -213,7 +223,8 @@ app.post('/api/bookings', (req, res) => {
         roomType: roomType || roomName || '-',   // 保留 roomType 兼容管理员界面
         guestName, guestPhone, guestEmail,
         checkIn, checkOut,
-        nights: nights || guests,
+        nights,
+        guests: guests || 2,
         totalAmount,
         arrivalTime, specialRequests,
         status: 'confirmed',
@@ -247,26 +258,33 @@ app.delete('/api/bookings/:id', (req, res) => {
 // ===== 评价 API =====
 app.get('/api/reviews', (req, res) => {
     const data = readData();
-    res.json({ reviews: data.reviews || [] });
+    const { roomId } = req.query;
+    let reviews = data.reviews || [];
+    if (roomId) reviews = reviews.filter(r => r.roomId === roomId);
+    res.json({ reviews });
 });
 
 app.post('/api/reviews', (req, res) => {
-    const { username, rating, comment, roomType } = req.body;
-    if (!username || !rating || !comment)
-        return res.status(400).json({ message: 'Please fill in all fields' });
+    const { username, rating, comment, roomId, roomName } = req.body;
+    if (!username || !rating || !comment || !roomId)
+        return res.status(400).json({ message: '请填写所有必填字段' });
     const data = readData();
+    if (!data.reviews) data.reviews = [];
+    // 每人每房间只能评一次
+    if (data.reviews.find(r => r.roomId === roomId && r.username === username))
+        return res.status(409).json({ message: '您已评价过该房间' });
     const review = {
         id: Date.now(),
         username,
-        roomType: roomType || '',
+        roomId,
+        roomName: roomName || '',
         rating: parseInt(rating),
         comment,
         createdAt: new Date().toISOString()
     };
-    if (!data.reviews) data.reviews = [];
     data.reviews.push(review);
     writeData(data);
-    res.json({ message: 'Review submitted', review });
+    res.json({ message: '评价成功', review });
 });
 
 app.delete('/api/reviews/:id', (req, res) => {
@@ -277,6 +295,62 @@ app.delete('/api/reviews/:id', (req, res) => {
     data.reviews.splice(idx, 1);
     writeData(data);
     res.json({ message: 'Review deleted' });
+});
+
+// ===== 新闻简报 API =====
+app.post('/api/newsletter/subscribe', (req, res) => {
+    const { email, username } = req.body;
+    if (!email) return res.status(400).json({ message: 'Email is required' });
+
+    const data = readData();
+    if (!data.subscribers) data.subscribers = [];
+
+    // 如果提供了用户名，更新用户信息
+    if (username) {
+        const user = data.users.find(u => u.username === username);
+        if (user) {
+            user.subscribed = true;
+        }
+    }
+
+    // 无论是否登录，都记录在订阅者列表中（去重）
+    if (!data.subscribers.includes(email)) {
+        data.subscribers.push(email);
+    }
+
+    writeData(data);
+    res.json({ message: 'Successfully subscribed to newsletter' });
+});
+
+app.get('/api/newsletter/status/:username', (req, res) => {
+    const { username } = req.params;
+    const data = readData();
+    const user = data.users.find(u => u.username === username);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    res.json({ subscribed: !!user.subscribed });
+});
+
+app.put('/api/newsletter/update', (req, res) => {
+    const { username, subscribed } = req.body;
+    const data = readData();
+    const user = data.users.find(u => u.username === username);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    user.subscribed = subscribed;
+    
+    if (subscribed) {
+        if (!data.subscribers) data.subscribers = [];
+        if (!data.subscribers.includes(user.email)) {
+            data.subscribers.push(user.email);
+        }
+    } else {
+        if (data.subscribers) {
+            data.subscribers = data.subscribers.filter(e => e !== user.email);
+        }
+    }
+
+    writeData(data);
+    res.json({ message: 'Subscription preference updated' });
 });
 
 // 静态文件放在所有API路由之后

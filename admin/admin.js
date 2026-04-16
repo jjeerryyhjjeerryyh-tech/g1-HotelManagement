@@ -244,7 +244,10 @@ async function loadBookings() {
                 <div>${b.guestName || b.username}</div>
                 ${b.guestName && b.username !== 'guest' ? `<div class="text-xs text-gray-400">@${b.username}</div>` : ''}
             </td>
-            <td class="px-6 py-4 text-sm">${b.roomName || b.roomType || '-'}</td>
+            <td class="px-6 py-4 text-sm">
+                <div>${b.roomName || b.roomType || '-'}</div>
+                <div class="text-xs text-gray-400">${b.guests || 2} 人入住</div>
+            </td>
             <td class="px-6 py-4 text-sm">${b.checkIn} / ${b.checkOut}</td>
             <td class="px-6 py-4 text-sm">${b.totalDisplay || ('¥' + (b.totalAmount || '-'))}</td>
             <td class="px-6 py-4 text-sm">${statusMap[b.status] || b.status}</td>

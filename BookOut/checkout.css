@@ -53,11 +53,48 @@ body {
     top: 86px;
 }
 
-.checkout-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 0.75rem;
+.checkout-sidebar-actions {
     margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--gray-200);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.checkout-sidebar-actions .btn-primary {
+    background: var(--primary);
+    color: white;
+    border: none;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(230, 126, 34, 0.2);
+    transition: all 0.3s ease;
+}
+
+.checkout-sidebar-actions .btn-primary:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(230, 126, 34, 0.3);
+}
+
+.btn-block {
+    width: 100%;
+    justify-content: center;
+    padding: 1rem !important;
+    font-size: 1.1rem !important;
+}
+
+.btn-link {
+    background: transparent !important;
+    color: var(--gray-600) !important;
+    border: none !important;
+    box-shadow: none !important;
+    font-size: 0.95rem !important;
+    text-decoration: underline;
+}
+
+.btn-link:hover {
+    color: var(--primary) !important;
 }
 
 .checkout-summary-room {

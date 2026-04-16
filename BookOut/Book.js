@@ -299,7 +299,40 @@
                 currency_thb: 'THB - 泰铢',
                 currency_myr: 'MYR - 马来西亚林吉特',
                 lang_display: '简体中文',
-                lang_title: '语言'
+                lang_title: '语言',
+                nav_notifications: '消息提醒',
+                section_connect: '畅享沟通',
+                connect_desc: '订阅酒店电子报，第一时间获取专属优惠、旅行灵感以及精彩活动资讯。',
+                subscribe_placeholder: '输入您的邮箱地址',
+                subscribe_btn: '注册',
+                subscribe_success: '已订阅: {email}',
+                subscribe_thanks: '感谢您的订阅！',
+                subscribe_success_msg: '您将第一时间收到我们的最新资讯和专属优惠。',
+                footer_guest_center: '环球宾客中心',
+                footer_guest_booking: '客房预订与咨询',
+                footer_guest_membership: '会员权益说明',
+                footer_guest_transport: '交通与周边',
+                footer_group: 'XX酒店集团',
+                footer_about: '关于我们',
+                footer_services: '住宿服务',
+                footer_food: '餐饮美食',
+                footer_contact: '联系我们',
+                footer_media: '媒体',
+                footer_newsroom: '新闻中心',
+                footer_media_contact: '媒体联系人',
+                footer_brand_assets: '品牌资料',
+                footer_corporate: '企业',
+                footer_meetings: '会议与宴会',
+                footer_sustainability: '可持续发展',
+                footer_careers: '招聘与工作',
+                footer_suppliers: '供应商合作',
+                footer_copyright: '© 2026 XX酒店',
+                footer_privacy: '隐私政策',
+                footer_terms: '条款与条件',
+                footer_cookie: 'Cookie 设置',
+                footer_lang: '语言',
+                lang_link_zh: '中文',
+                lang_link_en: 'English'
             },
             en: {
                 brand: 'HotelBook Booking',
@@ -421,7 +454,40 @@
                 currency_thb: 'THB',
                 currency_myr: 'MYR',
                 lang_display: 'English - UK',
-                lang_title: 'Language'
+                lang_title: 'Language',
+                nav_notifications: 'Notifications',
+                section_connect: 'Stay Connected',
+                connect_desc: 'Subscribe to our newsletter for exclusive offers, travel inspiration, and event highlights.',
+                subscribe_placeholder: 'Enter your email address',
+                subscribe_btn: 'Subscribe',
+                subscribe_success: 'Subscribed: {email}',
+                subscribe_thanks: 'Thank You for Subscribing!',
+                subscribe_success_msg: 'You will be the first to receive our latest updates and exclusive offers.',
+                footer_guest_center: 'Global Guest Center',
+                footer_guest_booking: 'Room Reservations',
+                footer_guest_membership: 'Membership Benefits',
+                footer_guest_transport: 'Transport & Surrounding',
+                footer_group: 'XX Hotel Group',
+                footer_about: 'About Us',
+                footer_services: 'Stay Services',
+                footer_food: 'Dining',
+                footer_contact: 'Contact Us',
+                footer_media: 'Media',
+                footer_newsroom: 'Newsroom',
+                footer_media_contact: 'Media Contacts',
+                footer_brand_assets: 'Brand Assets',
+                footer_corporate: 'Corporate',
+                footer_meetings: 'Meetings & Events',
+                footer_sustainability: 'Sustainability',
+                footer_careers: 'Careers',
+                footer_suppliers: 'Suppliers',
+                footer_copyright: '© 2026 XX Hotel',
+                footer_privacy: 'Privacy Policy',
+                footer_terms: 'Terms & Conditions',
+                footer_cookie: 'Cookie Settings',
+                footer_lang: 'Language',
+                lang_link_zh: 'Chinese',
+                lang_link_en: 'English'
             }
         };
 
@@ -515,10 +581,28 @@
                 }
                 sessionStorage.removeItem('bookingSearch');
             }
-            
-            // Render rooms
-            renderRooms();
-            updateStats();
+
+            // 从后端加载房型
+            fetch('http://localhost:3000/api/roomtypes')
+                .then(r => r.json())
+                .then(data => {
+                    if (data.roomTypes && data.roomTypes.length) {
+                        roomsData.length = 0;
+                        data.roomTypes.forEach(r => roomsData.push(r));
+                    }
+                    return loadAllRatings();
+                })
+                .then(() => {
+                    renderRooms();
+                    updateStats();
+                })
+                .catch(() => {
+                    loadAllRatings().then(() => {
+                        renderRooms();
+                        updateStats();
+                    });
+                });
+
             renderMyBookings();
         });
 
@@ -600,6 +684,39 @@
         // ============================================
         // Room Functions
         // ============================================
+
+        // 评分缓存 { roomId: { avg: '4.5', count: 3 } }
+        let roomRatings = {};
+
+        async function loadAllRatings() {
+            try {
+                const res = await fetch('http://localhost:3000/api/reviews');
+                const data = await res.json();
+                const map = {};
+                (data.reviews || []).forEach(r => {
+                    if (!map[r.roomId]) map[r.roomId] = { sum: 0, count: 0 };
+                    map[r.roomId].sum   += r.rating;
+                    map[r.roomId].count += 1;
+                });
+                roomRatings = {};
+                Object.keys(map).forEach(id => {
+                    roomRatings[id] = {
+                        avg:   (map[id].sum / map[id].count).toFixed(1),
+                        count: map[id].count
+                    };
+                });
+            } catch (e) { roomRatings = {}; }
+        }
+
+        function renderStarHtml(avg) {
+            const full  = Math.floor(avg);
+            const half  = (avg - full) >= 0.5 ? 1 : 0;
+            const empty = 5 - full - half;
+            return '<i class="fas fa-star" style="color:#f59e0b;font-size:0.8rem"></i>'.repeat(full)
+                 + (half ? '<i class="fas fa-star-half-alt" style="color:#f59e0b;font-size:0.8rem"></i>' : '')
+                 + '<i class="far fa-star" style="color:#f59e0b;font-size:0.8rem"></i>'.repeat(empty);
+        }
+
         function renderRooms() {
             const grid = document.getElementById('roomGrid');
             grid.innerHTML = roomsData.map(room => createRoomCard(room)).join('');
@@ -607,11 +724,12 @@
 
         function createRoomCard(room) {
             const discount = Math.round((1 - room.price / room.originalPrice) * 100);
+            const roomName = typeof room.name === 'object' ? (room.name[currentLang] || room.name.zh) : room.name;
             
             return `
                 <div class="room-card">
                     <div class="room-image">
-                        <img src="${room.image}" alt="${room.name}">
+                        <img src="${room.image}" alt="${roomName}">
                         <div class="room-badges">
                             ${discount > 0 ? `<span class="room-badge badge-discount">-${discount}%</span>` : ''}
                             ${room.available < 5 ? `<span class="room-badge badge-limited">${t('only_left', { count: room.available })}</span>` : ''}
@@ -622,11 +740,18 @@
                     </div>
                     <div class="room-content">
                         <div class="room-type">${room.type === 'standard' ? t('room_type_standard') : room.type === 'deluxe' ? t('room_type_deluxe') : t('room_type_suite')}</div>
-                        <h3 class="room-name">${room.name}</h3>
+                        <h3 class="room-name">${roomName}</h3>
                         <div class="room-features">
                             <span><i class="fas fa-ruler-combined"></i> ${room.size}</span>
-                            <span><i class="fas fa-bed"></i> ${room.bed}</span>
+                            <span><i class="fas fa-bed"></i> ${typeof room.bed === 'object' ? (room.bed[currentLang] || room.bed.zh) : room.bed}</span>
                             <span><i class="fas fa-user"></i> ${t('up_to_guests', { count: room.guests })}</span>
+                        </div>
+                        <div style="margin:6px 0 4px;font-size:0.82rem;display:flex;align-items:center;gap:4px;">
+                            ${roomRatings[room.id]
+                                ? `${renderStarHtml(parseFloat(roomRatings[room.id].avg))}
+                                   <span style="color:#374151;font-weight:600;">${roomRatings[room.id].avg}</span>
+                                   <span style="color:#9ca3af;">(${roomRatings[room.id].count}条评价)</span>`
+                                : `<span style="color:#9ca3af;">暂无评价</span>`}
                         </div>
                         <div class="room-footer">
                             <div class="room-price">
@@ -732,29 +857,35 @@
     const title = document.getElementById('roomModalTitle');
     const body = document.getElementById('roomModalBody');
     
-    title.textContent = currentRoom.name;
+    if (!modal || !title || !body) return;
+
+    const roomName = typeof currentRoom.name === 'object' ? (currentRoom.name[currentLang] || currentRoom.name.zh) : currentRoom.name;
+    title.textContent = roomName;
     
-    // 确保这个模板字符串完整闭合
+    // 处理可能缺失的 gallery
+    const gallery = currentRoom.gallery || [currentRoom.image];
+    const description = typeof currentRoom.description === 'object' ? (currentRoom.description[currentLang] || currentRoom.description.zh) : (currentRoom.description || '暂无详细描述。');
+
     body.innerHTML = `
         <div class="gallery-grid">
             <div class="gallery-main">
-                <img src="${currentRoom.gallery[0]}" alt="${currentRoom.name}">
+                <img src="${gallery[0]}" alt="${roomName}">
             </div>
             <div class="gallery-thumbs">
-                ${currentRoom.gallery.slice(1).map((img, i) => `
-                    <div class="gallery-thumb ${i === 1 ? 'more' : ''}">
+                ${gallery.length > 1 ? gallery.slice(1).map((img, i) => `
+                    <div class="gallery-thumb ${i === 1 && gallery.length > 3 ? 'more' : ''}">
                         <img src="${img}" alt="">
                     </div>
-                `).join('')}
+                `).join('') : ''}
             </div>
         </div>
         
         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
             <div>
-                <h3>${currentRoom.name}</h3>
+                <h3>${roomName}</h3>
                 <div class="room-features" style="margin-top: 0.5rem;">
                     <span><i class="fas fa-ruler-combined"></i> ${currentRoom.size}</span>
-                    <span><i class="fas fa-bed"></i> ${currentRoom.bed}</span>
+                    <span><i class="fas fa-bed"></i> ${typeof currentRoom.bed === 'object' ? (currentRoom.bed[currentLang] || currentRoom.bed.zh) : currentRoom.bed}</span>
                     <span><i class="fas fa-user"></i> ${t('up_to_guests', { count: currentRoom.guests })}</span>
                 </div>
             </div>
@@ -768,25 +899,140 @@
         </div>
         
         <p style="color: var(--gray-600); line-height: 1.6; margin-bottom: 1rem;">
-            ${currentRoom.description}
+            ${description}
         </p>
         
         <h4 style="margin-bottom: 0.75rem;">${t('amenities_title')}</h4>
         <div class="amenities-list">
-            ${currentRoom.amenities.map(a => `<span class="amenity-tag"><i class="fas fa-check"></i> ${a}</span>`).join('')}
+            ${(Array.isArray(currentRoom.amenities) ? currentRoom.amenities : (currentRoom.amenities[currentLang] || currentRoom.amenities.zh || [])).map(a => `<span class="amenity-tag"><i class="fas fa-check"></i> ${a}</span>`).join('')}
         </div>
         
         <div class="policy-box">
             <h4><i class="fas fa-info-circle"></i> ${t('booking_policy_title')}</h4>
-            <p>${currentRoom.policy}</p>
+            <p>${typeof currentRoom.policy === 'object' ? (currentRoom.policy[currentLang] || currentRoom.policy.zh) : (currentRoom.policy || '暂无政策说明。')}</p>
         </div>
-    `;  // ← 确保这里有闭合的反引号和分号
-    
+
+        <div id="reviewSection" style="margin-top:1.5rem;border-top:1px solid var(--gray-200);padding-top:1rem;">
+            <h4 style="margin-bottom:0.75rem;">住客评价</h4>
+            <div id="reviewList"><p style="color:#9ca3af;font-size:0.875rem;">加载中...</p></div>
+            <div id="reviewFormArea"></div>
+        </div>
+    `;
+
     modal.classList.add('active');
+    loadRoomReviews(currentRoom.id);
 }
 
 function closeRoomModal() {
     document.getElementById('roomModal').classList.remove('active');
+}
+
+// ============================================
+// Review Functions
+// ============================================
+async function loadRoomReviews(roomId) {
+    const listEl = document.getElementById('reviewList');
+    const formEl = document.getElementById('reviewFormArea');
+    if (!listEl || !formEl) return;
+
+    try {
+        const res  = await fetch('http://localhost:3000/api/reviews?roomId=' + roomId);
+        const data = await res.json();
+        const reviews = data.reviews || [];
+
+        // 渲染评论列表
+        if (reviews.length === 0) {
+            listEl.innerHTML = '<p style="color:#9ca3af;font-size:0.875rem;">暂无评价，成为第一个评价的住客吧！</p>';
+        } else {
+            listEl.innerHTML = reviews.map(r => `
+                <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;margin-bottom:10px;">
+                    <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+                        <span style="font-weight:600;font-size:0.875rem;">${r.username}</span>
+                        <span style="font-size:0.75rem;color:#9ca3af;">${new Date(r.createdAt).toLocaleDateString('zh-CN')}</span>
+                    </div>
+                    <div style="margin-bottom:6px;">${renderStarHtml(r.rating)} <span style="font-size:0.8rem;color:#6b7280;">${r.rating}.0</span></div>
+                    <p style="font-size:0.875rem;color:#374151;margin:0;">${r.comment}</p>
+                </div>
+            `).join('');
+        }
+
+        // 渲染提交表单
+        const username = sessionStorage.getItem('username');
+        if (!username) {
+            formEl.innerHTML = '<p style="font-size:0.875rem;color:#6b7280;text-align:center;padding:8px 0;"><a href="../login/login.html" style="color:#f27405;">登录</a> 后可提交评价</p>';
+        } else if (reviews.some(r => r.username === username)) {
+            formEl.innerHTML = '<p style="font-size:0.875rem;color:#9ca3af;text-align:center;padding:8px 0;">您已评价过该房间</p>';
+        } else {
+            formEl.innerHTML = `
+                <div style="border-top:1px solid #e5e7eb;padding-top:1rem;margin-top:0.5rem;">
+                    <h5 style="font-size:0.9rem;font-weight:600;margin-bottom:0.75rem;">提交您的评价</h5>
+                    <div style="display:flex;gap:6px;margin-bottom:10px;" id="starPicker">
+                        ${[1,2,3,4,5].map(n =>
+                            `<i class="far fa-star" data-val="${n}" style="font-size:1.6rem;color:#f59e0b;cursor:pointer;"
+                                onmouseover="hoverReviewStar(${n})"
+                                onmouseout="resetReviewStars()"
+                                onclick="pickReviewStar(${n})"></i>`
+                        ).join('')}
+                    </div>
+                    <input type="hidden" id="pickedRating" value="0">
+                    <textarea id="reviewComment" rows="3" placeholder="分享您的入住体验（至少5个字）..."
+                        style="width:100%;border:1px solid #d1d5db;border-radius:6px;padding:8px;font-size:0.875rem;resize:none;box-sizing:border-box;"></textarea>
+                    <button onclick="submitReview('${roomId}')"
+                        style="margin-top:8px;background:#f27405;color:#fff;border:none;padding:8px 20px;border-radius:6px;cursor:pointer;font-size:0.875rem;font-weight:500;">
+                        提交评价
+                    </button>
+                </div>
+            `;
+        }
+
+        // 刷新卡片评分
+        await loadAllRatings();
+        renderRooms();
+    } catch (e) {
+        if (listEl) listEl.innerHTML = '<p style="color:#ef4444;font-size:0.875rem;">加载评价失败</p>';
+    }
+}
+
+function hoverReviewStar(n) {
+    document.querySelectorAll('#starPicker i').forEach((el, i) => {
+        el.className = i < n ? 'fas fa-star' : 'far fa-star';
+    });
+}
+function resetReviewStars() {
+    const picked = parseInt(document.getElementById('pickedRating')?.value || 0);
+    document.querySelectorAll('#starPicker i').forEach((el, i) => {
+        el.className = i < picked ? 'fas fa-star' : 'far fa-star';
+    });
+}
+function pickReviewStar(n) {
+    document.getElementById('pickedRating').value = n;
+    resetReviewStars();
+}
+
+async function submitReview(roomId) {
+    const rating   = parseInt(document.getElementById('pickedRating').value);
+    const comment  = (document.getElementById('reviewComment').value || '').trim();
+    const username = sessionStorage.getItem('username');
+
+    if (!rating)           { showToast('请选择星级评分', 'error'); return; }
+    if (comment.length < 5){ showToast('评价内容至少5个字', 'error'); return; }
+
+    try {
+        const res  = await fetch('http://localhost:3000/api/reviews', {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body:    JSON.stringify({ username, roomId, roomName: currentRoom.name, rating, comment })
+        });
+        const data = await res.json();
+        if (res.ok) {
+            showToast('评价提交成功！', 'success');
+            loadRoomReviews(roomId);
+        } else {
+            showToast(data.message || '提交失败', 'error');
+        }
+    } catch (e) {
+        showToast('无法连接服务器', 'error');
+    }
 }
 
 function proceedToBook() {
@@ -949,6 +1195,91 @@ document.addEventListener('DOMContentLoaded', () => {
     const langDropdown = document.getElementById('langDropdown');
     const closeLangBtn = document.getElementById('closeLangBtn');
     
+    // --- Newsletter Logic ---
+    const subscribeForm = document.getElementById('hpSubscribeForm');
+    const subscribeSuccess = document.getElementById('hpSubscribeSuccess');
+
+    function triggerConfetti() {
+        const colors = ['#e67e22', '#f1c40f', '#2ecc71', '#3498db', '#e74c3c'];
+        const container = document.getElementById('connect');
+        
+        for (let i = 0; i < 50; i++) {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.left = '50%';
+            confetti.style.top = '50%';
+            confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+            
+            container.appendChild(confetti);
+            
+            const angle = Math.random() * Math.PI * 2;
+            const velocity = 10 + Math.random() * 20;
+            const tx = Math.cos(angle) * 200 * Math.random();
+            const ty = Math.sin(angle) * 200 * Math.random();
+            
+            confetti.animate([
+                { transform: 'translate(-50%, -50%) scale(0)', opacity: 1 },
+                { transform: `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(1)`, opacity: 1, offset: 0.7 },
+                { transform: `translate(calc(-50% + ${tx}px), calc(-50% + ${ty + 50}px)) scale(0)`, opacity: 0 }
+            ], {
+                duration: 1000 + Math.random() * 1000,
+                easing: 'cubic-bezier(0, .9, .57, 1)'
+            }).onfinish = () => confetti.remove();
+        }
+    }
+
+    if (subscribeForm) {
+        subscribeForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const emailEl = document.getElementById('hpSubscribeEmail');
+            const submitBtn = subscribeForm.querySelector('button[type="submit"]');
+            const email = emailEl ? emailEl.value.trim() : '';
+            if (!email) return;
+
+            const username = sessionStorage.getItem('username');
+
+            // 进入加载状态
+            submitBtn.classList.add('loading');
+
+            try {
+                // 使用绝对路径确保在不同环境下都能访问到 API
+                const response = await fetch('http://localhost:3000/api/newsletter/subscribe', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, username })
+                });
+
+                if (response.ok) {
+                    // 隐藏表单，显示成功信息
+                    subscribeForm.style.display = 'none';
+                    subscribeSuccess.classList.add('active');
+                    
+                    // 触发撒花特效
+                    triggerConfetti();
+                    
+                    if (username && window.notificationSystem) {
+                        window.notificationSystem.createNotification(
+                            username,
+                            'newsletter_subscription',
+                            '订阅成功',
+                            '您已成功订阅酒店新闻简报。'
+                        );
+                    }
+                } else {
+                    const errorData = await response.json().catch(() => ({}));
+                    console.error('Subscription failed:', errorData);
+                    showToast(errorData.message || '订阅失败，请稍后重试。', 'error');
+                }
+            } catch (error) {
+                console.error('Subscription network error:', error);
+                showToast('服务器连接失败，请检查后端是否运行。', 'error');
+            } finally {
+                submitBtn.classList.remove('loading');
+            }
+        });
+    }
+
     if (langBtn && langDropdown) {
         langBtn.addEventListener('click', (e) => {
             e.preventDefault();

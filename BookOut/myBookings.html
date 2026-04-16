@@ -64,7 +64,7 @@
                                 <div class="info-item"><label>房型</label><span>${b.roomType || '-'}</span></div>
                                 <div class="info-item"><label>入住日期</label><span>${b.checkIn}</span></div>
                                 <div class="info-item"><label>退房日期</label><span>${b.checkOut}</span></div>
-                                <div class="info-item"><label>入住人数</label><span>${b.guests} 人</span></div>
+                                <div class="info-item"><label>入住人数</label><span>${b.guests || 2} 人</span></div>
                                 <div class="info-item"><label>总金额</label><span>¥${b.totalAmount}</span></div>
                                 <div class="info-item"><label>预订时间</label><span>${new Date(b.createdAt).toLocaleDateString('zh-CN')}</span></div>
                             </div>
