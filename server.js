@@ -254,17 +254,21 @@ app.get('/api/reviews', (req, res) => {
 });
 
 app.post('/api/reviews', (req, res) => {
-    const { username, rating, comment, roomId, roomName } = req.body;
+    const { username, rating, comment, roomId, roomName, bookingId } = req.body;
     if (!username || !rating || !comment || !roomId)
         return res.status(400).json({ message: '请填写所有必填字段' });
     const data = readData();
     if (!data.reviews) data.reviews = [];
-    // 每人每房间只能评一次
-    if (data.reviews.find(r => r.roomId === roomId && r.username === username))
+    // 按 bookingId 去重（有 bookingId 时），否则按 roomId+username 去重
+    const duplicate = bookingId
+        ? data.reviews.find(r => r.bookingId === bookingId)
+        : data.reviews.find(r => r.roomId === roomId && r.username === username);
+    if (duplicate)
         return res.status(409).json({ message: '您已评价过该房间' });
     const review = {
         id: Date.now(),
         username,
+        bookingId: bookingId || null,
         roomId,
         roomName: roomName || '',
         rating: parseInt(rating),
