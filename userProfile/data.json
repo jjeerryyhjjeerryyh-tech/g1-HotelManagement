@@ -148,5 +148,139 @@
             "createdAt": "2026-04-02T08:43:22.930Z"
         }
     ],
-    "reviews": []
+    "reviews": [],
+    "roomTypes": [
+        {
+            "id": "R001",
+            "name": "舒适标准间",
+            "type": "standard",
+            "size": "28㎡",
+            "bed": "大床/双床",
+            "guests": 2,
+            "price": 588,
+            "originalPrice": 688,
+            "image": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800",
+            "amenities": [
+                "免费WiFi",
+                "空调",
+                "液晶电视",
+                "迷你吧",
+                "保险箱",
+                "24小时热水"
+            ],
+            "policy": "入住前48小时可免费取消",
+            "available": 8,
+            "status": "active"
+        },
+        {
+            "id": "R002",
+            "name": "豪华海景房",
+            "type": "deluxe",
+            "size": "45㎡",
+            "bed": "特大床",
+            "guests": 2,
+            "price": 988,
+            "originalPrice": 1288,
+            "image": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800",
+            "amenities": [
+                "免费WiFi",
+                "海景阳台",
+                "浴缸",
+                "Nespresso咖啡机",
+                "浴袍拖鞋",
+                "行政礼遇"
+            ],
+            "policy": "入住前72小时可免费取消",
+            "available": 5,
+            "status": "active"
+        },
+        {
+            "id": "R003",
+            "name": "行政套房",
+            "type": "suite",
+            "size": "75㎡",
+            "bed": "特大床",
+            "guests": 3,
+            "price": 1888,
+            "originalPrice": 2388,
+            "image": "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800",
+            "amenities": [
+                "全景落地窗",
+                "独立客厅",
+                "按摩浴缸",
+                "厨房设施",
+                "专属管家",
+                "行政酒廊"
+            ],
+            "policy": "入住前72小时可免费取消",
+            "available": 3,
+            "status": "active"
+        },
+        {
+            "id": "R004",
+            "name": "商务双床房",
+            "type": "standard",
+            "size": "32㎡",
+            "bed": "双床",
+            "guests": 2,
+            "price": 628,
+            "originalPrice": 728,
+            "image": "https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800",
+            "amenities": [
+                "免费WiFi",
+                "办公桌",
+                "人体工学椅",
+                "打印机",
+                "咖啡机",
+                "熨烫设施"
+            ],
+            "policy": "入住前48小时可免费取消",
+            "available": 12,
+            "status": "active"
+        },
+        {
+            "id": "R005",
+            "name": "总统套房",
+            "type": "suite",
+            "size": "200㎡",
+            "bed": "特大床",
+            "guests": 4,
+            "price": 8888,
+            "originalPrice": 12888,
+            "image": "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=800",
+            "amenities": [
+                "私人电梯",
+                "私人管家",
+                "会议室",
+                "厨房",
+                "私人SPA",
+                "直升机接送"
+            ],
+            "policy": "入住前7天可免费取消",
+            "available": 1,
+            "status": "active"
+        },
+        {
+            "id": "R006",
+            "name": "花园景观房",
+            "type": "deluxe",
+            "size": "38㎡",
+            "bed": "大床",
+            "guests": 2,
+            "price": 788,
+            "originalPrice": 988,
+            "image": "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=800",
+            "amenities": [
+                "花园景观",
+                "私人阳台",
+                "户外座椅",
+                "茶具套装",
+                "瑜伽垫",
+                "浴盐"
+            ],
+            "policy": "入住前48小时可免费取消",
+            "available": 6,
+            "status": "active"
+        }
+    ]
 }

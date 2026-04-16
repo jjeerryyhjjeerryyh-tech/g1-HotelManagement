@@ -47,7 +47,95 @@ function setSection(sectionKey) {
     if (sectionKey === 'bookings') loadBookings();
     if (sectionKey === 'reviews')  loadReviews();
     if (sectionKey === 'users')    loadUsers();
+    if (sectionKey === 'roomtypes') loadRoomTypes();
 }
+
+// ===== 房型管理 =====
+let editingRoomTypeId = null;
+
+async function loadRoomTypes() {
+    const res = await fetch(`${API}/api/roomtypes`);
+    const data = await res.json();
+    const tbody = document.getElementById('roomTypeTableBody');
+    if (!tbody) return;
+    if (!data.roomTypes.length) {
+        tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-8 text-center text-gray-400">暂无房型</td></tr>`;
+        return;
+    }
+    tbody.innerHTML = data.roomTypes.map(r => `
+        <tr class="hover:bg-gray-50">
+            <td class="px-6 py-4 text-sm font-medium">${r.name}</td>
+            <td class="px-6 py-4 text-sm">${r.bed || '-'} / ${r.size || '-'}</td>
+            <td class="px-6 py-4 text-sm">${r.guests} 人</td>
+            <td class="px-6 py-4 text-sm">¥${r.price}</td>
+            <td class="px-6 py-4 text-sm"><span class="px-2 py-1 rounded-full text-xs bg-success/10 text-success">启用</span></td>
+            <td class="px-6 py-4 text-sm">
+                <div class="flex space-x-3">
+                    <button onclick="editRoomType('${r.id}')" class="text-warning hover:text-warning/80"><i class="fa fa-edit mr-1"></i>编辑</button>
+                    <button onclick="deleteRoomType('${r.id}')" class="text-danger hover:text-danger/80"><i class="fa fa-trash mr-1"></i>删除</button>
+                </div>
+            </td>
+        </tr>
+    `).join('');
+}
+
+function openRoomTypeModal() {
+    editingRoomTypeId = null;
+    document.getElementById('roomTypeModalTitle').textContent = '新增房型';
+    document.getElementById('roomTypeForm').reset();
+    document.getElementById('roomTypeModal').classList.remove('hidden');
+}
+
+async function editRoomType(id) {
+    const res = await fetch(`${API}/api/roomtypes`);
+    const data = await res.json();
+    const r = data.roomTypes.find(x => x.id === id);
+    if (!r) return;
+    editingRoomTypeId = id;
+    document.getElementById('roomTypeModalTitle').textContent = '编辑房型';
+    document.getElementById('rtName').value = r.name;
+    document.getElementById('rtType').value = r.type;
+    document.getElementById('rtSize').value = r.size;
+    document.getElementById('rtBed').value = r.bed;
+    document.getElementById('rtGuests').value = r.guests;
+    document.getElementById('rtPrice').value = r.price;
+    document.getElementById('rtOriginalPrice').value = r.originalPrice;
+    document.getElementById('rtAvailable').value = r.available;
+    document.getElementById('rtImage').value = r.image;
+    document.getElementById('rtPolicy').value = r.policy;
+    document.getElementById('roomTypeModal').classList.remove('hidden');
+}
+
+function closeRoomTypeModal() {
+    document.getElementById('roomTypeModal').classList.add('hidden');
+}
+
+async function deleteRoomType(id) {
+    if (!confirm('确认删除该房型？')) return;
+    await fetch(`${API}/api/roomtypes/${id}`, { method: 'DELETE' });
+    loadRoomTypes();
+}
+
+document.getElementById('roomTypeForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const body = {
+        name: document.getElementById('rtName').value,
+        type: document.getElementById('rtType').value,
+        size: document.getElementById('rtSize').value,
+        bed: document.getElementById('rtBed').value,
+        guests: document.getElementById('rtGuests').value,
+        price: document.getElementById('rtPrice').value,
+        originalPrice: document.getElementById('rtOriginalPrice').value,
+        available: document.getElementById('rtAvailable').value,
+        image: document.getElementById('rtImage').value,
+        policy: document.getElementById('rtPolicy').value
+    };
+    const url = editingRoomTypeId ? `${API}/api/roomtypes/${editingRoomTypeId}` : `${API}/api/roomtypes`;
+    const method = editingRoomTypeId ? 'PUT' : 'POST';
+    const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    const data = await res.json();
+    if (res.ok) { closeRoomTypeModal(); loadRoomTypes(); } else { alert(data.message); }
+});
 
 // ===== 用户 CRUD =====
 async function loadUsers() {

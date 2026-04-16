@@ -100,13 +100,6 @@
                             <span class="ml-3">预定管理</span>
                         </button>
                     </li>
-                    <!-- 追加：侧边栏新增房间预订入口，原菜单保留 -->
-                    <li>
-                        <button type="button" data-section="roombooking" class="sidebar-link w-full flex items-center px-6 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200">
-                            <i class="fa fa-calendar-plus-o w-5 text-center"></i>
-                            <span class="ml-3">房间预订</span>
-                        </button>
-                    </li>
                     <li>
                         <button type="button" data-section="checkins" class="sidebar-link w-full flex items-center px-6 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200">
                             <i class="fa fa-key w-5 text-center"></i>
@@ -309,32 +302,88 @@
                     <div class="bg-white rounded-lg card-shadow">
                         <div class="p-6 border-b border-gray-200 flex items-center justify-between">
                             <h3 class="font-bold text-lg">房型管理</h3>
-                            <button class="btn-primary text-sm px-4 py-2"><i class="fa fa-plus mr-1"></i>新增房型</button>
+                            <button onclick="openRoomTypeModal()" class="btn-primary text-sm px-4 py-2"><i class="fa fa-plus mr-1"></i>新增房型</button>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="w-full">
                                 <thead>
                                     <tr class="bg-gray-50 text-left text-sm text-gray-600">
                                         <th class="px-6 py-3">房型名称</th>
+                                        <th class="px-6 py-3">床型/面积</th>
                                         <th class="px-6 py-3">可住人数</th>
                                         <th class="px-6 py-3">基础价格</th>
                                         <th class="px-6 py-3">状态</th>
                                         <th class="px-6 py-3">操作</th>
                                     </tr>
                                 </thead>
-                                <tbody class="divide-y divide-gray-200">
-                                    <tr class="hover:bg-gray-50">
-                                        <td class="px-6 py-4 text-sm">豪华客房</td>
-                                        <td class="px-6 py-4 text-sm">2</td>
-                                        <td class="px-6 py-4 text-sm">¥899</td>
-                                        <td class="px-6 py-4 text-sm"><span class="px-2 py-1 rounded-full text-xs bg-success/10 text-success">启用</span></td>
-                                        <td class="px-6 py-4 text-sm text-gray-400">（仅界面）</td>
-                                    </tr>
-                                </tbody>
+                                <tbody id="roomTypeTableBody" class="divide-y divide-gray-200"></tbody>
                             </table>
                         </div>
                     </div>
                 </section>
+
+                <!-- 新增/编辑房型弹窗 -->
+                <div id="roomTypeModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
+                    <div class="bg-white rounded-lg shadow-xl w-full max-w-lg p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 id="roomTypeModalTitle" class="font-bold text-lg">新增房型</h3>
+                            <button onclick="closeRoomTypeModal()" class="text-gray-400 hover:text-gray-600"><i class="fa fa-times text-xl"></i></button>
+                        </div>
+                        <form id="roomTypeForm" class="space-y-3">
+                            <input type="hidden" id="rtId">
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">房型名称</label>
+                                    <input id="rtName" type="text" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">类型</label>
+                                    <select id="rtType" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20">
+                                        <option value="standard">标准客房</option>
+                                        <option value="deluxe">豪华客房</option>
+                                        <option value="suite">套房</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">面积</label>
+                                    <input id="rtSize" type="text" placeholder="如 28㎡" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">床型</label>
+                                    <input id="rtBed" type="text" placeholder="如 大床/双床" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">可住人数</label>
+                                    <input id="rtGuests" type="number" min="1" value="2" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">基础价格 (¥)</label>
+                                    <input id="rtPrice" type="number" min="0" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">原价 (¥)</label>
+                                    <input id="rtOriginalPrice" type="number" min="0" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">可用数量</label>
+                                    <input id="rtAvailable" type="number" min="0" value="1" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">图片 URL</label>
+                                <input id="rtImage" type="text" placeholder="https://..." class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">取消政策</label>
+                                <input id="rtPolicy" type="text" placeholder="如 入住前48小时可免费取消" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20">
+                            </div>
+                            <div class="flex justify-end space-x-3 pt-2">
+                                <button type="button" onclick="closeRoomTypeModal()" class="btn-secondary px-4 py-2 text-sm">取消</button>
+                                <button type="submit" class="btn-primary px-4 py-2 text-sm">保存</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
                 <section id="section-rooms" class="hidden">
                     <div class="bg-white rounded-lg card-shadow">
                         <div class="p-6 border-b border-gray-200 flex items-center justify-between">
