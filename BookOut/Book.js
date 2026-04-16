@@ -299,7 +299,14 @@
                 currency_thb: 'THB - 泰铢',
                 currency_myr: 'MYR - 马来西亚林吉特',
                 lang_display: '简体中文',
-                lang_title: '语言'
+                lang_title: '语言',
+                section_connect: '畅享沟通',
+                connect_desc: '订阅酒店电子报，第一时间获取专属优惠、旅行灵感以及精彩活动资讯。',
+                subscribe_placeholder: '输入您的邮箱地址',
+                subscribe_btn: '注册',
+                subscribe_success: '已订阅: {email}',
+                subscribe_thanks: '感谢您的订阅！',
+                subscribe_success_msg: '您将第一时间收到我们的最新资讯和专属优惠。'
             },
             en: {
                 brand: 'HotelBook Booking',
@@ -421,7 +428,14 @@
                 currency_thb: 'THB',
                 currency_myr: 'MYR',
                 lang_display: 'English - UK',
-                lang_title: 'Language'
+                lang_title: 'Language',
+                section_connect: 'Stay Connected',
+                connect_desc: 'Subscribe to our newsletter for exclusive offers, travel inspiration, and event highlights.',
+                subscribe_placeholder: 'Enter your email address',
+                subscribe_btn: 'Subscribe',
+                subscribe_success: 'Subscribed: {email}',
+                subscribe_thanks: 'Thank You for Subscribing!',
+                subscribe_success_msg: 'You will be the first to receive our latest updates and exclusive offers.'
             }
         };
 
@@ -943,6 +957,91 @@ document.addEventListener('DOMContentLoaded', () => {
     const langDropdown = document.getElementById('langDropdown');
     const closeLangBtn = document.getElementById('closeLangBtn');
     
+    // --- Newsletter Logic ---
+    const subscribeForm = document.getElementById('hpSubscribeForm');
+    const subscribeSuccess = document.getElementById('hpSubscribeSuccess');
+
+    function triggerConfetti() {
+        const colors = ['#e67e22', '#f1c40f', '#2ecc71', '#3498db', '#e74c3c'];
+        const container = document.getElementById('connect');
+        
+        for (let i = 0; i < 50; i++) {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.left = '50%';
+            confetti.style.top = '50%';
+            confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+            
+            container.appendChild(confetti);
+            
+            const angle = Math.random() * Math.PI * 2;
+            const velocity = 10 + Math.random() * 20;
+            const tx = Math.cos(angle) * 200 * Math.random();
+            const ty = Math.sin(angle) * 200 * Math.random();
+            
+            confetti.animate([
+                { transform: 'translate(-50%, -50%) scale(0)', opacity: 1 },
+                { transform: `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(1)`, opacity: 1, offset: 0.7 },
+                { transform: `translate(calc(-50% + ${tx}px), calc(-50% + ${ty + 50}px)) scale(0)`, opacity: 0 }
+            ], {
+                duration: 1000 + Math.random() * 1000,
+                easing: 'cubic-bezier(0, .9, .57, 1)'
+            }).onfinish = () => confetti.remove();
+        }
+    }
+
+    if (subscribeForm) {
+        subscribeForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const emailEl = document.getElementById('hpSubscribeEmail');
+            const submitBtn = subscribeForm.querySelector('button[type="submit"]');
+            const email = emailEl ? emailEl.value.trim() : '';
+            if (!email) return;
+
+            const username = sessionStorage.getItem('username');
+
+            // 进入加载状态
+            submitBtn.classList.add('loading');
+
+            try {
+                // 使用绝对路径确保在不同环境下都能访问到 API
+                const response = await fetch('http://localhost:3000/api/newsletter/subscribe', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, username })
+                });
+
+                if (response.ok) {
+                    // 隐藏表单，显示成功信息
+                    subscribeForm.style.display = 'none';
+                    subscribeSuccess.classList.add('active');
+                    
+                    // 触发撒花特效
+                    triggerConfetti();
+                    
+                    if (username && window.notificationSystem) {
+                        window.notificationSystem.createNotification(
+                            username,
+                            'newsletter_subscription',
+                            '订阅成功',
+                            '您已成功订阅酒店新闻简报。'
+                        );
+                    }
+                } else {
+                    const errorData = await response.json().catch(() => ({}));
+                    console.error('Subscription failed:', errorData);
+                    showToast(errorData.message || '订阅失败，请稍后重试。', 'error');
+                }
+            } catch (error) {
+                console.error('Subscription network error:', error);
+                showToast('服务器连接失败，请检查后端是否运行。', 'error');
+            } finally {
+                submitBtn.classList.remove('loading');
+            }
+        });
+    }
+
     if (langBtn && langDropdown) {
         langBtn.addEventListener('click', (e) => {
             e.preventDefault();

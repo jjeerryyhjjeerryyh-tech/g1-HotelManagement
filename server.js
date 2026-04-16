@@ -24,7 +24,7 @@ function writeData(data) {
 
 // 注册
 app.post('/api/register', async (req, res) => {
-    const { username, fullName, email, phone, password } = req.body;
+    const { username, fullName, email, phone, password, subscribed } = req.body;
 
     if (!username || !fullName || !email || !phone || !password) {
         return res.status(400).json({ message: '请填写所有字段' });
@@ -44,10 +44,20 @@ app.post('/api/register', async (req, res) => {
         email,
         phone,
         password: hashedPassword,
-        role: 'user'
+        role: 'user',
+        subscribed: !!subscribed
     };
 
     data.users.push(newUser);
+
+    // 如果注册时勾选了订阅，也加入全局订阅列表
+    if (subscribed) {
+        if (!data.subscribers) data.subscribers = [];
+        if (!data.subscribers.includes(email)) {
+            data.subscribers.push(email);
+        }
+    }
+
     writeData(data);
     res.json({ message: '注册成功' });
 });
@@ -277,6 +287,62 @@ app.delete('/api/reviews/:id', (req, res) => {
     data.reviews.splice(idx, 1);
     writeData(data);
     res.json({ message: 'Review deleted' });
+});
+
+// ===== 新闻简报 API =====
+app.post('/api/newsletter/subscribe', (req, res) => {
+    const { email, username } = req.body;
+    if (!email) return res.status(400).json({ message: 'Email is required' });
+
+    const data = readData();
+    if (!data.subscribers) data.subscribers = [];
+
+    // 如果提供了用户名，更新用户信息
+    if (username) {
+        const user = data.users.find(u => u.username === username);
+        if (user) {
+            user.subscribed = true;
+        }
+    }
+
+    // 无论是否登录，都记录在订阅者列表中（去重）
+    if (!data.subscribers.includes(email)) {
+        data.subscribers.push(email);
+    }
+
+    writeData(data);
+    res.json({ message: 'Successfully subscribed to newsletter' });
+});
+
+app.get('/api/newsletter/status/:username', (req, res) => {
+    const { username } = req.params;
+    const data = readData();
+    const user = data.users.find(u => u.username === username);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    res.json({ subscribed: !!user.subscribed });
+});
+
+app.put('/api/newsletter/update', (req, res) => {
+    const { username, subscribed } = req.body;
+    const data = readData();
+    const user = data.users.find(u => u.username === username);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    user.subscribed = subscribed;
+    
+    if (subscribed) {
+        if (!data.subscribers) data.subscribers = [];
+        if (!data.subscribers.includes(user.email)) {
+            data.subscribers.push(user.email);
+        }
+    } else {
+        if (data.subscribers) {
+            data.subscribers = data.subscribers.filter(e => e !== user.email);
+        }
+    }
+
+    writeData(data);
+    res.json({ message: 'Subscription preference updated' });
 });
 
 // 静态文件放在所有API路由之后

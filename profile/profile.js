@@ -1,9 +1,19 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     // Populate user data if logged in
     const username = sessionStorage.getItem('username');
     if (username) {
-        // Just mock some data based on username
         document.getElementById('fullName').value = username;
+        
+        // 获取订阅状态
+        try {
+            const response = await fetch(`http://localhost:3000/api/newsletter/status/${username}`);
+            if (response.ok) {
+                const data = await response.json();
+                document.getElementById('marketing').checked = data.subscribed;
+            }
+        } catch (error) {
+            console.error('Error fetching subscription status:', error);
+        }
     } else {
         // Redirect to login or home if not logged in
         showToast('请先登入', 'error');
@@ -19,15 +29,39 @@ document.addEventListener('DOMContentLoaded', () => {
         window.history.back();
     });
 
-    profileForm.addEventListener('submit', (e) => {
+    profileForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
         const newPassword = document.getElementById('newPassword').value;
         const confirmPassword = document.getElementById('confirmPassword').value;
+        const isSubscribed = document.getElementById('marketing').checked;
         
         if (newPassword && newPassword !== confirmPassword) {
             showToast('两次输入的密码不一致', 'error');
             return;
+        }
+        
+        // 更新订阅偏好
+        try {
+            const subResponse = await fetch('http://localhost:3000/api/newsletter/update', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, subscribed: isSubscribed })
+            });
+            
+            if (subResponse.ok) {
+                // 如果已登录，发送通知
+                if (window.notificationSystem) {
+                    window.notificationSystem.createNotification(
+                        username,
+                        'newsletter_preference_update',
+                        '偏好更新成功',
+                        isSubscribed ? '您已成功订阅酒店新闻简报。' : '您已成功取消订阅酒店新闻简报。'
+                    );
+                }
+            }
+        } catch (error) {
+            console.error('Error updating subscription status:', error);
         }
         
         showToast('个人资料已更新', 'success');

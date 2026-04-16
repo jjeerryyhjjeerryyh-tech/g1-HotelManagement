@@ -604,15 +604,43 @@ document.getElementById('logoutBtn').addEventListener('click', () => {
 
 const subscribeForm = document.getElementById('hpSubscribeForm');
 if (subscribeForm) {
-    subscribeForm.addEventListener('submit', (e) => {
+    subscribeForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const emailEl = document.getElementById('hpSubscribeEmail');
         const email = emailEl ? emailEl.value.trim() : '';
         if (!email) return;
+
+        const username = sessionStorage.getItem('username');
         const dict = i18n[currentLang] || i18n.zh;
-        const tpl = dict.subscribe_success || 'Subscribed: {email}';
-        alert(tpl.replace('{email}', email));
-        subscribeForm.reset();
+
+        try {
+            const response = await fetch('http://localhost:3000/api/newsletter/subscribe', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, username })
+            });
+
+            if (response.ok) {
+                const tpl = dict.subscribe_success || 'Subscribed: {email}';
+                alert(tpl.replace('{email}', email));
+                subscribeForm.reset();
+                
+                // 如果已登录，发送通知
+                if (username && window.notificationSystem) {
+                    window.notificationSystem.createNotification(
+                        username,
+                        'newsletter_subscription',
+                        '订阅成功',
+                        '您已成功订阅酒店新闻简报。'
+                    );
+                }
+            } else {
+                alert('订阅失败，请稍后重试。');
+            }
+        } catch (error) {
+            console.error('Subscription error:', error);
+            alert('服务器连接失败。');
+        }
     });
 }
 
