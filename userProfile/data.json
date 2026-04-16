@@ -92,12 +92,21 @@
             "role": "user"
         },
         {
+<<<<<<< Updated upstream
             "id": 1776325709210,
             "username": "user4",
             "name": "hhh",
             "email": "user4@gmail.com",
             "phone": "12345678",
             "password": "$2b$10$xbkPeRMvyEXfARBazxKljeET3hDKsXDkClSmVSm1glAsUALefxR6m",
+=======
+            "id": 1776323288357,
+            "username": "12345678",
+            "name": "nimabi",
+            "email": "h3368600435@163.com",
+            "phone": "59564590",
+            "password": "$2b$10$6aPzbOwP22qj.jrBDGm4uOewC4VUq6ghwpajFldGS7w2WAzxdc8OW",
+>>>>>>> Stashed changes
             "role": "user"
         }
     ],
@@ -221,6 +230,7 @@
             "createdAt": "2026-04-16T06:34:32.359Z"
         },
         {
+<<<<<<< Updated upstream
             "id": "BK1776323851806",
             "username": "kskbl",
             "roomId": "R001",
@@ -229,10 +239,21 @@
             "guestName": "pao leng",
             "guestPhone": "12345678",
             "guestEmail": "jjeerryyhjjeerryyh@gmail.com",
+=======
+            "id": "BK1776323364468",
+            "username": "12345678",
+            "roomId": "R001",
+            "roomName": "舒适标准间",
+            "roomType": "舒适标准间",
+            "guestName": "nimabi",
+            "guestPhone": "59564590",
+            "guestEmail": "h3368600435@163.com",
+>>>>>>> Stashed changes
             "checkIn": "2026-04-16",
             "checkOut": "2026-04-17",
             "nights": 1,
             "totalAmount": 646.8,
+<<<<<<< Updated upstream
             "arrivalTime": "14:00-15:00",
             "specialRequests": "要个美女",
             "status": "checked-out",
@@ -291,6 +312,12 @@
             "rating": 5,
             "comment": "gggggg",
             "createdAt": "2026-04-16T08:17:07.052Z"
+=======
+            "arrivalTime": "18:00+",
+            "specialRequests": "",
+            "status": "confirmed",
+            "createdAt": "2026-04-16T07:09:24.468Z"
+>>>>>>> Stashed changes
         }
     ],
     "roomTypes": [

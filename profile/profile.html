@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>您的个人资料 - XX酒店</title>
+    <title>个人资料 · 91酒店</title>
+    <!-- Font Awesome 图标库 -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../BookOut/Book.css">
+    <!-- 样式文件 -->
     <link rel="stylesheet" href="profile.css">
 </head>
 <body>
-    <!-- Header (Similar to Book.html) -->
+    <!-- 头部导航 (与 Book.html 风格一致) -->
     <header class="header">
         <div class="header-content">
             <a class="logo" href="../homePage/index.html" aria-label="首页">
@@ -21,7 +22,7 @@
                     <a href="../BookOut/Book.html" class="header-link">增加房间</a>
                     <a href="#" class="header-link">选择饭店 <i class="fas fa-chevron-down"></i></a>
                     <a href="../BookOut/Book.html" class="header-link">我的预订</a>
-                    <a href="#" class="header-link">港币 <i class="fas fa-chevron-down"></i></a>
+                    <a href="#" class="header-link" id="currencyDisplay">港币 <i class="fas fa-chevron-down"></i></a>
                     
                     <label class="lang-select" for="langSelect">
                         <select id="langSelect" aria-label="Language">
@@ -35,6 +36,10 @@
                             <i class="far fa-user"></i>
                         </button>
                     </div>
+                    <!-- 主题切换按钮 -->
+                    <button class="icon-btn" id="themeToggle" aria-label="切换主题">
+                        <i class="fas fa-moon"></i>
+                    </button>
                 </nav>
             </div>
         </div>
@@ -44,6 +49,23 @@
         <h1 class="profile-title">您的个人资料</h1>
         
         <form id="profileForm">
+            <!-- 头像区域 -->
+            <div class="form-section avatar-section">
+                <div class="avatar-wrapper">
+                    <div class="avatar-preview" id="avatarPreview">
+                        <img id="avatarImg" src="" alt="用户头像">
+                        <i class="fas fa-user-circle default-avatar"></i>
+                    </div>
+                    <div class="avatar-actions">
+                        <button type="button" class="btn btn-outline btn-sm" id="uploadAvatarBtn">
+                            <i class="fas fa-camera"></i> 更换头像
+                        </button>
+                        <input type="file" id="avatarInput" accept="image/*" style="display: none;">
+                        <p class="avatar-hint">支持 JPG、PNG 格式，大小不超过 2MB</p>
+                    </div>
+                </div>
+            </div>
+
             <!-- 个人资料 -->
             <div class="form-section">
                 <div class="section-header">
@@ -52,44 +74,69 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label>姓名 *</label>
-                        <input type="text" id="fullName" value="leng pao" required>
+                        <label>用户名 (不可修改)</label>
+                        <input type="text" id="username" readonly disabled>
+                    </div>
+                    <div class="form-group">
+                        <label>真实姓名 *</label>
+                        <input type="text" id="fullName" required>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label>电子邮件地址 *</label>
-                        <input type="email" id="email" value="lengpao@gmail.com" required>
+                        <label>电子邮箱地址 *</label>
+                        <input type="email" id="email" required>
                     </div>
                     <div class="form-group">
-                        <label>确认电子邮件地址 *</label>
-                        <input type="email" id="confirmEmail" value="lengpao@gmail.com" required>
+                        <label>确认电子邮箱地址 *</label>
+                        <input type="email" id="confirmEmail" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>手机号码</label>
+                        <input type="tel" id="phone" placeholder="选填">
+                    </div>
+                    <div class="form-group">
+                        <label>角色</label>
+                        <input type="text" id="roleDisplay" readonly disabled>
+                    </div>
+                </div>
+                <!-- 管理员可见的额外字段 (权限控制演示) -->
+                <div class="form-row admin-only" id="adminFields" style="display: none;">
+                    <div class="form-group">
+                        <label>注册时间</label>
+                        <input type="text" id="registerDate" readonly disabled>
+                    </div>
+                    <div class="form-group">
+                        <label>账号状态</label>
+                        <input type="text" id="accountStatus" readonly disabled>
                     </div>
                 </div>
             </div>
 
-            <!-- 密码 -->
+            <!-- 密码修改 -->
             <div class="form-section">
-                <h2>密码</h2>
+                <h2>修改密码</h2>
                 <div class="form-row">
                     <div class="form-group">
-                        <label>建立密码</label>
-                        <input type="password" id="newPassword">
+                        <label>新密码</label>
+                        <input type="password" id="newPassword" placeholder="至少 8 个字符">
                     </div>
                     <div class="form-group">
-                        <label>确认密码</label>
-                        <input type="password" id="confirmPassword">
+                        <label>确认新密码</label>
+                        <input type="password" id="confirmPassword" placeholder="再次输入新密码">
                     </div>
                 </div>
-                <p class="password-hint">至少 8 个字符，区分大小写，可以包含 !@#%，不包含空格，不能与先前的密码或登入名称相同。</p>
+                <p class="password-hint">至少 8 个字符，区分大小写，可以包含 !@#%，不包含空格。</p>
             </div>
 
-            <!-- 致谢 -->
+            <!-- 偏好设置 & 致谢 -->
             <div class="form-section highlight-section">
-                <h2>致谢</h2>
+                <h2>偏好设置</h2>
                 <div class="checkbox-group">
                     <input type="checkbox" id="marketing">
-                    <label for="marketing">我希望透过邮寄、电子邮件、电话、简讯或其他即时通讯工具接收来自香港上海大酒店有限公司（「HSH」）及其关联公司（「HSH集团」）的促销、活动邀请、特别优惠和通讯资讯。</label>
+                    <label for="marketing">我希望透过邮寄、电子邮件、电话、简讯或其他即时通讯工具接收来自91酒店的促销、活动邀请和特别优惠。</label>
                 </div>
                 <div class="checkbox-group">
                     <input type="checkbox" id="terms" required>
@@ -97,18 +144,22 @@
                 </div>
             </div>
 
-            <!-- 按钮 -->
+            <!-- 操作按钮 -->
             <div class="form-actions">
                 <button type="button" class="btn btn-outline" id="cancelBtn">取消</button>
-                <button type="submit" class="btn btn-primary" id="updateBtn">更新</button>
+                <button type="submit" class="btn btn-primary" id="updateBtn">保存更新</button>
             </div>
         </form>
     </div>
 
-    <!-- Toast Container -->
+    <!-- Toast 容器 -->
     <div class="toast-container" id="toastContainer"></div>
 
+<<<<<<< Updated upstream
     <script src="../notifications/notificationSystem.js"></script>
+=======
+    <!-- JavaScript 文件 -->
+>>>>>>> Stashed changes
     <script src="profile.js"></script>
 </body>
 </html>
