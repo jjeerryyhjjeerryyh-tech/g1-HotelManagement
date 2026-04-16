@@ -78,6 +78,16 @@ document.addEventListener('DOMContentLoaded', function() {
     var room   = JSON.parse(roomRaw);
     var params = JSON.parse(paramsRaw);
 
+    // 设置初始入住人数
+    var guestsSelect = document.getElementById('guestsSelect');
+    if (guestsSelect) {
+        guestsSelect.value = params.guests || '2';
+        guestsSelect.addEventListener('change', function() {
+            params.guests = this.value;
+            renderSummary(room, params);
+        });
+    }
+
     renderSummary(room, params);
 
     var form = document.getElementById('checkoutForm');
@@ -124,6 +134,7 @@ document.addEventListener('DOMContentLoaded', function() {
             checkIn:         params.checkIn,
             checkOut:        params.checkOut,
             nights:          nights,
+            guests:          params.guests || '2',
             totalAmount:     totalCNY,
             totalDisplay:    totalDisplay,
             currency:        currency,

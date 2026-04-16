@@ -223,7 +223,8 @@ app.post('/api/bookings', (req, res) => {
         roomType: roomType || roomName || '-',   // 保留 roomType 兼容管理员界面
         guestName, guestPhone, guestEmail,
         checkIn, checkOut,
-        nights: nights || guests,
+        nights,
+        guests: guests || 2,
         totalAmount,
         arrivalTime, specialRequests,
         status: 'confirmed',
