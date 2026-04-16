@@ -512,23 +512,10 @@
                 }
                 sessionStorage.removeItem('bookingSearch');
             }
-
-            // 从后端加载房型
-            fetch('http://localhost:3000/api/roomtypes')
-                .then(r => r.json())
-                .then(data => {
-                    if (data.roomTypes && data.roomTypes.length) {
-                        roomsData.length = 0;
-                        data.roomTypes.forEach(r => roomsData.push(r));
-                    }
-                    renderRooms();
-                    updateStats();
-                })
-                .catch(() => {
-                    renderRooms();
-                    updateStats();
-                });
-
+            
+            // Render rooms
+            renderRooms();
+            updateStats();
             renderMyBookings();
         });
 
