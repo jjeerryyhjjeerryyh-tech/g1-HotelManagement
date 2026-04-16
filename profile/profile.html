@@ -7,29 +7,98 @@
     <!-- Font Awesome 图标库 -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <!-- 样式文件 -->
+    <link rel="stylesheet" href="../BookOut/Book.css">
     <link rel="stylesheet" href="profile.css">
 </head>
 <body>
-    <!-- 导航栏（与 index.html 风格一致） -->
-    <header class="pf-navbar" id="pfNavbar">
-        <div class="pf-navbar-container">
-            <div class="pf-navbar-left">
-                <a href="../homePage/index.html" class="pf-nav-back">
-                    <i class="fas fa-arrow-left"></i> 首页
-                </a>
-            </div>
-            <div class="pf-navbar-center">
-                <a class="pf-logo" href="../homePage/index.html" aria-label="首页">
-                    <div class="pf-logo-main">91酒店</div>
-                    <div class="pf-logo-sub">HONG KONG</div>
-                </a>
-            </div>
-            <div class="pf-navbar-right">
-                <a href="../BookOut/Book.html" class="pf-nav-link">客房预订</a>
-                <span class="pf-nav-divider">|</span>
-                <a href="../BookOut/myBookings.html" class="pf-nav-link">我的预订</a>
-                <span class="pf-nav-divider">|</span>
-                <button class="pf-nav-link pf-logout-btn" id="pfLogoutBtn">退出</button>
+    <!-- 导航栏（与 Book.html 完全一致） -->
+    <header class="header">
+        <div class="header-content">
+            <a class="logo" href="../homePage/index.html" aria-label="首页">
+                <div class="logo-main">91酒店</div>
+                <div class="logo-sub">HONG KONG</div>
+            </a>
+
+            <div class="header-right">
+                <nav class="header-links">
+                    <a href="../BookOut/myBookings.html" class="header-link">我的订单</a>
+
+                    <div class="currency-menu-container">
+                        <a href="#" class="header-link" id="currencyBtn">
+                            <span>港币</span> <i class="fas fa-chevron-down"></i>
+                        </a>
+                        <div class="currency-dropdown" id="currencyDropdown" style="display:none;">
+                            <div class="currency-header">
+                                <h3>货币</h3>
+                                <button class="close-dropdown" id="closeCurrencyBtn"><i class="fas fa-times"></i></button>
+                            </div>
+                            <div class="currency-body">
+                                <div class="currency-group">
+                                    <h4>热门货币</h4>
+                                    <ul class="currency-list">
+                                        <li><a href="#" class="currency-item active" data-currency="HKD">港币</a></li>
+                                        <li><a href="#" class="currency-item" data-currency="CNY">人民币 (CNY)</a></li>
+                                        <li><a href="#" class="currency-item" data-currency="USD">美元</a></li>
+                                        <li><a href="#" class="currency-item" data-currency="EUR">欧元</a></li>
+                                        <li><a href="#" class="currency-item" data-currency="GBP">英镑</a></li>
+                                        <li><a href="#" class="currency-item" data-currency="SGD">新加坡元 (SGD)</a></li>
+                                        <li><a href="#" class="currency-item" data-currency="AUD">澳币</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lang-menu-container">
+                        <a href="#" class="header-link" id="langBtn">
+                            <span>简体中文</span> <i class="fas fa-chevron-down"></i>
+                        </a>
+                        <div class="lang-dropdown" id="langDropdown" style="display:none;">
+                            <div class="lang-header">
+                                <h3>语言</h3>
+                                <button class="close-dropdown" id="closeLangBtn"><i class="fas fa-times"></i></button>
+                            </div>
+                            <div class="lang-body">
+                                <ul class="lang-list">
+                                    <li><a href="#" class="lang-item active" data-lang="zh">简体中文</a></li>
+                                    <li><a href="#" class="lang-item" data-lang="en">English</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="themeToggleMount"></div>
+
+                    <div class="user-menu-container">
+                        <button class="icon-btn" id="userBtn" aria-label="User profile">
+                            <i class="far fa-user"></i>
+                        </button>
+                        <div class="user-dropdown" id="userDropdown" style="display:none;">
+                            <div id="loginFormContainer">
+                                <div class="dropdown-header">
+                                    <h3>帐号登入</h3>
+                                    <button class="close-dropdown" id="closeLoginBtn"><i class="fas fa-times"></i></button>
+                                </div>
+                                <div class="dropdown-body">
+                                    <div class="form-group">
+                                        <input type="text" id="dropdownUsername" placeholder="使用者名称">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" id="dropdownPassword" placeholder="密码">
+                                    </div>
+                                    <button class="btn btn-secondary full-width" id="dropdownLoginBtn">登入</button>
+                                    <div class="dropdown-footer">
+                                        <a href="../register/register.html" class="create-account-link">建立一个帐户</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="loggedInContainer" style="display:none;">
+                                <a href="../profile/profile.html" class="dropdown-item">更新个人资料</a>
+                                <a href="#" class="dropdown-item" id="logoutBtn">登出</a>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
             </div>
         </div>
     </header>
@@ -146,12 +215,115 @@
 
     <script src="../notifications/notificationSystem.js"></script>
     <script src="profile.js"></script>
+    <script src="../assets/js/theme-button.js"></script>
     <script>
-        // 退出登录
-        document.getElementById('pfLogoutBtn').addEventListener('click', function() {
-            sessionStorage.clear();
-            window.location.href = '../homePage/index.html';
+    // ── 导航栏交互（与 Book.html 一致）──
+    (function () {
+        // 主题
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        const themeMount = document.getElementById('themeToggleMount');
+        if (themeMount) {
+            const btn = document.createElement('theme-button');
+            btn.setAttribute('value', savedTheme);
+            btn.setAttribute('size', '0.8');
+            btn.addEventListener('change', e => {
+                document.documentElement.setAttribute('data-theme', e.detail);
+                localStorage.setItem('theme', e.detail);
+            });
+            themeMount.appendChild(btn);
+        }
+
+        // 货币下拉
+        const currencyBtn      = document.getElementById('currencyBtn');
+        const currencyDropdown = document.getElementById('currencyDropdown');
+        const closeCurrencyBtn = document.getElementById('closeCurrencyBtn');
+        if (currencyBtn && currencyDropdown) {
+            currencyBtn.addEventListener('click', e => {
+                e.preventDefault(); e.stopPropagation();
+                currencyDropdown.style.display = currencyDropdown.style.display === 'flex' ? 'none' : 'flex';
+            });
+            closeCurrencyBtn && closeCurrencyBtn.addEventListener('click', () => currencyDropdown.style.display = 'none');
+            currencyDropdown.addEventListener('click', e => e.stopPropagation());
+        }
+
+        // 语言下拉
+        const langBtn      = document.getElementById('langBtn');
+        const langDropdown = document.getElementById('langDropdown');
+        const closeLangBtn = document.getElementById('closeLangBtn');
+        if (langBtn && langDropdown) {
+            langBtn.addEventListener('click', e => {
+                e.preventDefault(); e.stopPropagation();
+                langDropdown.style.display = langDropdown.style.display === 'flex' ? 'none' : 'flex';
+            });
+            closeLangBtn && closeLangBtn.addEventListener('click', () => langDropdown.style.display = 'none');
+        }
+
+        // 用户下拉
+        const userBtn          = document.getElementById('userBtn');
+        const userDropdown     = document.getElementById('userDropdown');
+        const closeLoginBtn    = document.getElementById('closeLoginBtn');
+        const loginFormCont    = document.getElementById('loginFormContainer');
+        const loggedInCont     = document.getElementById('loggedInContainer');
+        const logoutBtn        = document.getElementById('logoutBtn');
+        const dropdownLoginBtn = document.getElementById('dropdownLoginBtn');
+
+        function refreshUserState() {
+            const u = sessionStorage.getItem('username');
+            if (loginFormCont)  loginFormCont.style.display  = u ? 'none'  : 'block';
+            if (loggedInCont)   loggedInCont.style.display   = u ? 'block' : 'none';
+        }
+        refreshUserState();
+
+        if (userBtn && userDropdown) {
+            userBtn.addEventListener('click', e => {
+                e.stopPropagation();
+                userDropdown.style.display = userDropdown.style.display === 'block' ? 'none' : 'block';
+            });
+            closeLoginBtn && closeLoginBtn.addEventListener('click', () => userDropdown.style.display = 'none');
+            userDropdown.addEventListener('click', e => e.stopPropagation());
+        }
+
+        // 登入
+        if (dropdownLoginBtn) {
+            dropdownLoginBtn.addEventListener('click', async () => {
+                const username = document.getElementById('dropdownUsername').value.trim();
+                const password = document.getElementById('dropdownPassword').value;
+                if (!username || !password) return;
+                try {
+                    const res  = await fetch('http://localhost:3000/api/login', {
+                        method: 'POST', headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ username, password })
+                    });
+                    const data = await res.json();
+                    if (res.ok) {
+                        sessionStorage.setItem('isLoggedIn', 'true');
+                        sessionStorage.setItem('username', data.username);
+                        sessionStorage.setItem('role', data.role);
+                        sessionStorage.setItem('name', data.name);
+                        refreshUserState();
+                        userDropdown.style.display = 'none';
+                    } else { alert(data.message); }
+                } catch { alert('无法连接服务器'); }
+            });
+        }
+
+        // 登出
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', e => {
+                e.preventDefault();
+                sessionStorage.clear();
+                window.location.href = '../homePage/index.html';
+            });
+        }
+
+        // 点击外部关闭所有下拉
+        document.addEventListener('click', () => {
+            if (currencyDropdown) currencyDropdown.style.display = 'none';
+            if (langDropdown)     langDropdown.style.display     = 'none';
+            if (userDropdown)     userDropdown.style.display     = 'none';
         });
+    })();
     </script>
 </body>
 </html>

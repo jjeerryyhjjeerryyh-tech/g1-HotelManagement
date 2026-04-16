@@ -273,6 +273,24 @@
             "specialRequests": "要个美女",
             "status": "checked-out",
             "createdAt": "2026-04-16T07:59:01.277Z"
+        },
+        {
+            "id": "BK1776330532166",
+            "username": "user4",
+            "roomId": "R001",
+            "roomName": "舒适标准间",
+            "roomType": "舒适标准间",
+            "guestName": "user4",
+            "guestPhone": "12345678",
+            "guestEmail": "user4@gmail.com",
+            "checkIn": "2026-04-16",
+            "checkOut": "2026-04-17",
+            "nights": 1,
+            "totalAmount": 646.8,
+            "arrivalTime": "15:00-16:00",
+            "specialRequests": "要个美女",
+            "status": "cancelled",
+            "createdAt": "2026-04-16T09:08:52.166Z"
         }
     ],
     "reviews": [
