@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>客房评价</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="rating.css">
+</head>
+<body>
+
+<!-- 语言 + 主题切换 -->
+<div class="top-controls">
+    <button class="lang-toggle">中文</button>
+    <button class="theme-toggle">
+        <i class="fas fa-moon"></i>
+    </button>
+</div>
+
+<div class="review-wrapper">
+    <div class="review-card">
+        <h2 data-i18n="title">提交客房评价</h2>
+        <p class="sub-title" data-i18n="subtitle">已完成入住 · 仅可评价一次</p>
+
+        <!-- 总评分 -->
+        <div class="rate-group">
+            <label data-i18n="totalRating">总体评分</label>
+            <div class="stars" id="totalStars">
+                <i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
+            </div>
+        </div>
+
+        <!-- 多维度 -->
+        <div class="multi-rate">
+            <div class="rate-item">
+                <label data-i18n="clean">清洁度</label>
+                <div class="stars smallStars"><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></div>
+            </div>
+            <div class="rate-item">
+                <label data-i18n="comfort">舒适度</label>
+                <div class="stars smallStars"><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></div>
+            </div>
+            <div class="rate-item">
+                <label data-i18n="service">服务态度</label>
+                <div class="stars smallStars"><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></div>
+            </div>
+            <div class="rate-item">
+                <label data-i18n="facility">设施状况</label>
+                <div class="stars smallStars"><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></div>
+            </div>
+        </div>
+
+        <!-- 文字评价 -->
+        <div class="rate-group">
+            <label data-i18n="comment">文字评价（可选）</label>
+            <textarea data-i18n="placeholder" placeholder="分享你的入住体验"></textarea>
+        </div>
+
+        <!-- 图片上传 -->
+        <div class="rate-group">
+            <label data-i18n="upload">上传图片（可选）</label>
+            <div class="upload-box">
+                <input type="file" multiple accept="image/*">
+                <div class="preview"></div>
+            </div>
+        </div>
+
+        <button class="submit-btn" id="submitReview" data-i18n="submit">提交评价</button>
+    </div>
+</div>
+
+<script src="rating.js"></script>
+</body>
+</html>
