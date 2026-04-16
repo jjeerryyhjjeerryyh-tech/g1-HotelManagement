@@ -1,211 +1,254 @@
 /**
- * 通知系统核心模块 v1.1
- * 负责通知的创建、存储、获取和管理
+ * 通知系统核心模块 v2.3
+ *
+ * 通知内容存储为 {templateKey, params} 格式，
+ * 渲染时通过 lang.js 的 renderNotif() 动态翻译，
+ * 实现"切换语言后已存通知也能显示对应语言"的效果。
+ *
+ * 语言系统依赖：notifications/lang.js（必须在此前加载）
  */
 
-class NotificationSystem {
-    constructor() {
-        this.storageKey = 'hotel_notifications';
-        this.maxNotifications = 10;
-        this.init();
-    }
+(function () {
+    'use strict';
 
-    // 初始化通知系统
-    init() {
-        // 确保localStorage中有通知数据结构
-        if (!localStorage.getItem(this.storageKey)) {
-            localStorage.setItem(this.storageKey, JSON.stringify([]));
+    var storageKey = 'hotel_notifications';
+    var maxNotifications = 50;
+
+    // ============================================
+    // 初始化
+    // ============================================
+    function init() {
+        if (!localStorage.getItem(storageKey)) {
+            localStorage.setItem(storageKey, '[]');
         }
     }
 
-    // 创建新通知
-    createNotification(userId, type, title, message, additionalData = {}) {
-        const notification = {
-            id: Date.now() + Math.random(), // 确保唯一性
-            userId: userId,
-            type: type,
-            title: title,
-            message: message,
-            timestamp: new Date().toISOString(),
-            isRead: false,
-            ...additionalData
-        };
-
-        this.addNotification(notification);
-        this.syncToServer(notification);
-        return notification;
+    // ============================================
+    // 数据操作
+    // ============================================
+    function getAllNotifications() {
+        return JSON.parse(localStorage.getItem(storageKey) || '[]');
     }
 
-    // 添加通知到本地存储
-    addNotification(notification) {
-        let notifications = this.getNotifications();
-        notifications.unshift(notification); // 新通知放在前面
-        
-        // 限制通知数量
-        if (notifications.length > this.maxNotifications) {
-            notifications = notifications.slice(0, this.maxNotifications);
+    function saveNotifications(notifications) {
+        localStorage.setItem(storageKey, JSON.stringify(notifications));
+    }
+
+    function getNotifications(userId) {
+        var all = getAllNotifications();
+        if (userId) return all.filter(function (n) { return n.userId === userId; });
+        return all;
+    }
+
+    function addNotification(notification) {
+        var notifications = getAllNotifications();
+        notifications.unshift(notification);
+        if (notifications.length > maxNotifications) {
+            notifications = notifications.slice(0, maxNotifications);
         }
-        
-        localStorage.setItem(this.storageKey, JSON.stringify(notifications));
-        this.updateNotificationBadge();
+        saveNotifications(notifications);
+        updateNotificationBadge();
     }
 
-    // 获取所有通知
-    getNotifications(userId = null) {
-        const notifications = JSON.parse(localStorage.getItem(this.storageKey) || '[]');
-        if (userId) {
-            return notifications.filter(n => n.userId === userId);
-        }
-        return notifications;
+    function getUnreadCount(userId) {
+        return getNotifications(userId).filter(function (n) { return !n.isRead; }).length;
     }
 
-    // 获取用户的未读通知数量
-    getUnreadCount(userId) {
-        const notifications = this.getNotifications(userId);
-        return notifications.filter(n => !n.isRead).length;
-    }
-
-    // 标记通知为已读
-    markAsRead(notificationId) {
-        const notifications = this.getNotifications();
-        const notification = notifications.find(n => n.id == notificationId); // 使用 == 处理类型转换
-        if (notification) {
-            notification.isRead = true;
-            localStorage.setItem(this.storageKey, JSON.stringify(notifications));
-            this.updateNotificationBadge();
-            this.syncReadStatusToServer(notificationId);
+    function markAsRead(notificationId) {
+        var notifications = getAllNotifications();
+        var found = notifications.find(function (n) { return n.id == notificationId; });
+        if (found) {
+            found.isRead = true;
+            saveNotifications(notifications);
+            updateNotificationBadge();
         }
     }
 
-    // 标记所有通知为已读
-    markAllAsRead(userId) {
-        const notifications = this.getNotifications();
-        notifications.forEach(n => {
-            if (n.userId === userId) {
-                n.isRead = true;
-            }
+    function markAllAsRead(userId) {
+        var notifications = getAllNotifications();
+        notifications.forEach(function (n) {
+            if (n.userId === userId) n.isRead = true;
         });
-        localStorage.setItem(this.storageKey, JSON.stringify(notifications));
-        this.updateNotificationBadge();
+        saveNotifications(notifications);
+        updateNotificationBadge();
     }
 
-    // 删除通知
-    deleteNotification(notificationId) {
-        let notifications = this.getNotifications();
-        notifications = notifications.filter(n => n.id != notificationId); // 使用 != 处理类型转换
-        localStorage.setItem(this.storageKey, JSON.stringify(notifications));
-        this.updateNotificationBadge();
+    function deleteNotification(notificationId) {
+        var notifications = getAllNotifications();
+        notifications = notifications.filter(function (n) { return n.id != notificationId; });
+        saveNotifications(notifications);
+        updateNotificationBadge();
     }
 
-    // 更新通知徽章显示
-    updateNotificationBadge() {
-        const currentUser = sessionStorage.getItem('username');
-        if (!currentUser) return;
+    // ============================================
+    // 通知徽章更新
+    // ============================================
+    function updateNotificationBadge() {
+        var currentUser = sessionStorage.getItem('username');
+        if (!currentUser || !document) return;
 
-        const userId = this.getUserIdByUsername(currentUser);
-        const unreadCount = this.getUnreadCount(userId);
-        
-        // 更新所有页面的通知徽章
-        const badges = document.querySelectorAll('.notification-badge');
-        badges.forEach(badge => {
+        var unreadCount = getUnreadCount(currentUser);
+        document.querySelectorAll('.notification-badge').forEach(function (badge) {
             if (unreadCount > 0) {
                 badge.textContent = unreadCount > 99 ? '99+' : unreadCount;
-                badge.style.display = 'flex';
+                badge.style.display = 'inline-block';
             } else {
                 badge.style.display = 'none';
             }
         });
     }
 
-    // 根据用户名获取用户ID（简化版本）
-    getUserIdByUsername(username) {
-        // 这里使用用户名作为ID，实际项目中应该从用户数据中获取真实ID
-        return username;
+    // ============================================
+    // 翻译辅助（使用 lang.js 的全局函数）
+    // ============================================
+    function getLang() {
+        return (window.__notifLang && window.__notifLang.getLang)
+            ? window.__notifLang.getLang()
+            : (localStorage.getItem('lang') || 'zh');
     }
 
-    // 同步通知到服务器（可选功能）
-    async syncToServer(notification) {
-        try {
-            await fetch('/api/notifications', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(notification)
-            });
-        } catch (error) {
-            console.log('通知同步到服务器失败，仅保存在本地:', error);
+    function renderNotif(templateKey, params) {
+        return (window.__notifLang && window.__notifLang.renderNotif)
+            ? window.__notifLang.renderNotif(templateKey, params)
+            : (params && params.roomType ? templateKey : templateKey);
+    }
+
+    function t(key) {
+        return (window.__notifLang && window.__notifLang.t)
+            ? window.__notifLang.t(key)
+            : key;
+    }
+
+    // ============================================
+    // 渲染通知内容（语言切换时重新调用此函数）
+    // ============================================
+    function renderNotification(notification) {
+        // 如果存的是 templateKey + params（v2.3+），动态翻译
+        if (notification.templateKey) {
+            var title = renderNotif(notification.templateKey + '_title', notification.params);
+            var body  = renderNotif(notification.templateKey + '_body',  notification.params);
+            return { title: title, message: body };
         }
+        // 如果存的是旧格式的 pre-filled text（v1/v2），直接返回
+        return { title: notification.title, message: notification.message };
     }
 
-    // 同步已读状态到服务器
-    async syncReadStatusToServer(notificationId) {
-        try {
-            await fetch(`/api/notifications/${notificationId}/read`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' }
-            });
-        } catch (error) {
-            console.log('已读状态同步失败:', error);
-        }
-    }
-
-    // 预定义的通知类型和模板
-    static NotificationTypes = {
-        LOGIN_SUCCESS: 'login_success',
-        BOOKING_SUCCESS: 'booking_success',
-        PROFILE_UPDATE: 'profile_update',
-        ADMIN_LOGIN: 'admin_login',
-        FIRST_LOGIN: 'first_login'
+    // ============================================
+    // 快捷通知方法
+    // ============================================
+    var NotificationTypes = {
+        LOGIN_SUCCESS:    'login_success',
+        BOOKING_SUCCESS:  'booking_success',
+        PROFILE_UPDATE:   'profile_update',
+        ADMIN_LOGIN:      'admin_login',
+        FIRST_LOGIN:      'first_login'
     };
 
-    // 快捷方法：登录成功通知
-    notifyLoginSuccess(username, isFirstLogin = false) {
-        const userId = this.getUserIdByUsername(username);
-        const type = isFirstLogin ? NotificationSystem.NotificationTypes.FIRST_LOGIN : NotificationSystem.NotificationTypes.LOGIN_SUCCESS;
-        const title = isFirstLogin ? '欢迎加入！' : '登录成功';
-        const message = isFirstLogin ? 
-            `欢迎您，${username}！感谢您注册我们的酒店管理系统。` : 
-            `欢迎回来，${username}！您已成功登录系统。`;
-        
-        return this.createNotification(userId, type, title, message);
+    function notifyLoginSuccess(username, isFirstLogin) {
+        var type      = isFirstLogin ? 'first_login' : 'login_success';
+        var templateKey = type;
+        var params    = { name: username };
+
+        var notification = {
+            id:          Date.now() + Math.random(),
+            userId:      username,
+            type:        type,
+            templateKey: templateKey,
+            params:      params,
+            timestamp:   new Date().toISOString(),
+            isRead:      false
+        };
+        addNotification(notification);
+        return notification;
     }
 
-    // 快捷方法：预订成功通知
-    notifyBookingSuccess(username, bookingDetails) {
-        const userId = this.getUserIdByUsername(username);
-        const message = `您已成功预订${bookingDetails.roomType || '房间'}，入住日期：${bookingDetails.checkIn || '待确认'}，退房日期：${bookingDetails.checkOut || '待确认'}。`;
-        
-        return this.createNotification(
-            userId, 
-            NotificationSystem.NotificationTypes.BOOKING_SUCCESS, 
-            '预订成功', 
-            message,
-            { bookingDetails }
-        );
+    function notifyBookingSuccess(username, bookingDetails) {
+        var notification = {
+            id:          Date.now() + Math.random(),
+            userId:      username,
+            type:        'booking_success',
+            templateKey: 'booking_success_body',
+            params: {
+                roomType:  bookingDetails.roomType  || '',
+                checkIn:   bookingDetails.checkIn   || '',
+                checkOut:  bookingDetails.checkOut  || ''
+            },
+            timestamp:   new Date().toISOString(),
+            isRead:      false,
+            bookingDetails: bookingDetails
+        };
+        addNotification(notification);
+        return notification;
     }
 
-    // 快捷方法：个人信息变动通知
-    notifyProfileUpdate(username) {
-        const userId = this.getUserIdByUsername(username);
-        const message = `您的个人信息已成功更新。如非本人操作，请及时联系客服。`;
-        
-        return this.createNotification(userId, NotificationSystem.NotificationTypes.PROFILE_UPDATE, '信息更新', message);
+    function notifyProfileUpdate(username) {
+        var notification = {
+            id:          Date.now() + Math.random(),
+            userId:      username,
+            type:        'profile_update',
+            templateKey: 'profile_update_body',
+            params:      {},
+            timestamp:   new Date().toISOString(),
+            isRead:      false
+        };
+        addNotification(notification);
+        return notification;
     }
 
-    // 快捷方法：管理员登录通知
-    notifyAdminLogin(username) {
-        const userId = this.getUserIdByUsername(username);
-        const message = `管理员账户登录成功。您现在可以访问系统管理功能。`;
-        
-        return this.createNotification(userId, NotificationSystem.NotificationTypes.ADMIN_LOGIN, '管理员登录', message);
+    function notifyAdminLogin(username) {
+        var notification = {
+            id:          Date.now() + Math.random(),
+            userId:      username,
+            type:        'admin_login',
+            templateKey: 'admin_login_body',
+            params:      {},
+            timestamp:   new Date().toISOString(),
+            isRead:      false
+        };
+        addNotification(notification);
+        return notification;
     }
-}
 
-// 创建全局通知系统实例
-window.notificationSystem = new NotificationSystem();
+    // ============================================
+    // 语言变化时通知所有页面刷新
+    // ============================================
+    // 监听 lang.js 广播的 notifLangChanged 事件
+    window.addEventListener('notifLangChanged', function () {
+        updateNotificationBadge();
+    });
 
-// 页面加载时更新徽章
-document.addEventListener('DOMContentLoaded', () => {
-    if (window.notificationSystem) {
-        window.notificationSystem.updateNotificationBadge();
-    }
-});
+    // 兼容旧的 storage 事件（以防其他地方也有写入 lang）
+    window.addEventListener('storage', function (e) {
+        if (e.key === 'lang') updateNotificationBadge();
+    });
+
+    // ============================================
+    // 初始化 & 暴露到全局
+    // ============================================
+    init();
+
+    document.addEventListener('DOMContentLoaded', function () {
+        updateNotificationBadge();
+    });
+
+    // 每 5 秒刷新徽章
+    setInterval(function () { updateNotificationBadge(); }, 5000);
+
+    window.notificationSystem = {
+        NotificationTypes:     NotificationTypes,
+        getNotifications:       getNotifications,
+        getUnreadCount:        getUnreadCount,
+        markAsRead:            markAsRead,
+        markAllAsRead:         markAllAsRead,
+        deleteNotification:    deleteNotification,
+        updateNotificationBadge: updateNotificationBadge,
+        notifyLoginSuccess:    notifyLoginSuccess,
+        notifyBookingSuccess:  notifyBookingSuccess,
+        notifyProfileUpdate:   notifyProfileUpdate,
+        notifyAdminLogin:      notifyAdminLogin,
+        renderNotification:    renderNotification,
+        t:                     t,
+        getLang:               getLang
+    };
+
+})();

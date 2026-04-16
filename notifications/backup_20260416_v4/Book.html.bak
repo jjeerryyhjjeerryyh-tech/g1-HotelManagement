@@ -560,7 +560,6 @@
     </footer>
 
     <script src="../assets/js/theme-button.js"></script>
-    <script src="../notifications/lang.js"></script>
     <script src="Book.js"></script>
     <script src="shoppingCart.js"></script>
     <script src="../notifications/notificationSystem.js"></script>

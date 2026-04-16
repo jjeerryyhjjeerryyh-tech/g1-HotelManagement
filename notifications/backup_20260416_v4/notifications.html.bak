@@ -3,55 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>消息提醒 - 91 Hotel</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>消息提醒 - XX酒店</title>
     <link rel="stylesheet" href="notifications.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-    <!-- Header -->
+    <!-- Header（与 Book.html header 风格一致） -->
     <header class="header">
         <div class="header-content">
-            <a class="logo" href="../Homepage/index.html">
-                <div class="logo-main">91酒店</div>
-                <div class="logo-sub">HONG KONG</div>
-            </a>
-            <nav class="header-links">
-                <a href="../Homepage/index.html" class="header-link">
-                    <i class="fas fa-home"></i> 首页
-                </a>
-                <a href="../BookOut/Book.html" class="header-link">
-                    <i class="fas fa-bed"></i> 房型预订
-                </a>
-                <a href="../profile/profile.html" class="header-link">
-                    <i class="fas fa-user"></i> 个人中心
-                </a>
-            </nav>
-            <div class="header-right">
-                <nav class="header-links">
-                    <!-- 语言切换下拉 -->
-                    <div class="lang-menu-container">
-                        <a href="#" class="header-link" id="langBtn">
-                            <span id="langDisplay">中文</span> <i class="fas fa-chevron-down"></i>
-                        </a>
-                        <div class="lang-dropdown" id="langDropdown" style="display: none;">
-                            <div class="lang-header">
-                                <h3 id="langTitle">语言</h3>
-                                <button class="close-dropdown" id="closeLangBtn"><i class="fas fa-times"></i></button>
-                            </div>
-                            <div class="lang-body">
-                                <ul class="lang-list">
-                                    <li><a href="#" class="lang-item active" data-lang="zh">简体中文</a></li>
-                                    <li><a href="#" class="lang-item" data-lang="en">English</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <span id="userGreeting" class="header-link" style="cursor:default;"></span>
-                    <button id="logoutBtn" class="btn btn-outline btn-sm">
-                        <i class="fas fa-sign-out-alt"></i> 退出
-                    </button>
-                </nav>
+            <div class="header-left">
+                <a class="logo" href="../Homepage/index.html">🏨 91 Hotel</a>
+                <div class="header-links">
+                    <a href="../Homepage/index.html" class="header-link">
+                        <i class="fas fa-home"></i> 首页
+                    </a>
+                    <a href="../BookOut/Book.html" class="header-link">
+                        <i class="fas fa-bed"></i> 房型预订
+                    </a>
+                    <a href="../profile/profile.html" class="header-link">
+                        <i class="fas fa-user"></i> 个人中心
+                    </a>
+                </div>
+            </div>
+            <div class="header-links">
+                <button class="btn btn-outline" onclick="history.back()">
+                    <i class="fas fa-arrow-left"></i> 返回
+                </button>
+                <span id="userGreeting" class="header-link" style="cursor:default;"></span>
+                <button id="logoutBtn" class="btn btn-outline">
+                    <i class="fas fa-sign-out-alt"></i> 退出
+                </button>
             </div>
         </div>
     </header>
@@ -61,7 +42,7 @@
         <!-- 页面标题 -->
         <div class="page-header">
             <div class="page-title">
-                <span class="title-icon">&#128228;</span>
+                <span class="title-icon">📬</span>
                 <h1 id="pageTitle">消息提醒</h1>
             </div>
             <div class="page-actions">
@@ -80,8 +61,8 @@
                 <span class="stat-number" id="totalCount">0</span>
                 <span class="stat-label" id="totalLabel">总消息数</span>
             </div>
-            <div class="stat-card unread-card">
-                <span class="stat-number" id="unreadCount">0</span>
+            <div class="stat-card">
+                <span class="stat-number unread" id="unreadCount">0</span>
                 <span class="stat-label" id="unreadLabel">未读消息</span>
             </div>
         </div>
@@ -103,7 +84,7 @@
 
             <!-- 空状态 -->
             <div id="emptyState" class="empty-state" style="display: none;">
-                <div class="empty-icon">&#128231;</div>
+                <div class="empty-icon">📭</div>
                 <h3 id="emptyTitle">暂无消息</h3>
                 <p id="emptyDesc">您目前没有任何通知消息</p>
             </div>
@@ -130,7 +111,7 @@
                     <span class="modal-type" id="modalType"></span>
                     <span class="modal-time" id="modalTime"></span>
                 </div>
-                <div id="modalContent" class="modal-content-text"></div>
+                <div id="modalContent"></div>
             </div>
             <div class="modal-footer">
                 <button id="modalMarkReadBtn" class="btn btn-primary">标为已读</button>
@@ -155,11 +136,8 @@
         </div>
     </div>
 
-    <!-- 语言系统（必须在 notificationSystem 之前加载）-->
-    <script src="lang.js"></script>
     <!-- 通知系统 -->
     <script src="notificationSystem.js"></script>
-    <!-- 页面逻辑 -->
     <script src="notifications.js"></script>
 </body>
 </html>

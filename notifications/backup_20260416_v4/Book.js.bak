@@ -451,9 +451,6 @@
 
             renderRooms();
             renderMyBookings();
-
-            // 广播给 notifications 等其他页面
-            window.dispatchEvent(new CustomEvent('notifLangChanged', { detail: { lang: currentLang } }));
         }
 
         function setTheme(theme) {
@@ -941,9 +938,6 @@ function filterMyBookings() {
 
 // User Authentication & Dropdown Logic
 document.addEventListener('DOMContentLoaded', () => {
-    // 页面加载时应用已保存的语言
-    applyI18n(currentLang);
-
     // --- Lang Logic ---
     const langBtn = document.getElementById('langBtn');
     const langDropdown = document.getElementById('langDropdown');

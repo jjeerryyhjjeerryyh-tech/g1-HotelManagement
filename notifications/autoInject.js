@@ -128,10 +128,14 @@
         var container = document.querySelector('.header-links');
         if (!container) return;
 
+        var badge = '<span class="notification-badge" style="display:none;background:#e74c3c;color:#fff;border-radius:50%;width:18px;height:18px;font-size:11px;line-height:18px;text-align:center;position:absolute;top:-6px;right:-6px;font-weight:bold;">0</span>';
+        var btnText = getNotifBtnText();
+
         var a = document.createElement('a');
         a.href = notifBase() + 'notifications.html';
         a.className = 'notif-btn header-link';
-        a.innerHTML = '&#128231; 消息提醒<span class="notification-badge" style="display:none;background:#e74c3c;color:#fff;border-radius:50%;width:18px;height:18px;font-size:11px;line-height:18px;text-align:center;position:absolute;top:-6px;right:-6px;font-weight:bold;">0</span>';
+        a.id = 'notifBtn';
+        a.innerHTML = '&#128231; <span id="notifBtnText">' + btnText + '</span>' + badge;
         a.style.cssText = 'position:relative;display:inline-flex;align-items:center;gap:4px;';
 
         var userMenu = container.querySelector('.user-menu-container');
@@ -140,6 +144,21 @@
         } else {
             container.appendChild(a);
         }
+    }
+
+    function getNotifBtnText() {
+        if (window.__notifLang && window.__notifLang.getLang) {
+            var lang = window.__notifLang.getLang();
+            return lang === 'en' ? 'Notifications' : '消息提醒';
+        }
+        // 兜底：读 localStorage.lang
+        var lang = localStorage.getItem('lang') || 'zh';
+        return lang === 'en' ? 'Notifications' : '消息提醒';
+    }
+
+    function updateNotifBtnText() {
+        var textEl = document.getElementById('notifBtnText');
+        if (textEl) textEl.textContent = getNotifBtnText();
     }
 
     function updateBadge() {
@@ -174,6 +193,20 @@
             handlePostRedirectNotifications(); // Book.html
 
             setInterval(updateBadge, 5000);
+
+            // 监听语言切换，更新按钮文字
+            window.addEventListener('notifLangChanged', function () {
+                updateNotifBtnText();
+                updateBadge();
+            });
+
+            // 兼容 localStorage storage 事件
+            window.addEventListener('storage', function (e) {
+                if (e.key === 'lang') {
+                    updateNotifBtnText();
+                    updateBadge();
+                }
+            });
         }, 30);
     }
 
@@ -183,5 +216,5 @@
         init();
     }
 
-    console.log('[Notification] autoInject.js v2.2 已加载');
+    console.log('[Notification] autoInject.js v2.3 已加载');
 })();
