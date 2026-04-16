@@ -152,6 +152,49 @@ app.delete('/api/users/:id', (req, res) => {
     res.json({ message: 'User deleted successfully' });
 });
 
+// ===== 房型 API =====
+app.get('/api/roomtypes', (req, res) => {
+    const data = readData();
+    res.json({ roomTypes: data.roomTypes || [] });
+});
+
+app.post('/api/roomtypes', (req, res) => {
+    const { name, type, size, bed, guests, price, originalPrice, image, policy, available } = req.body;
+    if (!name || !price) return res.status(400).json({ message: '请填写房型名称和价格' });
+    const data = readData();
+    if (!data.roomTypes) data.roomTypes = [];
+    const newRoom = {
+        id: 'R' + Date.now(),
+        name, type: type || 'standard', size: size || '',
+        bed: bed || '', guests: parseInt(guests) || 2,
+        price: parseFloat(price), originalPrice: parseFloat(originalPrice) || parseFloat(price),
+        image: image || '', amenities: [],
+        policy: policy || '', available: parseInt(available) || 0,
+        status: 'active'
+    };
+    data.roomTypes.push(newRoom);
+    writeData(data);
+    res.json({ message: '房型新增成功', roomType: newRoom });
+});
+
+app.put('/api/roomtypes/:id', (req, res) => {
+    const data = readData();
+    const idx = data.roomTypes.findIndex(r => r.id === req.params.id);
+    if (idx === -1) return res.status(404).json({ message: '房型不存在' });
+    data.roomTypes[idx] = { ...data.roomTypes[idx], ...req.body };
+    writeData(data);
+    res.json({ message: '更新成功' });
+});
+
+app.delete('/api/roomtypes/:id', (req, res) => {
+    const data = readData();
+    const idx = data.roomTypes.findIndex(r => r.id === req.params.id);
+    if (idx === -1) return res.status(404).json({ message: '房型不存在' });
+    data.roomTypes.splice(idx, 1);
+    writeData(data);
+    res.json({ message: '删除成功' });
+});
+
 // ===== 预订 API =====
 app.get('/api/bookings', (req, res) => {
     const data = readData();
