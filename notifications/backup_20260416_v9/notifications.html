@@ -18,7 +18,22 @@
 
             <div class="header-right">
                 <nav class="header-links">
-                    <a href="../BookOut/Book.html" class="header-link" id="navBook" data-i18n="tab_book">房型预订</a>
+                    <a href="../BookOut/Book.html" class="header-link" data-i18n="tab_book">房型预订</a>
+
+                    <!-- 语言切换下拉 -->
+                    <div class="lang-menu-container">
+                        <a href="#" class="header-link" id="langBtn">
+                            <span id="langDisplay">中文</span> <i class="fas fa-chevron-down"></i>
+                        </a>
+                        <ul class="lang-list" id="langDropdown" style="display:none; position:absolute; right:0; top:100%; background:#fff; border:1px solid #e0d6cc; border-radius:10px; box-shadow:0 8px 30px rgba(0,0,0,0.12); min-width:150px; z-index:9999; list-style:none; padding:0.4rem 0; margin:8px 0 0 0;">
+                            <li><a href="#" class="lang-item active" data-lang="zh">简体中文</a></li>
+                            <li><a href="#" class="lang-item" data-lang="en">English</a></li>
+                        </ul>
+                    </div>
+
+                    <a href="#" id="logoutBtn" class="header-link">
+                        <i class="fas fa-sign-out-alt"></i> <span id="logoutText">登出</span>
+                    </a>
                 </nav>
             </div>
         </div>

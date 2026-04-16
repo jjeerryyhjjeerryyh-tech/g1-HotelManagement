@@ -77,10 +77,6 @@
         var pt = document.getElementById('pageTitle');
         if (pt) pt.textContent = t('page_title');
 
-        // header 导航：房型预订
-        var navBook = document.getElementById('navBook');
-        if (navBook) navBook.textContent = t('tab_book');
-
         var tl = document.getElementById('totalLabel');
         if (tl) tl.textContent = t('total');
 
@@ -499,6 +495,85 @@
     };
 
     // ============================================
+    // 语言切换下拉（与 Book.html 一致）
+    // ============================================
+    function initLangDropdown() {
+        var langBtn     = document.getElementById('langBtn');
+        var langDropdown = document.getElementById('langDropdown');
+        var closeBtn    = document.getElementById('closeLangBtn');
+        var langDisplay = document.getElementById('langDisplay');
+        var langItems   = document.querySelectorAll('.lang-item');
+
+        if (!langBtn || !langDropdown) return;
+
+        var currentLang = localStorage.getItem('lang') || 'zh';
+
+        // 切换下拉显示/隐藏
+        langBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var isOpen = langDropdown.style.display !== 'none';
+            langDropdown.style.display = isOpen ? 'none' : 'block';
+        });
+
+        // 关闭按钮
+        if (closeBtn) {
+            closeBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                langDropdown.style.display = 'none';
+            });
+        }
+
+        // 点击选项切换语言
+        langItems.forEach(function (item) {
+            item.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                var lang = item.dataset.lang;
+                if (!lang) return;
+
+                // 更新本地存储
+                localStorage.setItem('lang', lang);
+                currentLang = lang;
+
+                // 更新按钮显示文字
+                if (langDisplay) {
+                    langDisplay.textContent = lang === 'en' ? 'EN' : '中文';
+                }
+
+                // 更新 active 状态
+                langItems.forEach(function (li) {
+                    li.classList.remove('active');
+                    if (li.dataset.lang === lang) li.classList.add('active');
+                });
+
+                // 关闭下拉
+                langDropdown.style.display = 'none';
+
+                // 触发语言切换事件，让通知系统刷新
+                window.dispatchEvent(new CustomEvent('notifLangChanged', { detail: { lang: lang } }));
+            });
+        });
+
+        // 点击空白处关闭
+        document.addEventListener('click', function (e) {
+            if (!langDropdown.contains(e.target)) {
+                langDropdown.style.display = 'none';
+            }
+        });
+
+        // 初始化 active 状态
+        langItems.forEach(function (item) {
+            item.classList.remove('active');
+            if (item.dataset.lang === currentLang) item.classList.add('active');
+        });
+        if (langDisplay) {
+            langDisplay.textContent = currentLang === 'en' ? 'EN' : '中文';
+        }
+    }
+
+    // ============================================
     // 初始化
     // ============================================
     document.addEventListener('DOMContentLoaded', function () {
@@ -509,16 +584,7 @@
             return;
         }
         new NotificationPage();
-
-        // 监听 Book.html 的语言切换，刷新当前页面语言
-        window.addEventListener('notifLangChanged', function () {
-            var page = window.__notifPage;
-            if (page) page.renderList();
-            // 刷新页面 UI 文案（通过 lang.js 的 t() 重新读取）
-            var lang = localStorage.getItem('lang') || 'zh';
-            var titleEl = document.getElementById('pageTitle');
-            if (titleEl) titleEl.textContent = lang === 'en' ? 'Notifications' : '消息提醒';
-        });
+        initLangDropdown();
     });
 
 })();

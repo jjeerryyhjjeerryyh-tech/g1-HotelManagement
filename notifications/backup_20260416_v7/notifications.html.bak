@@ -8,17 +8,49 @@
     <link rel="stylesheet" href="notifications.css">
 </head>
 <body>
-    <!-- Header（精简版：语言下拉 + 登出）-->
+    <!-- Header -->
     <header class="header">
         <div class="header-content">
-            <a class="logo" href="../homePage/index.html" aria-label="首页">
+            <a class="logo" href="../Homepage/index.html">
                 <div class="logo-main">91酒店</div>
                 <div class="logo-sub">HONG KONG</div>
             </a>
-
+            <nav class="header-links">
+                <a href="../Homepage/index.html" class="header-link">
+                    <i class="fas fa-home"></i> 首页
+                </a>
+                <a href="../BookOut/Book.html" class="header-link">
+                    <i class="fas fa-bed"></i> 房型预订
+                </a>
+                <a href="../profile/profile.html" class="header-link">
+                    <i class="fas fa-user"></i> 个人中心
+                </a>
+            </nav>
             <div class="header-right">
                 <nav class="header-links">
-                    <a href="../BookOut/Book.html" class="header-link" id="navBook" data-i18n="tab_book">房型预订</a>
+                    <!-- 语言切换下拉 -->
+                    <div class="lang-menu-container">
+                        <a href="#" class="header-link" id="langBtn">
+                            <span id="langDisplay">中文</span> <i class="fas fa-chevron-down"></i>
+                        </a>
+                        <div class="lang-dropdown" id="langDropdown" style="display: none;">
+                            <div class="lang-header">
+                                <h3 id="langTitle">语言</h3>
+                                <button class="close-dropdown" id="closeLangBtn"><i class="fas fa-times"></i></button>
+                            </div>
+                            <div class="lang-body">
+                                <ul class="lang-list">
+                                    <li><a href="#" class="lang-item active" data-lang="zh">简体中文</a></li>
+                                    <li><a href="#" class="lang-item" data-lang="en">English</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <span id="userGreeting" class="header-link" style="cursor:default;"></span>
+                    <button id="logoutBtn" class="btn btn-outline btn-sm">
+                        <i class="fas fa-sign-out-alt"></i> 退出
+                    </button>
                 </nav>
             </div>
         </div>
