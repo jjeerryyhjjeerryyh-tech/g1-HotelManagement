@@ -80,6 +80,15 @@
             "phone": "12233447",
             "password": "$2b$10$jbR6uI6/HpxpmuoNlwmW9OMPorH1F3OGiawH0GbnmISSH4Zxk2Qpm",
             "role": "user"
+        },
+        {
+            "id": 1776322418473,
+            "username": "xxx",
+            "name": "t",
+            "email": "iamtest@qq.com",
+            "phone": "12345876",
+            "password": "$2b$10$GMTIp4ZvGnrMwb6.rEcfj.FGCLRN7uS7ZAPNmSjr9nR9OXnhots6K",
+            "role": "user"
         }
     ],
     "admins": [
