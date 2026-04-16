@@ -134,7 +134,6 @@
         checkInInput.min = today;
         checkOutInput.min = today;
 
-<<<<<<< Updated upstream
         var booking = {
             username:        username,
             roomId:          room.id   || '',
@@ -157,20 +156,6 @@
             address:         ((form.querySelector('input[name="address"]')        || {}).value || '').trim(),
             status:          'confirmed'
         };
-=======
-        checkInInput.addEventListener('change', function() {
-            const inVal = checkInInput.value;
-            if (inVal) {
-                checkOutInput.min = inVal;
-                if (checkOutInput.value && checkOutInput.value < inVal) {
-                    checkOutInput.value = inVal;
-                }
-                if (checkOutInput.value) {
-                    updateDatesAndRender(inVal, checkOutInput.value);
-                }
-            }
-        });
->>>>>>> Stashed changes
 
         checkOutInput.addEventListener('change', function() {
             const inVal = checkInInput.value;

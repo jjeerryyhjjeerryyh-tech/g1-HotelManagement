@@ -92,21 +92,12 @@
             "role": "user"
         },
         {
-<<<<<<< Updated upstream
             "id": 1776325709210,
             "username": "user4",
             "name": "hhh",
             "email": "user4@gmail.com",
             "phone": "12345678",
             "password": "$2b$10$xbkPeRMvyEXfARBazxKljeET3hDKsXDkClSmVSm1glAsUALefxR6m",
-=======
-            "id": 1776323288357,
-            "username": "12345678",
-            "name": "nimabi",
-            "email": "h3368600435@163.com",
-            "phone": "59564590",
-            "password": "$2b$10$6aPzbOwP22qj.jrBDGm4uOewC4VUq6ghwpajFldGS7w2WAzxdc8OW",
->>>>>>> Stashed changes
             "role": "user"
         }
     ],
