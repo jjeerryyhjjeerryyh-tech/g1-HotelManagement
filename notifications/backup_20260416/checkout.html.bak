@@ -56,20 +56,9 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label class="form-label">联系电话</label>
-                                    <input 
-                                         class="form-input" 
-                                          name="phone" 
-                                         required 
-                                        placeholder="请输入8位数字电话号码"
-                                          type="tel"
-                                        pattern="\d{8}"
-                                         maxlength="8"
-                                        inputmode="numeric"
-                                        ninput="this.value = this.value.replace(/\D/g, '').slice(0, 8)"
-                                            >
-                                         <small style="color: #666; display: block; margin-top: 4px;">请填写8位数字电话号码</small>
-                                        </div>
+                                    <label class="form-label">联系电话 *</label>
+                                    <input class="form-input" name="phone" required placeholder="请输入手机号码">
+                                </div>
                                 <div class="form-group">
                                     <label class="form-label">预计到达时间</label>
                                     <select class="form-select" name="arrivalTime">
@@ -106,38 +95,13 @@
                             <i class="fab fa-cc-jcb"></i>
                         </div>
                         <div class="form-group">
-                        <label class="form-label">卡号</label>
-                        <input 
-                            class="form-input" 
-                            form="checkoutForm" 
-                            name="cardNumber" 
-                            required 
-                            placeholder="**** **** **** **** "
-                            type="tel"
-                            pattern="\d{12}"
-                            maxlength="12"
-                            inputmode="numeric"
-                            oninput="this.value = this.value.replace(/\D/g, '').slice(0, 12)"
-                            title="请填写12位数字卡号"
-                        >
+                            <label class="form-label">卡号 *</label>
+                            <input class="form-input" form="checkoutForm" name="cardNumber" required placeholder="**** **** **** ****">
                         </div>
                         <div class="form-row">
-                         <div class="form-group">
-                         <label class="form-label">有效期 (MM/YY) *</label>
-                         <input 
-                           class="form-input" 
-                          form="checkoutForm" 
-                          name="expiry" 
-                          required 
-                          placeholder="MM/YY"
-                            type="tel"
-                          maxlength="4"
-                          inputmode="numeric"
-                           oninput="formatExpiry(this)"
-                           title="请填写4位数字（MMYY）"
-                            >
-                           <small style="color: #666; display: block; margin-top: 4px;">请输入4位数字，例如：1228（表示12/28）</small>
-                             </div>
+                            <div class="form-group">
+                                <label class="form-label">有效期 (MM/YY) *</label>
+                                <input class="form-input" form="checkoutForm" name="expiry" required placeholder="MM/YY">
                             </div>
                             <div class="form-group">
                                 <label class="form-label">持卡人姓名 *</label>

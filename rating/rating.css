@@ -1,0 +1,151 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #e67e22;
+    --bg: #faf7f2;
+    --card: rgba(255, 250, 240, 0.9);
+    --text: #333;
+    --text-secondary: #666;
+    --star: #f59e0b;
+    --star-empty: #ddd;
+}
+
+[data-theme="dark"] {
+    --primary: #ffb347;
+    --bg: #222;
+    --card: #333;
+    --text: #fff;
+    --text-secondary: #ccc;
+    --star-empty: #555;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    transition: all 0.3s;
+}
+
+/* 顶部控制：语言 + 主题 */
+.top-controls {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 12px;
+}
+
+.lang-toggle, .theme-toggle {
+    background: var(--card);
+    border: 1px solid var(--text-secondary);
+    color: var(--text);
+    padding: 6px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.theme-toggle {
+    font-size: 18px;
+    padding: 6px 10px;
+    border: none;
+}
+
+/* 卡片 */
+.review-wrapper {
+    width: 100%;
+    max-width: 600px;
+}
+
+.review-card {
+    background: var(--card);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.review-card h2 {
+    margin-bottom: 6px;
+    font-size: 24px;
+}
+
+.sub-title {
+    color: var(--text-secondary);
+    margin-bottom: 30px;
+    font-size: 14px;
+}
+
+/* 评分 */
+.rate-group {
+    margin-bottom: 24px;
+}
+.rate-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+.stars {
+    display: flex;
+    gap: 10px;
+}
+.stars i {
+    font-size: 28px;
+    color: var(--star-empty);
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.stars i.active {
+    color: var(--star);
+}
+
+/* 多维度 */
+.multi-rate {
+    margin: 30px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.rate-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.smallStars i {
+    font-size: 20px;
+}
+
+/* 输入 */
+textarea {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    min-height: 100px;
+    background: transparent;
+    color: var(--text);
+}
+
+/* 上传 */
+.upload-box { padding: 10px 0; }
+.preview {
+    display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap;
+}
+.preview img {
+    width: 60px; height: 60px; object-fit: cover; border-radius: 6px;
+}
+
+/* 按钮 */
+.submit-btn {
+    width: 100%; padding: 16px; background: var(--primary);
+    color: #fff; border: none; border-radius: 12px; font-size: 16px;
+    cursor: pointer; margin-top: 10px;
+}
