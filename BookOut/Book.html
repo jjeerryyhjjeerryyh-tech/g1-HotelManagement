@@ -82,49 +82,6 @@
                     <div id="themeToggleMount"></div>
                     
                     <div class="user-menu-container">
-                        <button class="icon-btn" id="userBtn" aria-label="User profile">
-                            <i class="far fa-user"></i>
-                        </button>
-                        <!-- User Dropdown (Hidden by default) -->
-                        <div class="user-dropdown" id="userDropdown" style="display: none;">
-                            <!-- 未登录状态 -->
-                            <div id="loginFormContainer">
-                                <div class="dropdown-header">
-                                    <h3 data-i18n="account_login">帐号登入</h3>
-                                    <button class="close-dropdown" id="closeLoginBtn"><i class="fas fa-times"></i></button>
-                                </div>
-                                <div class="dropdown-body">
-                                    <div class="form-group">
-                                        <input type="text" id="dropdownUsername" placeholder="使用者名称" data-i18n-placeholder="username_placeholder">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="password" id="dropdownPassword" placeholder="密码" data-i18n-placeholder="password_placeholder">
-                                    </div>
-                                    <button class="btn btn-secondary full-width" id="dropdownLoginBtn" data-i18n="login">登入</button>
-                                    
-                                    <div class="dropdown-links">
-                                        <a href="#" class="forgot-link" data-i18n="forgot_password">忘记密码？</a>
-                                    </div>
-                                    
-                                    <div class="dropdown-footer">
-                                        <p data-i18n="no_account_desc">还没有帐号？建立帐号，储存您的订单历史记录，享受更快速的结帐体验。</p>
-                                        <a href="../register/register.html" class="create-account-link" data-i18n="create_account">建立一个帐户</a>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- 已登录状态 -->
-                            <div id="loggedInContainer" style="display: none;">
-                                <a href="../profile/profile.html" class="dropdown-item" data-i18n="update_profile">更新个人资料</a>
-                                <a href="#" class="dropdown-item" id="logoutBtn" data-i18n="logout_login">登出登入</a>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <a href="checkout.html" class="icon-btn shopping-cart-link" id="cartLink" aria-label="Cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-count" id="cartCount">0</span>
-                    </a>
                 </nav>
             </div>
         </div>
