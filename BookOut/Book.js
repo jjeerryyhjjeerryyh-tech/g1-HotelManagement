@@ -521,12 +521,17 @@
                         roomsData.length = 0;
                         data.roomTypes.forEach(r => roomsData.push(r));
                     }
+                    return loadAllRatings();
+                })
+                .then(() => {
                     renderRooms();
                     updateStats();
                 })
                 .catch(() => {
-                    renderRooms();
-                    updateStats();
+                    loadAllRatings().then(() => {
+                        renderRooms();
+                        updateStats();
+                    });
                 });
 
             renderMyBookings();
@@ -610,6 +615,39 @@
         // ============================================
         // Room Functions
         // ============================================
+
+        // 评分缓存 { roomId: { avg: '4.5', count: 3 } }
+        let roomRatings = {};
+
+        async function loadAllRatings() {
+            try {
+                const res = await fetch('http://localhost:3000/api/reviews');
+                const data = await res.json();
+                const map = {};
+                (data.reviews || []).forEach(r => {
+                    if (!map[r.roomId]) map[r.roomId] = { sum: 0, count: 0 };
+                    map[r.roomId].sum   += r.rating;
+                    map[r.roomId].count += 1;
+                });
+                roomRatings = {};
+                Object.keys(map).forEach(id => {
+                    roomRatings[id] = {
+                        avg:   (map[id].sum / map[id].count).toFixed(1),
+                        count: map[id].count
+                    };
+                });
+            } catch (e) { roomRatings = {}; }
+        }
+
+        function renderStarHtml(avg) {
+            const full  = Math.floor(avg);
+            const half  = (avg - full) >= 0.5 ? 1 : 0;
+            const empty = 5 - full - half;
+            return '<i class="fas fa-star" style="color:#f59e0b;font-size:0.8rem"></i>'.repeat(full)
+                 + (half ? '<i class="fas fa-star-half-alt" style="color:#f59e0b;font-size:0.8rem"></i>' : '')
+                 + '<i class="far fa-star" style="color:#f59e0b;font-size:0.8rem"></i>'.repeat(empty);
+        }
+
         function renderRooms() {
             const grid = document.getElementById('roomGrid');
             grid.innerHTML = roomsData.map(room => createRoomCard(room)).join('');
@@ -637,6 +675,13 @@
                             <span><i class="fas fa-ruler-combined"></i> ${room.size}</span>
                             <span><i class="fas fa-bed"></i> ${room.bed}</span>
                             <span><i class="fas fa-user"></i> ${t('up_to_guests', { count: room.guests })}</span>
+                        </div>
+                        <div style="margin:6px 0 4px;font-size:0.82rem;display:flex;align-items:center;gap:4px;">
+                            ${roomRatings[room.id]
+                                ? `${renderStarHtml(parseFloat(roomRatings[room.id].avg))}
+                                   <span style="color:#374151;font-weight:600;">${roomRatings[room.id].avg}</span>
+                                   <span style="color:#9ca3af;">(${roomRatings[room.id].count}条评价)</span>`
+                                : `<span style="color:#9ca3af;">暂无评价</span>`}
                         </div>
                         <div class="room-footer">
                             <div class="room-price">
@@ -790,13 +835,128 @@
             <h4><i class="fas fa-info-circle"></i> ${t('booking_policy_title')}</h4>
             <p>${currentRoom.policy}</p>
         </div>
+
+        <div id="reviewSection" style="margin-top:1.5rem;border-top:1px solid var(--gray-200);padding-top:1rem;">
+            <h4 style="margin-bottom:0.75rem;">住客评价</h4>
+            <div id="reviewList"><p style="color:#9ca3af;font-size:0.875rem;">加载中...</p></div>
+            <div id="reviewFormArea"></div>
+        </div>
     `;  // ← 确保这里有闭合的反引号和分号
-    
+
     modal.classList.add('active');
+    loadRoomReviews(currentRoom.id);
 }
 
 function closeRoomModal() {
     document.getElementById('roomModal').classList.remove('active');
+}
+
+// ============================================
+// Review Functions
+// ============================================
+async function loadRoomReviews(roomId) {
+    const listEl = document.getElementById('reviewList');
+    const formEl = document.getElementById('reviewFormArea');
+    if (!listEl || !formEl) return;
+
+    try {
+        const res  = await fetch('http://localhost:3000/api/reviews?roomId=' + roomId);
+        const data = await res.json();
+        const reviews = data.reviews || [];
+
+        // 渲染评论列表
+        if (reviews.length === 0) {
+            listEl.innerHTML = '<p style="color:#9ca3af;font-size:0.875rem;">暂无评价，成为第一个评价的住客吧！</p>';
+        } else {
+            listEl.innerHTML = reviews.map(r => `
+                <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;margin-bottom:10px;">
+                    <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+                        <span style="font-weight:600;font-size:0.875rem;">${r.username}</span>
+                        <span style="font-size:0.75rem;color:#9ca3af;">${new Date(r.createdAt).toLocaleDateString('zh-CN')}</span>
+                    </div>
+                    <div style="margin-bottom:6px;">${renderStarHtml(r.rating)} <span style="font-size:0.8rem;color:#6b7280;">${r.rating}.0</span></div>
+                    <p style="font-size:0.875rem;color:#374151;margin:0;">${r.comment}</p>
+                </div>
+            `).join('');
+        }
+
+        // 渲染提交表单
+        const username = sessionStorage.getItem('username');
+        if (!username) {
+            formEl.innerHTML = '<p style="font-size:0.875rem;color:#6b7280;text-align:center;padding:8px 0;"><a href="../login/login.html" style="color:#f27405;">登录</a> 后可提交评价</p>';
+        } else if (reviews.some(r => r.username === username)) {
+            formEl.innerHTML = '<p style="font-size:0.875rem;color:#9ca3af;text-align:center;padding:8px 0;">您已评价过该房间</p>';
+        } else {
+            formEl.innerHTML = `
+                <div style="border-top:1px solid #e5e7eb;padding-top:1rem;margin-top:0.5rem;">
+                    <h5 style="font-size:0.9rem;font-weight:600;margin-bottom:0.75rem;">提交您的评价</h5>
+                    <div style="display:flex;gap:6px;margin-bottom:10px;" id="starPicker">
+                        ${[1,2,3,4,5].map(n =>
+                            `<i class="far fa-star" data-val="${n}" style="font-size:1.6rem;color:#f59e0b;cursor:pointer;"
+                                onmouseover="hoverReviewStar(${n})"
+                                onmouseout="resetReviewStars()"
+                                onclick="pickReviewStar(${n})"></i>`
+                        ).join('')}
+                    </div>
+                    <input type="hidden" id="pickedRating" value="0">
+                    <textarea id="reviewComment" rows="3" placeholder="分享您的入住体验（至少5个字）..."
+                        style="width:100%;border:1px solid #d1d5db;border-radius:6px;padding:8px;font-size:0.875rem;resize:none;box-sizing:border-box;"></textarea>
+                    <button onclick="submitReview('${roomId}')"
+                        style="margin-top:8px;background:#f27405;color:#fff;border:none;padding:8px 20px;border-radius:6px;cursor:pointer;font-size:0.875rem;font-weight:500;">
+                        提交评价
+                    </button>
+                </div>
+            `;
+        }
+
+        // 刷新卡片评分
+        await loadAllRatings();
+        renderRooms();
+    } catch (e) {
+        if (listEl) listEl.innerHTML = '<p style="color:#ef4444;font-size:0.875rem;">加载评价失败</p>';
+    }
+}
+
+function hoverReviewStar(n) {
+    document.querySelectorAll('#starPicker i').forEach((el, i) => {
+        el.className = i < n ? 'fas fa-star' : 'far fa-star';
+    });
+}
+function resetReviewStars() {
+    const picked = parseInt(document.getElementById('pickedRating')?.value || 0);
+    document.querySelectorAll('#starPicker i').forEach((el, i) => {
+        el.className = i < picked ? 'fas fa-star' : 'far fa-star';
+    });
+}
+function pickReviewStar(n) {
+    document.getElementById('pickedRating').value = n;
+    resetReviewStars();
+}
+
+async function submitReview(roomId) {
+    const rating   = parseInt(document.getElementById('pickedRating').value);
+    const comment  = (document.getElementById('reviewComment').value || '').trim();
+    const username = sessionStorage.getItem('username');
+
+    if (!rating)           { showToast('请选择星级评分', 'error'); return; }
+    if (comment.length < 5){ showToast('评价内容至少5个字', 'error'); return; }
+
+    try {
+        const res  = await fetch('http://localhost:3000/api/reviews', {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body:    JSON.stringify({ username, roomId, roomName: currentRoom.name, rating, comment })
+        });
+        const data = await res.json();
+        if (res.ok) {
+            showToast('评价提交成功！', 'success');
+            loadRoomReviews(roomId);
+        } else {
+            showToast(data.message || '提交失败', 'error');
+        }
+    } catch (e) {
+        showToast('无法连接服务器', 'error');
+    }
 }
 
 function proceedToBook() {

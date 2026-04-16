@@ -247,26 +247,33 @@ app.delete('/api/bookings/:id', (req, res) => {
 // ===== 评价 API =====
 app.get('/api/reviews', (req, res) => {
     const data = readData();
-    res.json({ reviews: data.reviews || [] });
+    const { roomId } = req.query;
+    let reviews = data.reviews || [];
+    if (roomId) reviews = reviews.filter(r => r.roomId === roomId);
+    res.json({ reviews });
 });
 
 app.post('/api/reviews', (req, res) => {
-    const { username, rating, comment, roomType } = req.body;
-    if (!username || !rating || !comment)
-        return res.status(400).json({ message: 'Please fill in all fields' });
+    const { username, rating, comment, roomId, roomName } = req.body;
+    if (!username || !rating || !comment || !roomId)
+        return res.status(400).json({ message: '请填写所有必填字段' });
     const data = readData();
+    if (!data.reviews) data.reviews = [];
+    // 每人每房间只能评一次
+    if (data.reviews.find(r => r.roomId === roomId && r.username === username))
+        return res.status(409).json({ message: '您已评价过该房间' });
     const review = {
         id: Date.now(),
         username,
-        roomType: roomType || '',
+        roomId,
+        roomName: roomName || '',
         rating: parseInt(rating),
         comment,
         createdAt: new Date().toISOString()
     };
-    if (!data.reviews) data.reviews = [];
     data.reviews.push(review);
     writeData(data);
-    res.json({ message: 'Review submitted', review });
+    res.json({ message: '评价成功', review });
 });
 
 app.delete('/api/reviews/:id', (req, res) => {

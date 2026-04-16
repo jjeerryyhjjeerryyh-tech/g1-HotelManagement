@@ -80,6 +80,15 @@
             "phone": "12233447",
             "password": "$2b$10$jbR6uI6/HpxpmuoNlwmW9OMPorH1F3OGiawH0GbnmISSH4Zxk2Qpm",
             "role": "user"
+        },
+        {
+            "id": 1776323337833,
+            "username": "user3",
+            "name": "hhhhh",
+            "email": "user3@gmail.com",
+            "phone": "12345678",
+            "password": "$2b$10$YMM5ZbFsnkWU4oXQnRf8Outi4hLoY4ELwOy/MYjEXV1Eb0pTC.j8q",
+            "role": "user"
         }
     ],
     "admins": [
@@ -200,6 +209,24 @@
             "specialRequests": "",
             "status": "confirmed",
             "createdAt": "2026-04-16T06:34:32.359Z"
+        },
+        {
+            "id": "BK1776323614621",
+            "username": "user3",
+            "roomId": "R001",
+            "roomName": "舒适标准间",
+            "roomType": "舒适标准间",
+            "guestName": "user3",
+            "guestPhone": "12345678",
+            "guestEmail": "user3@gmail.com",
+            "checkIn": "2026-04-16",
+            "checkOut": "2026-04-17",
+            "nights": 1,
+            "totalAmount": 646.8,
+            "arrivalTime": "14:00-15:00",
+            "specialRequests": "要个美女",
+            "status": "confirmed",
+            "createdAt": "2026-04-16T07:13:34.621Z"
         }
     ],
     "reviews": [],
