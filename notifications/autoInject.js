@@ -1,431 +1,181 @@
 /**
- * 通知系统自动注入脚本
- * 无需修改任何现有文件，通过浏览器扩展或书签方式注入
+ * 通知系统自动注入脚本 v2.1
+ *
+ * 工作流程：
+ *   1. login.html    → 拦截 /api/login → 写 __justLoggedIn 标志
+ *   2. checkout.html → 拦截表单提交  → 写 __justBooked + 预订详情
+ *   3. Book.html     → 检测 __justLoggedIn → 触发登录通知
+ *                    → 检测 __justBooked    → 触发预订通知
+ *   4. 所有页面      → 添加 📬 消息提醒按钮 + 未读徽章
+ *
+ * HTML 引入方式（各页面 </body> 前）：
+ *   <script src="../notifications/notificationSystem.js"></script>
+ *   <script src="../notifications/autoInject.js"></script>
  */
 
-(function() {
+(function () {
     'use strict';
-    
-    // 防止重复注入
-    if (window.notificationSystemInjected) {
-        return;
-    }
-    window.notificationSystemInjected = true;
 
-    // 动态加载通知系统核心
-    function loadNotificationSystem() {
-        return new Promise((resolve, reject) => {
-            if (window.notificationSystem) {
-                resolve();
-                return;
-            }
+    if (window.__notifAutoInjected) return;
+    window.__notifAutoInjected = true;
 
-            const script = document.createElement('script');
-            script.src = getBasePath() + 'notifications/notificationSystem.js';
-            script.onload = () => {
-                // 等待通知系统初始化
-                setTimeout(resolve, 100);
-            };
-            script.onerror = reject;
-            document.head.appendChild(script);
-        });
+    // ============================================
+    // 路径工具
+    // ============================================
+    function notifBase() {
+        var path = window.location.pathname;
+        if (/\/BookOut\//.test(path))      return '../notifications/';
+        if (/\/login\//.test(path))         return '../notifications/';
+        if (/\/register\//.test(path))      return '../notifications/';
+        if (/\/admin\//.test(path))         return '../notifications/';
+        if (/\/profile\//.test(path))       return '../notifications/';
+        if (/\/Homepage\//.test(path))      return '../notifications/';
+        if (/\/homePage\//.test(path))      return '../notifications/';
+        return './notifications/';
     }
 
-    // 获取基础路径
-    function getBasePath() {
-        const currentPath = window.location.pathname;
-        
-        // 根据当前路径确定相对路径
-        if (currentPath.includes('/BookOut/')) {
-            return '../';
-        } else if (currentPath.includes('/login/') || currentPath.includes('/register/') || 
-                   currentPath.includes('/admin/') || currentPath.includes('/profile/') || 
-                   currentPath.includes('/userProfile/')) {
-            return '../';
-        } else if (currentPath.includes('/Homepage/')) {
-            return '../';
-        } else {
-            // 根目录或其他情况
-            return './';
-        }
-    }
+    // ============================================
+    // 全局 Fetch 拦截器（设置 __justLoggedIn 标志）
+    // ============================================
+    (function () {
+        var _fetch = window.fetch;
+        window.fetch = function (input, init) {
+            var url = typeof input === 'string' ? input : input.url;
+            var isLogin = url && url.includes('/api/login');
 
-    // 主初始化函数
-    async function initNotificationSystem() {
-        try {
-            await loadNotificationSystem();
-            
-            // 根据当前页面类型进行不同的初始化
-            const currentPage = detectCurrentPage();
-            
-            switch (currentPage) {
-                case 'booking':
-                    initBookingPageFeatures();
-                    break;
-                case 'login':
-                    initLoginPageFeatures();
-                    break;
-                case 'homepage':
-                    initHomepageFeatures();
-                    break;
-                case 'admin':
-                    initAdminPageFeatures();
-                    break;
-                default:
-                    initGenericPageFeatures();
-            }
-            
-            // 通用功能
-            addNotificationButton();
-            checkLoginStatus();
-            updateNotificationBadge();
-            
-        } catch (error) {
-            console.error('通知系统注入失败:', error);
-        }
-    }
-
-    // 检测当前页面类型
-    function detectCurrentPage() {
-        const path = window.location.pathname.toLowerCase();
-        const title = document.title.toLowerCase();
-        
-        if (path.includes('book') || title.includes('预订') || title.includes('booking')) {
-            return 'booking';
-        } else if (path.includes('login') || title.includes('登录') || title.includes('login')) {
-            return 'login';
-        } else if (path.includes('admin') || title.includes('管理') || title.includes('admin')) {
-            return 'admin';
-        } else if (path.includes('homepage') || path.includes('index') || title.includes('首页')) {
-            return 'homepage';
-        }
-        return 'generic';
-    }
-
-    // 检查是否应该显示通知按钮
-    function shouldShowNotificationButton() {
-        const currentPage = detectCurrentPage();
-        // 主页不显示通知按钮
-        return currentPage !== 'homepage';
-    }
-
-    // 添加通知按钮到页面
-    function addNotificationButton() {
-        // 检查是否应该显示通知按钮
-        if (!shouldShowNotificationButton()) {
-            return;
-        }
-        // 尝试多种选择器找到合适的位置
-        const possibleSelectors = [
-            // BookOut页面
-            'a[onclick*="mybookings"]',
-            '.header-links a:first-child',
-            '.header-right nav a:first-child',
-            
-            // Homepage页面
-            '.navbar-auth',
-            '.navbar-right',
-            '.navbar-actions',
-            
-            // 通用选择器
-            'nav a:last-child',
-            'header a:last-child',
-            '.nav-btn:last-child',
-            'header .container'
-        ];
-
-        let targetElement = null;
-        let insertMethod = 'before'; // 'before', 'after', 'prepend', 'append'
-
-        for (const selector of possibleSelectors) {
-            const element = document.querySelector(selector);
-            if (element) {
-                targetElement = element;
-                
-                // 根据元素类型决定插入方式
-                if (selector.includes('mybookings')) {
-                    insertMethod = 'before';
-                } else if (selector.includes('navbar-auth')) {
-                    insertMethod = 'before';
-                } else if (selector.includes('container')) {
-                    insertMethod = 'append';
-                } else {
-                    insertMethod = 'after';
+            return _fetch.apply(this, arguments).then(function (res) {
+                if (res.ok && isLogin) {
+                    sessionStorage.setItem('__justLoggedIn', '1');
                 }
-                break;
-            }
-        }
-
-        if (!targetElement) {
-            console.warn('未找到合适的位置添加通知按钮');
-            return;
-        }
-
-        // 创建通知按钮
-        const notificationContainer = createNotificationButton();
-        
-        // 根据插入方式添加按钮
-        switch (insertMethod) {
-            case 'before':
-                targetElement.parentNode.insertBefore(notificationContainer, targetElement);
-                break;
-            case 'after':
-                targetElement.parentNode.insertBefore(notificationContainer, targetElement.nextSibling);
-                break;
-            case 'prepend':
-                targetElement.insertBefore(notificationContainer, targetElement.firstChild);
-                break;
-            case 'append':
-                targetElement.appendChild(notificationContainer);
-                break;
-        }
-    }
-
-    // 创建通知按钮
-    function createNotificationButton() {
-        const container = document.createElement('div');
-        container.style.cssText = 'position: relative; display: inline-block; margin: 0 0.5rem;';
-
-        const button = document.createElement('a');
-        // 确保正确的绝对路径，避免相对路径问题
-        const currentPath = window.location.pathname;
-        let notificationPath;
-        if (currentPath.includes('/homePage/') || currentPath.includes('/Homepage/')) {
-            notificationPath = '/notifications/notifications.html';
-        } else {
-            notificationPath = getBasePath() + 'notifications/notifications.html';
-        }
-        button.href = notificationPath;
-        button.innerHTML = '📬 消息提醒';
-        button.style.cssText = `
-            position: relative;
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            color: #666;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            background: #fff;
-            font-size: 0.9rem;
-            transition: all 0.3s;
-            display: inline-block;
-        `;
-
-        // 添加悬停效果
-        button.addEventListener('mouseenter', () => {
-            button.style.background = '#f8f9fa';
-            button.style.borderColor = '#3498db';
-            button.style.color = '#3498db';
-        });
-
-        button.addEventListener('mouseleave', () => {
-            button.style.background = '#fff';
-            button.style.borderColor = '#ddd';
-            button.style.color = '#666';
-        });
-
-        // 尝试匹配现有按钮样式
-        const existingButton = document.querySelector('.nav-btn, .header-link, .btn');
-        if (existingButton) {
-            const computedStyle = window.getComputedStyle(existingButton);
-            button.className = existingButton.className;
-            button.style.cssText = ''; // 清除内联样式，使用CSS类
-            button.innerHTML = '📬 消息提醒';
-        }
-
-        // 创建通知徽章
-        const badge = document.createElement('span');
-        badge.className = 'notification-badge';
-        badge.style.cssText = `
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: #e74c3c;
-            color: white;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            font-size: 0.7rem;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            z-index: 1000;
-        `;
-
-        container.appendChild(button);
-        container.appendChild(badge);
-
-        return container;
-    }
-
-    // 预订页面功能
-    function initBookingPageFeatures() {
-        // 监听预订表单
-        const bookingForm = document.getElementById('bookingForm');
-        if (bookingForm) {
-            bookingForm.addEventListener('submit', function(e) {
-                setTimeout(() => {
-                    handleBookingSubmission();
-                }, 500);
+                return res;
             });
-        }
-
-        // 监听页面内登录
-        const dropdownLoginBtn = document.getElementById('dropdownLoginBtn');
-        if (dropdownLoginBtn) {
-            dropdownLoginBtn.addEventListener('click', function() {
-                setTimeout(() => {
-                    handleLoginSuccess();
-                }, 1000);
-            });
-        }
-    }
-
-    // 登录页面功能
-    function initLoginPageFeatures() {
-        const loginForm = document.getElementById('loginForm');
-        if (loginForm) {
-            loginForm.addEventListener('submit', function(e) {
-                setTimeout(() => {
-                    handleLoginSuccess();
-                }, 1500);
-            });
-        }
-    }
-
-    // 主页功能
-    function initHomepageFeatures() {
-        // 监听预订表单
-        const bookingForm = document.getElementById('bookingForm');
-        if (bookingForm) {
-            bookingForm.addEventListener('submit', function(e) {
-                setTimeout(() => {
-                    handleBookingSubmission();
-                }, 500);
-            });
-        }
-    }
-
-    // 管理员页面功能
-    function initAdminPageFeatures() {
-        // 管理员特定功能
-        checkAdminLogin();
-    }
-
-    // 通用页面功能
-    function initGenericPageFeatures() {
-        // 通用功能，如监听动态登录等
-    }
-
-    // 处理预订提交
-    function handleBookingSubmission() {
-        const username = sessionStorage.getItem('username');
-        if (!username || !window.notificationSystem) return;
-
-        const checkIn = document.getElementById('checkInDate')?.value || 
-                       document.getElementById('checkIn')?.value || '待确认';
-        const checkOut = document.getElementById('checkOutDate')?.value || 
-                        document.getElementById('checkOut')?.value || '待确认';
-        
-        const bookingDetails = {
-            checkIn: checkIn,
-            checkOut: checkOut,
-            roomType: '房间'
         };
+    })();
 
-        window.notificationSystem.notifyBookingSuccess(username, bookingDetails);
-        updateNotificationBadge();
-    }
+    // ============================================
+    // checkout.html 专用：表单提交拦截（比 checkout.js 更早）
+    // ============================================
+    function attachCheckoutInterceptor() {
+        // 仅在 checkout.html 执行
+        if (!/\/BookOut\/checkout\.html/.test(window.location.pathname)) return;
 
-    // 处理登录成功
-    function handleLoginSuccess() {
-        const username = sessionStorage.getItem('username');
-        const role = sessionStorage.getItem('role');
-        
-        if (!username || !window.notificationSystem) return;
+        var form = document.getElementById('checkoutForm');
+        if (!form) return;
 
-        const isFirstLogin = checkFirstLogin(username);
-        
-        if (role === 'admin') {
-            window.notificationSystem.notifyAdminLogin(username);
-        } else {
-            window.notificationSystem.notifyLoginSuccess(username, isFirstLogin);
-        }
+        form.addEventListener('submit', function (e) {
+            var roomRaw   = sessionStorage.getItem('checkout_room');
+            var paramsRaw = sessionStorage.getItem('checkout_params');
 
-        markUserAsLoggedIn(username);
-        updateNotificationBadge();
-    }
-
-    // 检查管理员登录
-    function checkAdminLogin() {
-        const role = sessionStorage.getItem('role');
-        const username = sessionStorage.getItem('username');
-        
-        if (role === 'admin' && username && window.notificationSystem) {
-            window.notificationSystem.notifyAdminLogin(username);
-            updateNotificationBadge();
-        }
-    }
-
-    // 检查登录状态
-    function checkLoginStatus() {
-        const username = sessionStorage.getItem('username');
-        if (username && window.notificationSystem) {
-            const role = sessionStorage.getItem('role');
-            const isFirstLogin = checkFirstLogin(username);
-            
-            if (isFirstLogin) {
-                window.notificationSystem.notifyLoginSuccess(username, true);
-                markUserAsLoggedIn(username);
+            if (roomRaw && paramsRaw) {
+                try {
+                    var room   = JSON.parse(roomRaw);
+                    var params = JSON.parse(paramsRaw);
+                    // 预订详情存到 sessionStorage（checkout.js 会清空原字段，这些不会被清除）
+                    sessionStorage.setItem('__bookingRoom', room.name || '');
+                    sessionStorage.setItem('__bookingCheckIn', params.checkIn || '');
+                    sessionStorage.setItem('__bookingCheckOut', params.checkOut || '');
+                } catch (ex) { /* ignore parse errors */ }
             }
-            
-            updateNotificationBadge();
-        }
+            // 设置标志：Book.html 读取后会清空
+            sessionStorage.setItem('__justBooked', '1');
+        });
     }
 
-    // 检查首次登录
-    function checkFirstLogin(username) {
-        const loginHistory = JSON.parse(localStorage.getItem('loginHistory') || '{}');
-        return !loginHistory[username];
-    }
-
-    // 标记用户已登录
-    function markUserAsLoggedIn(username) {
-        const loginHistory = JSON.parse(localStorage.getItem('loginHistory') || '{}');
-        loginHistory[username] = new Date().toISOString();
-        localStorage.setItem('loginHistory', JSON.stringify(loginHistory));
-    }
-
-    // 更新通知徽章
-    function updateNotificationBadge() {
+    // ============================================
+    // Book.html 专用：读取标志 → 触发通知
+    // ============================================
+    function handlePostRedirectNotifications() {
+        if (!/\/BookOut\/Book\.html/.test(window.location.pathname)) return;
         if (!window.notificationSystem) return;
-        
-        const currentUser = sessionStorage.getItem('username');
-        if (!currentUser) return;
 
-        const unreadCount = window.notificationSystem.getUnreadCount(currentUser);
-        const badge = document.querySelector('.notification-badge');
-        
-        if (badge) {
-            if (unreadCount > 0) {
-                badge.textContent = unreadCount > 99 ? '99+' : unreadCount;
-                badge.style.display = 'flex';
-            } else {
-                badge.style.display = 'none';
-            }
+        var user = sessionStorage.getItem('username');
+        if (!user) return;
+
+        // 登录成功通知
+        if (sessionStorage.getItem('__justLoggedIn') === '1') {
+            sessionStorage.removeItem('__justLoggedIn');
+            window.notificationSystem.notifyLoginSuccess(user, false);
+            updateBadge();
+        }
+
+        // 预订成功通知
+        if (sessionStorage.getItem('__justBooked') === '1') {
+            sessionStorage.removeItem('__justBooked');
+            sessionStorage.removeItem('__bookingRoom');
+            sessionStorage.removeItem('__bookingCheckIn');
+            sessionStorage.removeItem('__bookingCheckOut');
+
+            window.notificationSystem.notifyBookingSuccess(user, {
+                roomType: sessionStorage.getItem('__bookingRoom') || '',
+                checkIn:   sessionStorage.getItem('__bookingCheckIn') || '',
+                checkOut:  sessionStorage.getItem('__bookingCheckOut') || ''
+            });
+            updateBadge();
         }
     }
 
-    // 页面加载完成后初始化
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initNotificationSystem);
-    } else {
-        initNotificationSystem();
+    // ============================================
+    // UI：添加消息提醒按钮
+    // ============================================
+    function addNotificationButton() {
+        if (document.querySelector('.notif-btn')) return;
+
+        var container = document.querySelector('.header-links');
+        if (!container) return;
+
+        var a = document.createElement('a');
+        a.href = notifBase() + 'notifications.html';
+        a.className = 'notif-btn header-link';
+        a.innerHTML = '&#128231; 消息提醒<span class="notif-badge" style="display:none;background:#e74c3c;color:#fff;border-radius:50%;width:18px;height:18px;font-size:11px;line-height:18px;text-align:center;position:absolute;top:-6px;right:-6px;font-weight:bold;">0</span>';
+        a.style.cssText = 'position:relative;display:inline-flex;align-items:center;gap:4px;';
+
+        var userMenu = container.querySelector('.user-menu-container');
+        if (userMenu && userMenu.parentNode === container) {
+            container.insertBefore(a, userMenu);
+        } else {
+            container.appendChild(a);
+        }
     }
 
-    // 定期更新徽章
-    setInterval(updateNotificationBadge, 5000);
+    function updateBadge() {
+        if (!window.notificationSystem) return;
+        var user = sessionStorage.getItem('username');
+        if (!user) return;
+        var count = window.notificationSystem.getUnreadCount(user);
+        document.querySelectorAll('.notif-badge').forEach(function (b) {
+            b.textContent = count > 99 ? '99+' : (count > 0 ? count : '');
+            b.style.display = count > 0 ? 'inline-block' : 'none';
+        });
+    }
 
-    console.log('通知系统已自动注入');
+    // ============================================
+    // 初始化
+    // ============================================
+    function waitForNS(fn, tries) {
+        if (window.notificationSystem) { fn(); return; }
+        if (tries <= 0) return;
+        setTimeout(function () { waitForNS(fn, tries - 1); }, 100);
+    }
 
+    function init() {
+        // 按钮和徽章（所有页面）
+        waitForNS(function () {
+            addNotificationButton();
+            updateBadge();
+
+            // 页面专用逻辑
+            attachCheckoutInterceptor();   // checkout.html
+            handlePostRedirectNotifications(); // Book.html
+
+            setInterval(updateBadge, 5000);
+        }, 30);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+
+    console.log('[Notification] autoInject.js v2.1 已加载');
 })();
