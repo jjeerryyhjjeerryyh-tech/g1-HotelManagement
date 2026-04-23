@@ -101,12 +101,6 @@
                         </button>
                     </li>
                     <li>
-                        <button type="button" data-section="checkins" class="sidebar-link w-full flex items-center px-6 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200">
-                            <i class="fa fa-key w-5 text-center"></i>
-                            <span class="ml-3" data-i18n="nav_checkins">入住管理</span>
-                        </button>
-                    </li>
-                    <li>
                         <button type="button" data-section="messages" class="sidebar-link w-full flex items-center px-6 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200">
                             <i class="fa fa-comments w-5 text-center"></i>
                             <span class="ml-3" data-i18n="nav_messages">留言管理</span>
@@ -462,36 +456,6 @@
                                 </thead>
                                 <tbody id="bookingTableBody" class="divide-y divide-gray-200">
                                     <!-- 数据由 JS 渲染 -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </section>
-                <section id="section-checkins" class="hidden">
-                    <div class="bg-white rounded-lg card-shadow">
-                        <div class="p-6 border-b border-gray-200 flex items-center justify-between">
-                            <h3 class="font-bold text-lg" data-i18n="checkin_management_title">入住管理</h3>
-                            <button class="btn-primary text-sm px-4 py-2"><i class="fa fa-plus mr-1"></i><span data-i18n="add_checkin_button">新增入住</span></button>
-                        </div>
-                        <div class="overflow-x-auto">
-                            <table class="w-full">
-                                <thead>
-                                    <tr class="bg-gray-50 text-left text-sm text-gray-600">
-                                        <th class="px-6 py-3" data-i18n="table_checkin_number">入住单号</th>
-                                        <th class="px-6 py-3" data-i18n="table_name">姓名</th>
-                                        <th class="px-6 py-3" data-i18n="table_room_number">房号</th>
-                                        <th class="px-6 py-3" data-i18n="table_checkin_time">入住时间</th>
-                                        <th class="px-6 py-3" data-i18n="table_status">状态</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-gray-200">
-                                    <tr class="hover:bg-gray-50">
-                                        <td class="px-6 py-4 text-sm">CI-20260327-001</td>
-                                        <td class="px-6 py-4 text-sm">张三</td>
-                                        <td class="px-6 py-4 text-sm">1208</td>
-                                        <td class="px-6 py-4 text-sm">2026-03-27 15:10</td>
-                                        <td class="px-6 py-4 text-sm"><span class="px-2 py-1 rounded-full text-xs bg-success/10 text-success" data-i18n="status_checked_in">已入住</span></td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
