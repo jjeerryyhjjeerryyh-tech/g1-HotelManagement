@@ -162,6 +162,53 @@ app.delete('/api/users/:id', (req, res) => {
     res.json({ message: 'User deleted successfully' });
 });
 
+// ===== 留言 API =====
+app.get('/api/messages', (req, res) => {
+    const data = readData();
+    res.json({ messages: data.messages || [] });
+});
+
+// 用户发留言
+app.post('/api/messages', (req, res) => {
+    const { username, content } = req.body;
+    if (!username || !content) return res.status(400).json({ message: '请填写留言内容' });
+    const data = readData();
+    if (!data.messages) data.messages = [];
+    data.messages.push({
+        id: Date.now(),
+        username,
+        content,
+        reply: null,
+        repliedAt: null,
+        createdAt: new Date().toISOString()
+    });
+    writeData(data);
+    res.json({ message: '留言成功' });
+});
+
+// 管理员回复留言
+app.put('/api/messages/:id/reply', (req, res) => {
+    const { reply } = req.body;
+    if (!reply) return res.status(400).json({ message: '回复内容不能为空' });
+    const data = readData();
+    const idx = data.messages.findIndex(m => m.id === parseInt(req.params.id));
+    if (idx === -1) return res.status(404).json({ message: '留言不存在' });
+    data.messages[idx].reply = reply;
+    data.messages[idx].repliedAt = new Date().toISOString();
+    writeData(data);
+    res.json({ message: '回复成功' });
+});
+
+// 删除留言
+app.delete('/api/messages/:id', (req, res) => {
+    const data = readData();
+    const idx = data.messages.findIndex(m => m.id === parseInt(req.params.id));
+    if (idx === -1) return res.status(404).json({ message: '留言不存在' });
+    data.messages.splice(idx, 1);
+    writeData(data);
+    res.json({ message: '删除成功' });
+});
+
 // ===== 房型 API =====
 app.get('/api/roomtypes', (req, res) => {
     const data = readData();
@@ -299,6 +346,19 @@ app.delete('/api/reviews/:id', (req, res) => {
     data.reviews.splice(idx, 1);
     writeData(data);
     res.json({ message: 'Review deleted' });
+});
+
+// 管理员回复评价
+app.put('/api/reviews/:id/reply', (req, res) => {
+    const { reply } = req.body;
+    if (!reply) return res.status(400).json({ message: '回复内容不能为空' });
+    const data = readData();
+    const idx = data.reviews.findIndex(r => r.id === parseInt(req.params.id));
+    if (idx === -1) return res.status(404).json({ message: '评价不存在' });
+    data.reviews[idx].reply = reply;
+    data.reviews[idx].repliedAt = new Date().toISOString();
+    writeData(data);
+    res.json({ message: '回复成功' });
 });
 
 // ===== 新闻简报 API =====

@@ -48,6 +48,7 @@ function setSection(sectionKey) {
     if (sectionKey === 'reviews')  loadReviews();
     if (sectionKey === 'users')    loadUsers();
     if (sectionKey === 'roomtypes') loadRoomTypes();
+    if (sectionKey === 'messages') loadMessages();
 }
 
 // ===== 房型管理 =====
@@ -299,6 +300,62 @@ async function updateBookingStatus(id, status) {
 
 function filterBookings() { loadBookings(); }
 function refreshBookings() { loadBookings(); }
+
+// ===== 留言管理（显示用户评价，支持回复）=====
+let replyingMessageId = null;
+
+async function loadMessages() {
+    const res = await fetch(`${API}/api/reviews`);
+    const data = await res.json();
+    const tbody = document.getElementById('messageTableBody');
+    if (!tbody) return;
+    if (!data.reviews.length) {
+        tbody.innerHTML = `<tr><td colspan="5" class="px-6 py-8 text-center text-gray-400">暂无评价</td></tr>`;
+        return;
+    }
+    const stars = n => '★'.repeat(n) + '☆'.repeat(5 - n);
+    tbody.innerHTML = data.reviews.slice().reverse().map(m => `
+        <tr class="hover:bg-gray-50">
+            <td class="px-6 py-4 text-sm font-medium">${m.username}</td>
+            <td class="px-6 py-4 text-sm">
+                <div class="text-warning text-sm mb-1">${stars(m.rating)} <span class="text-gray-400 text-xs">${m.rating}.0</span></div>
+                <div>${m.comment}</div>
+                ${m.reply ? `<div class="mt-1 text-xs text-primary bg-primary/5 px-2 py-1 rounded">管理员回复：${m.reply}</div>` : ''}
+            </td>
+            <td class="px-6 py-4 text-sm">${new Date(m.createdAt).toLocaleDateString('zh-CN')}</td>
+        </tr>
+    `).join('');
+}
+
+function openReplyModal(id, content) {
+    replyingMessageId = id;
+    document.getElementById('replyOriginal').textContent = '用户评价：' + content;
+    document.getElementById('replyContent').value = '';
+    document.getElementById('replyModal').classList.remove('hidden');
+}
+
+function closeReplyModal() {
+    document.getElementById('replyModal').classList.add('hidden');
+    replyingMessageId = null;
+}
+
+async function submitReply() {
+    const reply = document.getElementById('replyContent').value.trim();
+    if (!reply) { alert('请输入回复内容'); return; }
+    await fetch(`${API}/api/reviews/${replyingMessageId}/reply`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ reply })
+    });
+    closeReplyModal();
+    loadMessages();
+}
+
+async function deleteMessage(id) {
+    if (!confirm('确认删除该评价？')) return;
+    await fetch(`${API}/api/reviews/${id}`, { method: 'DELETE' });
+    loadMessages();
+}
 
 // ===== 评价管理（真实数据）=====
 async function loadReviews() {
