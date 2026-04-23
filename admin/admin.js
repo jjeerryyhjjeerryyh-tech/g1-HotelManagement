@@ -295,6 +295,7 @@ function setSection(sectionKey) {
     if (sectionKey === 'reviews')  loadReviews();
     if (sectionKey === 'users')    loadUsers();
     if (sectionKey === 'roomtypes') loadRoomTypes();
+    if (sectionKey === 'messages') loadMessages();
 }
 
 // ===== 房型管理 =====
@@ -465,19 +466,62 @@ document.getElementById('userForm').addEventListener('submit', async (e) => {
 });
 
 // ===== 预订管理（真实数据）=====
+let allBookings = []; // 存储所有预订数据用于筛选
+
 async function loadBookings() {
     const res = await fetch(`${API}/api/bookings`);
     const data = await res.json();
+    allBookings = data.bookings || [];
+    
+    // 应用筛选和搜索
+    filterAndDisplayBookings();
+}
+
+function filterAndDisplayBookings() {
     const tbody = document.getElementById('bookingTableBody');
     if (!tbody) return;
 
+<<<<<<< HEAD
     if (!data.bookings.length) {
         tbody.innerHTML = `<tr><td colspan="7" class="px-6 py-8 text-center text-gray-400">${currentLang === 'en' ? 'No booking records found' : '暂无预订记录'}</td></tr>`;
+=======
+    // 获取筛选条件
+    const statusFilter = document.getElementById('bookingStatusFilter')?.value || 'all';
+    const searchInput = document.getElementById('bookingSearchInput')?.value?.toLowerCase() || '';
+    
+    // 筛选数据
+    let filteredBookings = allBookings;
+    
+    // 状态筛选
+    if (statusFilter !== 'all') {
+        filteredBookings = filteredBookings.filter(b => b.status === statusFilter);
+    }
+    
+    // 搜索筛选
+    if (searchInput) {
+        filteredBookings = filteredBookings.filter(b => 
+            (b.id && b.id.toLowerCase().includes(searchInput)) ||
+            (b.guestName && b.guestName.toLowerCase().includes(searchInput)) ||
+            (b.username && b.username.toLowerCase().includes(searchInput)) ||
+            (b.roomName && b.roomName.toLowerCase().includes(searchInput)) ||
+            (b.roomType && b.roomType.toLowerCase().includes(searchInput))
+        );
+    }
+
+    if (!filteredBookings.length) {
+        tbody.innerHTML = `<tr><td colspan="7" class="px-6 py-8 text-center text-gray-400">暂无预订记录</td></tr>`;
+>>>>>>> b335b0bb1cd3df8f73ac93c66e46e5617aadaf8a
         updateBookingStats({});
         return;
     }
 
+<<<<<<< HEAD
     tbody.innerHTML = data.bookings.map(b => `
+=======
+
+
+    tbody.innerHTML = filteredBookings.map(b => `
+>>>>>>> b335b0bb1cd3df8f73ac93c66e46e5617aadaf8a
         <tr class="hover:bg-gray-50">
             <td class="px-6 py-4 text-sm font-medium">${b.id}</td>
             <td class="px-6 py-4 text-sm">
@@ -510,7 +554,7 @@ async function loadBookings() {
     `).join('');
 
     const counts = { pending: 0, confirmed: 0, 'checked-in': 0, cancelled: 0 };
-    data.bookings.forEach(b => { if (counts[b.status] !== undefined) counts[b.status]++; });
+    filteredBookings.forEach(b => { if (counts[b.status] !== undefined) counts[b.status]++; });
     updateBookingStats(counts);
 }
 
@@ -536,8 +580,71 @@ async function updateBookingStatus(id, status) {
     loadBookings();
 }
 
-function filterBookings() { loadBookings(); }
-function refreshBookings() { loadBookings(); }
+function filterBookings() { 
+    // 应用筛选条件并重新显示
+    filterAndDisplayBookings(); 
+}
+
+function refreshBookings() { 
+    // 重新从服务器加载数据
+    loadBookings(); 
+}
+
+// ===== 留言管理（显示用户评价，支持回复）=====
+let replyingMessageId = null;
+
+async function loadMessages() {
+    const res = await fetch(`${API}/api/reviews`);
+    const data = await res.json();
+    const tbody = document.getElementById('messageTableBody');
+    if (!tbody) return;
+    if (!data.reviews.length) {
+        tbody.innerHTML = `<tr><td colspan="5" class="px-6 py-8 text-center text-gray-400">暂无评价</td></tr>`;
+        return;
+    }
+    const stars = n => '★'.repeat(n) + '☆'.repeat(5 - n);
+    tbody.innerHTML = data.reviews.slice().reverse().map(m => `
+        <tr class="hover:bg-gray-50">
+            <td class="px-6 py-4 text-sm font-medium">${m.username}</td>
+            <td class="px-6 py-4 text-sm">
+                <div class="text-warning text-sm mb-1">${stars(m.rating)} <span class="text-gray-400 text-xs">${m.rating}.0</span></div>
+                <div>${m.comment}</div>
+                ${m.reply ? `<div class="mt-1 text-xs text-primary bg-primary/5 px-2 py-1 rounded">管理员回复：${m.reply}</div>` : ''}
+            </td>
+            <td class="px-6 py-4 text-sm">${new Date(m.createdAt).toLocaleDateString('zh-CN')}</td>
+        </tr>
+    `).join('');
+}
+
+function openReplyModal(id, content) {
+    replyingMessageId = id;
+    document.getElementById('replyOriginal').textContent = '用户评价：' + content;
+    document.getElementById('replyContent').value = '';
+    document.getElementById('replyModal').classList.remove('hidden');
+}
+
+function closeReplyModal() {
+    document.getElementById('replyModal').classList.add('hidden');
+    replyingMessageId = null;
+}
+
+async function submitReply() {
+    const reply = document.getElementById('replyContent').value.trim();
+    if (!reply) { alert('请输入回复内容'); return; }
+    await fetch(`${API}/api/reviews/${replyingMessageId}/reply`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ reply })
+    });
+    closeReplyModal();
+    loadMessages();
+}
+
+async function deleteMessage(id) {
+    if (!confirm('确认删除该评价？')) return;
+    await fetch(`${API}/api/reviews/${id}`, { method: 'DELETE' });
+    loadMessages();
+}
 
 // ===== 评价管理（真实数据）=====
 async function loadReviews() {

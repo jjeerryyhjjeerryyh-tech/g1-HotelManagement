@@ -101,24 +101,30 @@
                         </button>
                     </li>
                     <li>
+<<<<<<< HEAD
                         <button type="button" data-section="checkins" class="sidebar-link w-full flex items-center px-6 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200">
                             <i class="fa fa-key w-5 text-center"></i>
                             <span class="ml-3" data-i18n="nav_checkins">入住管理</span>
                         </button>
                     </li>
                     <li>
+=======
+>>>>>>> b335b0bb1cd3df8f73ac93c66e46e5617aadaf8a
                         <button type="button" data-section="messages" class="sidebar-link w-full flex items-center px-6 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200">
                             <i class="fa fa-comments w-5 text-center"></i>
                             <span class="ml-3" data-i18n="nav_messages">留言管理</span>
                         </button>
                     </li>
                     <li>
+<<<<<<< HEAD
                         <button type="button" data-section="announcements" class="sidebar-link w-full flex items-center px-6 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200">
                             <i class="fa fa-bullhorn w-5 text-center"></i>
                             <span class="ml-3" data-i18n="nav_announcements">公告管理</span>
                         </button>
                     </li>
                     <li>
+=======
+>>>>>>> b335b0bb1cd3df8f73ac93c66e46e5617aadaf8a
                         <button type="button" data-section="reviews" class="sidebar-link w-full flex items-center px-6 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200">
                             <i class="fa fa-bar-chart w-5 text-center"></i>
                             <span class="ml-3" data-i18n="nav_reviews">评价管理</span>
@@ -431,11 +437,20 @@
                                 <h3 class="font-bold text-lg" data-i18n="nav_bookings">预订管理</h3>
                                 <div class="flex items-center gap-3">
                                     <select id="bookingStatusFilter" onchange="filterBookings()" class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-accent">
+<<<<<<< HEAD
                                         <option value="all" data-i18n="filter_all">所有状态</option>
                                         <option value="pending" data-i18n="status_pending">待确认</option>
                                         <option value="confirmed" data-i18n="status_confirmed">已确认</option>
                                         <option value="checked-in" data-i18n="status_checked_in">已入住</option>
                                         <option value="cancelled" data-i18n="status_cancelled">已取消</option>
+=======
+                                        <option value="all">所有状态</option>
+                                        <option value="pending">待确认</option>
+                                        <option value="confirmed">已确认</option>
+                                        <option value="checked-in">已入住</option>
+                                        <option value="checked-out">已退房</option>
+                                        <option value="cancelled">已取消</option>
+>>>>>>> b335b0bb1cd3df8f73ac93c66e46e5617aadaf8a
                                     </select>
                                     <div class="relative">
                                         <input type="text" id="bookingSearchInput" placeholder="搜索订单号/姓名/手机..." onkeyup="filterBookings()" class="pl-9 pr-3 py-2 border border-gray-300 rounded-md text-sm w-64 focus:outline-none focus:ring-1 focus:ring-accent">
@@ -467,46 +482,22 @@
                         </div>
                     </div>
                 </section>
-                <section id="section-checkins" class="hidden">
-                    <div class="bg-white rounded-lg card-shadow">
-                        <div class="p-6 border-b border-gray-200 flex items-center justify-between">
-                            <h3 class="font-bold text-lg">入住管理</h3>
-                            <button class="btn-primary text-sm px-4 py-2"><i class="fa fa-plus mr-1"></i>新增入住</button>
-                        </div>
-                        <div class="overflow-x-auto">
-                            <table class="w-full">
-                                <thead>
-                                    <tr class="bg-gray-50 text-left text-sm text-gray-600">
-                                        <th class="px-6 py-3">入住单号</th>
-                                        <th class="px-6 py-3">姓名</th>
-                                        <th class="px-6 py-3">房号</th>
-                                        <th class="px-6 py-3">入住时间</th>
-                                        <th class="px-6 py-3">状态</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-gray-200">
-                                    <tr class="hover:bg-gray-50">
-                                        <td class="px-6 py-4 text-sm">CI-20260327-001</td>
-                                        <td class="px-6 py-4 text-sm">张三</td>
-                                        <td class="px-6 py-4 text-sm">1208</td>
-                                        <td class="px-6 py-4 text-sm">2026-03-27 15:10</td>
-                                        <td class="px-6 py-4 text-sm"><span class="px-2 py-1 rounded-full text-xs bg-success/10 text-success">已入住</span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </section>
                 <section id="section-messages" class="hidden">
                     <div class="bg-white rounded-lg card-shadow">
+<<<<<<< HEAD
                         <div class="p-6 border-b border-gray-200 flex items-center justify-between">
                             <h3 class="font-bold text-lg" data-i18n="nav_messages">留言管理</h3>
                             <button class="btn-primary text-sm px-4 py-2"><i class="fa fa-filter mr-1"></i><span data-i18n="btn_filter">筛选</span></button>
+=======
+                        <div class="p-6 border-b border-gray-200">
+                            <h3 class="font-bold text-lg">留言管理</h3>
+>>>>>>> b335b0bb1cd3df8f73ac93c66e46e5617aadaf8a
                         </div>
                         <div class="overflow-x-auto">
                             <table class="w-full">
                                 <thead>
                                     <tr class="bg-gray-50 text-left text-sm text-gray-600">
+<<<<<<< HEAD
                                         <th class="px-6 py-3" data-i18n="table_sender">留言人</th>
                                         <th class="px-6 py-3" data-i18n="table_comment">内容</th>
                                         <th class="px-6 py-3" data-i18n="table_time">时间</th>
@@ -554,6 +545,31 @@
                                     </tr>
                                 </tbody>
                             </table>
+=======
+                                        <th class="px-6 py-3">留言人</th>
+                                        <th class="px-6 py-3">留言内容</th>
+                                        <th class="px-6 py-3">时间</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="messageTableBody" class="divide-y divide-gray-200"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- 回复弹窗 -->
+                    <div id="replyModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
+                        <div class="bg-white rounded-lg shadow-xl w-full max-w-md p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="font-bold text-lg">回复留言</h3>
+                                <button onclick="closeReplyModal()" class="text-gray-400 hover:text-gray-600"><i class="fa fa-times text-xl"></i></button>
+                            </div>
+                            <div class="mb-3 p-3 bg-gray-50 rounded text-sm text-gray-600" id="replyOriginal"></div>
+                            <textarea id="replyContent" rows="4" placeholder="输入回复内容..." class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20"></textarea>
+                            <div class="flex justify-end space-x-3 mt-4">
+                                <button onclick="closeReplyModal()" class="btn-secondary px-4 py-2 text-sm">取消</button>
+                                <button onclick="submitReply()" class="btn-primary px-4 py-2 text-sm">发送回复</button>
+                            </div>
+>>>>>>> b335b0bb1cd3df8f73ac93c66e46e5617aadaf8a
                         </div>
                     </div>
                 </section>
