@@ -38,60 +38,29 @@ const i18nAdmin = {
         table_email: '邮箱',
         table_phone: '电话',
         table_action: '操作',
-        table_room_type: '房型名称',
-        table_bed_size: '床型/面积',
-        table_guests: '可住人数',
-        table_price: '基础价格',
+        roomtype_management_title: '房型管理',
+        add_roomtype_button: '新增房型',
+        table_roomtype_name: '房型名称',
+        table_bed_area: '床型/面积',
+        table_occupancy: '可住人数',
+        table_base_price: '基础价格',
         table_status: '状态',
-        table_order_no: '订单号',
-        table_guest: '预订人',
-        table_room_info: '房型/房号',
-        table_dates: '入住/退房日期',
-        table_total: '总金额',
-        table_rating: '评分',
-        table_comment: '内容',
-        table_time: '时间',
-        btn_edit: '编辑',
-        btn_delete: '删除',
-        btn_add_user: '新增用户',
-        btn_add_room_type: '新增房型',
-        btn_refresh: '刷新',
-        status_enabled: '启用',
-        status_pending: '待确认',
-        status_confirmed: '已确认',
-        status_checked_in: '已入住',
-        status_checked_out: '已退房',
-        status_cancelled: '已取消',
-        guests_unit: '人',
-        night_unit: '晚',
-        currency_symbol: '¥',
-        filter_all: '所有状态',
-        btn_filter: '筛选',
-        btn_publish: '发布公告',
-        table_sender: '留言人',
-        table_title: '标题',
-        table_publisher: '发布人',
-        status_no_reply: '未回复',
-        status_published: '已发布',
-        booking_conditions: '房间预订条件',
-        checkin: '入住日期',
-        checkout: '退房日期',
-        room_type_deluxe: '豪华客房',
-        room_type_standard: '标准客房',
-        room_type_suite: '套房',
-        btn_search_rooms: '查询可用房间',
-        error_date_check: '请检查日期：入住日期需晚于今日、早于退房日期',
-        no_rooms_found: '暂无可用房间，请调整预订条件',
-        total_nights: '入住晚数',
-        total_price: '总价',
-        btn_select_room: '选择此房间',
-        price_per_night: '晚',
-        label_original_price: '原价',
-        label_available_count: '可用数量',
-        label_image_url: '图片 URL',
-        label_policy: '取消政策',
-        btn_cancel: '取消',
-        btn_save: '保存',
+        add_roomtype_modal_title: '新增房型',
+        form_roomtype_name: '房型名称',
+        form_roomtype_type: '类型',
+        option_standard_room: '标准客房',
+        option_deluxe_room: '豪华客房',
+        option_suite: '套房',
+        form_roomtype_area: '面积',
+        form_roomtype_bed_type: '床型',
+        form_roomtype_occupancy: '可住人数',
+        form_roomtype_base_price: '基础价格 (¥)',
+        form_roomtype_original_price: '原价 (¥)',
+        form_roomtype_available_quantity: '可用数量',
+        form_roomtype_image_url: '图片 URL',
+        form_roomtype_cancellation_policy: '取消政策',
+        button_cancel: '取消',
+        button_save: '保存',
     },
     en: {
         admin_system_title: 'Hotel Management System',
@@ -120,76 +89,33 @@ const i18nAdmin = {
         table_email: 'Email',
         table_phone: 'Phone',
         table_action: 'Action',
-        table_room_type: 'Room Type',
-        table_bed_size: 'Bed / Size',
-        table_guests: 'Guests',
-        table_price: 'Base Price',
+        roomtype_management_title: 'Room Type Management',
+        add_roomtype_button: 'Add Room Type',
+        table_roomtype_name: 'Room Type Name',
+        table_bed_area: 'Bed Type/Area',
+        table_occupancy: 'Occupancy',
+        table_base_price: 'Base Price',
         table_status: 'Status',
-        table_order_no: 'Order No.',
-        table_guest: 'Guest',
-        table_room_info: 'Room/No.',
-        table_dates: 'Stay Dates',
-        table_total: 'Total',
-        table_rating: 'Rating',
-        table_comment: 'Comment',
-        table_time: 'Time',
-        btn_edit: 'Edit',
-        btn_delete: 'Delete',
-        btn_add_user: 'Add User',
-        btn_add_room_type: 'Add Type',
-        btn_refresh: 'Refresh',
-        status_enabled: 'Enabled',
-        status_pending: 'Pending',
-        status_confirmed: 'Confirmed',
-        status_checked_in: 'Checked In',
-        status_checked_out: 'Checked Out',
-        status_cancelled: 'Cancelled',
-        guests_unit: 'Guests',
-        night_unit: 'Night',
-        currency_symbol: '$',
-        filter_all: 'All Status',
-        btn_filter: 'Filter',
-        btn_publish: 'Publish',
-        table_sender: 'Sender',
-        table_title: 'Title',
-        table_publisher: 'Publisher',
-        status_no_reply: 'No Reply',
-        status_published: 'Published',
-        booking_conditions: 'Booking Conditions',
-        checkin: 'Check-in',
-        checkout: 'Check-out',
-        room_type_deluxe: 'Deluxe Room',
-        room_type_standard: 'Standard Room',
-        room_type_suite: 'Suite',
-        btn_search_rooms: 'Search Available Rooms',
-        error_date_check: 'Date error: Check-in must be after today and before check-out',
-        no_rooms_found: 'No rooms available, please adjust conditions',
-        total_nights: 'Total Nights',
-        total_price: 'Total Price',
-        btn_select_room: 'Select Room',
-        price_per_night: 'night',
-        label_original_price: 'Original Price',
-        label_available_count: 'Available Count',
-        label_image_url: 'Image URL',
-        label_policy: 'Policy',
-        btn_cancel: 'Cancel',
-        btn_save: 'Save',
+        add_roomtype_modal_title: 'Add Room Type',
+        form_roomtype_name: 'Room Type Name',
+        form_roomtype_type: 'Type',
+        option_standard_room: 'Standard Room',
+        option_deluxe_room: 'Deluxe Room',
+        option_suite: 'Suite',
+        form_roomtype_area: 'Area',
+        form_roomtype_bed_type: 'Bed Type',
+        form_roomtype_occupancy: 'Occupancy',
+        form_roomtype_base_price: 'Base Price (¥)',
+        form_roomtype_original_price: 'Original Price (¥)',
+        form_roomtype_available_quantity: 'Available Quantity',
+        form_roomtype_image_url: 'Image URL',
+        form_roomtype_cancellation_policy: 'Cancellation Policy',
+        button_cancel: 'Cancel',
+        button_save: 'Save',
     }
 };
 
 let currentLang = localStorage.getItem('lang') || 'zh';
-
-function t(key) {
-    const dict = i18nAdmin[currentLang] || i18nAdmin.zh;
-    return dict[key] || key;
-}
-
-function getLocalizedValue(val) {
-    if (val && typeof val === 'object') {
-        return val[currentLang] || val['zh'] || '';
-    }
-    return val || '';
-}
 
 const sectionMeta = {
     dashboard:     { title: '首页',     subtitle: '欢迎回来，管理员！这是您的酒店运营概览' },
@@ -295,7 +221,6 @@ function setSection(sectionKey) {
     if (sectionKey === 'reviews')  loadReviews();
     if (sectionKey === 'users')    loadUsers();
     if (sectionKey === 'roomtypes') loadRoomTypes();
-    if (sectionKey === 'messages') loadMessages();
 }
 
 // ===== 房型管理 =====
@@ -307,20 +232,20 @@ async function loadRoomTypes() {
     const tbody = document.getElementById('roomTypeTableBody');
     if (!tbody) return;
     if (!data.roomTypes.length) {
-        tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-8 text-center text-gray-400">${currentLang === 'en' ? 'No room types found' : '暂无房型'}</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-8 text-center text-gray-400">暂无房型</td></tr>`;
         return;
     }
     tbody.innerHTML = data.roomTypes.map(r => `
         <tr class="hover:bg-gray-50">
-            <td class="px-6 py-4 text-sm font-medium">${getLocalizedValue(r.name)}</td>
-            <td class="px-6 py-4 text-sm">${getLocalizedValue(r.bed) || '-'} / ${getLocalizedValue(r.size) || '-'}</td>
-            <td class="px-6 py-4 text-sm">${r.guests} ${t('guests_unit')}</td>
-            <td class="px-6 py-4 text-sm">${t('currency_symbol')}${r.price}</td>
-            <td class="px-6 py-4 text-sm"><span class="px-2 py-1 rounded-full text-xs bg-success/10 text-success">${t('status_enabled')}</span></td>
+            <td class="px-6 py-4 text-sm font-medium">${r.name}</td>
+            <td class="px-6 py-4 text-sm">${r.bed || '-'} / ${r.size || '-'}</td>
+            <td class="px-6 py-4 text-sm">${r.guests} 人</td>
+            <td class="px-6 py-4 text-sm">¥${r.price}</td>
+            <td class="px-6 py-4 text-sm"><span class="px-2 py-1 rounded-full text-xs bg-success/10 text-success">启用</span></td>
             <td class="px-6 py-4 text-sm">
                 <div class="flex space-x-3">
-                    <button onclick="editRoomType('${r.id}')" class="text-warning hover:text-warning/80"><i class="fa fa-edit mr-1"></i>${t('btn_edit')}</button>
-                    <button onclick="deleteRoomType('${r.id}')" class="text-danger hover:text-danger/80"><i class="fa fa-trash mr-1"></i>${t('btn_delete')}</button>
+                    <button onclick="editRoomType('${r.id}')" class="text-warning hover:text-warning/80"><i class="fa fa-edit mr-1"></i>编辑</button>
+                    <button onclick="deleteRoomType('${r.id}')" class="text-danger hover:text-danger/80"><i class="fa fa-trash mr-1"></i>删除</button>
                 </div>
             </td>
         </tr>
@@ -392,7 +317,7 @@ async function loadUsers() {
     const tbody = document.getElementById('userTableBody');
     if (!tbody) return;
     if (!data.users.length) {
-        tbody.innerHTML = `<tr><td colspan="5" class="px-6 py-8 text-center text-gray-400">${currentLang === 'en' ? 'No users found' : '暂无用户'}</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="5" class="px-6 py-8 text-center text-gray-400">No users found</td></tr>`;
         return;
     }
     tbody.innerHTML = data.users.map(u => `
@@ -404,10 +329,10 @@ async function loadUsers() {
             <td class="px-6 py-4 text-sm">
                 <div class="flex space-x-3">
                     <button onclick="editUser(${u.id},'${u.username}','${u.name}','${u.email}','${u.phone}')" class="text-warning hover:text-warning/80">
-                        <i class="fa fa-edit mr-1"></i>${t('btn_edit')}
+                        <i class="fa fa-edit mr-1"></i>编辑
                     </button>
                     <button onclick="deleteUser(${u.id})" class="text-danger hover:text-danger/80">
-                        <i class="fa fa-trash mr-1"></i>${t('btn_delete')}
+                        <i class="fa fa-trash mr-1"></i>删除
                     </button>
                 </div>
             </td>
@@ -466,62 +391,27 @@ document.getElementById('userForm').addEventListener('submit', async (e) => {
 });
 
 // ===== 预订管理（真实数据）=====
-let allBookings = []; // 存储所有预订数据用于筛选
-
 async function loadBookings() {
     const res = await fetch(`${API}/api/bookings`);
     const data = await res.json();
-    allBookings = data.bookings || [];
-    
-    // 应用筛选和搜索
-    filterAndDisplayBookings();
-}
-
-function filterAndDisplayBookings() {
     const tbody = document.getElementById('bookingTableBody');
     if (!tbody) return;
 
-<<<<<<< HEAD
     if (!data.bookings.length) {
-        tbody.innerHTML = `<tr><td colspan="7" class="px-6 py-8 text-center text-gray-400">${currentLang === 'en' ? 'No booking records found' : '暂无预订记录'}</td></tr>`;
-=======
-    // 获取筛选条件
-    const statusFilter = document.getElementById('bookingStatusFilter')?.value || 'all';
-    const searchInput = document.getElementById('bookingSearchInput')?.value?.toLowerCase() || '';
-    
-    // 筛选数据
-    let filteredBookings = allBookings;
-    
-    // 状态筛选
-    if (statusFilter !== 'all') {
-        filteredBookings = filteredBookings.filter(b => b.status === statusFilter);
-    }
-    
-    // 搜索筛选
-    if (searchInput) {
-        filteredBookings = filteredBookings.filter(b => 
-            (b.id && b.id.toLowerCase().includes(searchInput)) ||
-            (b.guestName && b.guestName.toLowerCase().includes(searchInput)) ||
-            (b.username && b.username.toLowerCase().includes(searchInput)) ||
-            (b.roomName && b.roomName.toLowerCase().includes(searchInput)) ||
-            (b.roomType && b.roomType.toLowerCase().includes(searchInput))
-        );
-    }
-
-    if (!filteredBookings.length) {
         tbody.innerHTML = `<tr><td colspan="7" class="px-6 py-8 text-center text-gray-400">暂无预订记录</td></tr>`;
->>>>>>> b335b0bb1cd3df8f73ac93c66e46e5617aadaf8a
         updateBookingStats({});
         return;
     }
 
-<<<<<<< HEAD
+    const statusMap = {
+        confirmed:      '<span class="px-2 py-1 text-xs rounded-full bg-success/10 text-success">已确认</span>',
+        pending:        '<span class="px-2 py-1 text-xs rounded-full bg-warning/10 text-warning">待确认</span>',
+        cancelled:      '<span class="px-2 py-1 text-xs rounded-full bg-danger/10 text-danger">已取消</span>',
+        'checked-in':   '<span class="px-2 py-1 text-xs rounded-full bg-primary/10 text-primary">已入住</span>',
+        'checked-out':  '<span class="px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-600">已退房</span>'
+    };
+
     tbody.innerHTML = data.bookings.map(b => `
-=======
-
-
-    tbody.innerHTML = filteredBookings.map(b => `
->>>>>>> b335b0bb1cd3df8f73ac93c66e46e5617aadaf8a
         <tr class="hover:bg-gray-50">
             <td class="px-6 py-4 text-sm font-medium">${b.id}</td>
             <td class="px-6 py-4 text-sm">
@@ -529,32 +419,32 @@ function filterAndDisplayBookings() {
                 ${b.guestName && b.username !== 'guest' ? `<div class="text-xs text-gray-400">@${b.username}</div>` : ''}
             </td>
             <td class="px-6 py-4 text-sm">
-                <div>${getLocalizedValue(b.roomName) || getLocalizedValue(b.roomType) || '-'}</div>
-                <div class="text-xs text-gray-400">${b.guests || 2} ${t('guests_unit')}</div>
+                <div>${b.roomName || b.roomType || '-'}</div>
+                <div class="text-xs text-gray-400">${b.guests || 2} 人入住</div>
             </td>
             <td class="px-6 py-4 text-sm">${b.checkIn} / ${b.checkOut}</td>
-            <td class="px-6 py-4 text-sm">${b.totalDisplay || (t('currency_symbol') + (b.totalAmount || '-'))}</td>
+            <td class="px-6 py-4 text-sm">${b.totalDisplay || ('¥' + (b.totalAmount || '-'))}</td>
             <td class="px-6 py-4 text-sm">
                 <select onchange="updateBookingStatus('${b.id}', this.value)"
                     class="text-xs border border-gray-200 rounded-full px-2 py-1 focus:outline-none focus:ring-1 focus:ring-primary cursor-pointer"
                     style="background:transparent;">
-                    <option value="pending"       ${b.status === 'pending'       ? 'selected' : ''}>${t('status_pending')}</option>
-                    <option value="confirmed"     ${b.status === 'confirmed'     ? 'selected' : ''}>${t('status_confirmed')}</option>
-                    <option value="checked-in"    ${b.status === 'checked-in'    ? 'selected' : ''}>${t('status_checked_in')}</option>
-                    <option value="checked-out"   ${b.status === 'checked-out'   ? 'selected' : ''}>${t('status_checked_out')}</option>
-                    <option value="cancelled"     ${b.status === 'cancelled'     ? 'selected' : ''}>${t('status_cancelled')}</option>
+                    <option value="pending"       ${b.status === 'pending'       ? 'selected' : ''}>待确认</option>
+                    <option value="confirmed"     ${b.status === 'confirmed'     ? 'selected' : ''}>已确认</option>
+                    <option value="checked-in"    ${b.status === 'checked-in'    ? 'selected' : ''}>已入住</option>
+                    <option value="checked-out"   ${b.status === 'checked-out'   ? 'selected' : ''}>已退房</option>
+                    <option value="cancelled"     ${b.status === 'cancelled'     ? 'selected' : ''}>已取消</option>
                 </select>
             </td>
             <td class="px-6 py-4 text-sm">
                 <button onclick="deleteBooking('${b.id}')" class="text-danger hover:text-danger/80">
-                    <i class="fa fa-trash mr-1"></i>${t('btn_delete')}
+                    <i class="fa fa-trash mr-1"></i>删除
                 </button>
             </td>
         </tr>
     `).join('');
 
     const counts = { pending: 0, confirmed: 0, 'checked-in': 0, cancelled: 0 };
-    filteredBookings.forEach(b => { if (counts[b.status] !== undefined) counts[b.status]++; });
+    data.bookings.forEach(b => { if (counts[b.status] !== undefined) counts[b.status]++; });
     updateBookingStats(counts);
 }
 
@@ -580,71 +470,8 @@ async function updateBookingStatus(id, status) {
     loadBookings();
 }
 
-function filterBookings() { 
-    // 应用筛选条件并重新显示
-    filterAndDisplayBookings(); 
-}
-
-function refreshBookings() { 
-    // 重新从服务器加载数据
-    loadBookings(); 
-}
-
-// ===== 留言管理（显示用户评价，支持回复）=====
-let replyingMessageId = null;
-
-async function loadMessages() {
-    const res = await fetch(`${API}/api/reviews`);
-    const data = await res.json();
-    const tbody = document.getElementById('messageTableBody');
-    if (!tbody) return;
-    if (!data.reviews.length) {
-        tbody.innerHTML = `<tr><td colspan="5" class="px-6 py-8 text-center text-gray-400">暂无评价</td></tr>`;
-        return;
-    }
-    const stars = n => '★'.repeat(n) + '☆'.repeat(5 - n);
-    tbody.innerHTML = data.reviews.slice().reverse().map(m => `
-        <tr class="hover:bg-gray-50">
-            <td class="px-6 py-4 text-sm font-medium">${m.username}</td>
-            <td class="px-6 py-4 text-sm">
-                <div class="text-warning text-sm mb-1">${stars(m.rating)} <span class="text-gray-400 text-xs">${m.rating}.0</span></div>
-                <div>${m.comment}</div>
-                ${m.reply ? `<div class="mt-1 text-xs text-primary bg-primary/5 px-2 py-1 rounded">管理员回复：${m.reply}</div>` : ''}
-            </td>
-            <td class="px-6 py-4 text-sm">${new Date(m.createdAt).toLocaleDateString('zh-CN')}</td>
-        </tr>
-    `).join('');
-}
-
-function openReplyModal(id, content) {
-    replyingMessageId = id;
-    document.getElementById('replyOriginal').textContent = '用户评价：' + content;
-    document.getElementById('replyContent').value = '';
-    document.getElementById('replyModal').classList.remove('hidden');
-}
-
-function closeReplyModal() {
-    document.getElementById('replyModal').classList.add('hidden');
-    replyingMessageId = null;
-}
-
-async function submitReply() {
-    const reply = document.getElementById('replyContent').value.trim();
-    if (!reply) { alert('请输入回复内容'); return; }
-    await fetch(`${API}/api/reviews/${replyingMessageId}/reply`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ reply })
-    });
-    closeReplyModal();
-    loadMessages();
-}
-
-async function deleteMessage(id) {
-    if (!confirm('确认删除该评价？')) return;
-    await fetch(`${API}/api/reviews/${id}`, { method: 'DELETE' });
-    loadMessages();
-}
+function filterBookings() { loadBookings(); }
+function refreshBookings() { loadBookings(); }
 
 // ===== 评价管理（真实数据）=====
 async function loadReviews() {
@@ -654,7 +481,7 @@ async function loadReviews() {
     if (!tbody) return;
 
     if (!data.reviews.length) {
-        tbody.innerHTML = `<tr><td colspan="5" class="px-6 py-8 text-center text-gray-400">${currentLang === 'en' ? 'No review records found' : '暂无评价记录'}</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="5" class="px-6 py-8 text-center text-gray-400">暂无评价记录</td></tr>`;
         return;
     }
 
@@ -663,10 +490,10 @@ async function loadReviews() {
             <td class="px-6 py-4 text-sm">${r.username}</td>
             <td class="px-6 py-4 text-sm text-warning">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</td>
             <td class="px-6 py-4 text-sm">${r.comment}</td>
-            <td class="px-6 py-4 text-sm">${new Date(r.createdAt).toLocaleDateString(currentLang === 'en' ? 'en-US' : 'zh-CN')}</td>
+            <td class="px-6 py-4 text-sm">${new Date(r.createdAt).toLocaleDateString('zh-CN')}</td>
             <td class="px-6 py-4 text-sm">
                 <button onclick="deleteReview(${r.id})" class="text-danger hover:text-danger/80">
-                    <i class="fa fa-trash mr-1"></i>${t('btn_delete')}
+                    <i class="fa fa-trash mr-1"></i>删除
                 </button>
             </td>
         </tr>
