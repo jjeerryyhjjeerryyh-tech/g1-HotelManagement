@@ -301,6 +301,16 @@
             "rating": 5,
             "comment": "gggggg gggg",
             "createdAt": "2026-04-16T07:50:20.617Z"
+        },
+        {
+            "id": 1776924838284,
+            "username": "xxx",
+            "bookingId": "BK1776326341277",
+            "roomId": "R001",
+            "roomName": "舒适标准间",
+            "rating": 1,
+            "comment": "sbyi wwww",
+            "createdAt": "2026-04-23T06:13:58.284Z"
         }
     ],
     "roomTypes": [
