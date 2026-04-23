@@ -301,14 +301,6 @@
             "rating": 5,
             "comment": "gggggg gggg",
             "createdAt": "2026-04-16T07:50:20.617Z"
-        },
-        {
-            "id": 1776327427052,
-            "username": "xxx",
-            "roomType": "",
-            "rating": 5,
-            "comment": "gggggg",
-            "createdAt": "2026-04-16T08:17:07.052Z"
         }
     ],
     "roomTypes": [
