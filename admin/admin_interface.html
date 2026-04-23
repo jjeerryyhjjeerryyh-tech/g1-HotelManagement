@@ -54,9 +54,9 @@
         <aside class="w-64 bg-white shadow-lg h-full transition-all duration-300 z-10 flex flex-col">
             <!-- 品牌/logo区域 -->
             <div class="h-16 flex items-center justify-center border-b border-gray-200">
-                <h1 class="text-xl font-bold text-primary flex items-center">
+                <h1 class="text-base font-bold text-primary flex items-center">
                     <i class="fa fa-hotel mr-2"></i>
-                    <span>酒店管理系统</span>
+                    <span data-i18n="admin_system_title">酒店管理系统</span>
                 </h1>
             </div>
             
@@ -67,7 +67,7 @@
                         <i class="fa fa-user"></i>
                     </div>
                     <div class="ml-3">
-                        <p class="font-medium">管理员</p>
+                        <p class="font-medium" data-i18n="admin_label">管理员</p>
                         <p class="text-xs text-gray-500">admin@hotel.com</p>
                     </div>
                 </div>
@@ -79,49 +79,49 @@
                     <li>
                         <button type="button" data-section="dashboard" class="sidebar-link sidebar-item-active w-full flex items-center px-6 py-3 text-sm">
                             <i class="fa fa-home w-5 text-center"></i>
-                            <span class="ml-3">首页</span>
+                            <span class="ml-3" data-i18n="nav_home">首页</span>
                         </button>
                     </li>
                     <li>
                         <button type="button" data-section="users" class="sidebar-link w-full flex items-center px-6 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200">
                             <i class="fa fa-users w-5 text-center"></i>
-                            <span class="ml-3">用户管理</span>
+                            <span class="ml-3" data-i18n="nav_users">用户管理</span>
                         </button>
                     </li>
                     <li>
                         <button type="button" data-section="roomtypes" class="sidebar-link w-full flex items-center px-6 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200">
                             <i class="fa fa-th-large w-5 text-center"></i>
-                            <span class="ml-3">房型管理</span>
+                            <span class="ml-3" data-i18n="nav_roomtypes">房型管理</span>
                         </button>
                     </li>
                     <li>
                         <button type="button" data-section="bookings" class="sidebar-link w-full flex items-center px-6 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200">
                             <i class="fa fa-calendar-check-o w-5 text-center"></i>
-                            <span class="ml-3">预定管理</span>
+                            <span class="ml-3" data-i18n="nav_bookings">预定管理</span>
                         </button>
                     </li>
                     <li>
                         <button type="button" data-section="checkins" class="sidebar-link w-full flex items-center px-6 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200">
                             <i class="fa fa-key w-5 text-center"></i>
-                            <span class="ml-3">入住管理</span>
+                            <span class="ml-3" data-i18n="nav_checkins">入住管理</span>
                         </button>
                     </li>
                     <li>
                         <button type="button" data-section="messages" class="sidebar-link w-full flex items-center px-6 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200">
                             <i class="fa fa-comments w-5 text-center"></i>
-                            <span class="ml-3">留言管理</span>
+                            <span class="ml-3" data-i18n="nav_messages">留言管理</span>
                         </button>
                     </li>
                     <li>
                         <button type="button" data-section="announcements" class="sidebar-link w-full flex items-center px-6 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200">
                             <i class="fa fa-bullhorn w-5 text-center"></i>
-                            <span class="ml-3">公告管理</span>
+                            <span class="ml-3" data-i18n="nav_announcements">公告管理</span>
                         </button>
                     </li>
                     <li>
                         <button type="button" data-section="reviews" class="sidebar-link w-full flex items-center px-6 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200">
                             <i class="fa fa-bar-chart w-5 text-center"></i>
-                            <span class="ml-3">评价管理</span>
+                            <span class="ml-3" data-i18n="nav_reviews">评价管理</span>
                         </button>
                     </li>
                 </ul>
@@ -129,9 +129,9 @@
             
             <!-- 退出按钮 -->
             <div class="p-4 border-t border-gray-200">
-                <button class="flex items-center w-full px-6 py-2 text-sm text-danger hover:bg-danger/10 rounded-md transition-colors duration-200">
+                <button id="logoutBtn" class="flex items-center w-full px-6 py-2 text-sm text-danger hover:bg-danger/10 rounded-md transition-colors duration-200">
                     <i class="fa fa-sign-out w-5 text-center"></i>
-                    <span class="ml-3">退出登录</span>
+                    <span class="ml-3" data-i18n="nav_logout">退出登录</span>
                 </button>
             </div>
         </aside>
@@ -148,25 +148,15 @@
                         </button>
                         <nav class="text-sm">
                             <ol class="flex items-center space-x-2">
-                                <li><a href="#" class="text-primary">首页</a></li>
+                                <li><a href="#" class="text-primary" data-i18n="breadcrumb_home">首页</a></li>
                                 <li><i class="fa fa-angle-right text-gray-400"></i></li>
-                                <li class="text-gray-500" id="breadcrumbCurrent">首页</li>
+                                <li class="text-gray-500" id="breadcrumbCurrent" data-i18n="breadcrumb_dashboard">首页</li>
                             </ol>
                         </nav>
                     </div>
                     
                     <!-- 右侧：功能按钮和用户操作 -->
                     <div class="flex items-center space-x-4">
-                        <!-- 搜索框 -->
-                        <div class="relative">
-                            <input type="text" placeholder="搜索..." class="pl-8 pr-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm w-48">
-                            <i class="fa fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                        </div>
-                        <!-- 追加：顶部导航预订快捷入口，原按钮保留 -->
-                        <a href="javascript:;" data-section="roombooking" class="text-gray-500 hover:text-primary flex items-center px-2 py-1 rounded quick-book">
-                            <i class="fa fa-calendar-plus-o mr-1"></i>
-                            <span class="text-sm">房间预订</span>
-                        </a>
                         <!-- 通知图标 -->
                         <div class="relative">
                             <button class="text-gray-500 hover:text-primary relative">
@@ -177,10 +167,10 @@
                         
                         <!-- 语言切换 -->
                         <div class="relative">
-                            <button class="flex items-center text-gray-500 hover:text-primary">
-                                <span class="mr-1">简体中文</span>
-                                <i class="fa fa-chevron-down text-xs"></i>
-                            </button>
+                            <select id="langSelect" class="bg-transparent text-gray-500 hover:text-primary text-sm focus:outline-none cursor-pointer">
+                                <option value="zh">简体中文</option>
+                                <option value="en">English</option>
+                            </select>
                         </div>
                         
                         <!-- 用户头像 -->
@@ -200,8 +190,8 @@
             <div class="p-6">
                 <!-- 页面标题 -->
                 <div class="mb-6">
-                    <h2 class="text-[clamp(1.25rem,2vw,1.75rem)] font-bold" id="pageTitle">首页</h2>
-                    <p class="text-gray-500 mt-1" id="pageSubtitle">欢迎回来，管理员！这是您的酒店运营概览</p>
+                    <h2 class="text-[clamp(1.25rem,2vw,1.75rem)] font-bold" id="pageTitle" data-i18n="page_title_dashboard">首页</h2>
+                    <p class="text-gray-500 mt-1" id="pageSubtitle" data-i18n="page_subtitle_dashboard">欢迎回来，管理员！这是您的酒店运营概览</p>
                 </div>
                 
                 <section id="section-dashboard">
@@ -210,10 +200,10 @@
                     <div class="bg-white rounded-lg p-6 card-shadow">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-gray-500 text-sm">总客房数</p>
+                                <p class="text-gray-500 text-sm" data-i18n="stat_total_rooms">总客房数</p>
                                 <h3 class="text-3xl font-bold mt-2">120</h3>
                                 <p class="text-success text-sm mt-2 flex items-center">
-                                    <i class="fa fa-arrow-up mr-1"></i> 5% 较上月
+                                    <i class="fa fa-arrow-up mr-1"></i> 5% <span data-i18n="stat_compare_month">较上月</span>
                                 </p>
                             </div>
                             <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
@@ -226,10 +216,10 @@
                     <div class="bg-white rounded-lg p-6 card-shadow">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-gray-500 text-sm">已入住客房</p>
+                                <p class="text-gray-500 text-sm" data-i18n="stat_occupied_rooms">已入住客房</p>
                                 <h3 class="text-3xl font-bold mt-2">86</h3>
                                 <p class="text-success text-sm mt-2 flex items-center">
-                                    <i class="fa fa-arrow-up mr-1"></i> 12% 较上月
+                                    <i class="fa fa-arrow-up mr-1"></i> 12% <span data-i18n="stat_compare_month">较上月</span>
                                 </p>
                             </div>
                             <div class="w-12 h-12 rounded-full bg-warning/10 flex items-center justify-center text-warning">
@@ -242,10 +232,10 @@
                     <div class="bg-white rounded-lg p-6 card-shadow">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-gray-500 text-sm">今日订单</p>
+                                <p class="text-gray-500 text-sm" data-i18n="stat_today_bookings">今日订单</p>
                                 <h3 class="text-3xl font-bold mt-2">24</h3>
                                 <p class="text-danger text-sm mt-2 flex items-center">
-                                    <i class="fa fa-arrow-down mr-1"></i> 3% 较昨日
+                                    <i class="fa fa-arrow-down mr-1"></i> 3% <span data-i18n="stat_compare_day">较昨日</span>
                                 </p>
                             </div>
                             <div class="w-12 h-12 rounded-full bg-success/10 flex items-center justify-center text-success">
@@ -258,10 +248,10 @@
                     <div class="bg-white rounded-lg p-6 card-shadow">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-gray-500 text-sm">今日营收</p>
+                                <p class="text-gray-500 text-sm" data-i18n="stat_today_revenue">今日营收</p>
                                 <h3 class="text-3xl font-bold mt-2">¥28,560</h3>
                                 <p class="text-success text-sm mt-2 flex items-center">
-                                    <i class="fa fa-arrow-up mr-1"></i> 8% 较昨日
+                                    <i class="fa fa-arrow-up mr-1"></i> 8% <span data-i18n="stat_compare_day">较昨日</span>
                                 </p>
                             </div>
                             <div class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center text-accent">
@@ -276,9 +266,9 @@
                 <div class="bg-white rounded-lg card-shadow">
                     <div class="p-6 border-b border-gray-200">
                         <div class="flex items-center justify-between">
-                            <h3 class="font-bold text-lg">用户管理</h3>
+                            <h3 class="font-bold text-lg" data-i18n="user_management_title">用户管理</h3>
                             <button onclick="openModal()" class="btn-primary text-sm px-4 py-2">
-                                <i class="fa fa-plus mr-1"></i> 新增用户
+                                <i class="fa fa-plus mr-1"></i> <span data-i18n="add_user_button">新增用户</span>
                             </button>
                         </div>
                     </div>
@@ -286,11 +276,11 @@
                         <table class="w-full">
                             <thead>
                                 <tr class="bg-gray-50 text-left text-sm text-gray-600">
-                                    <th class="px-6 py-3">账号</th>
-                                    <th class="px-6 py-3">姓名</th>
-                                    <th class="px-6 py-3">邮箱</th>
-                                    <th class="px-6 py-3">电话</th>
-                                    <th class="px-6 py-3">操作</th>
+                                    <th class="px-6 py-3" data-i18n="table_account">账号</th>
+                                    <th class="px-6 py-3" data-i18n="table_name">姓名</th>
+                                    <th class="px-6 py-3" data-i18n="table_email">邮箱</th>
+                                    <th class="px-6 py-3" data-i18n="table_phone">电话</th>
+                                    <th class="px-6 py-3" data-i18n="table_action">操作</th>
                                 </tr>
                             </thead>
                             <tbody id="userTableBody" class="divide-y divide-gray-200"></tbody>
@@ -301,19 +291,19 @@
                 <section id="section-roomtypes" class="hidden">
                     <div class="bg-white rounded-lg card-shadow">
                         <div class="p-6 border-b border-gray-200 flex items-center justify-between">
-                            <h3 class="font-bold text-lg">房型管理</h3>
-                            <button onclick="openRoomTypeModal()" class="btn-primary text-sm px-4 py-2"><i class="fa fa-plus mr-1"></i>新增房型</button>
+                            <h3 class="font-bold text-lg" data-i18n="roomtype_management_title">房型管理</h3>
+                            <button onclick="openRoomTypeModal()" class="btn-primary text-sm px-4 py-2"><i class="fa fa-plus mr-1"></i><span data-i18n="add_roomtype_button">新增房型</span></button>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="w-full">
                                 <thead>
                                     <tr class="bg-gray-50 text-left text-sm text-gray-600">
-                                        <th class="px-6 py-3">房型名称</th>
-                                        <th class="px-6 py-3">床型/面积</th>
-                                        <th class="px-6 py-3">可住人数</th>
-                                        <th class="px-6 py-3">基础价格</th>
-                                        <th class="px-6 py-3">状态</th>
-                                        <th class="px-6 py-3">操作</th>
+                                        <th class="px-6 py-3" data-i18n="table_roomtype_name">房型名称</th>
+                                        <th class="px-6 py-3" data-i18n="table_bed_area">床型/面积</th>
+                                        <th class="px-6 py-3" data-i18n="table_occupancy">可住人数</th>
+                                        <th class="px-6 py-3" data-i18n="table_base_price">基础价格</th>
+                                        <th class="px-6 py-3" data-i18n="table_status">状态</th>
+                                        <th class="px-6 py-3" data-i18n="table_action">操作</th>
                                     </tr>
                                 </thead>
                                 <tbody id="roomTypeTableBody" class="divide-y divide-gray-200"></tbody>
@@ -326,60 +316,60 @@
                 <div id="roomTypeModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
                     <div class="bg-white rounded-lg shadow-xl w-full max-w-lg p-6">
                         <div class="flex items-center justify-between mb-4">
-                            <h3 id="roomTypeModalTitle" class="font-bold text-lg">新增房型</h3>
+                            <h3 id="roomTypeModalTitle" class="font-bold text-lg" data-i18n="add_roomtype_modal_title">新增房型</h3>
                             <button onclick="closeRoomTypeModal()" class="text-gray-400 hover:text-gray-600"><i class="fa fa-times text-xl"></i></button>
                         </div>
                         <form id="roomTypeForm" class="space-y-3">
                             <input type="hidden" id="rtId">
                             <div class="grid grid-cols-2 gap-3">
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">房型名称</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1" data-i18n="form_roomtype_name">房型名称</label>
                                     <input id="rtName" type="text" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20" required>
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">类型</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1" data-i18n="form_roomtype_type">类型</label>
                                     <select id="rtType" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20">
-                                        <option value="standard">标准客房</option>
-                                        <option value="deluxe">豪华客房</option>
-                                        <option value="suite">套房</option>
+                                        <option value="standard" data-i18n="option_standard_room">标准客房</option>
+                                        <option value="deluxe" data-i18n="option_deluxe_room">豪华客房</option>
+                                        <option value="suite" data-i18n="option_suite">套房</option>
                                     </select>
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">面积</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1" data-i18n="form_roomtype_area">面积</label>
                                     <input id="rtSize" type="text" placeholder="如 28㎡" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20">
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">床型</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1" data-i18n="form_roomtype_bed_type">床型</label>
                                     <input id="rtBed" type="text" placeholder="如 大床/双床" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20">
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">可住人数</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1" data-i18n="form_roomtype_occupancy">可住人数</label>
                                     <input id="rtGuests" type="number" min="1" value="2" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20">
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">基础价格 (¥)</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1" data-i18n="form_roomtype_base_price">基础价格 (¥)</label>
                                     <input id="rtPrice" type="number" min="0" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20" required>
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">原价 (¥)</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1" data-i18n="form_roomtype_original_price">原价 (¥)</label>
                                     <input id="rtOriginalPrice" type="number" min="0" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20">
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">可用数量</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1" data-i18n="form_roomtype_available_quantity">可用数量</label>
                                     <input id="rtAvailable" type="number" min="0" value="1" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20">
                                 </div>
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">图片 URL</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-1" data-i18n="form_roomtype_image_url">图片 URL</label>
                                 <input id="rtImage" type="text" placeholder="https://..." class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20">
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">取消政策</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-1" data-i18n="form_roomtype_cancellation_policy">取消政策</label>
                                 <input id="rtPolicy" type="text" placeholder="如 入住前48小时可免费取消" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20">
                             </div>
                             <div class="flex justify-end space-x-3 pt-2">
-                                <button type="button" onclick="closeRoomTypeModal()" class="btn-secondary px-4 py-2 text-sm">取消</button>
-                                <button type="submit" class="btn-primary px-4 py-2 text-sm">保存</button>
+                                <button type="button" onclick="closeRoomTypeModal()" class="btn-secondary px-4 py-2 text-sm" data-i18n="button_cancel">取消</button>
+                                <button type="submit" class="btn-primary px-4 py-2 text-sm" data-i18n="button_save">保存</button>
                             </div>
                         </form>
                     </div>
@@ -387,18 +377,18 @@
                 <section id="section-rooms" class="hidden">
                     <div class="bg-white rounded-lg card-shadow">
                         <div class="p-6 border-b border-gray-200 flex items-center justify-between">
-                            <h3 class="font-bold text-lg">房间管理</h3>
-                            <button class="btn-primary text-sm px-4 py-2"><i class="fa fa-plus mr-1"></i>新增房间</button>
+                            <h3 class="font-bold text-lg" data-i18n="room_management_title">房间管理</h3>
+                            <button class="btn-primary text-sm px-4 py-2"><i class="fa fa-plus mr-1"></i><span data-i18n="add_room_button">新增房间</span></button>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="w-full">
                                 <thead>
                                     <tr class="bg-gray-50 text-left text-sm text-gray-600">
-                                        <th class="px-6 py-3">房号</th>
-                                        <th class="px-6 py-3">房型</th>
-                                        <th class="px-6 py-3">楼层</th>
-                                        <th class="px-6 py-3">状态</th>
-                                        <th class="px-6 py-3">操作</th>
+                                        <th class="px-6 py-3" data-i18n="table_room_number">房号</th>
+                                        <th class="px-6 py-3" data-i18n="table_room_type">房型</th>
+                                        <th class="px-6 py-3" data-i18n="table_floor">楼层</th>
+                                        <th class="px-6 py-3" data-i18n="table_status">状态</th>
+                                        <th class="px-6 py-3" data-i18n="table_action">操作</th>
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-gray-200">
@@ -406,8 +396,8 @@
                                         <td class="px-6 py-4 text-sm">1208</td>
                                         <td class="px-6 py-4 text-sm">豪华客房</td>
                                         <td class="px-6 py-4 text-sm">12</td>
-                                        <td class="px-6 py-4 text-sm"><span class="px-2 py-1 rounded-full text-xs bg-warning/10 text-warning">已入住</span></td>
-                                        <td class="px-6 py-4 text-sm text-gray-400">（仅界面）</td>
+                                        <td class="px-6 py-4 text-sm"><span class="px-2 py-1 rounded-full text-xs bg-warning/10 text-warning" data-i18n="status_occupied">已入住</span></td>
+                                        <td class="px-6 py-4 text-sm text-gray-400" data-i18n="interface_only">（仅界面）</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -418,19 +408,19 @@
                     <!-- 统计卡片 -->
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
                         <div class="bg-white rounded-lg p-6 card-shadow border-l-4 border-warning">
-                            <p class="text-gray-500 text-sm">待确认预订</p>
+                            <p class="text-gray-500 text-sm" data-i18n="stat_pending_bookings">待确认预订</p>
                             <h3 class="text-2xl font-bold mt-2" id="count-pending">0</h3>
                         </div>
                         <div class="bg-white rounded-lg p-6 card-shadow border-l-4 border-success">
-                            <p class="text-gray-500 text-sm">已确认预订</p>
+                            <p class="text-gray-500 text-sm" data-i18n="stat_confirmed_bookings">已确认预订</p>
                             <h3 class="text-2xl font-bold mt-2" id="count-confirmed">0</h3>
                         </div>
                         <div class="bg-white rounded-lg p-6 card-shadow border-l-4 border-accent">
-                            <p class="text-gray-500 text-sm">已入住</p>
+                            <p class="text-gray-500 text-sm" data-i18n="stat_checked_in">已入住</p>
                             <h3 class="text-2xl font-bold mt-2" id="count-checkedin">0</h3>
                         </div>
                         <div class="bg-white rounded-lg p-6 card-shadow border-l-4 border-danger">
-                            <p class="text-gray-500 text-sm">已取消预订</p>
+                            <p class="text-gray-500 text-sm" data-i18n="stat_cancelled_bookings">已取消预订</p>
                             <h3 class="text-2xl font-bold mt-2" id="count-cancelled">0</h3>
                         </div>
                     </div>
@@ -438,22 +428,21 @@
                     <div class="bg-white rounded-lg card-shadow">
                         <div class="p-6 border-b border-gray-200">
                             <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                                <h3 class="font-bold text-lg">预订管理</h3>
+                                <h3 class="font-bold text-lg" data-i18n="booking_management_title">预订管理</h3>
                                 <div class="flex items-center gap-3">
                                     <select id="bookingStatusFilter" onchange="filterBookings()" class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-accent">
-                                        <option value="all">所有状态</option>
-                                        <option value="pending">待确认</option>
-                                        <option value="confirmed">已确认</option>
-                                        <option value="checked-in">已入住</option>
-                                        <option value="checked-out">已退房</option>
-                                        <option value="cancelled">已取消</option>
+                                        <option value="all" data-i18n="option_all_status">所有状态</option>
+                                        <option value="pending" data-i18n="option_pending">待确认</option>
+                                        <option value="confirmed" data-i18n="option_confirmed">已确认</option>
+                                        <option value="checked-in" data-i18n="option_checked_in">已入住</option>
+                                        <option value="cancelled" data-i18n="option_cancelled">已取消</option>
                                     </select>
                                     <div class="relative">
-                                        <input type="text" id="bookingSearchInput" placeholder="搜索订单号/姓名/手机..." onkeyup="filterBookings()" class="pl-9 pr-3 py-2 border border-gray-300 rounded-md text-sm w-64 focus:outline-none focus:ring-1 focus:ring-accent">
+                                        <input type="text" id="bookingSearchInput" placeholder="搜索订单号/姓名/手机..." onkeyup="filterBookings()" class="pl-9 pr-3 py-2 border border-gray-300 rounded-md text-sm w-64 focus:outline-none focus:ring-1 focus:ring-accent" data-i18n-placeholder="search_booking_placeholder">
                                         <i class="fa fa-search absolute left-3 top-3 text-gray-400"></i>
                                     </div>
                                     <button onclick="refreshBookings()" class="btn-secondary text-sm px-4 py-2">
-                                        <i class="fa fa-refresh mr-1"></i> 刷新
+                                        <i class="fa fa-refresh mr-1"></i> <span data-i18n="button_refresh">刷新</span>
                                     </button>
                                 </div>
                             </div>
@@ -462,13 +451,13 @@
                             <table class="w-full">
                                 <thead>
                                     <tr class="bg-gray-50 text-left text-sm text-gray-600">
-                                        <th class="px-6 py-3">订单号</th>
-                                        <th class="px-6 py-3">预订人</th>
-                                        <th class="px-6 py-3">房型/房号</th>
-                                        <th class="px-6 py-3">入住/退房日期</th>
-                                        <th class="px-6 py-3">总金额</th>
-                                        <th class="px-6 py-3">状态</th>
-                                        <th class="px-6 py-3">操作</th>
+                                        <th class="px-6 py-3" data-i18n="table_order_number">订单号</th>
+                                        <th class="px-6 py-3" data-i18n="table_booker">预订人</th>
+                                        <th class="px-6 py-3" data-i18n="table_room_type_number">房型/房号</th>
+                                        <th class="px-6 py-3" data-i18n="table_checkin_checkout_date">入住/退房日期</th>
+                                        <th class="px-6 py-3" data-i18n="table_total_amount">总金额</th>
+                                        <th class="px-6 py-3" data-i18n="table_status">状态</th>
+                                        <th class="px-6 py-3" data-i18n="table_action">操作</th>
                                     </tr>
                                 </thead>
                                 <tbody id="bookingTableBody" class="divide-y divide-gray-200">
@@ -481,18 +470,18 @@
                 <section id="section-checkins" class="hidden">
                     <div class="bg-white rounded-lg card-shadow">
                         <div class="p-6 border-b border-gray-200 flex items-center justify-between">
-                            <h3 class="font-bold text-lg">入住管理</h3>
-                            <button class="btn-primary text-sm px-4 py-2"><i class="fa fa-plus mr-1"></i>新增入住</button>
+                            <h3 class="font-bold text-lg" data-i18n="checkin_management_title">入住管理</h3>
+                            <button class="btn-primary text-sm px-4 py-2"><i class="fa fa-plus mr-1"></i><span data-i18n="add_checkin_button">新增入住</span></button>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="w-full">
                                 <thead>
                                     <tr class="bg-gray-50 text-left text-sm text-gray-600">
-                                        <th class="px-6 py-3">入住单号</th>
-                                        <th class="px-6 py-3">姓名</th>
-                                        <th class="px-6 py-3">房号</th>
-                                        <th class="px-6 py-3">入住时间</th>
-                                        <th class="px-6 py-3">状态</th>
+                                        <th class="px-6 py-3" data-i18n="table_checkin_number">入住单号</th>
+                                        <th class="px-6 py-3" data-i18n="table_name">姓名</th>
+                                        <th class="px-6 py-3" data-i18n="table_room_number">房号</th>
+                                        <th class="px-6 py-3" data-i18n="table_checkin_time">入住时间</th>
+                                        <th class="px-6 py-3" data-i18n="table_status">状态</th>
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-gray-200">
@@ -501,7 +490,7 @@
                                         <td class="px-6 py-4 text-sm">张三</td>
                                         <td class="px-6 py-4 text-sm">1208</td>
                                         <td class="px-6 py-4 text-sm">2026-03-27 15:10</td>
-                                        <td class="px-6 py-4 text-sm"><span class="px-2 py-1 rounded-full text-xs bg-success/10 text-success">已入住</span></td>
+                                        <td class="px-6 py-4 text-sm"><span class="px-2 py-1 rounded-full text-xs bg-success/10 text-success" data-i18n="status_checked_in">已入住</span></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -510,54 +499,49 @@
                 </section>
                 <section id="section-messages" class="hidden">
                     <div class="bg-white rounded-lg card-shadow">
-                        <div class="p-6 border-b border-gray-200">
-                            <h3 class="font-bold text-lg">留言管理</h3>
+                        <div class="p-6 border-b border-gray-200 flex items-center justify-between">
+                            <h3 class="font-bold text-lg" data-i18n="message_management_title">留言管理</h3>
+                            <button class="btn-primary text-sm px-4 py-2"><i class="fa fa-filter mr-1"></i><span data-i18n="button_filter">筛选</span></button>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="w-full">
                                 <thead>
                                     <tr class="bg-gray-50 text-left text-sm text-gray-600">
-                                        <th class="px-6 py-3">留言人</th>
-                                        <th class="px-6 py-3">留言内容</th>
-                                        <th class="px-6 py-3">时间</th>
+                                        <th class="px-6 py-3" data-i18n="table_messenger">留言人</th>
+                                        <th class="px-6 py-3" data-i18n="table_content">内容</th>
+                                        <th class="px-6 py-3" data-i18n="table_time">时间</th>
+                                        <th class="px-6 py-3" data-i18n="table_status">状态</th>
+                                        <th class="px-6 py-3" data-i18n="table_action">操作</th>
                                     </tr>
                                 </thead>
-                                <tbody id="messageTableBody" class="divide-y divide-gray-200"></tbody>
+                                <tbody class="divide-y divide-gray-200">
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-6 py-4 text-sm">李四</td>
+                                        <td class="px-6 py-4 text-sm">请问可以提前入住吗？</td>
+                                        <td class="px-6 py-4 text-sm">2026-03-27</td>
+                                        <td class="px-6 py-4 text-sm"><span class="px-2 py-1 rounded-full text-xs bg-warning/10 text-warning" data-i18n="status_unreplied">未回复</span></td>
+                                        <td class="px-6 py-4 text-sm text-gray-400" data-i18n="interface_only">（仅界面）</td>
+                                    </tr>
+                                </tbody>
                             </table>
-                        </div>
-                    </div>
-
-                    <!-- 回复弹窗 -->
-                    <div id="replyModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
-                        <div class="bg-white rounded-lg shadow-xl w-full max-w-md p-6">
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 class="font-bold text-lg">回复留言</h3>
-                                <button onclick="closeReplyModal()" class="text-gray-400 hover:text-gray-600"><i class="fa fa-times text-xl"></i></button>
-                            </div>
-                            <div class="mb-3 p-3 bg-gray-50 rounded text-sm text-gray-600" id="replyOriginal"></div>
-                            <textarea id="replyContent" rows="4" placeholder="输入回复内容..." class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20"></textarea>
-                            <div class="flex justify-end space-x-3 mt-4">
-                                <button onclick="closeReplyModal()" class="btn-secondary px-4 py-2 text-sm">取消</button>
-                                <button onclick="submitReply()" class="btn-primary px-4 py-2 text-sm">发送回复</button>
-                            </div>
                         </div>
                     </div>
                 </section>
                 <section id="section-announcements" class="hidden">
                     <div class="bg-white rounded-lg card-shadow">
                         <div class="p-6 border-b border-gray-200 flex items-center justify-between">
-                            <h3 class="font-bold text-lg">公告管理</h3>
-                            <button class="btn-primary text-sm px-4 py-2"><i class="fa fa-plus mr-1"></i>发布公告</button>
+                            <h3 class="font-bold text-lg" data-i18n="announcement_management_title">公告管理</h3>
+                            <button class="btn-primary text-sm px-4 py-2"><i class="fa fa-plus mr-1"></i><span data-i18n="publish_announcement_button">发布公告</span></button>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="w-full">
                                 <thead>
                                     <tr class="bg-gray-50 text-left text-sm text-gray-600">
-                                        <th class="px-6 py-3">标题</th>
-                                        <th class="px-6 py-3">发布时间</th>
-                                        <th class="px-6 py-3">发布人</th>
-                                        <th class="px-6 py-3">状态</th>
-                                        <th class="px-6 py-3">操作</th>
+                                        <th class="px-6 py-3" data-i18n="table_title">标题</th>
+                                        <th class="px-6 py-3" data-i18n="table_publish_time">发布时间</th>
+                                        <th class="px-6 py-3" data-i18n="table_publisher">发布人</th>
+                                        <th class="px-6 py-3" data-i18n="table_status">状态</th>
+                                        <th class="px-6 py-3" data-i18n="table_action">操作</th>
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-gray-200">
@@ -565,8 +549,8 @@
                                         <td class="px-6 py-4 text-sm">系统维护通知</td>
                                         <td class="px-6 py-4 text-sm">2026-03-27</td>
                                         <td class="px-6 py-4 text-sm">管理员</td>
-                                        <td class="px-6 py-4 text-sm"><span class="px-2 py-1 rounded-full text-xs bg-success/10 text-success">已发布</span></td>
-                                        <td class="px-6 py-4 text-sm text-gray-400">（仅界面）</td>
+                                        <td class="px-6 py-4 text-sm"><span class="px-2 py-1 rounded-full text-xs bg-success/10 text-success" data-i18n="status_published">已发布</span></td>
+                                        <td class="px-6 py-4 text-sm text-gray-400" data-i18n="interface_only">（仅界面）</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -576,18 +560,18 @@
                 <section id="section-reviews" class="hidden">
                     <div class="bg-white rounded-lg card-shadow">
                         <div class="p-6 border-b border-gray-200 flex items-center justify-between">
-                            <h3 class="font-bold text-lg">评价管理</h3>
-                            <button class="btn-primary text-sm px-4 py-2"><i class="fa fa-filter mr-1"></i>筛选</button>
+                            <h3 class="font-bold text-lg" data-i18n="review_management_title">评价管理</h3>
+                            <button class="btn-primary text-sm px-4 py-2"><i class="fa fa-filter mr-1"></i><span data-i18n="button_filter">筛选</span></button>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="w-full">
                                 <thead>
                                     <tr class="bg-gray-50 text-left text-sm text-gray-600">
-                                        <th class="px-6 py-3">预订号</th>
-                                        <th class="px-6 py-3">评分</th>
-                                        <th class="px-6 py-3">内容</th>
-                                        <th class="px-6 py-3">时间</th>
-                                        <th class="px-6 py-3">操作</th>
+                                        <th class="px-6 py-3" data-i18n="table_order_number">预订号</th>
+                                        <th class="px-6 py-3" data-i18n="table_rating">评分</th>
+                                        <th class="px-6 py-3" data-i18n="table_content">内容</th>
+                                        <th class="px-6 py-3" data-i18n="table_time">时间</th>
+                                        <th class="px-6 py-3" data-i18n="table_action">操作</th>
                                     </tr>
                                 </thead>
                                 <tbody id="reviewTableBody" class="divide-y divide-gray-200"></tbody>
@@ -599,46 +583,46 @@
                 <!-- 追加：核心房间预订功能模块，原所有section保留 -->
                 <section id="section-roombooking" class="hidden">
                     <div class="bg-white rounded-lg shadow p-6 mb-8">
-                        <h2 class="text-lg font-bold mb-4">房间预订条件</h2>
+                        <h2 class="text-lg font-bold mb-4" data-i18n="room_booking_conditions_title">房间预订条件</h2>
                         <form id="searchForm" class="grid grid-cols-1 md:grid-cols-4 gap-4">
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">入住日期</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-1" data-i18n="form_checkin_date">入住日期</label>
                                 <input type="date" id="checkInDate" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm" required>
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">退房日期</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-1" data-i18n="form_checkout_date">退房日期</label>
                                 <input type="date" id="checkOutDate" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm" required>
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">房型</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-1" data-i18n="form_room_type">房型</label>
                                 <select id="roomType" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm">
-                                    <option value="all">全部房型</option>
-                                    <option value="豪华客房">豪华客房</option>
-                                    <option value="标准客房">标准客房</option>
-                                    <option value="套房">套房</option>
+                                    <option value="all" data-i18n="option_all_room_types">全部房型</option>
+                                    <option value="豪华客房" data-i18n="option_deluxe_room">豪华客房</option>
+                                    <option value="标准客房" data-i18n="option_standard_room">标准客房</option>
+                                    <option value="套房" data-i18n="option_suite">套房</option>
                                 </select>
                             </div>
                             <div class="flex items-end">
-                                <button type="submit" class="w-full bg-primary text-white px-4 py-2 rounded-md text-sm hover:bg-primary/90 transition">
+                                <button type="submit" class="w-full bg-primary text-white px-4 py-2 rounded-md text-sm hover:bg-primary/90" data-i18n="button_search_available_rooms">
                                     <i class="fa fa-search mr-1"></i>查询可用房间
                                 </button>
                             </div>
                         </form>
-                        <p class="text-danger text-sm mt-2 hidden" id="dateError">请检查日期：入住日期需晚于今日、早于退房日期</p>
+                        <p class="text-danger text-sm mt-2 hidden" id="dateError" data-i18n="date_error_message">请检查日期：入住日期需晚于今日、早于退房日期</p>
                     </div>
 
                     <!-- 可用房间列表 -->
                     <div id="roomList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8 hidden">
                         <!-- JS动态渲染 -->
                     </div>
-                    <p class="text-center text-gray-500 hidden" id="noRoomTip">暂无可用房间，请调整预订条件</p>
+                    <p class="text-center text-gray-500 hidden" id="noRoomTip" data-i18n="no_available_rooms_tip">暂无可用房间，请调整预订条件</p>
                 </section>
 
                 <!-- 原弹窗保留 -->
                 <div id="userModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
                     <div class="bg-white rounded-lg shadow-xl w-full max-w-md p-6">
                         <div class="flex items-center justify-between mb-4">
-                            <h3 id="modalTitle" class="font-bold text-lg">新增用户</h3>
+                            <h3 id="modalTitle" class="font-bold text-lg" data-i18n="add_user_modal_title">新增用户</h3>
                             <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600">
                                 <i class="fa fa-times text-xl"></i>
                             </button>
@@ -646,28 +630,28 @@
                         <form id="userForm" class="space-y-4">
                             <input type="hidden" id="userId">
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">账号</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-1" data-i18n="form_account">账号</label>
                                 <input id="fieldUsername" type="text" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" required>
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">姓名</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-1" data-i18n="form_full_name">姓名</label>
                                 <input id="fieldFullName" type="text" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" required>
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">邮箱</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-1" data-i18n="form_email">邮箱</label>
                                 <input id="fieldEmail" type="email" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" required>
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">电话</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-1" data-i18n="form_phone">电话</label>
                                 <input id="fieldPhone" type="tel" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" required>
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">密码 <span id="passwordHint" class="text-gray-400 font-normal">（留空表示不修改）</span></label>
+                                <label class="block text-sm font-medium text-gray-700 mb-1" data-i18n="form_password">密码 <span id="passwordHint" class="text-gray-400 font-normal" data-i18n="form_password_hint">（留空表示不修改）</span></label>
                                 <input id="fieldPassword" type="password" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary">
                             </div>
                             <div class="flex justify-end space-x-3 pt-2">
-                                <button type="button" onclick="closeModal()" class="btn-secondary px-4 py-2 text-sm">取消</button>
-                                <button type="submit" class="btn-primary px-4 py-2 text-sm">保存</button>
+                                <button type="button" onclick="closeModal()" class="btn-secondary px-4 py-2 text-sm" data-i18n="button_cancel">取消</button>
+                                <button type="submit" class="btn-primary px-4 py-2 text-sm" data-i18n="button_save">保存</button>
                             </div>
                         </form>
                     </div>
@@ -677,7 +661,7 @@
                 <div id="confirmModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
                     <div class="bg-white rounded-lg shadow-xl w-full max-w-lg p-6">
                         <div class="flex items-center justify-between mb-4">
-                            <h3 class="font-bold text-lg">确认预订信息</h3>
+                            <h3 class="font-bold text-lg" data-i18n="confirm_booking_info_title">确认预订信息</h3>
                             <button onclick="closeConfirmModal()" class="text-gray-400 hover:text-gray-600">
                                 <i class="fa fa-times text-xl"></i>
                             </button>
@@ -686,8 +670,8 @@
                             <!-- JS动态渲染 -->
                         </div>
                         <div class="flex justify-end space-x-3">
-                            <button onclick="closeConfirmModal()" class="border border-gray-300 px-4 py-2 rounded-md text-sm hover:bg-gray-50">取消</button>
-                            <button onclick="submitBooking()" class="bg-primary text-white px-4 py-2 rounded-md text-sm hover:bg-primary/90">确认预订</button>
+                            <button onclick="closeConfirmModal()" class="border border-gray-300 px-4 py-2 rounded-md text-sm hover:bg-gray-50" data-i18n="button_cancel">取消</button>
+                            <button onclick="submitBooking()" class="bg-primary text-white px-4 py-2 rounded-md text-sm hover:bg-primary/90" data-i18n="button_confirm_booking">确认预订</button>
                         </div>
                     </div>
                 </div>
@@ -696,10 +680,10 @@
                 <div id="successModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
                     <div class="bg-white rounded-lg shadow-xl w-full max-w-md p-6 text-center">
                         <i class="fa fa-check-circle text-4xl text-success mb-4"></i>
-                        <h3 class="font-bold text-lg mb-2">预订成功！</h3>
-                        <p class="text-gray-500 mb-4" id="orderNoTip">您的订单号：<span class="font-medium text-primary" id="orderNo"></span></p>
-                        <p class="text-gray-500 mb-6">我们已向您的邮箱发送预订通知，请注意查收</p>
-                        <button onclick="closeSuccessModal()" class="inline-block bg-primary text-white px-4 py-2 rounded-md text-sm hover:bg-primary/90">确认</button>
+                        <h3 class="font-bold text-lg mb-2" data-i18n="booking_success_title">预订成功！</h3>
+                        <p class="text-gray-500 mb-4" id="orderNoTip" data-i18n="order_number_tip">您的订单号：<span class="font-medium text-primary" id="orderNo"></span></p>
+                        <p class="text-gray-500 mb-6" data-i18n="booking_email_sent_tip">我们已向您的邮箱发送预订通知，请注意查收</p>
+                        <button onclick="closeSuccessModal()" class="inline-block bg-primary text-white px-4 py-2 rounded-md text-sm hover:bg-primary/90" data-i18n="button_confirm">确认</button>
                     </div>
                 </div>
             </div>
@@ -711,7 +695,7 @@
     <div id="bookingDetailsModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
         <div class="bg-white rounded-lg w-full max-w-2xl mx-4 card-shadow">
             <div class="flex justify-between items-center p-6 border-b border-gray-200">
-                <h2 class="text-xl font-bold">预订详情</h2>
+                <h2 class="text-xl font-bold" data-i18n="booking_details_title">预订详情</h2>
                 <button onclick="closeBookingModal()" class="text-gray-400 hover:text-gray-600">
                     <i class="fa fa-times text-xl"></i>
                 </button>
@@ -720,7 +704,7 @@
                 <!-- 动态内容 -->
             </div>
             <div class="flex justify-end gap-3 p-6 border-t border-gray-200 bg-gray-50 rounded-b-lg">
-                <button type="button" onclick="closeBookingModal()" class="btn-secondary px-6 py-2">关闭</button>
+                <button type="button" onclick="closeBookingModal()" class="btn-secondary px-6 py-2" data-i18n="button_close">关闭</button>
             </div>
         </div>
     </div>
@@ -791,12 +775,12 @@
                 availableRooms.forEach(room => {
                     roomList.innerHTML += `
                         <div class="room-card bg-white rounded-lg shadow p-4 border-l-4 border-primary">
-                            <h4 class="font-bold">${room.no} | ${room.type}</h4>
-                            <p class="text-gray-500 text-sm mt-1">单价：¥${room.price}/晚</p>
-                            <p class="text-sm mt-3" id="nightCount-${room.id}">入住晚数：--</p>
-                            <p class="font-bold mt-1" id="totalPrice-${room.id}">总价：¥--</p>
+                            <h4 class="font-bold" data-i18n="room_number_type">${room.no} | ${room.type}</h4>
+                            <p class="text-gray-500 text-sm mt-1" data-i18n="room_price_per_night">单价：¥${room.price}/晚</p>
+                            <p class="text-sm mt-3" id="nightCount-${room.id}" data-i18n="nights_stayed">入住晚数：--</p>
+                            <p class="font-bold mt-1" id="totalPrice-${room.id}" data-i18n="total_price">总价：¥--</p>
                             <button onclick="selectRoom(${room.id}, '${room.no}', '${room.type}', ${room.price})" 
-                                class="w-full mt-4 bg-primary text-white px-3 py-2 rounded-md text-sm hover:bg-primary/90">
+                                class="w-full mt-4 bg-primary text-white px-3 py-2 rounded-md text-sm hover:bg-primary/90" data-i18n="button_select_room">
                                 选择此房间
                             </button>
                         </div>
@@ -817,11 +801,11 @@
             const outDate = new Date(checkOut);
             const nights = Math.ceil((outDate - inDate) / (1000 * 60 * 60 * 24));
             document.querySelectorAll('[id^=nightCount-]').forEach(el => {
-                el.innerText = `入住晚数：${nights}晚`;
+                el.innerText = `${i18nAdmin[currentLang].nights_stayed.replace('--', nights)}`;
             });
             document.querySelectorAll('[id^=totalPrice-]').forEach(el => {
                 const price = el.parentElement.querySelector('p:nth-child(2)').innerText.split('¥')[1];
-                el.innerText = `总价：¥${price * nights}`;
+                el.innerText = `${i18nAdmin[currentLang].total_price.replace('--', `¥${price * nights}`)}`;
             });
         }
 
@@ -841,26 +825,27 @@
             // 渲染预订摘要
             document.getElementById('confirmInfo').innerHTML = `
                 <div class="grid grid-cols-2 gap-2">
-                    <span class="text-gray-500">入住日期：</span>
+                    <span class="text-gray-500" data-i18n="form_checkin_date">入住日期：</span>
                     <span>${checkIn}</span>
-                    <span class="text-gray-500">退房日期：</span>
+                    <span class="text-gray-500" data-i18n="form_checkout_date">退房日期：</span>
                     <span>${checkOut}</span>
-                    <span class="text-gray-500">入住晚数：</span>
-                    <span>${nights}晚</span>
-                    <span class="text-gray-500">房间号：</span>
+                    <span class="text-gray-500" data-i18n="nights_stayed">入住晚数：</span>
+                    <span>${nights}<span data-i18n="nights_unit">晚</span></span>
+                    <span class="text-gray-500" data-i18n="table_room_number">房间号：</span>
                     <span class="font-medium">${roomNo}</span>
-                    <span class="text-gray-500">房型：</span>
+                    <span class="text-gray-500" data-i18n="table_room_type">房型：</span>
                     <span>${roomType}</span>
-                    <span class="text-gray-500">单价：</span>
-                    <span>¥${price}/晚</span>
-                    <span class="text-gray-500 font-bold">总价：</span>
+                    <span class="text-gray-500" data-i18n="room_price_per_night">单价：</span>
+                    <span>¥${price}/<span data-i18n="per_night_unit">晚</span></span>
+                    <span class="text-gray-500 font-bold" data-i18n="total_price">总价：</span>
                     <span class="font-bold text-primary">¥${total}</span>
-                    <span class="text-gray-500">预订人：</span>
+                    <span class="text-gray-500" data-i18n="booker_label">预订人：</span>
                     <span>管理员</span>
-                    <span class="text-gray-500">联系邮箱：</span>
+                    <span class="text-gray-500" data-i18n="contact_email_label">联系邮箱：</span>
                     <span>admin@hotel.com</span>
                 </div>
             `;
+            applyI18nToElement(document.getElementById('confirmInfo'));
             document.getElementById('confirmModal').classList.remove('hidden');
         }
 
@@ -881,7 +866,7 @@
             // 二次校验房间可用性（防止并发重复预订）
             const isAvailable = checkRoomAvailability(selectedRoomId, checkIn, checkOut);
             if (!isAvailable) {
-                alert('抱歉，该房间已被他人预订，请重新选择');
+                alert(i18nAdmin[currentLang].room_unavailable_alert);
                 closeConfirmModal();
                 document.getElementById('searchForm').submit();
                 return;
@@ -985,6 +970,23 @@
         window.addEventListener('load', function() {
             if (typeof refreshBookings === 'function') refreshBookings();
         });
+
+        // 辅助函数：对指定元素及其子元素应用国际化
+        function applyI18nToElement(element) {
+            const dict = i18nAdmin[currentLang] || i18nAdmin.zh;
+            element.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (dict[key]) {
+                    el.textContent = dict[key];
+                }
+            });
+            element.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if (dict[key]) {
+                    el.placeholder = dict[key];
+                }
+            });
+        }
     </script>
 </body>
 </html>
