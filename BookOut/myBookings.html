@@ -66,12 +66,43 @@
             transition: background 0.2s, color 0.2s;
         }
         .cancel-btn:hover { background: #fff1f0; }
+
+        /* 语言切换器 */
+        .lang-select {
+            margin-left: auto;
+            padding: 6px 14px;
+            border-radius: 8px;
+            border: none;
+            font-size: 13px;
+            font-weight: 600;
+            background: #f27405; /* 使用更鲜艳的橙色背景 */
+            color: white;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.2s;
+            box-shadow: 0 2px 4px rgba(242, 116, 5, 0.3);
+            appearance: none; /* 去掉原生下拉箭头 */
+            -webkit-appearance: none;
+            text-align: center;
+        }
+        .lang-select:hover {
+            background: #d66304;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(242, 116, 5, 0.4);
+        }
+        .lang-select:focus { 
+            box-shadow: 0 0 0 3px rgba(242, 116, 5, 0.2);
+        }
     </style>
 </head>
 <body>
     <div class="page-header">
-        <a href="Book.html" class="back-btn"><i class="fas fa-arrow-left"></i> 返回</a>
-        <h1>我的订单</h1>
+        <a href="Book.html" class="back-btn"><i class="fas fa-arrow-left"></i> <span data-i18n="back_to_home">返回</span></a>
+        <h1 data-i18n="my_bookings_title">我的订单</h1>
+        <select id="langSelect" class="lang-select">
+            <option value="zh">中文</option>
+            <option value="en">English</option>
+        </select>
     </div>
     <div class="bookings-list" id="bookingsList"></div>
 
@@ -79,30 +110,129 @@
         const API      = 'http://localhost:3000';
         const username = sessionStorage.getItem('username');
 
+        const i18n = {
+            zh: {
+                back_to_home: '返回',
+                my_bookings_title: '我的订单',
+                login_required: '请先登录后查看预订记录',
+                go_to_login: '前往登录',
+                no_bookings_found: '暂无预订记录',
+                order_id: '订单号',
+                room_type: '房型',
+                checkin_date: '入住日期',
+                checkout_date: '退房日期',
+                total_amount: '总金额',
+                booking_time: '预订时间',
+                status_confirmed: '已确认',
+                status_pending: '待确认',
+                status_checked_in: '已入住',
+                status_checked_out: '已退房',
+                status_cancelled: '已取消',
+                your_review: '您的评价',
+                hotel_reply: '🏨 管理员回复',
+                review_this_stay: '评价此次入住',
+                share_experience_placeholder: '分享您的入住体验（至少5个字）...',
+                submit_review: '提交评价',
+                review_after_checkout: '退房后可进行评价',
+                cancel_booking: '取消预订',
+                confirm_cancel: '确认取消此预订？取消后无法恢复。',
+                cancel_success: '预订已取消',
+                cancel_fail: '取消失败，请重试',
+                select_rating_alert: '请选择星级评分',
+                comment_min_length_alert: '评价内容至少5个字',
+                review_submit_success: '评价提交成功！',
+                review_submit_fail: '提交失败'
+            },
+            en: {
+                back_to_home: 'Back',
+                my_bookings_title: 'My Bookings',
+                login_required: 'Please login to view your bookings',
+                go_to_login: 'Go to Login',
+                no_bookings_found: 'No bookings found',
+                order_id: 'Order ID',
+                room_type: 'Room Type',
+                checkin_date: 'Check-in',
+                checkout_date: 'Check-out',
+                total_amount: 'Total Amount',
+                booking_time: 'Booking Time',
+                status_confirmed: 'Confirmed',
+                status_pending: 'Pending',
+                status_checked_in: 'Checked-in',
+                status_checked_out: 'Checked-out',
+                status_cancelled: 'Cancelled',
+                your_review: 'Your Review',
+                hotel_reply: '🏨 Hotel Reply',
+                review_this_stay: 'Review this stay',
+                share_experience_placeholder: 'Share your experience (min 5 characters)...',
+                submit_review: 'Submit Review',
+                review_after_checkout: 'Review available after check-out',
+                cancel_booking: 'Cancel Booking',
+                confirm_cancel: 'Are you sure you want to cancel this booking? This cannot be undone.',
+                cancel_success: 'Booking cancelled successfully',
+                cancel_fail: 'Failed to cancel booking, please try again',
+                select_rating_alert: 'Please select a rating',
+                comment_min_length_alert: 'Comment must be at least 5 characters',
+                review_submit_success: 'Review submitted successfully!',
+                review_submit_fail: 'Failed to submit review'
+            }
+        };
+
+        let currentLang = localStorage.getItem('lang') || 'zh';
+
+        function applyI18n() {
+            const dict = i18n[currentLang];
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (dict[key]) el.textContent = dict[key];
+            });
+            document.querySelectorAll('textarea[placeholder]').forEach(el => {
+                // If it's the review textarea, update its placeholder
+                if (el.id.startsWith('comment-')) {
+                    el.placeholder = dict.share_experience_placeholder;
+                }
+            });
+        }
+
         const STATUS_LABEL = {
-            confirmed:     '已确认',
-            pending:       '待确认',
-            'checked-in':  '已入住',
-            'checked-out': '已退房',
-            cancelled:     '已取消'
+            confirmed:     'status_confirmed',
+            pending:       'status_pending',
+            'checked-in':  'status_checked_in',
+            'checked-out': 'status_checked_out',
+            cancelled:     'status_cancelled'
         };
 
         function starsHtml(n) {
             return '<i class="fas fa-star"></i>'.repeat(n) + '<i class="far fa-star"></i>'.repeat(5 - n);
         }
 
-        if (!username) {
-            document.getElementById('bookingsList').innerHTML = `
-                <div class="empty">
-                    <i class="fas fa-user-lock"></i>
-                    <p>请先登录后查看预订记录</p>
-                    <a href="../login/login.html" style="color:#c8873a;">前往登录</a>
-                </div>`;
-        } else {
-            loadPage();
-        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const langSelect = document.getElementById('langSelect');
+            if (langSelect) {
+                langSelect.value = currentLang;
+                langSelect.addEventListener('change', (e) => {
+                    currentLang = e.target.value;
+                    localStorage.setItem('lang', currentLang);
+                    applyI18n();
+                    loadPage();
+                });
+            }
+            applyI18n();
+
+            if (!username) {
+                const dict = i18n[currentLang];
+                document.getElementById('bookingsList').innerHTML = `
+                    <div class="empty">
+                        <i class="fas fa-user-lock"></i>
+                        <p>${dict.login_required}</p>
+                        <a href="../login/login.html" style="color:#c8873a;">${dict.go_to_login}</a>
+                    </div>`;
+            } else {
+                loadPage();
+            }
+        });
 
         async function loadPage() {
+            const dict = i18n[currentLang];
             const [bookRes, revRes] = await Promise.all([
                 fetch(`${API}/api/bookings`),
                 fetch(`${API}/api/reviews`)
@@ -115,13 +245,13 @@
 
             const container = document.getElementById('bookingsList');
             if (!myList.length) {
-                container.innerHTML = `<div class="empty"><i class="fas fa-calendar-times"></i><p>暂无预订记录</p></div>`;
+                container.innerHTML = `<div class="empty"><i class="fas fa-calendar-times"></i><p>${dict.no_bookings_found}</p></div>`;
                 return;
             }
 
             container.innerHTML = myList.map(b => {
                 const statusClass = 'status-' + (b.status || 'confirmed').replace(/\s/g, '-');
-                const statusText  = STATUS_LABEL[b.status] || b.status;
+                const statusText  = dict[STATUS_LABEL[b.status]] || b.status;
                 const isCheckedOut = b.status === 'checked-out';
                 const isCancellable = b.status === 'confirmed' || b.status === 'pending';
 
@@ -135,13 +265,13 @@
                     if (existingReview) {
                         reviewHtml = `
                             <div class="review-section">
-                                <h4><i class="fas fa-star" style="color:#f59e0b"></i> 您的评价</h4>
+                                <h4><i class="fas fa-star" style="color:#f59e0b"></i> ${dict.your_review}</h4>
                                 <div class="existing-review">
                                     <div class="stars">${starsHtml(existingReview.rating)} ${existingReview.rating}.0</div>
                                     <div class="comment">${existingReview.comment}</div>
                                     ${existingReview.reply ? `
                                     <div style="margin-top:10px;background:#f0f7ff;border-left:3px solid #c8873a;padding:10px 14px;border-radius:0 8px 8px 0;font-size:13px;color:#555;">
-                                        <div style="font-size:12px;color:#c8873a;font-weight:600;margin-bottom:4px;">🏨 管理员回复</div>
+                                        <div style="font-size:12px;color:#c8873a;font-weight:600;margin-bottom:4px;">${dict.hotel_reply}</div>
                                         <div>${existingReview.reply}</div>
                                     </div>` : ''}
                                 </div>
@@ -149,7 +279,7 @@
                     } else {
                         reviewHtml = `
                             <div class="review-section">
-                                <h4><i class="fas fa-star" style="color:#f59e0b"></i> 评价此次入住</h4>
+                                <h4><i class="fas fa-star" style="color:#f59e0b"></i> ${dict.review_this_stay}</h4>
                                 <div class="review-form" id="form-${b.id}">
                                     <div class="star-picker" id="stars-${b.id}">
                                         ${[1,2,3,4,5].map(n =>
@@ -160,35 +290,35 @@
                                         ).join('')}
                                     </div>
                                     <input type="hidden" id="rating-${b.id}" value="0">
-                                    <textarea id="comment-${b.id}" rows="3" placeholder="分享您的入住体验（至少5个字）..."></textarea>
+                                    <textarea id="comment-${b.id}" rows="3" placeholder="${dict.share_experience_placeholder}"></textarea>
                                     <button class="submit-review-btn" onclick="submitReview('${b.id}','${b.roomId}','${b.roomName || b.roomType || ''}')">
-                                        提交评价
+                                        ${dict.submit_review}
                                     </button>
                                 </div>
                             </div>`;
                     }
                 } else if (b.status !== 'cancelled') {
-                    reviewHtml = `<div class="review-section"><p class="review-hint"><i class="fas fa-info-circle"></i> 退房后可进行评价</p></div>`;
+                    reviewHtml = `<div class="review-section"><p class="review-hint"><i class="fas fa-info-circle"></i> ${dict.review_after_checkout}</p></div>`;
                 }
 
                 return `
                     <div class="booking-card">
                         <div class="booking-card-header">
-                            <span class="booking-id">订单号：${b.id}</span>
+                            <span class="booking-id">${dict.order_id}：${b.id}</span>
                             <span class="status-badge ${statusClass}">${statusText}</span>
                         </div>
                         <div class="booking-info">
-                            <div class="info-item"><label>房型</label><span>${b.roomName || b.roomType || '-'}</span></div>
-                            <div class="info-item"><label>入住日期</label><span>${b.checkIn}</span></div>
-                            <div class="info-item"><label>退房日期</label><span>${b.checkOut}</span></div>
-                            <div class="info-item"><label>总金额</label><span>${b.totalDisplay || ('¥' + b.totalAmount)}</span></div>
-                            <div class="info-item"><label>预订时间</label><span>${new Date(b.createdAt).toLocaleDateString('zh-CN')}</span></div>
+                            <div class="info-item"><label>${dict.room_type}</label><span>${b.roomName || b.roomType || '-'}</span></div>
+                            <div class="info-item"><label>${dict.checkin_date}</label><span>${b.checkIn}</span></div>
+                            <div class="info-item"><label>${dict.checkout_date}</label><span>${b.checkOut}</span></div>
+                            <div class="info-item"><label>${dict.total_amount}</label><span>${b.totalDisplay || ('¥' + b.totalAmount)}</span></div>
+                            <div class="info-item"><label>${dict.booking_time}</label><span>${new Date(b.createdAt).toLocaleDateString(currentLang === 'zh' ? 'zh-CN' : 'en-US')}</span></div>
                         </div>
                         ${reviewHtml}
                         ${isCancellable ? `
                         <div style="margin-top:16px;padding-top:16px;border-top:1px solid #f0f0f0;display:flex;justify-content:flex-end;">
                             <button class="cancel-btn" onclick="cancelBooking('${b.id}')">
-                                <i class="fas fa-times-circle"></i> 取消预订
+                                <i class="fas fa-times-circle"></i> ${dict.cancel_booking}
                             </button>
                         </div>` : ''}
                     </div>`;
@@ -212,11 +342,12 @@
         }
 
         async function submitReview(bookingId, roomId, roomName) {
+            const dict    = i18n[currentLang];
             const rating  = parseInt(document.getElementById('rating-'  + bookingId).value);
             const comment = (document.getElementById('comment-' + bookingId).value || '').trim();
 
-            if (!rating)            { alert('请选择星级评分'); return; }
-            if (comment.length < 5) { alert('评价内容至少5个字'); return; }
+            if (!rating)            { alert(dict.select_rating_alert); return; }
+            if (comment.length < 5) { alert(dict.comment_min_length_alert); return; }
 
             const res  = await fetch(`${API}/api/reviews`, {
                 method:  'POST',
@@ -225,15 +356,16 @@
             });
             const data = await res.json();
             if (res.ok) {
-                alert('评价提交成功！');
+                alert(dict.review_submit_success);
                 loadPage();
             } else {
-                alert(data.message || '提交失败');
+                alert(data.message || dict.review_submit_fail);
             }
         }
 
         async function cancelBooking(bookingId) {
-            if (!confirm('确认取消此预订？取消后无法恢复。')) return;
+            const dict = i18n[currentLang];
+            if (!confirm(dict.confirm_cancel)) return;
             const res  = await fetch(`${API}/api/bookings/${bookingId}/status`, {
                 method:  'PUT',
                 headers: { 'Content-Type': 'application/json' },
@@ -241,10 +373,10 @@
             });
             const data = await res.json();
             if (res.ok) {
-                alert('预订已取消');
+                alert(dict.cancel_success);
                 loadPage();
             } else {
-                alert(data.message || '取消失败，请重试');
+                alert(data.message || dict.cancel_fail);
             }
         }
     </script>
