@@ -515,7 +515,7 @@
         console.log('[checkout] submitting booking:', booking);
 
         try {
-            const res = await fetch('http://localhost:3000/api/bookings', {
+            const res = await fetch('http://43.132.210.15:3000/api/bookings', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(booking)
