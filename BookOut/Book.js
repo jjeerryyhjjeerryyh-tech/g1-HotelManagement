@@ -1373,6 +1373,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if (usernameInput && passwordInput) {
             sessionStorage.setItem('username', usernameInput);
+            sessionStorage.setItem('isLoggedIn', 'true'); // 添加登录状态标志
             showToast('登录成功', 'success');
             checkLoginState();
             setTimeout(() => {
@@ -1387,6 +1388,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         sessionStorage.removeItem('username');
         sessionStorage.removeItem('role');
+        sessionStorage.removeItem('isLoggedIn'); // 移除登录状态标志
         showToast('已登出', 'success');
         checkLoginState();
         setTimeout(() => {
