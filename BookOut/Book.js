@@ -1382,8 +1382,8 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             showToast('请输入用户名和密码', 'error');
         }
-    });
-    
+});
+
     logoutBtn.addEventListener('click', (e) => {
         e.preventDefault();
         sessionStorage.removeItem('username');
@@ -1395,4 +1395,20 @@ document.addEventListener('DOMContentLoaded', () => {
             userDropdown.style.display = 'none';
         }, 1000);
     });
+    
+    // 加载通知系统
+    loadScript('../notifications/notificationSystem.js', function() {
+        console.log('通知系统已加载');
+        if (window.HotelNotification) {
+            window.HotelNotification.updateNotificationBadge();
+        }
+    });
 });
+
+// 动态加载脚本函数
+function loadScript(src, callback) {
+    var script = document.createElement('script');
+    script.src = src;
+    script.onload = callback;
+    document.head.appendChild(script);
+}
