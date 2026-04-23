@@ -1,5 +1,4 @@
-
-{ 
+{
     "users": [
         {
             "id": 1773902177514,
@@ -91,6 +90,15 @@
             "phone": "12345876",
             "password": "$2b$10$GMTIp4ZvGnrMwb6.rEcfj.FGCLRN7uS7ZAPNmSjr9nR9OXnhots6K",
             "role": "user"
+        },
+        {
+            "id": 1776325709210,
+            "username": "user4",
+            "name": "hhh",
+            "email": "user4@gmail.com",
+            "phone": "12345678",
+            "password": "$2b$10$xbkPeRMvyEXfARBazxKljeET3hDKsXDkClSmVSm1glAsUALefxR6m",
+            "role": "user"
         }
     ],
     "admins": [
@@ -122,7 +130,7 @@
             "checkOut": "2026-04-03",
             "guests": "2",
             "totalAmount": 988,
-            "status": "confirmed",
+            "status": "checked-out",
             "createdAt": "2026-04-02T06:55:29.083Z"
         },
         {
@@ -226,118 +234,319 @@
             "nights": 1,
             "totalAmount": 646.8,
             "arrivalTime": "14:00-15:00",
-            "specialRequests": "",
-            "status": "confirmed",
-            "createdAt": "2026-04-16T07:17:31.806Z"
+            "specialRequests": "要个美女",
+            "status": "checked-out",
+            "createdAt": "2026-04-16T07:13:34.621Z"
+        },
+        {
+            "id": "BK1776325764748",
+            "username": "user4",
+            "roomId": "R001",
+            "roomName": "舒适标准间",
+            "roomType": "舒适标准间",
+            "guestName": "user4",
+            "guestPhone": "12345678",
+            "guestEmail": "user4@gmail.com",
+            "checkIn": "2026-04-16",
+            "checkOut": "2026-04-17",
+            "nights": 1,
+            "totalAmount": 646.8,
+            "arrivalTime": "15:00-16:00",
+            "specialRequests": "要个美女",
+            "status": "checked-out",
+            "createdAt": "2026-04-16T07:49:24.748Z"
+        },
+        {
+            "id": "BK1776326341277",
+            "username": "xxx",
+            "roomId": "R001",
+            "roomName": "舒适标准间",
+            "roomType": "舒适标准间",
+            "guestName": "xxx",
+            "guestPhone": "12345678",
+            "guestEmail": "xxx@gmail.com",
+            "checkIn": "2026-04-16",
+            "checkOut": "2026-04-17",
+            "nights": 1,
+            "totalAmount": 646.8,
+            "arrivalTime": "15:00-16:00",
+            "specialRequests": "要个美女",
+            "status": "checked-out",
+            "createdAt": "2026-04-16T07:59:01.277Z"
+        },
+        {
+            "id": "BK1776330532166",
+            "username": "user4",
+            "roomId": "R001",
+            "roomName": "舒适标准间",
+            "roomType": "舒适标准间",
+            "guestName": "user4",
+            "guestPhone": "12345678",
+            "guestEmail": "user4@gmail.com",
+            "checkIn": "2026-04-16",
+            "checkOut": "2026-04-17",
+            "nights": 1,
+            "totalAmount": 646.8,
+            "arrivalTime": "15:00-16:00",
+            "specialRequests": "要个美女",
+            "status": "cancelled",
+            "createdAt": "2026-04-16T09:08:52.166Z"
         }
     ],
-    "reviews": [],
+    "reviews": [
+        {
+            "id": 1776325820617,
+            "username": "user4",
+            "roomType": "",
+            "rating": 5,
+            "comment": "gggggg gggg",
+            "createdAt": "2026-04-16T07:50:20.617Z"
+        }
+    ],
     "roomTypes": [
         {
             "id": "R001",
-            "name": { "zh": "舒适标准间", "en": "Standard Room" },
+            "name": {
+                "zh": "舒适标准间",
+                "en": "Standard Room"
+            },
             "type": "standard",
             "size": "28㎡",
-            "bed": { "zh": "大床/双床", "en": "King / Twin Bed" },
+            "bed": {
+                "zh": "大床/双床",
+                "en": "King / Twin Bed"
+            },
             "guests": 2,
             "price": 588,
             "originalPrice": 688,
             "image": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800",
             "amenities": {
-                "zh": ["免费WiFi", "空调", "液晶电视", "迷你吧", "保险箱", "24小时热水"],
-                "en": ["Free WiFi", "AC", "LCD TV", "Minibar", "Safe", "24h Hot Water"]
+                "zh": [
+                    "免费WiFi",
+                    "空调",
+                    "液晶电视",
+                    "迷你吧",
+                    "保险箱",
+                    "24小时热水"
+                ],
+                "en": [
+                    "Free WiFi",
+                    "AC",
+                    "LCD TV",
+                    "Minibar",
+                    "Safe",
+                    "24h Hot Water"
+                ]
             },
-            "policy": { "zh": "入住前48小时可免费取消", "en": "Free cancellation 48h before check-in" },
+            "policy": {
+                "zh": "入住前48小时可免费取消",
+                "en": "Free cancellation 48h before check-in"
+            },
             "available": 8,
             "status": "active"
         },
         {
             "id": "R002",
-            "name": { "zh": "豪华海景房", "en": "Deluxe Harbour View Room" },
+            "name": {
+                "zh": "豪华海景房",
+                "en": "Deluxe Harbour View Room"
+            },
             "type": "deluxe",
             "size": "45㎡",
-            "bed": { "zh": "特大床", "en": "King Bed" },
+            "bed": {
+                "zh": "特大床",
+                "en": "King Bed"
+            },
             "guests": 2,
             "price": 988,
             "originalPrice": 1288,
             "image": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800",
             "amenities": {
-                "zh": ["免费WiFi", "海景阳台", "浴缸", "Nespresso咖啡机", "浴袍拖鞋", "行政礼遇"],
-                "en": ["Free WiFi", "Sea View Balcony", "Bathtub", "Nespresso", "Bathrobe", "Executive Perks"]
+                "zh": [
+                    "免费WiFi",
+                    "海景阳台",
+                    "浴缸",
+                    "Nespresso咖啡机",
+                    "浴袍拖鞋",
+                    "行政礼遇"
+                ],
+                "en": [
+                    "Free WiFi",
+                    "Sea View Balcony",
+                    "Bathtub",
+                    "Nespresso",
+                    "Bathrobe",
+                    "Executive Perks"
+                ]
             },
-            "policy": { "zh": "入住前72小时可免费取消", "en": "Free cancellation 72h before check-in" },
+            "policy": {
+                "zh": "入住前72小时可免费取消",
+                "en": "Free cancellation 72h before check-in"
+            },
             "available": 5,
             "status": "active"
         },
         {
             "id": "R003",
-            "name": { "zh": "行政套房", "en": "Executive Suite" },
+            "name": {
+                "zh": "行政套房",
+                "en": "Executive Suite"
+            },
             "type": "suite",
             "size": "75㎡",
-            "bed": { "zh": "特大床", "en": "King Bed" },
+            "bed": {
+                "zh": "特大床",
+                "en": "King Bed"
+            },
             "guests": 3,
             "price": 1888,
             "originalPrice": 2388,
             "image": "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800",
             "amenities": {
-                "zh": ["全景落地窗", "独立客厅", "按摩浴缸", "厨房设施", "专属管家", "行政酒廊"],
-                "en": ["Floor-to-ceiling Windows", "Living Room", "Jacuzzi", "Kitchenette", "Butler", "Executive Lounge"]
+                "zh": [
+                    "全景落地窗",
+                    "独立客厅",
+                    "按摩浴缸",
+                    "厨房设施",
+                    "专属管家",
+                    "行政酒廊"
+                ],
+                "en": [
+                    "Floor-to-ceiling Windows",
+                    "Living Room",
+                    "Jacuzzi",
+                    "Kitchenette",
+                    "Butler",
+                    "Executive Lounge"
+                ]
             },
-            "policy": { "zh": "入住前72小时可免费取消", "en": "Free cancellation 72h before check-in" },
+            "policy": {
+                "zh": "入住前72小时可免费取消",
+                "en": "Free cancellation 72h before check-in"
+            },
             "available": 3,
             "status": "active"
         },
         {
             "id": "R004",
-            "name": { "zh": "商务双床房", "en": "Business Twin Room" },
+            "name": {
+                "zh": "商务双床房",
+                "en": "Business Twin Room"
+            },
             "type": "standard",
             "size": "32㎡",
-            "bed": { "zh": "双床", "en": "Twin Beds" },
+            "bed": {
+                "zh": "双床",
+                "en": "Twin Beds"
+            },
             "guests": 2,
             "price": 628,
             "originalPrice": 728,
             "image": "https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800",
             "amenities": {
-                "zh": ["免费WiFi", "办公桌", "人体工学椅", "打印机", "咖啡机", "熨烫设施"],
-                "en": ["Free WiFi", "Desk", "Ergonomic Chair", "Printer", "Coffee Maker", "Ironing"]
+                "zh": [
+                    "免费WiFi",
+                    "办公桌",
+                    "人体工学椅",
+                    "打印机",
+                    "咖啡机",
+                    "熨烫设施"
+                ],
+                "en": [
+                    "Free WiFi",
+                    "Desk",
+                    "Ergonomic Chair",
+                    "Printer",
+                    "Coffee Maker",
+                    "Ironing"
+                ]
             },
-            "policy": { "zh": "入住前48小时可免费取消", "en": "Free cancellation 48h before check-in" },
+            "policy": {
+                "zh": "入住前48小时可免费取消",
+                "en": "Free cancellation 48h before check-in"
+            },
             "available": 12,
             "status": "active"
         },
         {
             "id": "R005",
-            "name": { "zh": "总统套房", "en": "Presidential Suite" },
+            "name": {
+                "zh": "总统套房",
+                "en": "Presidential Suite"
+            },
             "type": "suite",
             "size": "200㎡",
-            "bed": { "zh": "特大床", "en": "King Bed" },
+            "bed": {
+                "zh": "特大床",
+                "en": "King Bed"
+            },
             "guests": 4,
             "price": 8888,
             "originalPrice": 12888,
             "image": "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=800",
             "amenities": {
-                "zh": ["私人电梯", "私人管家", "会议室", "厨房", "私人SPA", "直升机接送"],
-                "en": ["Private Elevator", "Butler Service", "Meeting Room", "Kitchen", "Private SPA", "Helicopter"]
+                "zh": [
+                    "私人电梯",
+                    "私人管家",
+                    "会议室",
+                    "厨房",
+                    "私人SPA",
+                    "直升机接送"
+                ],
+                "en": [
+                    "Private Elevator",
+                    "Butler Service",
+                    "Meeting Room",
+                    "Kitchen",
+                    "Private SPA",
+                    "Helicopter"
+                ]
             },
-            "policy": { "zh": "入住前7天可免费取消", "en": "Free cancellation 7 days before check-in" },
+            "policy": {
+                "zh": "入住前7天可免费取消",
+                "en": "Free cancellation 7 days before check-in"
+            },
             "available": 1,
             "status": "active"
         },
         {
             "id": "R006",
-            "name": { "zh": "花园景观房", "en": "Garden View Room" },
+            "name": {
+                "zh": "花园景观房",
+                "en": "Garden View Room"
+            },
             "type": "deluxe",
             "size": "38㎡",
-            "bed": { "zh": "大床", "en": "King Bed" },
+            "bed": {
+                "zh": "大床",
+                "en": "King Bed"
+            },
             "guests": 2,
             "price": 788,
             "originalPrice": 988,
             "image": "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=800",
             "amenities": {
-                "zh": ["花园景观", "私人阳台", "户外座椅", "茶具套装", "瑜伽垫", "浴盐"],
-                "en": ["Garden View", "Private Balcony", "Outdoor Seating", "Tea Set", "Yoga Mat", "Bath Salts"]
+                "zh": [
+                    "花园景观",
+                    "私人阳台",
+                    "户外座椅",
+                    "茶具套装",
+                    "瑜伽垫",
+                    "浴盐"
+                ],
+                "en": [
+                    "Garden View",
+                    "Private Balcony",
+                    "Outdoor Seating",
+                    "Tea Set",
+                    "Yoga Mat",
+                    "Bath Salts"
+                ]
             },
-            "policy": { "zh": "入住前48小时可免费取消", "en": "Free cancellation 48h before check-in" },
+            "policy": {
+                "zh": "入住前48小时可免费取消",
+                "en": "Free cancellation 48h before check-in"
+            },
             "available": 6,
             "status": "active"
         }

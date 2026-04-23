@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>预订信息 - 91酒店</title>
+    <title data-i18n="pageTitle">预订信息 · 91酒店</title>
+    <!-- Font Awesome 图标库 -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="Book.css">
+    <!-- 样式文件 -->
     <link rel="stylesheet" href="checkout.css">
 </head>
 <body>
@@ -13,100 +14,119 @@
         <div class="checkout-topbar-inner">
             <a class="checkout-back" href="Book.html">
                 <i class="fas fa-arrow-left"></i>
-                <span>查看</span>
+                <span data-i18n="backToRooms">返回客房</span>
             </a>
             <div class="checkout-topbar-right">
-                <div id="themeToggleMount"></div>
+                <!-- 语言切换下拉 -->
+                <div class="lang-selector">
+                    <select id="languageSelect" aria-label="选择语言">
+                        <option value="zh">中文</option>
+                        <option value="en">English</option>
+                        <option value="ja">日本語</option>
+                    </select>
+                </div>
+                <!-- 主题切换按钮 -->
+                <button class="icon-btn" id="themeToggle" aria-label="切换主题">
+                    <i class="fas fa-moon"></i>
+                </button>
             </div>
         </div>
     </div>
 
     <div class="checkout-container">
         <div class="checkout-grid">
+            <!-- 左侧主表单 -->
             <div class="checkout-main">
+                <!-- 日期选择卡片 -->
                 <div class="section-card">
                     <div class="section-header">
-                        <div class="section-title"><i class="fas fa-user"></i><span>联系信息</span></div>
+                        <div class="section-title"><i class="fas fa-calendar-alt"></i><span data-i18n="selectDates">选择入住 / 退房日期</span></div>
+                    </div>
+                    <div class="section-body">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" data-i18n="checkInDate">入住日期 *</label>
+                                <input type="date" id="checkInDate" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" data-i18n="checkOutDate">退房日期 *</label>
+                                <input type="date" id="checkOutDate" class="form-input" required>
+                            </div>
+                        </div>
+                        <div class="nights-info">
+                            <i class="far fa-moon"></i> <span id="nightsDisplay" data-i18n="totalNights" data-i18n-args='{"nights":0}'>共 0 晚</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 联系信息 -->
+                <div class="section-card">
+                    <div class="section-header">
+                        <div class="section-title"><i class="fas fa-user"></i><span data-i18n="contactInfo">联系信息</span></div>
                     </div>
                     <div class="section-body">
                         <form id="checkoutForm">
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label class="form-label">称谓 *</label>
+                                    <label class="form-label" data-i18n="title">称谓 *</label>
                                     <select class="form-select" name="title" required>
-                                        <option value="">请选择</option>
-                                        <option value="mr">先生</option>
-                                        <option value="ms">女士</option>
+                                        <option value="" data-i18n="pleaseSelect">请选择</option>
+                                        <option value="mr" data-i18n="mr">先生</option>
+                                        <option value="ms" data-i18n="ms">女士</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label">姓名 *</label>
-                                    <input class="form-input" name="fullName" required placeholder="姓名（与证件一致）">
+                                    <label class="form-label" data-i18n="fullName">姓名 *</label>
+                                    <input class="form-input" name="fullName" required data-i18n-placeholder="fullNamePlaceholder" placeholder="姓名（与证件一致）">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label class="form-label">电子邮箱地址 *</label>
+                                    <label class="form-label" data-i18n="email">电子邮箱地址 *</label>
                                     <input type="email" class="form-input" name="email" required placeholder="name@example.com">
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label">确认电子邮箱地址 *</label>
+                                    <label class="form-label" data-i18n="confirmEmail">确认电子邮箱地址 *</label>
                                     <input type="email" class="form-input" name="confirmEmail" required placeholder="name@example.com">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label class="form-label">联系电话</label>
-                                    <input 
-                                         class="form-input" 
-                                          name="phone" 
-                                         required 
-                                        placeholder="请输入8位数字电话号码"
-                                          type="tel"
-                                        pattern="\d{8}"
-                                         maxlength="8"
-                                        inputmode="numeric"
-                                        ninput="this.value = this.value.replace(/\D/g, '').slice(0, 8)"
-                                            >
-                                         <small style="color: #666; display: block; margin-top: 4px;">请填写8位数字电话号码</small>
-                                        </div>
+                                    <label class="form-label" data-i18n="phone">联系电话</label>
+                                    <input class="form-input" name="phone" required data-i18n-placeholder="phonePlaceholder" placeholder="请输入8位数字电话号码"
+                                           type="tel" pattern="\d{8}" maxlength="8" inputmode="numeric"
+                                           oninput="this.value = this.value.replace(/\D/g, '').slice(0, 8)">
+                                    <small style="color: #666; margin-top: 4px;" data-i18n="phoneHint">请填写8位数字电话号码</small>
+                                </div>
                                 <div class="form-group">
-                                    <label class="form-label">预计到达时间</label>
+                                    <label class="form-label" data-i18n="arrivalTime">预计到达时间</label>
                                     <select class="form-select" name="arrivalTime">
-                                        <option value="">请选择</option>
+                                        <option value="" data-i18n="pleaseSelect">请选择</option>
                                         <option value="14:00-15:00">14:00-15:00</option>
                                         <option value="15:00-16:00">15:00-16:00</option>
                                         <option value="16:00-17:00">16:00-17:00</option>
                                         <option value="17:00-18:00">17:00-18:00</option>
-                                        <option value="18:00+">18:00 以后</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">入住人数 *</label>
-                                    <select class="form-select" name="guests" id="guestsSelect" required>
-                                        <option value="1">1 位成人</option>
-                                        <option value="2" selected>2 位成人</option>
-                                        <option value="3">3 位成人</option>
-                                        <option value="4">4 位成人</option>
+                                        <option value="18:00+" data-i18n="after18">18:00 以后</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="form-label">特殊要求（可选）</label>
-                                <input class="form-input" name="specialRequests" placeholder="如无烟房、高层、靠近电梯等">
+                                <label class="form-label" data-i18n="specialRequests">特殊要求（可选）</label>
+                                <input class="form-input" name="specialRequests" data-i18n-placeholder="specialRequestsPlaceholder" placeholder="如无烟房、高层、靠近电梯等">
                             </div>
                         </form>
                     </div>
                 </div>
 
+                <!-- 付款信息 -->
                 <div class="section-card">
                     <div class="section-header">
-                        <div class="section-title"><i class="fas fa-credit-card"></i><span>付款</span></div>
+                        <div class="section-title"><i class="fas fa-credit-card"></i><span data-i18n="payment">付款</span></div>
                     </div>
                     <div class="section-body">
                         <div class="policy-box">
-                            <h4><i class="fas fa-lock"></i> 安全提示</h4>
-                            <p>我们使用加密方式处理支付信息。此页面为前端展示，暂不进行真实扣款。</p>
+                            <h4><i class="fas fa-lock"></i> <span data-i18n="securityNotice">安全提示</span></h4>
+                            <p data-i18n="securityMessage">我们使用加密方式处理支付信息。此页面为前端展示，暂不进行真实扣款。</p>
                         </div>
                         <div class="checkout-pay-icons">
                             <i class="fab fa-cc-visa"></i>
@@ -115,78 +135,76 @@
                             <i class="fab fa-cc-jcb"></i>
                         </div>
                         <div class="form-group">
-                        <label class="form-label">卡号</label>
-                        <input 
-                            class="form-input" 
-                            form="checkoutForm" 
-                            name="cardNumber" 
-                            required 
-                            placeholder="**** **** **** **** "
-                            type="tel"
-                            pattern="\d{12}"
-                            maxlength="12"
-                            inputmode="numeric"
-                            oninput="this.value = this.value.replace(/\D/g, '').slice(0, 12)"
-                            title="请填写12位数字卡号"
-                        >
+                            <label class="form-label" data-i18n="cardNumber">卡号</label>
+                            <input class="form-input" form="checkoutForm" name="cardNumber" required
+                                   placeholder="**** **** **** ****" type="tel" pattern="\d{12}" maxlength="12"
+                                   inputmode="numeric" oninput="this.value = this.value.replace(/\D/g, '').slice(0, 12)"
+                                   title="请填写12位数字卡号">
                         </div>
                         <div class="form-row">
-                         <div class="form-group">
-                         <label class="form-label">有效期 (MM/YY) *</label>
-                         <input 
-                           class="form-input" 
-                          form="checkoutForm" 
-                          name="expiry" 
-                          required 
-                          placeholder="MM/YY"
-                            type="tel"
-                          maxlength="4"
-                          inputmode="numeric"
-                           oninput="formatExpiry(this)"
-                           title="请填写4位数字（MMYY）"
-                            >
-                           <small style="color: #666; display: block; margin-top: 4px;">请输入4位数字，例如：1228（表示12/28）</small>
-                             </div>
-                            </div>
                             <div class="form-group">
-                                <label class="form-label">持卡人姓名 *</label>
-                                <input class="form-input" form="checkoutForm" name="cardName" required placeholder="姓名">
+                                <label class="form-label" data-i18n="expiry">有效期 (MM/YY) *</label>
+                                <input class="form-input" form="checkoutForm" name="expiry" required placeholder="MM/YY"
+                                       type="tel" maxlength="4" inputmode="numeric" oninput="formatExpiry(this)"
+                                       title="请填写4位数字（MMYY）">
+                                <small style="color: #666; margin-top: 4px;" data-i18n="expiryHint">例如：1228 表示 12/28</small>
                             </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" data-i18n="cardholderName">持卡人姓名 *</label>
+                            <input class="form-input" form="checkoutForm" name="cardName" required data-i18n-placeholder="cardholderNamePlaceholder" placeholder="姓名">
                         </div>
                     </div>
                 </div>
 
+                <!-- 政策与条款 -->
                 <div class="section-card">
                     <div class="section-header">
-                        <div class="section-title"><i class="fas fa-file-lines"></i><span>政策</span></div>
+                        <div class="section-title"><i class="fas fa-file-lines"></i><span data-i18n="policies">政策</span></div>
                     </div>
                     <div class="section-body">
                         <div class="checkout-policy">
                             <div class="checkout-policy-item">
-                                <div class="checkout-policy-title">入住</div>
-                                <div class="checkout-policy-value" id="policyCheckIn">下午 2:00 之后</div>
+                                <div class="checkout-policy-title" data-i18n="checkIn">入住</div>
+                                <div class="checkout-policy-value" data-i18n="checkInTime">下午 2:00 之后</div>
                             </div>
                             <div class="checkout-policy-item">
-                                <div class="checkout-policy-title">退房</div>
-                                <div class="checkout-policy-value">中午 12:00 之前</div>
+                                <div class="checkout-policy-title" data-i18n="checkOut">退房</div>
+                                <div class="checkout-policy-value" data-i18n="checkOutTime">中午 12:00 之前</div>
                             </div>
                         </div>
                         <div class="policy-box">
-                            <h4><i class="fas fa-info-circle"></i> 取消条款</h4>
-                            <p>入住前 48 小时可免费取消，之后将收取首晚房费作为取消费用。</p>
+                            <h4><i class="fas fa-info-circle"></i> <span data-i18n="cancellationPolicy">取消条款</span></h4>
+                            <p data-i18n="cancellationMessage">入住前 48 小时可免费取消，之后将收取首晚房费作为取消费用。</p>
                         </div>
                         <div class="checkbox-wrapper">
                             <input type="checkbox" id="agreeTerms" form="checkoutForm" required>
-                            <label for="agreeTerms">我已阅读并同意<a href="#">预订条款</a>和<a href="#">隐私政策</a></label>
+                            <label for="agreeTerms">
+                                <span data-i18n="agreeTermsPrefix">我已阅读并同意</span>
+                                <a href="#" data-i18n="bookingTerms">预订条款</a>
+                                <span data-i18n="and">和</span>
+                                <a href="#" data-i18n="privacyPolicy">隐私政策</a>
+                            </label>
                         </div>
                     </div>
                 </div>
+
+                <!-- 操作按钮 -->
+                <div class="checkout-actions">
+                    <button class="btn btn-secondary" type="button" onclick="window.location.href='Book.html'">
+                        <span data-i18n="back">返回</span>
+                    </button>
+                    <button class="btn btn-primary" type="submit" form="checkoutForm">
+                        <i class="fas fa-check"></i> <span data-i18n="confirmBooking">确认预订</span>
+                    </button>
+                </div>
             </div>
 
+            <!-- 右侧价格详情 -->
             <aside class="checkout-aside">
                 <div class="section-card">
                     <div class="section-header">
-                        <div class="section-title"><i class="fas fa-receipt"></i><span>价格详情</span></div>
+                        <div class="section-title"><i class="fas fa-receipt"></i><span data-i18n="priceDetails">价格详情</span></div>
                     </div>
                     <div class="section-body">
                         <div class="checkout-summary-room">
@@ -195,23 +213,17 @@
                         </div>
                         <div class="fee-calculation" id="summaryFees"></div>
                         <div class="checkout-benefits">
-                            <div class="checkout-benefits-title">直接预订，专享礼遇</div>
-                            <div class="checkout-benefit"><i class="fas fa-clock"></i><span>灵活的入住和退房时间</span></div>
-                            <div class="checkout-benefit"><i class="fas fa-repeat"></i><span>灵活预订，区域任选</span></div>
-                            <div class="checkout-benefit"><i class="fas fa-tag"></i><span>专享优惠和价格</span></div>
-                            <div class="checkout-benefit"><i class="fas fa-graduation-cap"></i><span>体验独特策划活动</span></div>
+                            <div class="checkout-benefits-title" data-i18n="directBookingBenefits">直接预订，专享礼遇</div>
+                            <div class="checkout-benefit"><i class="fas fa-clock"></i><span data-i18n="benefit1">灵活的入住和退房时间</span></div>
+                            <div class="checkout-benefit"><i class="fas fa-repeat"></i><span data-i18n="benefit2">灵活预订，区域任选</span></div>
+                            <div class="checkout-benefit"><i class="fas fa-tag"></i><span data-i18n="benefit3">专享优惠和价格</span></div>
+                            <div class="checkout-benefit"><i class="fas fa-graduation-cap"></i><span data-i18n="benefit4">体验独特策划活动</span></div>
                         </div>
                         <div class="checkout-help">
-                            <div class="checkout-help-title">需要帮助？</div>
-                            <div class="checkout-help-text">我们的专业预订团队随时为您服务：</div>
+                            <div class="checkout-help-title" data-i18n="needHelp">需要帮助？</div>
+                            <div class="checkout-help-text" data-i18n="helpText">我们的专业预订团队随时为您服务：</div>
                             <div class="checkout-help-text">+86 (21) 2327 6588</div>
-                            <div class="checkout-help-text">reservation@xxhotel.com</div>
-                        </div>
-                        <div class="checkout-sidebar-actions">
-                            <button class="btn btn-primary btn-block" type="submit" form="checkoutForm">
-                                <i class="fas fa-check"></i> 确认预订
-                            </button>
-                            <button class="btn btn-link btn-block" type="button" onclick="window.location.href='Book.html'">返回修改</button>
+                            <div class="checkout-help-text">reservation@91hotel.com</div>
                         </div>
                     </div>
                 </div>
@@ -219,11 +231,10 @@
         </div>
     </div>
 
+    <!-- Toast 容器 -->
     <div class="toast-container" id="toastContainer"></div>
 
-    <script src="../assets/js/theme-button.js"></script>
-    <script src="../notifications/notificationSystem.js"></script>
-    <script src="../notifications/autoInject.js"></script>
+    <!-- JavaScript 文件 -->
     <script src="checkout.js"></script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的预订</title>
+    <title>我的订单</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="Book.css">
     <style>
@@ -17,25 +17,79 @@
         .booking-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
         .booking-id { font-size: 13px; color: #888; }
         .status-badge { padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
-        .status-confirmed { background: #e6f7ee; color: #00a854; }
-        .status-cancelled { background: #fff1f0; color: #f5222d; }
+        .status-confirmed  { background: #e6f7ee; color: #00a854; }
+        .status-cancelled  { background: #fff1f0; color: #f5222d; }
+        .status-checked-in { background: #e6f0ff; color: #165dff; }
+        .status-checked-out{ background: #f0f0f0; color: #555; }
+        .status-pending    { background: #fff7e6; color: #fa8c16; }
         .booking-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; }
         .info-item label { font-size: 12px; color: #888; display: block; margin-bottom: 4px; }
         .info-item span { font-size: 15px; font-weight: 600; color: #333; }
         .empty { text-align: center; padding: 60px 20px; color: #aaa; }
         .empty i { font-size: 48px; margin-bottom: 16px; display: block; }
+
+        /* 评价区域 */
+        .review-section { margin-top: 20px; border-top: 1px solid #f0f0f0; padding-top: 16px; }
+        .review-section h4 { font-size: 14px; font-weight: 600; margin-bottom: 12px; color: #333; }
+        .existing-review { background: #fafafa; border-radius: 8px; padding: 12px; font-size: 14px; }
+        .existing-review .stars { color: #f59e0b; margin-bottom: 4px; }
+        .existing-review .comment { color: #555; }
+        .review-form { display: flex; flex-direction: column; gap: 10px; }
+        .star-picker { display: flex; gap: 6px; }
+        .star-picker i { font-size: 1.6rem; color: #f59e0b; cursor: pointer; transition: transform 0.1s; }
+        .star-picker i:hover { transform: scale(1.2); }
+        .review-form textarea {
+            border: 1px solid #d1d5db; border-radius: 8px; padding: 10px;
+            font-size: 14px; resize: none; font-family: inherit;
+        }
+        .review-form textarea:focus { outline: none; border-color: #f27405; }
+        .submit-review-btn {
+            align-self: flex-start; background: #f27405; color: white;
+            border: none; padding: 8px 20px; border-radius: 8px;
+            cursor: pointer; font-size: 14px; font-weight: 500;
+        }
+        .submit-review-btn:hover { background: #d66304; }
+        .review-hint { font-size: 13px; color: #9ca3af; padding: 8px 0; }
+
+        /* 取消预订按钮 */
+        .cancel-btn {
+            background: none;
+            border: 1px solid #f5222d;
+            color: #f5222d;
+            padding: 7px 18px;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .cancel-btn:hover { background: #fff1f0; }
     </style>
 </head>
 <body>
     <div class="page-header">
         <a href="Book.html" class="back-btn"><i class="fas fa-arrow-left"></i> 返回</a>
-        <h1>我的预订</h1>
+        <h1>我的订单</h1>
     </div>
     <div class="bookings-list" id="bookingsList"></div>
 
     <script>
-        const API = 'http://localhost:3000';
+        const API      = 'http://localhost:3000';
         const username = sessionStorage.getItem('username');
+
+        const STATUS_LABEL = {
+            confirmed:     '已确认',
+            pending:       '待确认',
+            'checked-in':  '已入住',
+            'checked-out': '已退房',
+            cancelled:     '已取消'
+        };
+
+        function starsHtml(n) {
+            return '<i class="fas fa-star"></i>'.repeat(n) + '<i class="far fa-star"></i>'.repeat(5 - n);
+        }
 
         if (!username) {
             document.getElementById('bookingsList').innerHTML = `
@@ -45,35 +99,148 @@
                     <a href="../login/login.html" style="color:#c8873a;">前往登录</a>
                 </div>`;
         } else {
-            fetch(`${API}/api/bookings`)
-                .then(r => r.json())
-                .then(data => {
-                    const myList = (data.bookings || []).filter(b => b.username === username);
-                    const container = document.getElementById('bookingsList');
-                    if (!myList.length) {
-                        container.innerHTML = `<div class="empty"><i class="fas fa-calendar-times"></i><p>暂无预订记录</p></div>`;
-                        return;
+            loadPage();
+        }
+
+        async function loadPage() {
+            const [bookRes, revRes] = await Promise.all([
+                fetch(`${API}/api/bookings`),
+                fetch(`${API}/api/reviews`)
+            ]);
+            const bookData = await bookRes.json();
+            const revData  = await revRes.json();
+
+            const myList  = (bookData.bookings || []).filter(b => b.username === username).reverse();
+            const reviews = revData.reviews || [];
+
+            const container = document.getElementById('bookingsList');
+            if (!myList.length) {
+                container.innerHTML = `<div class="empty"><i class="fas fa-calendar-times"></i><p>暂无预订记录</p></div>`;
+                return;
+            }
+
+            container.innerHTML = myList.map(b => {
+                const statusClass = 'status-' + (b.status || 'confirmed').replace(/\s/g, '-');
+                const statusText  = STATUS_LABEL[b.status] || b.status;
+                const isCheckedOut = b.status === 'checked-out';
+                const isCancellable = b.status === 'confirmed' || b.status === 'pending';
+
+                // 查找该预订是否已有评价（按 bookingId 或 roomId+username）
+                const existingReview = reviews.find(r =>
+                    r.bookingId === b.id || (r.roomId === b.roomId && r.username === username)
+                );
+
+                let reviewHtml = '';
+                if (isCheckedOut) {
+                    if (existingReview) {
+                        reviewHtml = `
+                            <div class="review-section">
+                                <h4><i class="fas fa-star" style="color:#f59e0b"></i> 您的评价</h4>
+                                <div class="existing-review">
+                                    <div class="stars">${starsHtml(existingReview.rating)} ${existingReview.rating}.0</div>
+                                    <div class="comment">${existingReview.comment}</div>
+                                </div>
+                            </div>`;
+                    } else {
+                        reviewHtml = `
+                            <div class="review-section">
+                                <h4><i class="fas fa-star" style="color:#f59e0b"></i> 评价此次入住</h4>
+                                <div class="review-form" id="form-${b.id}">
+                                    <div class="star-picker" id="stars-${b.id}">
+                                        ${[1,2,3,4,5].map(n =>
+                                            `<i class="far fa-star" data-val="${n}"
+                                                onmouseover="hoverStar('${b.id}',${n})"
+                                                onmouseout="resetStar('${b.id}')"
+                                                onclick="pickStar('${b.id}',${n})"></i>`
+                                        ).join('')}
+                                    </div>
+                                    <input type="hidden" id="rating-${b.id}" value="0">
+                                    <textarea id="comment-${b.id}" rows="3" placeholder="分享您的入住体验（至少5个字）..."></textarea>
+                                    <button class="submit-review-btn" onclick="submitReview('${b.id}','${b.roomId}','${b.roomName || b.roomType || ''}')">
+                                        提交评价
+                                    </button>
+                                </div>
+                            </div>`;
                     }
-                    container.innerHTML = myList.reverse().map(b => `
-                        <div class="booking-card">
-                            <div class="booking-card-header">
-                                <span class="booking-id">订单号：${b.id}</span>
-                                <span class="status-badge status-${b.status}">${b.status === 'confirmed' ? '已确认' : b.status === 'cancelled' ? '已取消' : b.status}</span>
-                            </div>
-                            <div class="booking-info">
-                                <div class="info-item"><label>房型</label><span>${b.roomType || '-'}</span></div>
-                                <div class="info-item"><label>入住日期</label><span>${b.checkIn}</span></div>
-                                <div class="info-item"><label>退房日期</label><span>${b.checkOut}</span></div>
-                                <div class="info-item"><label>入住人数</label><span>${b.guests || 2} 人</span></div>
-                                <div class="info-item"><label>总金额</label><span>¥${b.totalAmount}</span></div>
-                                <div class="info-item"><label>预订时间</label><span>${new Date(b.createdAt).toLocaleDateString('zh-CN')}</span></div>
-                            </div>
+                } else if (b.status !== 'cancelled') {
+                    reviewHtml = `<div class="review-section"><p class="review-hint"><i class="fas fa-info-circle"></i> 退房后可进行评价</p></div>`;
+                }
+
+                return `
+                    <div class="booking-card">
+                        <div class="booking-card-header">
+                            <span class="booking-id">订单号：${b.id}</span>
+                            <span class="status-badge ${statusClass}">${statusText}</span>
                         </div>
-                    `).join('');
-                })
-                .catch(() => {
-                    document.getElementById('bookingsList').innerHTML = `<div class="empty"><i class="fas fa-exclamation-circle"></i><p>无法连接服务器</p></div>`;
-                });
+                        <div class="booking-info">
+                            <div class="info-item"><label>房型</label><span>${b.roomName || b.roomType || '-'}</span></div>
+                            <div class="info-item"><label>入住日期</label><span>${b.checkIn}</span></div>
+                            <div class="info-item"><label>退房日期</label><span>${b.checkOut}</span></div>
+                            <div class="info-item"><label>总金额</label><span>${b.totalDisplay || ('¥' + b.totalAmount)}</span></div>
+                            <div class="info-item"><label>预订时间</label><span>${new Date(b.createdAt).toLocaleDateString('zh-CN')}</span></div>
+                        </div>
+                        ${reviewHtml}
+                        ${isCancellable ? `
+                        <div style="margin-top:16px;padding-top:16px;border-top:1px solid #f0f0f0;display:flex;justify-content:flex-end;">
+                            <button class="cancel-btn" onclick="cancelBooking('${b.id}')">
+                                <i class="fas fa-times-circle"></i> 取消预订
+                            </button>
+                        </div>` : ''}
+                    </div>`;
+            }).join('');
+        }
+
+        function hoverStar(bookingId, n) {
+            document.querySelectorAll(`#stars-${bookingId} i`).forEach((el, i) => {
+                el.className = i < n ? 'fas fa-star' : 'far fa-star';
+            });
+        }
+        function resetStar(bookingId) {
+            const picked = parseInt(document.getElementById('rating-' + bookingId).value || 0);
+            document.querySelectorAll(`#stars-${bookingId} i`).forEach((el, i) => {
+                el.className = i < picked ? 'fas fa-star' : 'far fa-star';
+            });
+        }
+        function pickStar(bookingId, n) {
+            document.getElementById('rating-' + bookingId).value = n;
+            resetStar(bookingId);
+        }
+
+        async function submitReview(bookingId, roomId, roomName) {
+            const rating  = parseInt(document.getElementById('rating-'  + bookingId).value);
+            const comment = (document.getElementById('comment-' + bookingId).value || '').trim();
+
+            if (!rating)            { alert('请选择星级评分'); return; }
+            if (comment.length < 5) { alert('评价内容至少5个字'); return; }
+
+            const res  = await fetch(`${API}/api/reviews`, {
+                method:  'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body:    JSON.stringify({ username, bookingId, roomId, roomName, rating, comment })
+            });
+            const data = await res.json();
+            if (res.ok) {
+                alert('评价提交成功！');
+                loadPage();
+            } else {
+                alert(data.message || '提交失败');
+            }
+        }
+
+        async function cancelBooking(bookingId) {
+            if (!confirm('确认取消此预订？取消后无法恢复。')) return;
+            const res  = await fetch(`${API}/api/bookings/${bookingId}/status`, {
+                method:  'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body:    JSON.stringify({ status: 'cancelled' })
+            });
+            const data = await res.json();
+            if (res.ok) {
+                alert('预订已取消');
+                loadPage();
+            } else {
+                alert(data.message || '取消失败，请重试');
+            }
         }
     </script>
 </body>

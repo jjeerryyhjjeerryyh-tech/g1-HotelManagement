@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 document.addEventListener('DOMContentLoaded', async () => {
     // Populate user data if logged in
     const username = sessionStorage.getItem('username');
@@ -17,17 +18,45 @@ document.addEventListener('DOMContentLoaded', async () => {
     } else {
         // Redirect to login or home if not logged in
         showToast('请先登入', 'error');
+=======
+(function(){
+    "use strict";
+
+    // ---------- 工具函数：Toast 提示 ----------
+    function showToast(message, type = 'info') {
+        const container = document.getElementById('toastContainer');
+        if (!container) return;
+        
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        toast.textContent = message;
+        container.appendChild(toast);
+        
+>>>>>>> Stashed changes
         setTimeout(() => {
-            window.location.href = '../homePage/index.html';
-        }, 1500);
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateX(20px)';
+            toast.style.transition = 'opacity 0.3s, transform 0.3s';
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
     }
 
-    const profileForm = document.getElementById('profileForm');
-    const cancelBtn = document.getElementById('cancelBtn');
-    
-    cancelBtn.addEventListener('click', () => {
-        window.history.back();
-    });
+    // ---------- 模拟用户数据 (实际应从 sessionStorage 或 API 获取) ----------
+    function loadUserData() {
+        // 从 sessionStorage 获取当前登录用户名
+        let username = sessionStorage.getItem('username') || 'lengpao';
+        
+        // 模拟完整的用户数据 (实际可调用后端 API)
+        const mockUserData = {
+            username: username,
+            fullName: '冷泡',
+            email: 'lengpao@gmail.com',
+            phone: '12345678',
+            role: username === 'admin' ? 'admin' : 'user',   // 简单权限模拟
+            avatar: sessionStorage.getItem('userAvatar') || '',
+            registerDate: '2024-01-15',
+            status: 'active'
+        };
 
     profileForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -71,28 +100,5 @@ document.addEventListener('DOMContentLoaded', async () => {
             sessionStorage.setItem('username', fullName);
         }
     });
-});
 
-function showToast(message, type = 'info') {
-    const container = document.getElementById('toastContainer');
-    if (!container) return;
-    
-    const toast = document.createElement('div');
-    toast.className = `toast ${type}`;
-    // Simple inline styles for toast since we might not have all Book.css styles perfectly matching here
-    toast.style.padding = '12px 24px';
-    toast.style.marginBottom = '10px';
-    toast.style.borderRadius = '4px';
-    toast.style.color = '#fff';
-    toast.style.background = type === 'success' ? '#4caf50' : type === 'error' ? '#f44336' : '#2196f3';
-    toast.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
-    toast.style.transition = 'opacity 0.3s ease';
-    
-    toast.innerHTML = `<span>${message}</span>`;
-    container.appendChild(toast);
-    
-    setTimeout(() => {
-        toast.style.opacity = '0';
-        setTimeout(() => toast.remove(), 300);
-    }, 3000);
-}
+})();

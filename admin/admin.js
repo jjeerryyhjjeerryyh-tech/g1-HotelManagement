@@ -231,10 +231,11 @@ async function loadBookings() {
     }
 
     const statusMap = {
-        confirmed:    '<span class="px-2 py-1 text-xs rounded-full bg-success/10 text-success">已确认</span>',
-        pending:      '<span class="px-2 py-1 text-xs rounded-full bg-warning/10 text-warning">待确认</span>',
-        cancelled:    '<span class="px-2 py-1 text-xs rounded-full bg-danger/10 text-danger">已取消</span>',
-        'checked-in': '<span class="px-2 py-1 text-xs rounded-full bg-primary/10 text-primary">已入住</span>'
+        confirmed:      '<span class="px-2 py-1 text-xs rounded-full bg-success/10 text-success">已确认</span>',
+        pending:        '<span class="px-2 py-1 text-xs rounded-full bg-warning/10 text-warning">待确认</span>',
+        cancelled:      '<span class="px-2 py-1 text-xs rounded-full bg-danger/10 text-danger">已取消</span>',
+        'checked-in':   '<span class="px-2 py-1 text-xs rounded-full bg-primary/10 text-primary">已入住</span>',
+        'checked-out':  '<span class="px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-600">已退房</span>'
     };
 
     tbody.innerHTML = data.bookings.map(b => `
@@ -250,7 +251,17 @@ async function loadBookings() {
             </td>
             <td class="px-6 py-4 text-sm">${b.checkIn} / ${b.checkOut}</td>
             <td class="px-6 py-4 text-sm">${b.totalDisplay || ('¥' + (b.totalAmount || '-'))}</td>
-            <td class="px-6 py-4 text-sm">${statusMap[b.status] || b.status}</td>
+            <td class="px-6 py-4 text-sm">
+                <select onchange="updateBookingStatus('${b.id}', this.value)"
+                    class="text-xs border border-gray-200 rounded-full px-2 py-1 focus:outline-none focus:ring-1 focus:ring-primary cursor-pointer"
+                    style="background:transparent;">
+                    <option value="pending"       ${b.status === 'pending'       ? 'selected' : ''}>待确认</option>
+                    <option value="confirmed"     ${b.status === 'confirmed'     ? 'selected' : ''}>已确认</option>
+                    <option value="checked-in"    ${b.status === 'checked-in'    ? 'selected' : ''}>已入住</option>
+                    <option value="checked-out"   ${b.status === 'checked-out'   ? 'selected' : ''}>已退房</option>
+                    <option value="cancelled"     ${b.status === 'cancelled'     ? 'selected' : ''}>已取消</option>
+                </select>
+            </td>
             <td class="px-6 py-4 text-sm">
                 <button onclick="deleteBooking('${b.id}')" class="text-danger hover:text-danger/80">
                     <i class="fa fa-trash mr-1"></i>删除
@@ -274,6 +285,15 @@ function updateBookingStats(counts) {
 async function deleteBooking(id) {
     if (!confirm('确认删除该预订？')) return;
     await fetch(`${API}/api/bookings/${id}`, { method: 'DELETE' });
+    loadBookings();
+}
+
+async function updateBookingStatus(id, status) {
+    await fetch(`${API}/api/bookings/${id}/status`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status })
+    });
     loadBookings();
 }
 

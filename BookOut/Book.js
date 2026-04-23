@@ -183,7 +183,7 @@
                 brand: 'HotelBook 客户预订系统',
                 tab_search: '查询预订',
                 tab_rooms: '客房预订',
-                tab_mybookings: '我的预订',
+                tab_mybookings: '我的订单',
                 lang: '语言',
                 hero_copy: '直接选择入住与退房日期，即可享受专属礼遇与优惠。',
                 checkin: '入住日期',
@@ -208,7 +208,7 @@
                 sort_price_asc: '价格从低到高',
                 sort_price_desc: '价格从高到低',
                 refresh: '刷新',
-                mybookings_title: '我的预订',
+                mybookings_title: '我的订单',
                 status_all: '全部状态',
                 status_confirmed: '已确认',
                 status_completed: '已完成',
@@ -223,7 +223,7 @@
                 th_action: '操作',
                 stat_available: '可预订客房',
                 stat_popular: '本周热门',
-                stat_booked: '我的预订',
+                stat_booked: '我的订单',
                 stat_saved: '收藏客房',
                 help_title: '需要帮助吗？',
                 help_text: '我们将竭诚为您提供预订协助与咨询服务。',
@@ -942,7 +942,7 @@ async function loadRoomReviews(roomId) {
 
         // 渲染评论列表
         if (reviews.length === 0) {
-            listEl.innerHTML = '<p style="color:#9ca3af;font-size:0.875rem;">暂无评价，成为第一个评价的住客吧！</p>';
+            listEl.innerHTML = '<p style="color:#9ca3af;font-size:0.875rem;">暂无评价</p>';
         } else {
             listEl.innerHTML = reviews.map(r => `
                 <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;margin-bottom:10px;">
@@ -956,82 +956,14 @@ async function loadRoomReviews(roomId) {
             `).join('');
         }
 
-        // 渲染提交表单
-        const username = sessionStorage.getItem('username');
-        if (!username) {
-            formEl.innerHTML = '<p style="font-size:0.875rem;color:#6b7280;text-align:center;padding:8px 0;"><a href="../login/login.html" style="color:#f27405;">登录</a> 后可提交评价</p>';
-        } else if (reviews.some(r => r.username === username)) {
-            formEl.innerHTML = '<p style="font-size:0.875rem;color:#9ca3af;text-align:center;padding:8px 0;">您已评价过该房间</p>';
-        } else {
-            formEl.innerHTML = `
-                <div style="border-top:1px solid #e5e7eb;padding-top:1rem;margin-top:0.5rem;">
-                    <h5 style="font-size:0.9rem;font-weight:600;margin-bottom:0.75rem;">提交您的评价</h5>
-                    <div style="display:flex;gap:6px;margin-bottom:10px;" id="starPicker">
-                        ${[1,2,3,4,5].map(n =>
-                            `<i class="far fa-star" data-val="${n}" style="font-size:1.6rem;color:#f59e0b;cursor:pointer;"
-                                onmouseover="hoverReviewStar(${n})"
-                                onmouseout="resetReviewStars()"
-                                onclick="pickReviewStar(${n})"></i>`
-                        ).join('')}
-                    </div>
-                    <input type="hidden" id="pickedRating" value="0">
-                    <textarea id="reviewComment" rows="3" placeholder="分享您的入住体验（至少5个字）..."
-                        style="width:100%;border:1px solid #d1d5db;border-radius:6px;padding:8px;font-size:0.875rem;resize:none;box-sizing:border-box;"></textarea>
-                    <button onclick="submitReview('${roomId}')"
-                        style="margin-top:8px;background:#f27405;color:#fff;border:none;padding:8px 20px;border-radius:6px;cursor:pointer;font-size:0.875rem;font-weight:500;">
-                        提交评价
-                    </button>
-                </div>
-            `;
-        }
+        // 不显示提交表单，评价入口在"我的预订"页面
+        formEl.innerHTML = '';
 
         // 刷新卡片评分
         await loadAllRatings();
         renderRooms();
     } catch (e) {
         if (listEl) listEl.innerHTML = '<p style="color:#ef4444;font-size:0.875rem;">加载评价失败</p>';
-    }
-}
-
-function hoverReviewStar(n) {
-    document.querySelectorAll('#starPicker i').forEach((el, i) => {
-        el.className = i < n ? 'fas fa-star' : 'far fa-star';
-    });
-}
-function resetReviewStars() {
-    const picked = parseInt(document.getElementById('pickedRating')?.value || 0);
-    document.querySelectorAll('#starPicker i').forEach((el, i) => {
-        el.className = i < picked ? 'fas fa-star' : 'far fa-star';
-    });
-}
-function pickReviewStar(n) {
-    document.getElementById('pickedRating').value = n;
-    resetReviewStars();
-}
-
-async function submitReview(roomId) {
-    const rating   = parseInt(document.getElementById('pickedRating').value);
-    const comment  = (document.getElementById('reviewComment').value || '').trim();
-    const username = sessionStorage.getItem('username');
-
-    if (!rating)           { showToast('请选择星级评分', 'error'); return; }
-    if (comment.length < 5){ showToast('评价内容至少5个字', 'error'); return; }
-
-    try {
-        const res  = await fetch('http://localhost:3000/api/reviews', {
-            method:  'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body:    JSON.stringify({ username, roomId, roomName: currentRoom.name, rating, comment })
-        });
-        const data = await res.json();
-        if (res.ok) {
-            showToast('评价提交成功！', 'success');
-            loadRoomReviews(roomId);
-        } else {
-            showToast(data.message || '提交失败', 'error');
-        }
-    } catch (e) {
-        showToast('无法连接服务器', 'error');
     }
 }
 
