@@ -147,7 +147,7 @@
         if (!container) return;
 
         var btnText = getNotifBtnText();
-        var badge = '<span class="notification-badge" style="display:none;background:#e74c3c;color:#fff;border-radius:50%;width:18px;height:18px;font-size:11px;line-height:18px;text-align:center;position:absolute;top:-6px;right:-6px;font-weight:bold;">0</span>';
+        var badge = '<span class="notification-badge" style="display:none;background:#e74c3c;color:#fff;border-radius:50%;width:18px;height:18px;font-size:11px;line-height:18px;text-align:center;position:absolute;top:-9px;right:2px;font-weight:bold;">0</span>';
 
         var a = document.createElement('a');
         a.href = notifBase() + 'notifications.html';

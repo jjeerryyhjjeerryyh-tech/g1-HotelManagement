@@ -125,8 +125,10 @@
     function renderNotification(notification) {
         // 如果存的是 templateKey + params（v2.3+），动态翻译
         if (notification.templateKey) {
-            var title = renderNotif(notification.templateKey + '_title', notification.params);
-            var body  = renderNotif(notification.templateKey + '_body',  notification.params);
+            // 标题在 UI 字典里，用 t() 翻译
+            var title = t(notification.templateKey + '_title');
+            // 正文在 NOTIF_TEMPLATES 里，用 renderNotif() 翻译+替换占位符
+            var body  = renderNotif(notification.templateKey + '_body', notification.params);
             return { title: title, message: body };
         }
         // 如果存的是旧格式的 pre-filled text（v1/v2），直接返回

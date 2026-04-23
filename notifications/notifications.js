@@ -77,6 +77,10 @@
         var pt = document.getElementById('pageTitle');
         if (pt) pt.textContent = t('page_title');
 
+        // header 导航：房型预订
+        var navBook = document.getElementById('navBook');
+        if (navBook) navBook.textContent = t('tab_book');
+
         var tl = document.getElementById('totalLabel');
         if (tl) tl.textContent = t('total');
 
@@ -123,7 +127,7 @@
 
         // 语言下拉显示文字
         var langSpan = document.querySelector('#langBtn > span');
-        if (langSpan) langSpan.textContent = getLang() === 'en' ? 'English' : '中文';
+        if (langSpan) langSpan.textContent = getLang() === 'en' ? 'EN' : '中文';
         var langTitleSpan = document.querySelector('.lang-header h3');
         if (langTitleSpan) langTitleSpan.textContent = t('lang_title');
     }
@@ -317,7 +321,8 @@
     NotificationPage.prototype.updateUserGreeting = function () {
         var el = document.getElementById('userGreeting');
         if (el && this.currentUser) {
-            el.textContent = (getLang() === 'en' ? '&#128100; ' : '&#128100; ') + this.currentUser;
+            // 使用 innerHTML 解析 HTML 实体渲染用户图标
+            el.innerHTML = '&#128100; ' + this.currentUser;
         }
     };
 
@@ -504,6 +509,16 @@
             return;
         }
         new NotificationPage();
+
+        // 监听 Book.html 的语言切换，刷新当前页面语言
+        window.addEventListener('notifLangChanged', function () {
+            var page = window.__notifPage;
+            if (page) page.renderList();
+            // 刷新页面 UI 文案（通过 lang.js 的 t() 重新读取）
+            var lang = localStorage.getItem('lang') || 'zh';
+            var titleEl = document.getElementById('pageTitle');
+            if (titleEl) titleEl.textContent = lang === 'en' ? 'Notifications' : '消息提醒';
+        });
     });
 
 })();
