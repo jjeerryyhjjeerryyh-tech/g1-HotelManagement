@@ -218,27 +218,53 @@ document.getElementById('userForm').addEventListener('submit', async (e) => {
 });
 
 // ===== 预订管理（真实数据）=====
+let allBookings = []; // 存储所有预订数据用于筛选
+
 async function loadBookings() {
     const res = await fetch(`${API}/api/bookings`);
     const data = await res.json();
+    allBookings = data.bookings || [];
+    
+    // 应用筛选和搜索
+    filterAndDisplayBookings();
+}
+
+function filterAndDisplayBookings() {
     const tbody = document.getElementById('bookingTableBody');
     if (!tbody) return;
 
-    if (!data.bookings.length) {
+    // 获取筛选条件
+    const statusFilter = document.getElementById('bookingStatusFilter')?.value || 'all';
+    const searchInput = document.getElementById('bookingSearchInput')?.value?.toLowerCase() || '';
+    
+    // 筛选数据
+    let filteredBookings = allBookings;
+    
+    // 状态筛选
+    if (statusFilter !== 'all') {
+        filteredBookings = filteredBookings.filter(b => b.status === statusFilter);
+    }
+    
+    // 搜索筛选
+    if (searchInput) {
+        filteredBookings = filteredBookings.filter(b => 
+            (b.id && b.id.toLowerCase().includes(searchInput)) ||
+            (b.guestName && b.guestName.toLowerCase().includes(searchInput)) ||
+            (b.username && b.username.toLowerCase().includes(searchInput)) ||
+            (b.roomName && b.roomName.toLowerCase().includes(searchInput)) ||
+            (b.roomType && b.roomType.toLowerCase().includes(searchInput))
+        );
+    }
+
+    if (!filteredBookings.length) {
         tbody.innerHTML = `<tr><td colspan="7" class="px-6 py-8 text-center text-gray-400">暂无预订记录</td></tr>`;
         updateBookingStats({});
         return;
     }
 
-    const statusMap = {
-        confirmed:      '<span class="px-2 py-1 text-xs rounded-full bg-success/10 text-success">已确认</span>',
-        pending:        '<span class="px-2 py-1 text-xs rounded-full bg-warning/10 text-warning">待确认</span>',
-        cancelled:      '<span class="px-2 py-1 text-xs rounded-full bg-danger/10 text-danger">已取消</span>',
-        'checked-in':   '<span class="px-2 py-1 text-xs rounded-full bg-primary/10 text-primary">已入住</span>',
-        'checked-out':  '<span class="px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-600">已退房</span>'
-    };
 
-    tbody.innerHTML = data.bookings.map(b => `
+
+    tbody.innerHTML = filteredBookings.map(b => `
         <tr class="hover:bg-gray-50">
             <td class="px-6 py-4 text-sm font-medium">${b.id}</td>
             <td class="px-6 py-4 text-sm">
@@ -271,7 +297,7 @@ async function loadBookings() {
     `).join('');
 
     const counts = { pending: 0, confirmed: 0, 'checked-in': 0, cancelled: 0 };
-    data.bookings.forEach(b => { if (counts[b.status] !== undefined) counts[b.status]++; });
+    filteredBookings.forEach(b => { if (counts[b.status] !== undefined) counts[b.status]++; });
     updateBookingStats(counts);
 }
 
@@ -297,8 +323,15 @@ async function updateBookingStatus(id, status) {
     loadBookings();
 }
 
-function filterBookings() { loadBookings(); }
-function refreshBookings() { loadBookings(); }
+function filterBookings() { 
+    // 应用筛选条件并重新显示
+    filterAndDisplayBookings(); 
+}
+
+function refreshBookings() { 
+    // 重新从服务器加载数据
+    loadBookings(); 
+}
 
 // ===== 评价管理（真实数据）=====
 async function loadReviews() {
