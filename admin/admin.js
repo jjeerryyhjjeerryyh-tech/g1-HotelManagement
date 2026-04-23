@@ -6,7 +6,7 @@ if (role !== 'admin') {
     window.location.href = '../admin/adminLogin.html';
 }
 
-const API = 'http://localhost:3000';
+const API = 'http://43.132.210.15:3000';
 let editingId = null;
 let activeSection = 'dashboard';
 
