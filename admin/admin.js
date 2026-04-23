@@ -400,8 +400,8 @@ async function loadRoomTypes() {
     }
     tbody.innerHTML = data.roomTypes.map(r => `
         <tr class="hover:bg-gray-50">
-            <td class="px-6 py-4 text-sm font-medium">${r.name}</td>
-            <td class="px-6 py-4 text-sm">${r.bed || '-'} / ${r.size || '-'}</td>
+            <td class="px-6 py-4 text-sm font-medium">${r.name[currentLang]}</td>
+            <td class="px-6 py-4 text-sm">${(r.bed && r.bed[currentLang]) || '-'} / ${r.size || '-'}m²</td>
             <td class="px-6 py-4 text-sm">${r.guests} ${i18nAdmin[currentLang].person_unit}</td>
             <td class="px-6 py-4 text-sm">¥${r.price}</td>
             <td class="px-6 py-4 text-sm"><span class="px-2 py-1 rounded-full text-xs bg-success/10 text-success">${i18nAdmin[currentLang].status_enabled}</span></td>
