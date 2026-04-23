@@ -28,7 +28,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     const [username, password] = [...inputs].map(i => i.value);
 
     try {
-        const res = await fetch('http://localhost:3000/api/login', {
+        const res = await fetch('http://43.132.210.15:3000/api/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, password })

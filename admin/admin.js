@@ -6,7 +6,7 @@ if (role !== 'admin') {
     window.location.href = '../admin/adminLogin.html';
 }
 
-const API = 'http://localhost:3000';
+const API = 'http://43.132.210.15:3000';
 let editingId = null;
 let activeSection = 'dashboard';
 
@@ -18,7 +18,6 @@ const i18nAdmin = {
         nav_users: '用户管理',
         nav_roomtypes: '房型管理',
         nav_bookings: '预定管理',
-        nav_checkins: '入住管理',
         nav_messages: '留言管理',
         nav_announcements: '公告管理',
         nav_reviews: '评价管理',
@@ -87,11 +86,6 @@ const i18nAdmin = {
         table_room_type_number: '房型/房号',
         table_checkin_checkout_date: '入住/退房日期',
         table_total_amount: '总金额',
-        checkin_management_title: '入住管理',
-        add_checkin_button: '新增入住',
-        table_checkin_number: '入住单号',
-        table_checkin_time: '入住时间',
-        status_checked_in: '已入住',
         message_management_title: '留言管理',
         button_filter: '筛选',
         table_messenger: '留言人',
@@ -158,7 +152,6 @@ const i18nAdmin = {
         nav_users: 'Users',
         nav_roomtypes: 'Room Types',
         nav_bookings: 'Bookings',
-        nav_checkins: 'Check-ins',
         nav_messages: 'Messages',
         nav_announcements: 'Announcements',
         nav_reviews: 'Reviews',
@@ -227,11 +220,6 @@ const i18nAdmin = {
         table_room_type_number: 'Room Type/No.',
         table_checkin_checkout_date: 'Check-in/Check-out Date',
         table_total_amount: 'Total Amount',
-        checkin_management_title: 'Check-in Management',
-        add_checkin_button: 'Add Check-in',
-        table_checkin_number: 'Check-in No.',
-        table_checkin_time: 'Check-in Time',
-        status_checked_in: 'Checked-in',
         message_management_title: 'Message Management',
         button_filter: 'Filter',
         table_messenger: 'Messenger',
@@ -302,7 +290,6 @@ const sectionMeta = {
     roomtypes:     { title: '房型管理',  subtitle: '' },
     rooms:         { title: '房间管理',  subtitle: '' },
     bookings:      { title: '预订管理',  subtitle: '实时预订数据' },
-    checkins:      { title: '入住管理',  subtitle: '' },
     messages:      { title: '留言管理',  subtitle: '' },
     announcements: { title: '公告管理',  subtitle: '' },
     reviews:       { title: '评价管理',  subtitle: '用户评价与留言' }
@@ -334,7 +321,6 @@ function updateSectionMeta() {
             users: { title: '用户管理', subtitle: '查看与管理用户信息' },
             roomtypes: { title: '房型管理', subtitle: '房型信息配置' },
             bookings: { title: '预订管理', subtitle: '实时预订数据' },
-            checkins: { title: '入住管理', subtitle: '办理入住与退房' },
             messages: { title: '留言管理', subtitle: '处理用户咨询与反馈' },
             announcements: { title: '公告管理', subtitle: '发布系统公告' },
             reviews: { title: '评价管理', subtitle: '用户评价与留言' }
@@ -344,7 +330,6 @@ function updateSectionMeta() {
             users: { title: 'User Management', subtitle: 'View and manage user information.' },
             roomtypes: { title: 'Room Type Management', subtitle: 'Configure room type information.' },
             bookings: { title: 'Booking Management', subtitle: 'Real-time booking data.' },
-            checkins: { title: 'Check-in Management', subtitle: 'Handle check-ins and check-outs.' },
             messages: { title: 'Message Management', subtitle: 'Handle user inquiries and feedback.' },
             announcements: { title: 'Announcement Management', subtitle: 'Publish system announcements.' },
             reviews: { title: 'Review Management', subtitle: 'User reviews and comments.' }
@@ -415,8 +400,8 @@ async function loadRoomTypes() {
     }
     tbody.innerHTML = data.roomTypes.map(r => `
         <tr class="hover:bg-gray-50">
-            <td class="px-6 py-4 text-sm font-medium">${r.name}</td>
-            <td class="px-6 py-4 text-sm">${r.bed || '-'} / ${r.size || '-'}</td>
+            <td class="px-6 py-4 text-sm font-medium">${r.name[currentLang]}</td>
+            <td class="px-6 py-4 text-sm">${(r.bed && r.bed[currentLang]) || '-'} / ${r.size || '-'}m²</td>
             <td class="px-6 py-4 text-sm">${r.guests} ${i18nAdmin[currentLang].person_unit}</td>
             <td class="px-6 py-4 text-sm">¥${r.price}</td>
             <td class="px-6 py-4 text-sm"><span class="px-2 py-1 rounded-full text-xs bg-success/10 text-success">${i18nAdmin[currentLang].status_enabled}</span></td>

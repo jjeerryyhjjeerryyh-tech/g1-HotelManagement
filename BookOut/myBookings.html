@@ -291,7 +291,7 @@
                                     </div>
                                     <input type="hidden" id="rating-${b.id}" value="0">
                                     <textarea id="comment-${b.id}" rows="3" placeholder="${dict.share_experience_placeholder}"></textarea>
-                                    <button class="submit-review-btn" onclick="submitReview('${b.id}','${b.roomId}','${b.roomName || b.roomType || ''}')">
+                                    <button class="submit-review-btn" onclick="submitReview('${b.id}','${b.roomId}','${(b.roomName && b.roomName[currentLang]) || (b.roomType && b.roomType[currentLang]) || ''}')">
                                         ${dict.submit_review}
                                     </button>
                                 </div>
@@ -308,7 +308,7 @@
                             <span class="status-badge ${statusClass}">${statusText}</span>
                         </div>
                         <div class="booking-info">
-                            <div class="info-item"><label>${dict.room_type}</label><span>${b.roomName || b.roomType || '-'}</span></div>
+                            <div class="info-item"><label>${dict.room_type}</label><span>${(b.roomName && b.roomName[currentLang]) || (b.roomType && b.roomType[currentLang]) || '-'}</span></div>
                             <div class="info-item"><label>${dict.checkin_date}</label><span>${b.checkIn}</span></div>
                             <div class="info-item"><label>${dict.checkout_date}</label><span>${b.checkOut}</span></div>
                             <div class="info-item"><label>${dict.total_amount}</label><span>${b.totalDisplay || ('¥' + b.totalAmount)}</span></div>

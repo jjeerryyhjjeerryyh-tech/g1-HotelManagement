@@ -658,7 +658,7 @@ if (subscribeForm) {
         const dict = i18n[currentLang] || i18n.zh;
 
         try {
-            const response = await fetch('http://localhost:3000/api/newsletter/subscribe', {
+            const response = await fetch('http://43.132.210.15:3000/api/newsletter/subscribe', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, username })

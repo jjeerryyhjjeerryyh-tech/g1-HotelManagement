@@ -583,7 +583,7 @@
             }
 
             // 从后端加载房型
-            fetch('http://localhost:3000/api/roomtypes')
+            fetch('http://43.132.210.15:3000/api/roomtypes')
                 .then(r => r.json())
                 .then(data => {
                     if (data.roomTypes && data.roomTypes.length) {
@@ -690,7 +690,7 @@
 
         async function loadAllRatings() {
             try {
-                const res = await fetch('http://localhost:3000/api/reviews');
+                const res = await fetch('http://43.132.210.15:3000/api/reviews');
                 const data = await res.json();
                 const map = {};
                 (data.reviews || []).forEach(r => {
@@ -936,7 +936,7 @@ async function loadRoomReviews(roomId) {
     if (!listEl || !formEl) return;
 
     try {
-        const res  = await fetch('http://localhost:3000/api/reviews?roomId=' + roomId);
+        const res  = await fetch('http://43.132.210.15:3000/api/reviews?roomId=' + roomId);
         const data = await res.json();
         const reviews = data.reviews || [];
 
@@ -1023,7 +1023,7 @@ function submitBooking(event) {
     };
 
     // 发送到后端
-    fetch('http://localhost:3000/api/bookings', {
+    fetch('http://43.132.210.15:3000/api/bookings', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newBooking)
@@ -1176,7 +1176,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             try {
                 // 使用绝对路径确保在不同环境下都能访问到 API
-                const response = await fetch('http://localhost:3000/api/newsletter/subscribe', {
+                const response = await fetch('http://43.132.210.15:3000/api/newsletter/subscribe', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, username })

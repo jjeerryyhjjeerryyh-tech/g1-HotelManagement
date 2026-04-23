@@ -33,7 +33,7 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
     const subscribed = form.querySelector('input[name="subscribe"]').checked;
 
     try {
-        const res = await fetch('http://localhost:3000/api/register', {
+        const res = await fetch('http://43.132.210.15:3000/api/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, fullName, email, phone, password, subscribed })
