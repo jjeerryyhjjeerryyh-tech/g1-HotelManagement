@@ -21,7 +21,7 @@ loginForm.addEventListener('submit', async (e) => {
     const password = loginForm.querySelector('input[name="password"]').value;
 
     try {
-        const res = await fetch('http://localhost:3000/api/login', {
+        const res = await fetch('http://43.132.210.15:3000/api/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, password })
@@ -56,7 +56,7 @@ registerForm.addEventListener('submit', async (e) => {
     const password = registerForm.querySelector('input[name="password"]').value;
 
     try {
-        const res = await fetch('http://localhost:3000/api/admin/register', {
+        const res = await fetch('http://43.132.210.15:3000/api/admin/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, password })
