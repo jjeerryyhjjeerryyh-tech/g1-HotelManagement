@@ -1621,6 +1621,35 @@ document.addEventListener('DOMContentLoaded', () => {
     const subscribeForm = document.getElementById('hpSubscribeForm');
     const subscribeSuccess = document.getElementById('hpSubscribeSuccess');
 
+    function isUserSubscribed(username) {
+        if (!username) return false;
+        const subscribed = JSON.parse(localStorage.getItem('subscribed_users') || '[]');
+        return subscribed.includes(username);
+    }
+
+    function setSubscriptionState(username, isSubscribed) {
+        if (!username) return;
+        let subscribed = JSON.parse(localStorage.getItem('subscribed_users') || '[]');
+        if (isSubscribed) {
+            if (!subscribed.includes(username)) subscribed.push(username);
+        } else {
+            subscribed = subscribed.filter(u => u !== username);
+        }
+        localStorage.setItem('subscribed_users', JSON.stringify(subscribed));
+        updateSubscriptionUI();
+    }
+
+    function updateSubscriptionUI() {
+        const username = sessionStorage.getItem('username');
+        if (isUserSubscribed(username)) {
+            if (subscribeForm) subscribeForm.style.display = 'none';
+            if (subscribeSuccess) subscribeSuccess.classList.add('active');
+        } else {
+            if (subscribeForm) subscribeForm.style.display = 'flex';
+            if (subscribeSuccess) subscribeSuccess.classList.remove('active');
+        }
+    }
+
     function triggerConfetti() {
         const colors = ['#e67e22', '#f1c40f', '#2ecc71', '#3498db', '#e74c3c'];
         const container = document.getElementById('connect');
@@ -1652,6 +1681,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (subscribeForm) {
+        updateSubscriptionUI();
         subscribeForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const emailEl = document.getElementById('hpSubscribeEmail');
@@ -1680,15 +1710,36 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 if (success) {
-                    // 隐藏表单，显示成功信息
-                    subscribeForm.style.display = 'none';
-                    subscribeSuccess.classList.add('active');
+                    // 保存订阅状态
+                    if (username) {
+                        setSubscriptionState(username, true);
+                    } else {
+                        // 如果未登录，只做视觉上的展示
+                        subscribeForm.style.display = 'none';
+                        subscribeSuccess.classList.add('active');
+                    }
                     
                     // 触发撒花特效
                     triggerConfetti();
                     
                     if (username && window.notificationSystem) {
                         window.notificationSystem.notifyNewsletterSubscription(username);
+
+                        // 为用户推荐几个有折扣的房型
+                        const discountedRooms = roomsData
+                            .filter(r => r.originalPrice > r.price)
+                            .slice(0, 3);
+                        
+                        if (discountedRooms.length > 0) {
+                            const params = {
+                                recommendations_zh: discountedRooms.map(r => `${r.name.zh} (-${Math.round((1 - r.price / r.originalPrice) * 100)}%)`).join(', '),
+                                recommendations_en: discountedRooms.map(r => `${r.name.en} (-${Math.round((1 - r.price / r.originalPrice) * 100)}%)`).join(', '),
+                                recommendations_fr: discountedRooms.map(r => `${r.name.fr} (-${Math.round((1 - r.price / r.originalPrice) * 100)}%)`).join(', '),
+                                recommendations_ja: discountedRooms.map(r => `${r.name.ja} (-${Math.round((1 - r.price / r.originalPrice) * 100)}%)`).join(', ')
+                            };
+                            
+                            window.notificationSystem.notifyRoomRecommendation(username, params);
+                        }
                     }
                 } else {
                     const errorData = await response.json().catch(() => ({}));
@@ -1707,11 +1758,19 @@ document.addEventListener('DOMContentLoaded', () => {
         const btnUnsubscribe = document.getElementById('btnUnsubscribe');
         if (btnUnsubscribe) {
             btnUnsubscribe.addEventListener('click', () => {
-                const form = document.getElementById('hpSubscribeForm');
-                const successDiv = document.getElementById('hpSubscribeSuccess');
-                successDiv.classList.remove('active');
-                form.style.display = 'flex';
-                document.getElementById('hpSubscribeEmail').value = '';
+                const username = sessionStorage.getItem('username');
+                if (username) {
+                    setSubscriptionState(username, false);
+                    if (window.notificationSystem) {
+                        window.notificationSystem.notifyNewsletterUnsubscription(username);
+                    }
+                } else {
+                    const form = document.getElementById('hpSubscribeForm');
+                    const successDiv = document.getElementById('hpSubscribeSuccess');
+                    successDiv.classList.remove('active');
+                    form.style.display = 'flex';
+                    document.getElementById('hpSubscribeEmail').value = '';
+                }
                 showToast(t('toast_unsubscribed') || '已取消订阅', 'info');
             });
         }
@@ -1841,6 +1900,7 @@ document.addEventListener('DOMContentLoaded', () => {
             loginFormContainer.style.display = 'block';
             loggedInContainer.style.display = 'none';
         }
+        updateSubscriptionUI();
     }
     
     userBtn.addEventListener('click', (e) => {
@@ -1901,6 +1961,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1000);
     });
     
+    checkLoginState();
+
     // 加载通知系统
     loadScript('../notifications/notificationSystem.js', function() {
         console.log('通知系统已加载');

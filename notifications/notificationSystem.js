@@ -211,6 +211,34 @@
         return notification;
     }
 
+    function notifyNewsletterUnsubscription(username) {
+        var notification = {
+            id:          Date.now() + Math.random(),
+            userId:      username,
+            type:        'newsletter_unsubscription',
+            templateKey: 'newsletter_unsubscription',
+            params:      {},
+            timestamp:   new Date().toISOString(),
+            isRead:      false
+        };
+        addNotification(notification);
+        return notification;
+    }
+
+    function notifyRoomRecommendation(username, params) {
+        var notification = {
+            id:          Date.now() + Math.random(),
+            userId:      username,
+            type:        'room_recommendation',
+            templateKey: 'room_recommendation',
+            params:      params,
+            timestamp:   new Date().toISOString(),
+            isRead:      false
+        };
+        addNotification(notification);
+        return notification;
+    }
+
     function notifyAdminLogin(username) {
         var notification = {
             id:          Date.now() + Math.random(),
@@ -282,6 +310,8 @@
         notifyBookingCancelled: notifyBookingCancelled,
         notifyProfileUpdate:    notifyProfileUpdate,
         notifyNewsletterSubscription: notifyNewsletterSubscription,
+        notifyNewsletterUnsubscription: notifyNewsletterUnsubscription,
+        notifyRoomRecommendation: notifyRoomRecommendation,
         notifyAdminLogin:      notifyAdminLogin,
         renderNotification:    renderNotification,
         t:                     t,

@@ -60,6 +60,8 @@
             back: '返回',
             unsubscribe_btn: '取消订阅',
             newsletter_subscription_title: '订阅成功',
+            newsletter_unsubscription_title: '退订成功',
+            room_recommendation_title: '专属优惠推荐',
             toast_unsubscribed: '已取消订阅',
             just_now: '刚刚',
         },
@@ -109,6 +111,8 @@
             back: 'Back',
             unsubscribe_btn: 'Unsubscribe',
             newsletter_subscription_title: 'Subscription Successful',
+            newsletter_unsubscription_title: 'Unsubscribed',
+            room_recommendation_title: 'Exclusive Offers',
             toast_unsubscribed: 'Unsubscribed',
             just_now: 'Just now',
         },
@@ -157,6 +161,8 @@
             back: 'Retour',
             unsubscribe_btn: 'Se désabonner',
             newsletter_subscription_title: 'Abonnement réussi',
+            newsletter_unsubscription_title: 'Désabonnement réussi',
+            room_recommendation_title: 'Offres exclusives',
             toast_unsubscribed: 'Désabonné',
             just_now: 'À l\'instant',
         },
@@ -205,6 +211,8 @@
             back: '戻る',
             unsubscribe_btn: '購読解除',
             newsletter_subscription_title: '購読成功',
+            newsletter_unsubscription_title: '購読解除成功',
+            room_recommendation_title: '限定オファー',
             toast_unsubscribed: '購読を解除しました',
             just_now: 'たった今',
         }
@@ -219,6 +227,8 @@
             booking_cancelled_body: '您已取消预订 {roomType}（{checkIn} 至 {checkOut}）。退款将在3-5个工作日内原路返回。',
             profile_update_body: '您的个人资料已成功更新。',
             newsletter_subscription_body: '您已成功订阅酒店新闻简报。我们将定期为您发送专属优惠。',
+            newsletter_unsubscription_body: '您已成功退订酒店新闻简报。我们将不再向您发送优惠信息。',
+            room_recommendation_body: '感谢订阅！为您推荐今日热门折扣：{recommendations_zh}',
             general_body: '{content}',
         },
         en: {
@@ -228,6 +238,8 @@
             booking_cancelled_body: 'Your booking for {roomType} ({checkIn} to {checkOut}) has been cancelled. Refund will be processed within 3-5 business days.',
             profile_update_body: 'Your profile has been updated successfully.',
             newsletter_subscription_body: 'You have successfully subscribed to the hotel newsletter. We will send you exclusive offers regularly.',
+            newsletter_unsubscription_body: 'You have successfully unsubscribed from the hotel newsletter. You will no longer receive our offers.',
+            room_recommendation_body: 'Thank you for subscribing! Today\'s top recommendations: {recommendations_en}',
             general_body: '{content}',
         },
         fr: {
@@ -236,6 +248,8 @@
             booking_success_body2: 'Votre réservation est confirmée ! {roomType}, du {checkIn} au {checkOut}. Bon séjour !',
             profile_update_body: 'Votre profil a été mis à jour avec succès.',
             newsletter_subscription_body: 'Vous vous êtes abonné avec succès à la newsletter de l\'hôtel. Nous vous enverrons régulièrement des offres exclusives.',
+            newsletter_unsubscription_body: 'Vous vous êtes désabonné avec succès de la newsletter de l\'hôtel.',
+            room_recommendation_body: 'Merci pour votre abonnement ! Recommandations du jour : {recommendations_fr}',
             general_body: '{content}',
         },
         ja: {
@@ -244,6 +258,8 @@
             booking_success_body2: '予約が確定しました！{roomType}、{checkIn}から{checkOut}まで。素敵なご滞在を！',
             profile_update_body: 'プロフィールの更新が完了しました。',
             newsletter_subscription_body: 'ホテルのメールマガジンに登録されました。お得な情報を定期的にお届けします。',
+            newsletter_unsubscription_body: 'ホテルのメールマガジンの購読を解除しました。',
+            room_recommendation_body: 'ご登録ありがとうございます！本日の限定オファー：{recommendations_ja}',
             general_body: '{content}',
         }
     };
