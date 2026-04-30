@@ -1883,80 +1883,8 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('通知系统已加载');
         if (window.notificationSystem) {
             window.notificationSystem.updateNotificationBadge();
-            initNotificationBell();
         }
     });
-
-    // ============================================
-    // 通知铃铛交互
-    // ============================================
-    function initNotificationBell() {
-        var bellBtn    = document.getElementById('notifBellBtn');
-        var dropdown   = document.getElementById('notifDropdown');
-        var notifList  = document.getElementById('notifList');
-        var notifEmpty = document.getElementById('notifEmpty');
-
-        if (!bellBtn || !dropdown) return;
-
-        bellBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
-            if (dropdown.style.display === 'block') renderNotifList();
-        });
-
-        document.addEventListener('click', function(e) {
-            if (!dropdown.contains(e.target)) {
-                dropdown.style.display = 'none';
-            }
-        });
-
-        document.getElementById('markAllReadBtn').addEventListener('click', function() {
-            if (window.notificationSystem) {
-                var username = sessionStorage.getItem('username');
-                var notifs = window.notificationSystem.getNotifications(username);
-                notifs.forEach(function(n) {
-                    if (!n.isRead) window.notificationSystem.markAsRead(n.id);
-                });
-                renderNotifList();
-                window.notificationSystem.updateNotificationBadge();
-            }
-        });
-    }
-
-    function renderNotifList() {
-        var username = sessionStorage.getItem('username');
-        var ns = window.notificationSystem;
-        if (!username || !ns) return;
-
-        var notifs = ns.getNotifications(username);
-        var list  = document.getElementById('notifList');
-        var empty = document.getElementById('notifEmpty');
-        if (!list || !empty) return;
-
-        list.innerHTML = '';
-        notifs.forEach(function(n) {
-            var div = document.createElement('div');
-            div.className = 'notif-item' + (n.isRead ? '' : ' unread');
-            div.style.cssText = 'padding:12px 16px;border-bottom:1px solid #f5f5f5;cursor:pointer;font-size:13px;';
-            div.innerHTML = '<div style="font-weight:' + (n.isRead ? '400' : '600') + ';margin-bottom:4px;">' + escapeHtml(n.title) + '</div><div style="color:#888;font-size:12px;">' + escapeHtml(n.body) + '</div><div style="color:#ccc;font-size:11px;margin-top:4px;">' + new Date(n.timestamp).toLocaleString() + '</div>';
-            div.addEventListener('click', function() {
-                if (!n.isRead) ns.markAsRead(n.id);
-                ns.updateNotificationBadge();
-                renderNotifList();
-            });
-            list.appendChild(div);
-        });
-
-        list.style.display = notifs.length ? 'block' : 'none';
-        empty.style.display = notifs.length ? 'none' : 'block';
-    }
-
-    function escapeHtml(str) {
-        if (!str) return '';
-        var d = document.createElement('div');
-        d.textContent = str;
-        return d.innerHTML;
-    }
 });
 
 // 动态加载脚本函数
