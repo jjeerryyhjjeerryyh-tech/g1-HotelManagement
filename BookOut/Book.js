@@ -732,8 +732,7 @@
         }
 
         function renderRooms() {
-            const grid = document.getElementById('roomGrid');
-            grid.innerHTML = roomsData.map(room => createRoomCard(room)).join('');
+            filterRooms();
         }
 
         function createRoomCard(room) {
@@ -785,6 +784,8 @@
         function filterRooms() {
             const typeFilter = document.getElementById('roomTypeFilter').value;
             const priceFilter = document.getElementById('priceFilter').value;
+            const guestFilter = parseInt(document.getElementById('guestCount').value) || 0;
+            const sortType = document.getElementById('sortFilter').value;
             
             let filtered = roomsData.filter(room => {
                 // Type filter
@@ -796,26 +797,28 @@
                     if (priceFilter === '500-1000' && (room.price < 500 || room.price >= 1000)) return false;
                     if (priceFilter === '1000+' && room.price < 1000) return false;
                 }
+
+                // Guest filter
+                if (room.guests < guestFilter) return false;
                 
                 return true;
             });
-            
-            const grid = document.getElementById('roomGrid');
-            grid.innerHTML = filtered.map(room => createRoomCard(room)).join('');
-        }
 
-        function sortRooms() {
-            const sortType = document.getElementById('sortFilter').value;
-            let sorted = [...roomsData];
-            
+            // Apply sorting
             if (sortType === 'price-asc') {
-                sorted.sort((a, b) => a.price - b.price);
+                filtered.sort((a, b) => a.price - b.price);
             } else if (sortType === 'price-desc') {
-                sorted.sort((a, b) => b.price - a.price);
+                filtered.sort((a, b) => b.price - a.price);
             }
             
             const grid = document.getElementById('roomGrid');
-            grid.innerHTML = sorted.map(room => createRoomCard(room)).join('');
+            grid.innerHTML = filtered.map(room => createRoomCard(room)).join('');
+            
+            return filtered.length;
+        }
+
+        function sortRooms() {
+            filterRooms();
         }
 
         function searchRooms() {
@@ -836,8 +839,8 @@
             
             showToast(t('toast_searching'), 'info');
             setTimeout(() => {
-                filterRooms();
-                showToast(t('toast_found_rooms', { count: roomsData.length }), 'success');
+                const count = filterRooms();
+                showToast(t('toast_found_rooms', { count: count }), 'success');
             }, 500);
         }
 

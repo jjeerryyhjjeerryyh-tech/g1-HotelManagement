@@ -198,6 +198,27 @@ body {
 /* ================================
    语言下拉菜单（与 Book.css 完全一致）
 ================================ */
+.lang-selector {
+    margin-right: 15px;
+}
+
+.lang-select {
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    border: 1px solid var(--gray-300);
+    background: var(--surface);
+    color: var(--gray-800);
+    font-size: 0.9rem;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.2s;
+    font-family: inherit;
+}
+
+.lang-select:hover {
+    border-color: var(--primary);
+}
+
 .lang-menu-container {
     position: relative;
 }

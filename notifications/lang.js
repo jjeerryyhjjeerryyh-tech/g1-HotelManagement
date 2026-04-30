@@ -56,6 +56,7 @@
             create_account: '建立一个帐户',
             update_profile: '更新个人资料',
             logout_login: '登出登入',
+            back: '返回',
         },
         en: {
             hotel_name: '91 Hotel',
@@ -99,6 +100,7 @@
             create_account: 'Create an Account',
             update_profile: 'Update Profile',
             logout_login: 'Log Out',
+            back: 'Back',
         }
     };
 
