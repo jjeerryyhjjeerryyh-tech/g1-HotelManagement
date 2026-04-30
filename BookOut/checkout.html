@@ -77,7 +77,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label" data-i18n="fullName">姓名 *</label>
-                                    <input class="form-input" name="fullName" required data-i18n-placeholder="fullNamePlaceholder" placeholder="姓名（与证件一致）">
+                                    <input class="form-input" name="fullName" required data-i18n-placeholder="fullNamePlaceholder" placeholder="Name">
                                 </div>
                             </div>
                             <div class="form-row">
@@ -93,7 +93,7 @@
                             <div class="form-row">
                                 <div class="form-group">
                                     <label class="form-label" data-i18n="phone">联系电话</label>
-                                    <input class="form-input" name="phone" required data-i18n-placeholder="phonePlaceholder" placeholder="请输入8位数字电话号码"
+                                    <input class="form-input" name="phone" required data-i18n-placeholder="phonePlaceholder" placeholder="Please enter an 8-digit phone number"
                                            type="tel" pattern="\d{8}" maxlength="8" inputmode="numeric"
                                            oninput="this.value = this.value.replace(/\D/g, '').slice(0, 8)">
                                     <small style="color: #666; margin-top: 4px;" data-i18n="phoneHint">请填写8位数字电话号码</small>
@@ -112,7 +112,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="form-label" data-i18n="specialRequests">特殊要求（可选）</label>
-                                <input class="form-input" name="specialRequests" data-i18n-placeholder="specialRequestsPlaceholder" placeholder="如无烟房、高层、靠近电梯等">
+                                <input class="form-input" name="specialRequests" data-i18n-placeholder="specialRequestsPlaceholder" placeholder="Like Non-smoking rooms, high floors, near the elevator, etc.">
                             </div>
                         </form>
                     </div>
@@ -145,14 +145,14 @@
                             <div class="form-group">
                                 <label class="form-label" data-i18n="expiry">有效期 (MM/YY) *</label>
                                 <input class="form-input" form="checkoutForm" name="expiry" required placeholder="MM/YY"
-                                       type="tel" maxlength="4" inputmode="numeric" oninput="formatExpiry(this)"
+                                       type="tel" maxlength="5" inputmode="numeric" oninput="formatExpiry(this)"
                                        title="请填写4位数字（MMYY）">
-                                <small style="color: #666; margin-top: 4px;" data-i18n="expiryHint">例如：1228 表示 12/28</small>
+                                
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="form-label" data-i18n="cardholderName">持卡人姓名 *</label>
-                            <input class="form-input" form="checkoutForm" name="cardName" required data-i18n-placeholder="cardholderNamePlaceholder" placeholder="姓名">
+                            <input class="form-input" form="checkoutForm" name="cardName" required data-i18n-placeholder="cardholderNamePlaceholder" placeholder="Name">
                         </div>
                     </div>
                 </div>
