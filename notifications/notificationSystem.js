@@ -197,6 +197,20 @@
         return notification;
     }
 
+    function notifyNewsletterSubscription(username) {
+        var notification = {
+            id:          Date.now() + Math.random(),
+            userId:      username,
+            type:        'newsletter_subscription',
+            templateKey: 'newsletter_subscription',
+            params:      {},
+            timestamp:   new Date().toISOString(),
+            isRead:      false
+        };
+        addNotification(notification);
+        return notification;
+    }
+
     function notifyAdminLogin(username) {
         var notification = {
             id:          Date.now() + Math.random(),
@@ -267,6 +281,7 @@
         notifyBookingSuccess:   notifyBookingSuccess,
         notifyBookingCancelled: notifyBookingCancelled,
         notifyProfileUpdate:    notifyProfileUpdate,
+        notifyNewsletterSubscription: notifyNewsletterSubscription,
         notifyAdminLogin:      notifyAdminLogin,
         renderNotification:    renderNotification,
         t:                     t,

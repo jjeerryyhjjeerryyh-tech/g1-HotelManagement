@@ -58,6 +58,10 @@
             update_profile: '更新个人资料',
             logout_login: '登出登入',
             back: '返回',
+            unsubscribe_btn: '取消订阅',
+            newsletter_subscription_title: '订阅成功',
+            toast_unsubscribed: '已取消订阅',
+            just_now: '刚刚',
         },
         en: {
             hotel_name: '91 Hotel',
@@ -103,6 +107,10 @@
             update_profile: 'Update Profile',
             logout_login: 'Log Out',
             back: 'Back',
+            unsubscribe_btn: 'Unsubscribe',
+            newsletter_subscription_title: 'Subscription Successful',
+            toast_unsubscribed: 'Unsubscribed',
+            just_now: 'Just now',
         },
         fr: {
             hotel_name: '91 Hôtel',
@@ -147,6 +155,10 @@
             update_profile: 'Mettre à jour le profil',
             logout_login: 'Déconnexion',
             back: 'Retour',
+            unsubscribe_btn: 'Se désabonner',
+            newsletter_subscription_title: 'Abonnement réussi',
+            toast_unsubscribed: 'Désabonné',
+            just_now: 'À l\'instant',
         },
         ja: {
             hotel_name: '91ホテル',
@@ -191,6 +203,10 @@
             update_profile: 'プロフィール更新',
             logout_login: 'ログアウト',
             back: '戻る',
+            unsubscribe_btn: '購読解除',
+            newsletter_subscription_title: '購読成功',
+            toast_unsubscribed: '購読を解除しました',
+            just_now: 'たった今',
         }
     };
 
@@ -202,6 +218,7 @@
             booking_success_body2: '您的预订已确认！{roomType}，{checkIn} 至 {checkOut}。祝您住宿愉快！',
             booking_cancelled_body: '您已取消预订 {roomType}（{checkIn} 至 {checkOut}）。退款将在3-5个工作日内原路返回。',
             profile_update_body: '您的个人资料已成功更新。',
+            newsletter_subscription_body: '您已成功订阅酒店新闻简报。我们将定期为您发送专属优惠。',
             general_body: '{content}',
         },
         en: {
@@ -210,6 +227,7 @@
             booking_success_body2: 'Your reservation is confirmed! {roomType}, {checkIn} to {checkOut}. Enjoy your stay!',
             booking_cancelled_body: 'Your booking for {roomType} ({checkIn} to {checkOut}) has been cancelled. Refund will be processed within 3-5 business days.',
             profile_update_body: 'Your profile has been updated successfully.',
+            newsletter_subscription_body: 'You have successfully subscribed to the hotel newsletter. We will send you exclusive offers regularly.',
             general_body: '{content}',
         },
         fr: {
@@ -217,6 +235,7 @@
             booking_success_body: 'Réservation réussie pour {roomType}. Arrivée : {checkIn}, Départ : {checkOut}.',
             booking_success_body2: 'Votre réservation est confirmée ! {roomType}, du {checkIn} au {checkOut}. Bon séjour !',
             profile_update_body: 'Votre profil a été mis à jour avec succès.',
+            newsletter_subscription_body: 'Vous vous êtes abonné avec succès à la newsletter de l\'hôtel. Nous vous enverrons régulièrement des offres exclusives.',
             general_body: '{content}',
         },
         ja: {
@@ -224,6 +243,7 @@
             booking_success_body: '{roomType}の予約が完了しました。チェックイン：{checkIn}、チェックアウト：{checkOut}。',
             booking_success_body2: '予約が確定しました！{roomType}、{checkIn}から{checkOut}まで。素敵なご滞在を！',
             profile_update_body: 'プロフィールの更新が完了しました。',
+            newsletter_subscription_body: 'ホテルのメールマガジンに登録されました。お得な情報を定期的にお届けします。',
             general_body: '{content}',
         }
     };
