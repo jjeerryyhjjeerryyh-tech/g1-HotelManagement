@@ -424,9 +424,10 @@
                 toast_booking_success: '预订成功！',
                 toast_enter_lookup: '请输入查询信息',
                 toast_lookup_loading: '查询中...',
-                toast_lookup_not_found: '未找到相关预订',
-                toast_booking_cancelled: '预订已取消',
+                toast_lookup_not_found: '未找到订单',
+                toast_booking_cancelled: '订单已取消',
                 toast_not_implemented: '功能暂未实现',
+                toast_currency_changed: '已切换至 {name}',
                 amenities_title: '客房设施',
                 booking_policy_title: '预订政策',
                 select_hotel: '选择饭店',
@@ -589,6 +590,7 @@
                 toast_lookup_not_found: 'No booking found',
                 toast_booking_cancelled: 'Booking cancelled',
                 toast_not_implemented: 'Not implemented yet',
+                toast_currency_changed: 'Switched to {name}',
                 amenities_title: 'Amenities',
                 booking_policy_title: 'Booking Policy',
                 select_hotel: 'Select Hotel',
@@ -737,6 +739,7 @@
                 toast_found_rooms: '{count} chambres trouvées',
                 toast_refresh_success: 'Actualisé',
                 toast_booking_success: 'Réservation réussie !',
+                toast_currency_changed: 'Changé en {name}',
                 lang_display: 'Français',
                 lang_title: 'Langue',
                 section_connect: 'Restez Connecté',
@@ -770,7 +773,23 @@
                 section_connect: 'Restez Connecté',
                 connect_desc: 'Inscrivez-vous à notre newsletter pour recevoir des offres exclusives et des inspirations de voyage.',
                 subscribe_thanks: 'Merci pour votre abonnement !',
-                subscribe_success_msg: 'Vous recevrez bientôt nos dernières nouvelles.'
+                subscribe_success_msg: 'Vous recevrez bientôt nos dernières nouvelles.',
+                nav_notifications: 'Notifications',
+                currency_title: 'Devise',
+                currency_popular: 'DEVISES POPULAIRES',
+                currency_hkd: 'HKD',
+                currency_cny: 'CNY',
+                currency_usd: 'USD',
+                currency_eur: 'EUR',
+                currency_gbp: 'GBP',
+                currency_sgd: 'SGD',
+                currency_aud: 'AUD',
+                currency_all: 'TOUTES LES DEVISES',
+                currency_filter: 'Filtrer',
+                currency_jpy: 'JPY',
+                currency_krw: 'KRW',
+                currency_thb: 'THB',
+                currency_myr: 'MYR'
             },
             ja: {
                 brand: 'HotelBook 予約システム',
@@ -856,6 +875,7 @@
                 toast_found_rooms: '{count}室の空室が見つかりました',
                 toast_refresh_success: '更新に成功しました',
                 toast_booking_success: '予約が完了しました！',
+                toast_currency_changed: '{name} に切り替えました',
                 lang_display: '日本語',
                 lang_title: '言語',
                 section_connect: 'お問い合わせ',
@@ -887,7 +907,23 @@
                 footer_cookie: 'クッキー設定',
                 footer_lang: '言語',
                 connect_desc: 'ニュースレターに登録して、限定オファーや最新情報をいち早く受け取りましょう。',
-                subscribe_success_msg: '最新ニュースやお得な情報をメールでお届けします。'
+                subscribe_success_msg: '最新ニュースやお得な情報をメールでお届けします。',
+                nav_notifications: 'お知らせ',
+                currency_title: '通貨',
+                currency_popular: '人気の通貨',
+                currency_hkd: 'HKD',
+                currency_cny: 'CNY',
+                currency_usd: 'USD',
+                currency_eur: 'EUR',
+                currency_gbp: 'GBP',
+                currency_sgd: 'SGD',
+                currency_aud: 'AUD',
+                currency_all: 'すべての通貨',
+                currency_filter: '検索',
+                currency_jpy: 'JPY',
+                currency_krw: 'KRW',
+                currency_thb: 'THB',
+                currency_myr: 'MYR'
             }
         };
 
@@ -917,6 +953,17 @@
                 const k = el.getAttribute('data-i18n-placeholder');
                 if (k) el.setAttribute('placeholder', t(k));
             });
+
+            // 更新货币按钮文本
+            const currencyBtn = document.getElementById('currencyBtn');
+            if (currencyBtn) {
+                const activeCurrencyItem = document.querySelector('.currency-item.active');
+                if (activeCurrencyItem) {
+                    const k = activeCurrencyItem.getAttribute('data-i18n');
+                    const span = currencyBtn.querySelector('span');
+                    if (span && k) span.textContent = t(k);
+                }
+            }
 
             renderRooms();
             renderMyBookings();
@@ -1748,7 +1795,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 renderRooms(); // Re-render rooms to update prices
                 renderMyBookings(); // Re-render bookings to update prices
                 
-                showToast(`已切换至 ${currencyName}`, 'success');
+                showToast(t('toast_currency_changed', { name: currencyName }), 'success');
             });
         });
     }
