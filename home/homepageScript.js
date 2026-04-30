@@ -325,6 +325,40 @@ const i18n = {
             connect_desc: 'Subscribe to our newsletter for exclusive offers and updates.',
             subscribe_placeholder: 'Enter email address',
             subscribe_btn: 'Subscribe'
+        },
+        fr: {
+            menu: 'MENU',
+            nav_rooms: 'Chambres',
+            nav_dining: 'Dîner',
+            nav_wellness: 'Bien-être',
+            nav_offers: 'Offres',
+            lang: 'Langue',
+            contact_us: 'CONTACTEZ-NOUS',
+            reserve: 'RÉSERVER',
+            search_rooms: 'Rechercher',
+            hotel_name: '91 Hôtel',
+            checkin: 'Arrivée',
+            checkout: 'Départ',
+            search_available: 'Vérifier la disponibilité',
+            alert_invalid_date: 'La date de départ doit être après la date d\'arrivée.',
+            subscribe_btn: 'S\'abonner'
+        },
+        ja: {
+            menu: 'メニュー',
+            nav_rooms: '客室',
+            nav_dining: 'ダイニング',
+            nav_wellness: 'ウェルネス',
+            nav_offers: 'オファー',
+            lang: '言語',
+            contact_us: 'お問い合わせ',
+            reserve: '予約',
+            search_rooms: '検索',
+            hotel_name: '91ホテル',
+            checkin: 'チェックイン',
+            checkout: 'チェックアウト',
+            search_available: '空室状況を確認',
+            alert_invalid_date: 'チェックアウト日はチェックイン日より後にしてください。',
+            subscribe_btn: '登録'
         }
     };
 
@@ -528,7 +562,9 @@ if (langSelect) {
         const next = langSelect.value;
         currentLang = i18n[next] ? next : 'zh';
         localStorage.setItem('lang', currentLang);
-        document.documentElement.setAttribute('lang', currentLang === 'zh' ? 'zh-CN' : 'en');
+        
+        const htmlLangs = { zh: 'zh-CN', en: 'en', fr: 'fr', ja: 'ja' };
+        document.documentElement.setAttribute('lang', htmlLangs[currentLang] || 'en');
         document.documentElement.setAttribute('data-lang', currentLang);
         applyI18n();
         renderMenuPanel(activeMenuKey);

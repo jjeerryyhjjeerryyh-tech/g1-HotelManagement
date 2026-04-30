@@ -238,6 +238,79 @@
             toastServerError: "サーバーに接続できません。バックエンドが起動しているか確認してください",
             toastNoData: "予約情報がありません。客室選択画面に戻ります",
             toastDataParseError: "データ解析エラー"
+        },
+        fr: {
+            hotel_name: "91 Hôtel",
+            pageTitle: "Détails de la réservation · 91 Hôtel",
+            backToRooms: "Retour aux chambres",
+            selectDates: "Sélectionner les dates d'arrivée / départ",
+            checkInDate: "Date d'arrivée *",
+            checkOutDate: "Date de départ *",
+            totalNights: "{nights} nuit(s) au total",
+            contactInfo: "Informations de contact",
+            title: "Civilité *",
+            pleaseSelect: "Veuillez sélectionner",
+            mr: "M.",
+            ms: "Mme",
+            fullName: "Nom complet *",
+            fullNamePlaceholder: "Nom (selon pièce d'identité)",
+            email: "Adresse e-mail *",
+            confirmEmail: "Confirmer l'adresse e-mail *",
+            phone: "Numéro de téléphone",
+            phonePlaceholder: "Entrez un numéro à 8 chiffres",
+            phoneHint: "Veuillez entrer un numéro à 8 chiffres",
+            arrivalTime: "Heure d'arrivée estimée",
+            after18: "Après 18h00",
+            specialRequests: "Demandes spéciales (Facultatif)",
+            specialRequestsPlaceholder: "ex: chambre non-fumeur, étage élevé",
+            payment: "Paiement",
+            securityNotice: "Avis de sécurité",
+            securityMessage: "Nous cryptons les informations de paiement. Cette page est une démo.",
+            cardNumber: "Numéro de carte",
+            expiry: "Expiration (MM/YY) *",
+            expiryHint: "ex: 1228 pour 12/28",
+            cardholderName: "Nom du titulaire *",
+            cardholderNamePlaceholder: "Nom",
+            cardNumberTitle: "Veuillez entrer 12 chiffres",
+            expiryTitle: "Veuillez entrer 4 chiffres (MMYY)",
+            policies: "Politiques",
+            checkIn: "Arrivée",
+            checkInTime: "Après 14h00",
+            checkOut: "Départ",
+            checkOutTime: "Avant 12h00",
+            cancellationPolicy: "Politique d'annulation",
+            cancellationMessage: "Annulation gratuite jusqu'à 48h avant l'arrivée.",
+            agreeTermsPrefix: "J'ai lu et j'accepte les",
+            bookingTerms: "Conditions de réservation",
+            and: "et la",
+            privacyPolicy: "Politique de confidentialité",
+            back: "Retour",
+            confirmBooking: "Confirmer la réservation",
+            priceDetails: "Détails du prix",
+            directBookingBenefits: "Avantages de la réservation directe",
+            benefit1: "Heures d'arrivée/départ flexibles",
+            benefit2: "Réservation flexible",
+            benefit3: "Offres et tarifs exclusifs",
+            benefit4: "Expériences uniques",
+            needHelp: "Besoin d'aide ?",
+            helpText: "Notre équipe est à votre service :",
+            room: "Chambre",
+            price: "Prix",
+            nights: "Nuits",
+            tax: "Taxe",
+            total: "Total",
+            adults: "adulte(s)",
+            nightsUnit: "nuit(s)",
+            toastEmailMismatch: "Les adresses e-mail ne correspondent pas",
+            toastPhoneInvalid: "Le numéro doit faire 8 chiffres",
+            toastSelectDates: "Veuillez sélectionner les dates",
+            toastCheckOutBeforeCheckIn: "Le départ doit être après l'arrivée",
+            toastMinOneNight: "Séjour minimum d'une nuit",
+            toastBookingSuccess: "Réservation réussie ! Redirection...",
+            toastBookingFailed: "Échec de la réservation",
+            toastServerError: "Erreur serveur",
+            toastNoData: "Données manquantes",
+            toastDataParseError: "Erreur d'analyse des données"
         }
     };
 
@@ -420,10 +493,6 @@
                 <div class="fee-row" style="font-weight:bold;color:#e07b39"><span>${t.total}</span><span>${formatMoney(total)}</span></div>
             `;
         }
-
-        if (nightsSpan) {
-            nightsSpan.textContent = (t.totalNights || "共 {nights} 晚").replace('{nights}', nights);
-        }
     }
 
     function updateDatesAndRender(newCheckIn, newCheckOut) {
@@ -576,7 +645,7 @@
                         type: 'booking_success',
                         templateKey: 'booking_success',
                         params: {
-                            roomName: currentRoom.name || '房间',
+                            roomName: roomNameForDB || '房间',
                             checkIn: checkIn,
                             checkOut: checkOut,
                             totalAmount: totalDisplay || (currency + ' ' + displayTotal)
