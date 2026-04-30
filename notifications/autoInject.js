@@ -128,13 +128,17 @@
     // ============================================
     function getNotifBtnText() {
         // 优先通过 lang.js 获取语言
+        var lang = 'zh';
         if (window.__notifLang && window.__notifLang.getLang) {
-            var lang = window.__notifLang.getLang();
-            return lang === 'en' ? 'Notifications' : '消息提醒';
+            lang = window.__notifLang.getLang();
+        } else {
+            lang = localStorage.getItem('lang') || 'zh';
         }
-        // 兜底：读 localStorage.lang
-        var lang = localStorage.getItem('lang') || 'zh';
-        return lang === 'en' ? 'Notifications' : '消息提醒';
+
+        if (lang === 'en') return 'Notifications';
+        if (lang === 'fr') return 'Notifications';
+        if (lang === 'ja') return 'お知らせ';
+        return '消息提醒';
     }
 
     function updateNotifBtnText() {
