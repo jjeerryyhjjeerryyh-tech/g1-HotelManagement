@@ -1,23 +1,6 @@
 (function(){
     "use strict";
 
-    // 动态加载通知系统
-    function loadNotificationSystem(callback) {
-        if (window.HotelNotification) {
-            callback();
-            return;
-        }
-        var script = document.createElement('script');
-        script.src = '../notifications/notificationSystem.js';
-        script.onload = callback;
-        document.head.appendChild(script);
-    }
-
-    // 等待通知系统加载后执行回调
-    loadNotificationSystem(function() {
-        console.log('通知系统已加载');
-    });
-
     // ---------- 多语言配置 ----------
     const translations = {
         zh: {
@@ -562,21 +545,6 @@
             const data = await res.json();
             if (res.ok) {
                 showToast('toastBookingSuccess', 'success');
-                
-                // 添加预订成功通知
-                if (window.HotelNotification) {
-                    window.HotelNotification.addNotification({
-                        userId: username,
-                        type: 'booking_success',
-                        templateKey: 'booking_success',
-                        params: {
-                            roomName: currentRoom.name || '房间',
-                            checkIn: checkIn,
-                            checkOut: checkOut,
-                            totalAmount: totalDisplay || (currency + ' ' + displayTotal)
-                        }
-                    });
-                }
                 
                 sessionStorage.removeItem('checkout_room');
                 sessionStorage.removeItem('checkout_params');
