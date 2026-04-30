@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 
 /**
- * scripts-refactored.js - 重构后的脚本命令系统
- * 
- * 改进点：
- * 1. 使用命令模式消除 deploy:dev/test/prod 的 70% 重复代码
- * 2. 使用工具类统一命令执行和错误处理
- * 3. 使用 Constants 消除硬编码字符串
- * 4. 创建抽象基类 DeployCommand
- * 5. 更好的代码组织和可扩展性
+ * scripts-refactored.js - Refactored Script Command System
+ *
+ * Improvements:
+ * 1. Uses command pattern to eliminate 70% duplicate code in deploy:dev/test/prod
+ * 2. Uses utility classes for unified command execution and error handling
+ * 3. Uses Constants to eliminate hardcoded strings
+ * 4. Creates abstract base class DeployCommand
+ * 5. Better code organization and extensibility
  */
 
 const Constants = require('./Constants');
@@ -18,7 +18,7 @@ const DependencyManager = require('./dependency-manager-refactored');
 const DeploymentManager = require('./deployment-refactored');
 
 /**
- * 基础命令类
+ * Base command class
  */
 class Command {
   constructor(name, description) {
@@ -27,12 +27,12 @@ class Command {
   }
 
   execute() {
-    throw new Error('execute() 方法必须被重写');
+    throw new Error('execute() method must be overridden');
   }
 }
 
 /**
- * 部署命令基类 - 消除重复逻辑
+ * Deploy command base class - eliminates duplicate logic
  */
 class DeployCommand extends Command {
   constructor(environment, finalCommand, description) {
@@ -46,43 +46,43 @@ class DeployCommand extends Command {
       console.log(`=== ${this.description} ===`);
       process.env.NODE_ENV = this.environment;
 
-      // 共同的检查流程
+      // Common check flow
       this._checkDependencies();
       this._preDeploymentCheck();
 
-      // 执行具体的部署命令
+      // Execute specific deployment command
       this._runFinalCommand();
 
-      logger.info(`${this.description} 完成`, { environment: this.environment });
-      console.log(`✅ 部署成功`);
+      logger.info(`${this.description} completed`, { environment: this.environment });
+      console.log(`Deployment succeeded`);
     } catch (error) {
-      console.error(`❌ 部署失败: ${error.message}`);
+      console.error(`Deployment failed: ${error.message}`);
       process.exit(1);
     }
   }
 
   /**
-   * 检查依赖
+   * Check dependencies
    * @protected
    */
   _checkDependencies() {
-    console.log('检查依赖...');
+    console.log('Checking dependencies...');
     const depsResult = DependencyManager.checkDependencies();
 
     if (depsResult.status !== Constants.DEPENDENCY_STATUS.COMPLETE) {
-      console.log('缺失依赖，正在安装...');
+      console.log('Missing dependencies, installing...');
       if (!DependencyManager.installDependencies()) {
-        throw new Error('依赖安装失败');
+        throw new Error('Dependency installation failed');
       }
     }
   }
 
   /**
-   * 部署前检查
+   * Pre-deployment check
    * @protected
    */
   _preDeploymentCheck() {
-    console.log('执行部署前检查...');
+    console.log('Running pre-deployment checks...');
     const deployment = new DeploymentManager(this.environment);
     const preCheck = deployment.preDeploymentCheck();
 
@@ -90,153 +90,153 @@ class DeployCommand extends Command {
       const errors = preCheck.checks.filter(c => c.type === Constants.CHECK_TYPES.ERROR);
       if (errors.length > 0) {
         errors.forEach(check => {
-          console.error(`❌ ${check.message}`);
+          console.error(`X ${check.message}`);
         });
-        throw new Error('部署前检查失败');
+        throw new Error('Pre-deployment check failed');
       }
     }
 
-    // 显示警告但不停止部署
+    // Show warnings but don't stop deployment
     const warnings = preCheck.checks.filter(c => c.type === Constants.CHECK_TYPES.WARNING);
     warnings.forEach(check => {
-      console.warn(`⚠️  ${check.message}`);
+      console.warn(`! ${check.message}`);
     });
   }
 
   /**
-   * 执行最终命令 - 由子类重写
+   * Execute final command - overridden by subclasses
    * @protected
    */
   _runFinalCommand() {
-    console.log(`执行命令: ${this.finalCommand}`);
+    console.log(`Executing command: ${this.finalCommand}`);
     CommandExecutor.executeNpmWithStdio(...this.finalCommand.split(' '));
   }
 }
 
 /**
- * 开发环境部署命令
+ * Dev environment deploy command
  */
 class DeployDevCommand extends DeployCommand {
   constructor() {
     super(
       Constants.ENVIRONMENTS.DEVELOPMENT,
       'npm run dev',
-      '开发环境部署'
+      'Dev environment deployment'
     );
   }
 
   _runFinalCommand() {
-    console.log('启动开发服务器...');
+    console.log('Starting dev server...');
     CommandExecutor.executeNpmWithStdio('run', ['dev']);
   }
 }
 
 /**
- * 测试环境部署命令
+ * Test environment deploy command
  */
 class DeployTestCommand extends DeployCommand {
   constructor() {
     super(
       Constants.ENVIRONMENTS.TESTING,
       'npm run lint',
-      '测试环境部署'
+      'Test environment deployment'
     );
   }
 
   _runFinalCommand() {
-    console.log('运行测试...');
+    console.log('Running tests...');
     CommandExecutor.executeNpmWithStdio('run', ['lint']);
   }
 }
 
 /**
- * 生产环境部署命令
+ * Production environment deploy command
  */
 class DeployProdCommand extends DeployCommand {
   constructor() {
     super(
       Constants.ENVIRONMENTS.PRODUCTION,
       'npm run build && npm start',
-      '生产环境部署'
+      'Production environment deployment'
     );
   }
 
   _preDeploymentCheck() {
-    // 生产环境额外检查环境变量
+    // Extra checks for production environment
     const requiredEnvVars = ['DB_USERNAME', 'DB_PASSWORD'];
     const missingVars = requiredEnvVars.filter(v => !process.env[v]);
 
     if (missingVars.length > 0) {
-      throw new Error(`缺失必要的环境变量: ${missingVars.join(', ')}`);
+      throw new Error(`Missing required environment variables: ${missingVars.join(', ')}`);
     }
 
-    // 调用父类的检查
+    // Call parent check
     super._preDeploymentCheck();
   }
 
   _runFinalCommand() {
-    console.log('构建项目...');
+    console.log('Building project...');
     CommandExecutor.executeNpmWithStdio('run', ['build']);
 
-    console.log('启动生产服务器...');
+    console.log('Starting production server...');
     CommandExecutor.executeNpmWithStdio('start');
   }
 }
 
 /**
- * 配置检查命令
+ * Config check command
  */
 class ConfigCheckCommand extends Command {
   constructor() {
-    super('config:check', '检查当前环境配置');
+    super('config:check', 'Check current environment config');
   }
 
   execute() {
-    console.log('=== 当前环境配置 ===');
+    console.log('=== Current Environment Config ===');
     try {
       const config = require('./config-refactored');
       console.log(JSON.stringify(config.getAll(), null, 2));
     } catch (error) {
-      console.error('配置加载失败:', error.message);
+      console.error('Config loading failed:', error.message);
       process.exit(1);
     }
   }
 }
 
 /**
- * 依赖检查命令
+ * Dependency check command
  */
 class DepsCheckCommand extends Command {
   constructor() {
-    super('deps:check', '检查项目依赖完整性');
+    super('deps:check', 'Check project dependency completeness');
   }
 
   execute() {
-    console.log('=== 依赖检查 ===');
+    console.log('=== Dependency Check ===');
     try {
       const result = DependencyManager.checkDependencies();
       console.log(JSON.stringify(result, null, 2));
 
       if (result.status === Constants.DEPENDENCY_STATUS.INCOMPLETE) {
-        console.warn(`\n⚠️  检测到 ${result.missing.length} 个缺失的依赖`);
+        console.warn(`\n! Detected ${result.missing.length} missing dependencies`);
       }
     } catch (error) {
-      console.error('依赖检查失败:', error.message);
+      console.error('Dependency check failed:', error.message);
       process.exit(1);
     }
   }
 }
 
 /**
- * 健康检查命令
+ * Health check command
  */
 class HealthCheckCommand extends Command {
   constructor() {
-    super('health:check', '执行系统健康检查');
+    super('health:check', 'Execute system health check');
   }
 
   execute() {
-    console.log('=== 系统健康检查 ===');
+    console.log('=== System Health Check ===');
     try {
       const deployment = new DeploymentManager();
       const result = deployment.healthCheck();
@@ -246,49 +246,49 @@ class HealthCheckCommand extends Command {
         .filter(([, check]) => check.status === Constants.HEALTH_CHECK_STATUS.FAIL);
 
       if (failedChecks.length > 0) {
-        console.warn(`\n⚠️  检测到 ${failedChecks.length} 个失败的检查`);
+        console.warn(`\n! Detected ${failedChecks.length} failed checks`);
       }
     } catch (error) {
-      console.error('健康检查失败:', error.message);
+      console.error('Health check failed:', error.message);
       process.exit(1);
     }
   }
 }
 
 /**
- * 帮助命令
+ * Help command
  */
 class HelpCommand extends Command {
   constructor(commands) {
-    super('help', '显示帮助信息');
+    super('help', 'Display help info');
     this.commands = commands;
   }
 
   execute() {
     console.log(`
-=== 环境管理脚本帮助 ===
+=== Environment Management Script Help ===
 
-使用方法: node config/scripts.js <命令>
+Usage: node config/scripts.js <command>
 
-可用命令:`);
-    
+Available commands:`);
+
     for (const [cmdName, cmd] of Object.entries(this.commands)) {
       console.log(`  ${cmdName.padEnd(20)} - ${cmd.description}`);
     }
 
     console.log(`
-示例:
+Examples:
   node config/scripts.js config:check
   node config/scripts.js deploy:dev
   node config/scripts.js health:check
 
-更多信息请查看 README.md
+For more info see README.md
     `);
   }
 }
 
 /**
- * 命令管理器
+ * Command manager
  */
 class CommandManager {
   constructor() {
@@ -296,7 +296,7 @@ class CommandManager {
   }
 
   /**
-   * 初始化所有命令
+   * Initialize all commands
    * @private
    */
   _initializeCommands() {
@@ -312,7 +312,7 @@ class CommandManager {
   }
 
   /**
-   * 执行命令
+   * Execute command
    */
   execute(commandName) {
     if (!commandName || commandName === 'help') {
@@ -323,35 +323,35 @@ class CommandManager {
 
     const command = this.commands[commandName];
     if (!command) {
-      console.error(`❌ 未知命令: ${commandName}`);
-      console.log('使用 "node config/scripts.js help" 查看可用命令');
+      console.error(`Unknown command: ${commandName}`);
+      console.log('Use "node config/scripts.js help" to see available commands');
       process.exit(1);
     }
 
     try {
       command.execute();
     } catch (error) {
-      console.error(`❌ 命令执行错误: ${error.message}`);
+      console.error(`Command execution error: ${error.message}`);
       process.exit(1);
     }
   }
 
   /**
-   * 注册自定义命令
+   * Register custom command
    */
   registerCommand(command) {
     this.commands[command.name] = command;
   }
 
   /**
-   * 列出所有命令
+   * List all commands
    */
   listCommands() {
     return Object.keys(this.commands);
   }
 }
 
-// ============ 主程序 ============
+// ============ Main Program ============
 
 const manager = new CommandManager();
 const commandName = process.argv[2];

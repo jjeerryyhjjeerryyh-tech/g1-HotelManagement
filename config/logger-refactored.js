@@ -1,12 +1,12 @@
 /**
- * logger-refactored.js - 重构后的日志系统
- * 
- * 改进点：
- * 1. 使用 Constants 消除硬编码日志级别
- * 2. 使用 FileUtils 统一文件操作
- * 3. 更好的错误处理使用 AppError
- * 4. 支持日志元数据和格式化
- * 5. 性能优化建议（可选使用缓冲或流）
+ * logger-refactored.js - Refactored Logging System
+ *
+ * Improvements:
+ * 1. Uses Constants to eliminate hardcoded log levels
+ * 2. Uses FileUtils for unified file operations
+ * 3. Better error handling using AppError
+ * 4. Supports log metadata and formatting
+ * 5. Performance optimization suggestions (optional buffering or streaming)
  */
 
 const FileUtils = require('./FileUtils');
@@ -20,7 +20,7 @@ class Logger {
   }
 
   /**
-   * 从配置中加载日志配置
+   * Load log config from settings
    * @private
    */
   _loadLogConfig() {
@@ -35,7 +35,7 @@ class Logger {
   }
 
   /**
-   * 确保日志目录存在
+   * Ensure log directory exists
    * @private
    */
   _ensureLogDirectory() {
@@ -44,12 +44,12 @@ class Logger {
         FileUtils.ensureDirectory(this._getLogDirectory());
       }
     } catch (error) {
-      console.error('日志目录创建失败:', error.message);
+      console.error('Failed to create log directory:', error.message);
     }
   }
 
   /**
-   * 获取日志目录
+   * Get log directory
    * @private
    */
   _getLogDirectory() {
@@ -57,7 +57,7 @@ class Logger {
   }
 
   /**
-   * 格式化日志消息
+   * Format log message
    * @private
    */
   _formatMessage(level, message, meta = {}) {
@@ -65,12 +65,12 @@ class Logger {
     const metaStr = Object.keys(meta).length > 0
       ? ` | ${JSON.stringify(meta)}`
       : '';
-    
+
     return `[${timestamp}] [${level.toUpperCase()}] ${message}${metaStr}`;
   }
 
   /**
-   * 写入日志到文件
+   * Write log to file
    * @private
    */
   _writeToFile(formattedMessage) {
@@ -81,12 +81,12 @@ class Logger {
     try {
       FileUtils.appendToFile(this.logConfig.path, formattedMessage + '\n');
     } catch (error) {
-      console.error('写入日志文件失败:', error.message);
+      console.error('Failed to write log file:', error.message);
     }
   }
 
   /**
-   * 写入日志到控制台
+   * Write log to console
    * @private
    */
   _writeToConsole(formattedMessage, level) {
@@ -94,7 +94,7 @@ class Logger {
       return;
     }
 
-    // 根据日志级别使用不同的输出方法
+    // Use different output methods based on log level
     switch (level) {
       case Constants.LOG_LEVELS.ERROR:
         console.error(formattedMessage);
@@ -114,7 +114,7 @@ class Logger {
   }
 
   /**
-   * 检查是否应该记录该级别的日志
+   * Check if this level of log should be recorded
    * @private
    */
   _shouldLog(level) {
@@ -124,7 +124,7 @@ class Logger {
   }
 
   /**
-   * 内部日志方法
+   * Internal log method
    * @private
    */
   _log(level, message, meta = {}) {
@@ -133,41 +133,41 @@ class Logger {
     }
 
     const formattedMessage = this._formatMessage(level, message, meta);
-    
+
     this._writeToConsole(formattedMessage, level);
     this._writeToFile(formattedMessage);
   }
 
   /**
-   * 调试日志
+   * Debug log
    */
   debug(message, meta = {}) {
     this._log(Constants.LOG_LEVELS.DEBUG, message, meta);
   }
 
   /**
-   * 信息日志
+   * Info log
    */
   info(message, meta = {}) {
     this._log(Constants.LOG_LEVELS.INFO, message, meta);
   }
 
   /**
-   * 警告日志
+   * Warning log
    */
   warn(message, meta = {}) {
     this._log(Constants.LOG_LEVELS.WARN, message, meta);
   }
 
   /**
-   * 错误日志
+   * Error log
    */
   error(message, meta = {}) {
     this._log(Constants.LOG_LEVELS.ERROR, message, meta);
   }
 
   /**
-   * 记录异常
+   * Log exception
    */
   logError(error, context = {}) {
     const errorInfo = {
@@ -180,11 +180,11 @@ class Logger {
       errorInfo.stack = error.stack;
     }
 
-    this.error('发生异常', errorInfo);
+    this.error('Exception occurred', errorInfo);
   }
 
   /**
-   * 获取当前日志配置
+   * Get current log config
    */
   getConfig() {
     return {
@@ -196,32 +196,32 @@ class Logger {
   }
 
   /**
-   * 设置日志级别
+   * Set log level
    */
   setLevel(level) {
     if (!Constants.LOG_LEVELS[level.toUpperCase()]) {
-      this.warn(`未知的日志级别: ${level}`);
+      this.warn(`Unknown log level: ${level}`);
       return;
     }
     this.logConfig.level = level;
   }
 
   /**
-   * 清空日志文件
+   * Clear log file
    */
   clearLogFile() {
     try {
       if (this.logConfig.file && this.logConfig.path) {
         FileUtils.deleteFile(this.logConfig.path);
-        this.info('日志文件已清空');
+        this.info('Log file cleared');
       }
     } catch (error) {
-      this.error('清空日志文件失败', { error: error.message });
+      this.error('Failed to clear log file', { error: error.message });
     }
   }
 
   /**
-   * 获取日志文件大小
+   * Get log file size
    */
   getLogFileSize() {
     try {
@@ -230,15 +230,15 @@ class Logger {
       }
       return 0;
     } catch (error) {
-      this.error('获取日志文件大小失败', { error: error.message });
+      this.error('Failed to get log file size', { error: error.message });
       return 0;
     }
   }
 
   /**
-   * 轮转日志文件（当文件过大时）
+   * Rotate log file (when file is too large)
    */
-  rotateLogFile(maxSize = 10 * 1024 * 1024) { // 默认 10MB
+  rotateLogFile(maxSize = 10 * 1024 * 1024) { // Default 10MB
     try {
       if (!this.logConfig.file || !this.logConfig.path) {
         return;
@@ -248,16 +248,16 @@ class Logger {
       if (size > maxSize) {
         const timestamp = new Date().getTime();
         const backupPath = `${this.logConfig.path}.${timestamp}`;
-        
-        // 重命名当前日志文件
+
+        // Rename current log file
         require('fs').renameSync(this.logConfig.path, backupPath);
-        this.info(`日志文件已轮转至: ${backupPath}`);
+        this.info(`Log file rotated to: ${backupPath}`);
       }
     } catch (error) {
-      this.error('轮转日志文件失败', { error: error.message });
+      this.error('Failed to rotate log file', { error: error.message });
     }
   }
 }
 
-// 导出单例
+// Export singleton
 module.exports = new Logger();
