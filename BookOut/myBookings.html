@@ -316,15 +316,28 @@
 
         async function loadPage() {
             const dict = i18n[currentLang];
-            const [bookRes, revRes] = await Promise.all([
+            const [bookRes, revRes, typesRes] = await Promise.all([
                 fetch(`${API}/api/bookings`),
-                fetch(`${API}/api/reviews`)
+                fetch(`${API}/api/reviews`),
+                fetch(`${API}/api/roomtypes`)
             ]);
-            const bookData = await bookRes.json();
-            const revData  = await revRes.json();
+            const bookData  = await bookRes.json();
+            const revData   = await revRes.json();
+            const typesData = await typesRes.json();
 
             const myList  = (bookData.bookings || []).filter(b => b.username === username).reverse();
             const reviews = revData.reviews || [];
+            const roomTypes = typesData.roomTypes || [];
+
+            // 定义本地多语言字典，用于修正 API 返回的纯中文名
+            const roomI18nMap = {
+                'R001': { zh: '舒适标准间', en: 'Comfort Standard Room', fr: 'Chambre Standard Confort', ja: 'コンフォート標準客室' },
+                'R002': { zh: '豪华海景房', en: 'Deluxe Ocean View Room', fr: 'Chambre Deluxe Vue Mer', ja: 'デラックスオーシャンビュールーム' },
+                'R003': { zh: '行政套房', en: 'Executive Suite', fr: 'Suite Exécutive', ja: 'エグゼクティブスイート' },
+                'R004': { zh: '商务双床房', en: 'Business Twin Room', fr: 'Chambre Affaires à Deux Lits', ja: 'ビジネスツインルーム' },
+                'R005': { zh: '总统套房', en: 'Presidential Suite', fr: 'Suite Présidentielle', ja: 'ロイヤルスイートルーム' },
+                'R006': { zh: '花园景观房', en: 'Garden View Room', fr: 'Chambre Vue Jardin', ja: 'ガーデンビュールーム' }
+            };
 
             const container = document.getElementById('bookingsList');
             if (!myList.length) {
@@ -338,7 +351,13 @@
                 const isCheckedOut = b.status === 'checked-out';
                 const isCancellable = b.status === 'confirmed' || b.status === 'pending';
 
-                // 查找该预订是否已有评价（按 bookingId 或 roomId+username）
+                // 核心修复：优先从本地 i18n 映射表通过 roomId 获取翻译后的房型名
+                const i18nNameObj = roomI18nMap[b.roomId];
+                const displayRoomName = i18nNameObj 
+                    ? (i18nNameObj[currentLang] || i18nNameObj.zh)
+                    : (typeof b.roomName === 'object' ? (b.roomName[currentLang] || b.roomName.zh) : (b.roomName || b.roomType || '-'));
+
+                // 查找该预订是否已有评价
                 const existingReview = reviews.find(r =>
                     r.bookingId === b.id || (r.roomId === b.roomId && r.username === username)
                 );
@@ -374,7 +393,7 @@
                                     </div>
                                     <input type="hidden" id="rating-${b.id}" value="0">
                                     <textarea id="comment-${b.id}" rows="3" placeholder="${dict.share_experience_placeholder}"></textarea>
-                                    <button class="submit-review-btn" onclick="submitReview('${b.id}','${b.roomId}','${(b.roomName && b.roomName[currentLang]) || (b.roomType && b.roomType[currentLang]) || ''}')">
+                                    <button class="submit-review-btn" onclick="submitReview('${b.id}','${b.roomId}','${displayRoomName}')">
                                         ${dict.submit_review}
                                     </button>
                                 </div>
@@ -391,7 +410,7 @@
                             <span class="status-badge ${statusClass}">${statusText}</span>
                         </div>
                         <div class="booking-info">
-                            <div class="info-item"><label>${dict.room_type}</label><span>${(b.roomName && b.roomName[currentLang]) || (b.roomType && b.roomType[currentLang]) || '-'}</span></div>
+                            <div class="info-item"><label>${dict.room_type}</label><span>${displayRoomName}</span></div>
                             <div class="info-item"><label>${dict.checkin_date}</label><span>${b.checkIn}</span></div>
                             <div class="info-item"><label>${dict.checkout_date}</label><span>${b.checkOut}</span></div>
                             <div class="info-item"><label>${dict.total_amount}</label><span>${b.totalDisplay || ('¥' + b.totalAmount)}</span></div>
@@ -401,7 +420,7 @@
                         ${isCancellable ? `
                         <div style="margin-top:16px;padding-top:16px;border-top:1px solid #f0f0f0;display:flex;justify-content:flex-end;">
                             <button class="cancel-btn"
-                                data-roomtype="${(b.roomName && b.roomName[currentLang]) || (b.roomType && b.roomType[currentLang]) || '-'}"
+                                data-roomtype="${displayRoomName}"
                                 data-checkin="${b.checkIn}"
                                 data-checkout="${b.checkOut}"
                                 onclick="cancelBooking(this, '${b.id}')">
