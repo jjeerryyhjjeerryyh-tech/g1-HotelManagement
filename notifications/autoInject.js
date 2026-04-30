@@ -73,7 +73,11 @@
                     var room   = JSON.parse(roomRaw);
                     var params = JSON.parse(paramsRaw);
                     // 预订详情存到 sessionStorage（checkout.js 会清空原字段，这些不会被清除）
-                    sessionStorage.setItem('__bookingRoom', room.name || '');
+                    // 处理多语言房名：name 可能是 { zh, en, ja } 结构
+                    var roomName = typeof room.name === 'object'
+                        ? (room.name['en'] || room.name.zh || '')
+                        : (room.name || '');
+                    sessionStorage.setItem('__bookingRoom', roomName);
                     sessionStorage.setItem('__bookingCheckIn', params.checkIn || '');
                     sessionStorage.setItem('__bookingCheckOut', params.checkOut || '');
                 } catch (ex) { /* ignore parse errors */ }

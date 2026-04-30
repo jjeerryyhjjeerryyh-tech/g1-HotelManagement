@@ -169,7 +169,7 @@
             id:          Date.now() + Math.random(),
             userId:      username,
             type:        'booking_success',
-            templateKey: 'booking_success_body',
+            templateKey: 'booking_success',
             params: {
                 roomType:  bookingDetails.roomType  || '',
                 checkIn:   bookingDetails.checkIn   || '',
@@ -188,7 +188,7 @@
             id:          Date.now() + Math.random(),
             userId:      username,
             type:        'profile_update',
-            templateKey: 'profile_update_body',
+            templateKey: 'profile_update',
             params:      {},
             timestamp:   new Date().toISOString(),
             isRead:      false
@@ -202,7 +202,7 @@
             id:          Date.now() + Math.random(),
             userId:      username,
             type:        'admin_login',
-            templateKey: 'admin_login_body',
+            templateKey: 'admin_login',
             params:      {},
             timestamp:   new Date().toISOString(),
             isRead:      false

@@ -1,209 +1,209 @@
-# 👥 团队协作指南
+# Team Collaboration Guide
 
-**用途**: 让团队成员理解角色分工、通信约定、工作流程
-
----
-
-## 🎯 团队成员角色
-
-### 👨‍💼 项目经理 / 产品经理
-
-**职责**:
-- 了解项目整体情况
-- 制定迁移计划和时间表
-- 跟踪项目进度
-- 与团队沟通
-
-**需要知道**:
-- ✅ 这个系统是做什么的
-- ✅ 迁移需要多长时间
-- ✅ 有什么风险
-- ✅ 成本效益是什么
-
-**快速了解** (20 分钟):
-```
-1. 读本文档 (5 分钟)
-2. 读 MIGRATION_GUIDE.md (10 分钟)
-3. 问开发团队问题 (5 分钟)
-```
-
-**关键指标**:
-- 代码质量提升 300%
-- 开发效率提升 25%
-- Bug 率降低 40%
-- 维护成本降低 30%
+**Purpose**: Help team members understand role divisions, communication conventions, and workflows
 
 ---
 
-### 👨‍💻 后端开发者
+## Team Member Roles
 
-**职责**:
-- 理解系统设计和 API
-- 在代码中使用工具类
-- 编写测试
-- 参与代码审查
+### Project Manager / Product Manager
 
-**需要知道**:
-- ✅ 8 个模块分别做什么
-- ✅ 如何使用工具类
-- ✅ 常见错误和解决方法
-- ✅ 代码示例和最佳实践
+**Responsibilities**:
+- Understand overall project status
+- Create migration plans and timelines
+- Track project progress
+- Communicate with the team
 
-**快速了解** (30 分钟):
+**Need to Know**:
+- ✅ What this system does
+- ✅ How long migration will take
+- ✅ What the risks are
+- ✅ What the cost-benefit is
+
+**Quick Overview** (20 minutes):
 ```
-1. 读 GETTING_STARTED.md (5 分钟)
-2. 读 API_REFERENCE.md (15 分钟)
-3. 看代码注释 (5 分钟)
-4. 写第一个测试 (5 分钟)
+1. Read this document (5 minutes)
+2. Read MIGRATION_GUIDE.md (10 minutes)
+3. Ask the development team questions (5 minutes)
 ```
 
-**日常工作**:
-- 使用 FileUtils 读写文件
-- 使用 CommandExecutor 执行命令
-- 使用 Constants 引用常量
-- 使用 AppError 处理异常
-- 使用 Logger 记录日志
+**Key Metrics**:
+- Code quality improvement: 300%
+- Development efficiency improvement: 25%
+- Bug rate reduction: 40%
+- Maintenance cost reduction: 30%
 
 ---
 
-### 🧪 QA / 测试工程师
+### Backend Developer
 
-**职责**:
-- 测试系统功能
-- 验证命令和流程
-- 发现并报告 bug
-- 执行回归测试
+**Responsibilities**:
+- Understand system design and APIs
+- Use utility classes in code
+- Write tests
+- Participate in code reviews
 
-**需要知道**:
-- ✅ 系统有哪些命令
-- ✅ 如何执行测试
-- ✅ 常见错误现象
-- ✅ 如何查看日志
+**Need to Know**:
+- ✅ What each of the 8 modules does
+- ✅ How to use utility classes
+- ✅ Common errors and solutions
+- ✅ Code examples and best practices
 
-**快速了解** (15 分钟):
+**Quick Overview** (30 minutes):
 ```
-1. 读本文档的"命令列表" (5 分钟)
-2. 读 TROUBLESHOOTING.md (5 分钟)
-3. 手动执行几个命令 (5 分钟)
+1. Read GETTING_STARTED.md (5 minutes)
+2. Read API_REFERENCE.md (15 minutes)
+3. Read code comments (5 minutes)
+4. Write first test (5 minutes)
 ```
 
-**日常工作**:
-- 执行系统命令
-- 检查日志输出
-- 验证异常处理
-- 跟踪 bug 修复
+**Daily Work**:
+- Use FileUtils for file read/write
+- Use CommandExecutor to execute commands
+- Use Constants to reference constants
+- Use AppError to handle exceptions
+- Use Logger to log messages
 
 ---
 
-### 🚀 DevOps / 部署工程师
+### QA / Test Engineer
 
-**职责**:
-- 在不同环境部署
-- 监控系统运行
-- 管理日志和备份
-- 处理部署问题
+**Responsibilities**:
+- Test system functionality
+- Verify commands and workflows
+- Find and report bugs
+- Execute regression tests
 
-**需要知道**:
-- ✅ 如何在各环境部署
-- ✅ 日志文件位置
-- ✅ 如何监控性能
-- ✅ 如何故障排查
+**Need to Know**:
+- ✅ What commands the system has
+- ✅ How to execute tests
+- ✅ Common error symptoms
+- ✅ How to view logs
 
-**快速了解** (25 分钟):
+**Quick Overview** (15 minutes):
 ```
-1. 读 GETTING_STARTED.md (部署部分) (10 分钟)
-2. 读 API_REFERENCE.md (Deployment 部分) (10 分钟)
-3. 手动部署一次 (5 分钟)
+1. Read "Command List" section of this document (5 minutes)
+2. Read TROUBLESHOOTING.md (5 minutes)
+3. Manually execute a few commands (5 minutes)
 ```
 
-**日常工作**:
-- 部署应用到各环境
-- 检查部署状态
-- 查看日志
-- 处理部署错误
+**Daily Work**:
+- Execute system commands
+- Check log output
+- Verify exception handling
+- Track bug fixes
 
 ---
 
-## 📋 命令列表
+### DevOps / Deployment Engineer
 
-### 检查和验证
+**Responsibilities**:
+- Deploy to different environments
+- Monitor system operation
+- Manage logs and backups
+- Handle deployment issues
+
+**Need to Know**:
+- ✅ How to deploy to each environment
+- ✅ Log file locations
+- ✅ How to monitor performance
+- ✅ How to troubleshoot
+
+**Quick Overview** (25 minutes):
+```
+1. Read GETTING_STARTED.md (deployment section) (10 minutes)
+2. Read API_REFERENCE.md (Deployment section) (10 minutes)
+3. Manually deploy once (5 minutes)
+```
+
+**Daily Work**:
+- Deploy applications to each environment
+- Check deployment status
+- View logs
+- Handle deployment errors
+
+---
+
+## Command List
+
+### Checks and Verification
 
 ```bash
-# 查看所有可用命令
+# View all available commands
 node scripts-refactored.js help
 
-# 检查配置是否正确
+# Check if config is correct
 node scripts-refactored.js config:check
 
-# 检查系统健康状态
+# Check system health status
 node scripts-refactored.js health:check
 
-# 检查依赖是否完整
+# Check if dependencies are complete
 node scripts-refactored.js dep:check
 ```
 
-### 部署命令
+### Deployment Commands
 
 ```bash
-# 部署到开发环境
+# Deploy to dev environment
 node scripts-refactored.js deploy:dev
 
-# 部署到测试环境
+# Deploy to test environment
 node scripts-refactored.js deploy:test
 
-# 部署到生产环境
+# Deploy to production environment
 node scripts-refactored.js deploy:prod
 
-# 检查部署状态
+# Check deployment status
 node scripts-refactored.js deploy:status
 ```
 
-### 依赖管理
+### Dependency Management
 
 ```bash
-# 安装所有依赖
+# Install all dependencies
 node scripts-refactored.js dep:install
 
-# 仅安装生产依赖
+# Install production dependencies only
 node scripts-refactored.js dep:prod
 
-# 检查安全漏洞
+# Check security vulnerabilities
 node scripts-refactored.js dep:audit
 
-# 列出所有依赖
+# List all dependencies
 node scripts-refactored.js dep:list
 ```
 
-### 日志相关
+### Log Related
 
 ```bash
-# 查看日志
+# View logs
 tail -f logs/application.log
 
-# 清空日志
+# Clear logs
 node scripts-refactored.js log:clear
 
-# 查看日志大小
+# View log size
 du -h logs/application.log
 
-# 轮转日志
+# Rotate logs
 node scripts-refactored.js log:rotate
 ```
 
 ---
 
-## 🗂️ 文件和路径
+## Files and Paths
 
-### 日志文件
+### Log Files
 
 ```
 logs/
-├── development.log     开发环境日志
-├── testing.log        测试环境日志
-└── production.log     生产环境日志
+├── development.log     Dev environment logs
+├── testing.log         Test environment logs
+└── production.log      Production environment logs
 ```
 
-### 配置文件
+### Config Files
 
 ```
 config/
@@ -217,303 +217,303 @@ config/
 └── deployment-refactored.js
 ```
 
-### 部署脚本
+### Deployment Scripts
 
 ```
 deploy/
-├── dev.sh            开发部署脚本 (Linux)
-├── dev.bat           开发部署脚本 (Windows)
-├── test.sh           测试部署脚本 (Linux)
-├── test.bat          测试部署脚本 (Windows)
-├── prod.sh           生产部署脚本 (Linux)
-└── prod.bat          生产部署脚本 (Windows)
+├── dev.sh            Dev deployment script (Linux)
+├── dev.bat           Dev deployment script (Windows)
+├── test.sh           Test deployment script (Linux)
+├── test.bat          Test deployment script (Windows)
+├── prod.sh           Prod deployment script (Linux)
+└── prod.bat          Prod deployment script (Windows)
 ```
 
 ---
 
-## 📞 沟通协议
+## Communication Protocols
 
-### 问题分类
+### Issue Classification
 
-| 问题 | 处理人 | 响应时间 |
-|-----|--------|--------|
-| API 相关 | 后端开发 | 2 小时 |
-| 部署相关 | DevOps | 1 小时 |
-| 测试问题 | QA | 4 小时 |
-| 架构设计 | 架构师 | 4 小时 |
-| 紧急故障 | 全体 | 15 分钟 |
+| Issue | Handler | Response Time |
+|------|---------|--------------|
+| API related | Backend dev | 2 hours |
+| Deployment related | DevOps | 1 hour |
+| Testing issues | QA | 4 hours |
+| Architecture design | Architect | 4 hours |
+| Emergency failure | All | 15 minutes |
 
-### 沟通方式
+### Communication Methods
 
-1. **文档优先** - 先查看文档是否有答案
-2. **示例代码** - 查看代码注释和示例
-3. **团队讨论** - 在团队会议讨论
-4. **文档记录** - 将解决方案记录到文档
+1. **Documentation first** - Check if documentation has answers first
+2. **Code examples** - View code comments and examples
+3. **Team discussion** - Discuss in team meetings
+4. **Document records** - Record solutions in documentation
 
-### 会议安排
+### Meeting Schedule
 
-- **周一** 项目进度同步 (30 分钟)
-- **周三** 技术方案讨论 (30 分钟)
-- **周五** 风险评估和计划 (30 分钟)
-- **需要时** 应急会议 (15 分钟)
+- **Monday** Project progress sync (30 minutes)
+- **Wednesday** Technical solution discussion (30 minutes)
+- **Friday** Risk assessment and planning (30 minutes)
+- **As needed** Emergency meeting (15 minutes)
 
 ---
 
-## ✅ 工作流程
+## Workflows
 
-### 日常开发流程
-
-```
-1. 开始工作
-   ↓
-2. 查看相关文档
-   ↓
-3. 在代码中使用工具类
-   ↓
-4. 编写测试
-   ↓
-5. 提交代码审查
-   ↓
-6. 修改反馈
-   ↓
-7. 合并代码
-```
-
-### Bug 修复流程
+### Daily Development Workflow
 
 ```
-1. 测试发现问题 → 报告 bug
-   ↓
-2. 开发者查看 TROUBLESHOOTING.md
-   ↓
+1. Start work
+   |
+2. View relevant documentation
+   |
+3. Use utility classes in code
+   |
+4. Write tests
+   |
+5. Submit code review
+   |
+6. Modify based on feedback
+   |
+7. Merge code
+```
+
+### Bug Fix Workflow
+
+```
+1. Testing发现问题 -> Report bug
+   |
+2. Developer查看 TROUBLESHOOTING.md
+   |
 3. 追查根本原因
-   ↓
+   |
 4. 实现修复
-   ↓
+   |
 5. 编写测试验证
-   ↓
+   |
 6. 提交代码审查
-   ↓
+   |
 7. QA 验证修复
-   ↓
+   |
 8. 关闭 bug
 ```
 
-### 部署流程
+### Deployment Workflow
 
 ```
 1. 代码合并到主分支
-   ↓
+   |
 2. 运行完整测试
-   ↓
-3. DevOps 在测试环境验证
-   ↓
+   |
+3. DevOps在测试环境验证
+   |
 4. 所有人确认没问题
-   ↓
-5. DevOps 部署到生产
-   ↓
+   |
+5. DevOps部署到生产
+   |
 6. 监控系统运行状态
-   ↓
+   |
 7. 验收完成
 ```
 
 ---
 
-## 📊 关键指标
+## Key Metrics
 
-### 代码质量
-
-```
-指标                  目标      当前
-─────────────────────────────────
-代码重复率           <10%      ✅ 8%
-测试覆盖率           >80%      📈 进行中
-文档完整度           100%      ✅ 100%
-类型检查             100%      ✅ 100%
-```
-
-### 性能指标
+### Code Quality
 
 ```
-指标                  目标      当前
-─────────────────────────────────
-启动时间             <2s       ✅ 1.2s
-命令执行             <5s       ✅ 2.3s
-日志写入             <100ms    ✅ 45ms
-内存占用             <50MB     ✅ 38MB
+Metric                  Target      Current
+─────────────────────────────────────────
+Code duplication rate   <10%        ✅ 8%
+Test coverage           >80%        📈 In progress
+Documentation complete  100%       ✅ 100%
+Type checking           100%        ✅ 100%
 ```
 
-### 可用性
+### Performance Metrics
 
 ```
-指标                  目标      当前
-─────────────────────────────────
-系统可用性           99.5%     ✅ 99.8%
-部署成功率           100%      ✅ 100%
-故障恢复时间         <15min    ✅ 5min
-文档可读性           100%      ✅ 100%
+Metric                  Target      Current
+─────────────────────────────────────────
+Startup time            <2s         ✅ 1.2s
+Command execution       <5s         ✅ 2.3s
+Log writing             <100ms      ✅ 45ms
+Memory usage            <50MB       ✅ 38MB
 ```
 
----
-
-## 🚨 应急处理
-
-### 常见紧急情况
-
-| 情况 | 处理人 | 步骤 |
-|-----|--------|------|
-| 部署失败 | DevOps | 1.查看日志 2.回滚 3.通知全体 |
-| 命令崩溃 | 后端开发 | 1.查看异常 2.修复代码 3.测试 |
-| 日志满了 | DevOps | 1.清理日志 2.检查根因 3.配置轮转 |
-| 依赖冲突 | 后端开发 | 1.分析冲突 2.解决 3.重新安装 |
-
-### 应急联系
-
-- **系统管理员**: 张三 (18600000001)
-- **架构师**: 李四 (18600000002)
-- **技术负责人**: 王五 (18600000003)
-
----
-
-## 📚 团队资源
-
-### 文档库
-
-- **技术文档**: 见 README.md
-- **设计文档**: `/docs/design/`
-- **部署文档**: `/docs/deployment/`
-- **故障排查**: TROUBLESHOOTING.md
-
-### 工具
-
-- **代码仓库**: GitHub (URL)
-- **问题追踪**: Jira (URL)
-- **文档协作**: Confluence (URL)
-- **沟通工具**: Slack / 企业微信
-
-### 培训
-
-- **新人培训**: 第一周 2 小时
-- **定期分享**: 每月一次技术分享
-- **代码审查**: 每个 PR 必须被审查
-- **知识转移**: 关键员工有备份
-
----
-
-## 🎓 最佳实践
-
-### 代码审查
+### Availability
 
 ```
-要求:
-✅ 所有 PR 必须被至少 1 人审查
-✅ 必须通过自动化测试
-✅ 代码符合团队规范
-✅ 有清晰的提交信息
-
-评审标准:
-1. 功能是否正确
-2. 代码是否清晰易懂
-3. 是否有测试覆盖
-4. 是否遵循设计模式
-5. 是否更新了文档
-```
-
-### 测试要求
-
-```
-类型          覆盖率要求    
-─────────────────────────
-单元测试      > 80%
-集成测试      > 60%
-E2E 测试      > 40%
-总体覆盖      > 70%
-```
-
-### 文档要求
-
-```
-类型          要求
-─────────────────────────
-代码注释      关键逻辑需要注释
-JSDoc         所有公开方法
-README        每个模块有说明
-示例代码      常用功能有示例
-```
-
-### 部署要求
-
-```
-检查项        生产环境前必须
-─────────────────────────
-✅ 代码审查    所有 PR 被审查
-✅ 自动化测试  全部通过
-✅ 文档更新    文档已更新
-✅ 知会团队    所有人收到通知
-✅ 准备回滚    回滚脚本准备好
+Metric                  Target      Current
+─────────────────────────────────────────
+System availability      99.5%       ✅ 99.8%
+Deployment success rate 100%        ✅ 100%
+Failure recovery time   <15min      ✅ 5min
+Documentation readability 100%      ✅ 100%
 ```
 
 ---
 
-## 📋 每日检查清单
+## Emergency Handling
 
-### 开发者 - 每天开始
+### Common Emergency Situations
 
-- [ ] 检查是否有新的 bug 报告
-- [ ] 查看是否有代码审查反馈
-- [ ] 检查上次部署是否成功
-- [ ] 查看日志是否有异常
+| Situation | Handler | Steps |
+|-----------|---------|-------|
+| Deployment failed | DevOps | 1.View logs 2.Rollback 3.Notify all |
+| Command crashed | Backend dev | 1.View exception 2.Fix code 3.Test |
+| Log full | DevOps | 1.Clear logs 2.Check root cause 3.Configure rotation |
+| Dependency conflict | Backend dev | 1.Analyze conflict 2.Resolve 3.Reinstall |
 
-### QA - 每天开始
+### Emergency Contacts
 
-- [ ] 检查是否有新的代码提交
-- [ ] 执行冒烟测试
-- [ ] 查看系统日志
-- [ ] 检查是否有待办测试
-
-### DevOps - 每天开始
-
-- [ ] 检查系统健康状态
-- [ ] 检查磁盘空间使用
-- [ ] 查看日志文件大小
-- [ ] 检查依赖更新
+- **System Administrator**: Zhang San (+86 18600000001)
+- **Architect**: Li Si (+86 18600000002)
+- **Technical Lead**: Wang Wu (+86 18600000003)
 
 ---
 
-## 📞 常见问题
+## Team Resources
 
-**Q: 我应该使用哪个文档?**  
-A: 根据你的角色，查看对应的文档。参考 README.md 的"快速导航"部分。
+### Documentation Library
 
-**Q: 遇到问题怎么办?**  
-A: 先查看 TROUBLESHOOTING.md。如果没找到答案，询问相关人员。
+- **Technical docs**: See README.md
+- **Design docs**: `/docs/design/`
+- **Deployment docs**: `/docs/deployment/`
+- **Troubleshooting**: TROUBLESHOOTING.md
 
-**Q: 如何提出改进建议?**  
-A: 在周三的技术方案讨论中提出，或发邮件给技术负责人。
+### Tools
 
-**Q: 代码审查要多久?**  
-A: 一般在 2-4 小时内，紧急情况可加急。
+- **Code repository**: GitHub (URL)
+- **Issue tracking**: Jira (URL)
+- **Documentation collaboration**: Confluence (URL)
+- **Communication tool**: Slack / WeChat Work
 
-**Q: 部署需要多久?**  
-A: 一般需要 15-30 分钟，包括测试和验收。
+### Training
 
----
-
-## 🎊 总结
-
-这个文档定义了:
-- ✅ 每个人的角色和职责
-- ✅ 如何沟通和协作
-- ✅ 常用的命令和文件
-- ✅ 工作流程和最佳实践
-- ✅ 应急处理机制
-
-**记住**: 遇到问题先查文档，然后才是问别人！
+- **Newcomer training**: 2 hours in first week
+- **Regular sharing**: Monthly tech sharing
+- **Code review**: Every PR must be reviewed
+- **Knowledge transfer**: Backup for key employees
 
 ---
 
-**版本**: 2.0.0  
-**最后更新**: 2026年3月  
-**维护**: 团队技术负责人
+## Best Practices
 
-👉 **下一步**: 根据你的角色，查看对应的文档！
+### Code Review
+
+```
+Requirements:
+✅ All PRs must be reviewed by at least 1 person
+✅ Must pass automated tests
+✅ Code must follow team conventions
+✅ Must have clear commit messages
+
+Review criteria:
+1. Is functionality correct?
+2. Is code clear and understandable?
+3. Is there test coverage?
+4. Does it follow design patterns?
+5. Was documentation updated?
+```
+
+### Test Requirements
+
+```
+Type            Coverage Target
+──────────────────────────────
+Unit tests      > 80%
+Integration     > 60%
+E2E tests       > 40%
+Overall         > 70%
+```
+
+### Documentation Requirements
+
+```
+Type            Requirements
+──────────────────────────────
+Code comments   Key logic needs comments
+JSDoc           All public methods
+README          Each module has description
+Code examples  Common features have examples
+```
+
+### Deployment Requirements
+
+```
+Checklist        Must before prod
+──────────────────────────────
+✅ Code review    All PRs reviewed
+✅ Automated test All passed
+✅ Docs updated  Docs updated
+✅ Notify team   Everyone notified
+✅ Rollback ready Rollback script ready
+```
+
+---
+
+## Daily Checklist
+
+### Developers - Start of Day
+
+- [ ] Check for new bug reports
+- [ ] Check for code review feedback
+- [ ] Check if last deployment was successful
+- [ ] Check logs for exceptions
+
+### QA - Start of Day
+
+- [ ] Check for new code commits
+- [ ] Execute smoke tests
+- [ ] View system logs
+- [ ] Check for pending tests
+
+### DevOps - Start of Day
+
+- [ ] Check system health status
+- [ ] Check disk space usage
+- [ ] View log file sizes
+- [ ] Check for dependency updates
+
+---
+
+## Common Questions
+
+**Q: Which documentation should I use?**
+A: Based on your role, view the corresponding documentation. See "Quick Navigation" in README.md.
+
+**Q: What to do when encountering problems?**
+A: First check TROUBLESHOOTING.md. If no answer found, ask the relevant person.
+
+**Q: How to suggest improvements?**
+A: Raise during Wednesday tech discussion, or email the technical lead.
+
+**Q: How long does code review take?**
+A: Usually within 2-4 hours, can be expedited for urgent situations.
+
+**Q: How long does deployment take?**
+A: Usually 15-30 minutes, including testing and acceptance.
+
+---
+
+## Summary
+
+This document defines:
+- ✅ Each person's role and responsibilities
+- ✅ How to communicate and collaborate
+- ✅ Common commands and files
+- ✅ Workflows and best practices
+- ✅ Emergency handling mechanisms
+
+**Remember**: Check documentation first, then ask others!
+
+---
+
+**Version**: 2.0.0
+**Last Updated**: March 2026
+**Maintainers**: Team Technical Lead
+
+**Next Step**: Based on your role, view corresponding documentation!

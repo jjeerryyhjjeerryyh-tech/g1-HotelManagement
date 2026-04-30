@@ -1,12 +1,12 @@
 /**
- * dependency-manager-refactored.js - 重构后的依赖管理器
- * 
- * 改进点：
- * 1. 使用 FileUtils 统一 JSON 读写操作
- * 2. 使用 CommandExecutor 统一命令执行
- * 3. 使用 Constants 消除硬编码字符串
- * 4. 消除与 deployment-manager 的重复代码
- * 5. 改进错误处理使用 AppError
+ * dependency-manager-refactored.js - Refactored Dependency Manager
+ *
+ * Improvements:
+ * 1. Uses FileUtils for unified JSON read/write operations
+ * 2. Uses CommandExecutor for unified command execution
+ * 3. Uses Constants to eliminate hardcoded strings
+ * 4. Eliminates duplicate code with deployment-manager
+ * 5. Improved error handling using AppError
  */
 
 const FileUtils = require('./FileUtils');
@@ -27,9 +27,9 @@ class DependencyManager {
   }
 
   /**
-   * 检查依赖完整性
-   * @returns {Object} 检查结果 { status, missing, total }
-   * @throws {DependencyError} 检查失败时抛出
+   * Check dependency completeness
+   * @returns {Object} Check result { status, missing, total }
+   * @throws {DependencyError} Thrown when check fails
    */
   checkDependencies() {
     try {
@@ -66,12 +66,12 @@ class DependencyManager {
   }
 
   /**
-   * 安装依赖
-   * @returns {boolean} 是否安装成功
+   * Install dependencies
+   * @returns {boolean} Whether installation succeeded
    */
   installDependencies() {
     try {
-      console.log('正在安装依赖...');
+      console.log('Installing dependencies...');
       CommandExecutor.executeNpmWithStdio('install');
       console.log(Constants.SUCCESS_MESSAGES.DEPENDENCIES_INSTALLED);
       return true;
@@ -85,12 +85,12 @@ class DependencyManager {
   }
 
   /**
-   * 为生产环境安装依赖（使用 npm ci）
-   * @returns {boolean} 是否安装成功
+   * Install dependencies for production (using npm ci)
+   * @returns {boolean} Whether installation succeeded
    */
   installProductionDependencies() {
     try {
-      console.log('正在安装生产依赖...');
+      console.log('Installing production dependencies...');
       CommandExecutor.executeNpmWithStdio('ci', ['--only=production']);
       console.log(Constants.SUCCESS_MESSAGES.DEPENDENCIES_INSTALLED);
       return true;
@@ -104,9 +104,9 @@ class DependencyManager {
   }
 
   /**
-   * 生成依赖报告
-   * @returns {Object} 依赖报告对象
-   * @throws {DependencyError} 生成失败时抛出
+   * Generate dependency report
+   * @returns {Object} Dependency report object
+   * @throws {DependencyError} Thrown when generation fails
    */
   generateDependencyReport() {
     try {
@@ -130,12 +130,12 @@ class DependencyManager {
         process.cwd(),
         Constants.FILE_PATHS.DEPENDENCY_REPORT
       );
-      
+
       FileUtils.writeJSON(reportPath, report);
       return report;
     } catch (error) {
       throw new DependencyError(
-        `生成依赖报告失败`,
+        `Failed to generate dependency report`,
         [],
         { error: error.message }
       );
@@ -143,7 +143,7 @@ class DependencyManager {
   }
 
   /**
-   * 获取 NPM 版本
+   * Get NPM version
    * @private
    */
   _getNpmVersion() {
@@ -155,8 +155,8 @@ class DependencyManager {
   }
 
   /**
-   * 清理依赖
-   * @returns {boolean} 是否清理成功
+   * Clean dependencies
+   * @returns {boolean} Whether cleaning succeeded
    */
   cleanDependencies() {
     try {
@@ -166,12 +166,12 @@ class DependencyManager {
       );
 
       if (FileUtils.directoryExists(nodeModulesPath)) {
-        console.log('正在清理 node_modules...');
+        console.log('Cleaning node_modules...');
         FileUtils.deleteDirectory(nodeModulesPath);
       }
 
       if (FileUtils.fileExists(this.lockfilePath)) {
-        console.log('正在删除 package-lock.json...');
+        console.log('Deleting package-lock.json...');
         FileUtils.deleteFile(this.lockfilePath);
       }
 
@@ -187,8 +187,8 @@ class DependencyManager {
   }
 
   /**
-   * 获取依赖树
-   * @returns {Object} 依赖树结构
+   * Get dependency tree
+   * @returns {Object} Dependency tree structure
    */
   getDependencyTree() {
     try {
@@ -203,7 +203,7 @@ class DependencyManager {
       };
     } catch (error) {
       throw new DependencyError(
-        `获取依赖树失败`,
+        `Failed to get dependency tree`,
         [],
         { error: error.message }
       );
@@ -211,9 +211,9 @@ class DependencyManager {
   }
 
   /**
-   * 检查特定依赖是否已安装
-   * @param {string} packageName - 包名称
-   * @returns {boolean} 是否已安装
+   * Check if specific dependency is installed
+   * @param {string} packageName - Package name
+   * @returns {boolean} Whether installed
    */
   isDependencyInstalled(packageName) {
     try {
@@ -225,9 +225,9 @@ class DependencyManager {
   }
 
   /**
-   * 获取依赖信息
-   * @param {string} packageName - 包名称
-   * @returns {Object|null} 依赖信息或 null
+   * Get dependency info
+   * @param {string} packageName - Package name
+   * @returns {Object|null} Dependency info or null
    */
   getDependencyInfo(packageName) {
     try {
@@ -258,10 +258,10 @@ class DependencyManager {
   }
 
   /**
-   * 安装特定依赖
-   * @param {string} packageName - 包名称
-   * @param {boolean} isDev - 是否作为开发依赖
-   * @returns {boolean} 是否安装成功
+   * Install specific dependency
+   * @param {string} packageName - Package name
+   * @param {boolean} isDev - Whether as dev dependency
+   * @returns {boolean} Whether installation succeeded
    */
   installDependency(packageName, isDev = false) {
     try {
@@ -269,30 +269,30 @@ class DependencyManager {
       CommandExecutor.executeNpmWithStdio('install', args);
       return true;
     } catch (error) {
-      console.error(`安装 ${packageName} 失败:`, error.message);
+      console.error(`Failed to install ${packageName}:`, error.message);
       return false;
     }
   }
 
   /**
-   * 卸载依赖
-   * @param {string} packageName - 包名称
-   * @returns {boolean} 是否卸载成功
+   * Uninstall dependency
+   * @param {string} packageName - Package name
+   * @returns {boolean} Whether uninstallation succeeded
    */
   uninstallDependency(packageName) {
     try {
       CommandExecutor.executeNpmWithStdio('uninstall', [packageName]);
       return true;
     } catch (error) {
-      console.error(`卸载 ${packageName} 失败:`, error.message);
+      console.error(`Failed to uninstall ${packageName}:`, error.message);
       return false;
     }
   }
 
   /**
-   * 升级依赖
-   * @param {string} packageName - 包名称（可选，不指定则升级所有）
-   * @returns {boolean} 是否升级成功
+   * Upgrade dependency
+   * @param {string} packageName - Package name (optional, upgrade all if not specified)
+   * @returns {boolean} Whether upgrade succeeded
    */
   upgradeDependency(packageName = null) {
     try {
@@ -300,14 +300,14 @@ class DependencyManager {
       CommandExecutor.executeNpmWithStdio(...args);
       return true;
     } catch (error) {
-      console.error(`升级依赖失败:`, error.message);
+      console.error(`Failed to upgrade dependency:`, error.message);
       return false;
     }
   }
 
   /**
-   * 审计依赖安全性
-   * @returns {Object} 审计结果
+   * Audit dependency security
+   * @returns {Object} Audit results
    */
   auditDependencies() {
     try {

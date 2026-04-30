@@ -1,9 +1,9 @@
 /**
- * CommandExecutor.js - 命令执行工具类
- * 
- * 统一管理命令执行逻辑
- * 消除 execSync 的重复使用和错误处理散布
- * 提供统一的日志记录和错误处理
+ * CommandExecutor.js - Command Execution Utility Class
+ *
+ * Unified management of command execution logic
+ * Eliminates scattered execSync usage and error handling
+ * Provides unified logging and error handling
  */
 
 const { execSync, spawnSync } = require('child_process');
@@ -12,15 +12,15 @@ const Constants = require('./Constants');
 
 class CommandExecutor {
   /**
-   * 同步执行命令
-   * @param {string} command - 要执行的命令
-   * @param {Object} options - 执行选项
-   * @param {Object} options.cwd - 工作目录
-   * @param {boolean} options.stdio - 标准输入输出设置
-   * @param {string} options.encoding - 输出编码
-   * @param {number} options.timeout - 超时时间（毫秒）
-   * @returns {string} 命令输出
-   * @throws {CommandError} 命令执行失败时抛出
+   * Synchronous command execution
+   * @param {string} command - Command to execute
+   * @param {Object} options - Execution options
+   * @param {Object} options.cwd - Working directory
+   * @param {boolean} options.stdio - stdin/stdout/stderr settings
+   * @param {string} options.encoding - Output encoding
+   * @param {number} options.timeout - Timeout in milliseconds
+   * @returns {string} Command output
+   * @throws {CommandError} Thrown when command execution fails
    */
   static execute(command, options = {}) {
     try {
@@ -38,11 +38,11 @@ class CommandExecutor {
   }
 
   /**
-   * 执行命令并继承 stdio（用于需要交互式输出的命令）
-   * @param {string} command - 要执行的命令
-   * @param {Object} options - 执行选项
+   * Execute command with stdio inheritance (for interactive output)
+   * @param {string} command - Command to execute
+   * @param {Object} options - Execution options
    * @returns {void}
-   * @throws {CommandError} 命令执行失败时抛出
+   * @throws {CommandError} Thrown when command execution fails
    */
   static executeWithStdio(command, options = {}) {
     try {
@@ -59,18 +59,18 @@ class CommandExecutor {
   }
 
   /**
-   * 尝试执行命令，如果失败则执行备选命令
-   * @param {string} command - 主命令
-   * @param {string} fallbackCommand - 备选命令
-   * @param {Object} options - 执行选项
-   * @returns {string} 命令输出
+   * Try to execute command, fallback on failure
+   * @param {string} command - Primary command
+   * @param {string} fallbackCommand - Fallback command
+   * @param {Object} options - Execution options
+   * @returns {string} Command output
    */
   static tryExecute(command, fallbackCommand, options = {}) {
     try {
       return this.execute(command, options);
     } catch (error) {
       try {
-        console.warn(`命令执行失败，尝试备选命令: ${fallbackCommand}`);
+        console.warn(`Primary command failed, trying fallback: ${fallbackCommand}`);
         return this.execute(fallbackCommand, options);
       } catch (fallbackError) {
         this._throwCommandError(fallbackError, fallbackCommand);
@@ -79,10 +79,10 @@ class CommandExecutor {
   }
 
   /**
-   * 异步执行命令
-   * @param {string} command - 要执行的命令
-   * @param {Object} options - 执行选项
-   * @returns {Promise<string>} 命令输出
+   * Asynchronous command execution
+   * @param {string} command - Command to execute
+   * @param {Object} options - Execution options
+   * @returns {Promise<string>} Command output
    */
   static executeAsync(command, options = {}) {
     return new Promise((resolve, reject) => {
@@ -100,7 +100,7 @@ class CommandExecutor {
         }
 
         if (child.status !== 0) {
-          const error = new Error(child.stderr?.toString() || '命令失败');
+          const error = new Error(child.stderr?.toString() || 'Command failed');
           this._throwCommandError(error, command, child.status);
         }
 
@@ -112,16 +112,16 @@ class CommandExecutor {
   }
 
   /**
-   * 检查命令是否可用
-   * @param {string} command - 命令名称（如 'npm', 'node'）
-   * @returns {boolean} 命令是否可用
+   * Check if command is available
+   * @param {string} command - Command name (e.g., 'npm', 'node')
+   * @returns {boolean} Whether command is available
    */
   static isCommandAvailable(command) {
     try {
       const checkCommand = process.platform === 'win32'
         ? `where ${command}`
         : `which ${command}`;
-      
+
       execSync(checkCommand, { stdio: 'pipe' });
       return true;
     } catch (error) {
@@ -130,10 +130,10 @@ class CommandExecutor {
   }
 
   /**
-   * 获取命令版本
-   * @param {string} command - 命令名称
-   * @returns {string} 版本字符串
-   * @throws {CommandError} 获取版本失败时抛出
+   * Get command version
+   * @param {string} command - Command name
+   * @returns {string} Version string
+   * @throws {CommandError} Thrown when version retrieval fails
    */
   static getCommandVersion(command) {
     try {
@@ -141,7 +141,7 @@ class CommandExecutor {
       return this.execute(versionCommand).trim();
     } catch (error) {
       throw new CommandError(
-        `获取 ${command} 版本失败`,
+        `Failed to get ${command} version`,
         command,
         error.status || 0,
         { reason: 'VERSION_CHECK_FAILED' }
@@ -150,12 +150,12 @@ class CommandExecutor {
   }
 
   /**
-   * 执行 NPM 命令
-   * @param {string} subCommand - 子命令（如 'install', 'build'）
-   * @param {Array} args - 命令参数
-   * @param {Object} options - 执行选项
-   * @returns {string} 命令输出
-   * @throws {CommandError} 命令执行失败时抛出
+   * Execute NPM command
+   * @param {string} subCommand - Subcommand (e.g., 'install', 'build')
+   * @param {Array} args - Command arguments
+   * @param {Object} options - Execution options
+   * @returns {string} Command output
+   * @throws {CommandError} Thrown when command execution fails
    */
   static executeNpm(subCommand, args = [], options = {}) {
     const command = `npm ${subCommand} ${args.join(' ')}`.trim();
@@ -163,10 +163,10 @@ class CommandExecutor {
   }
 
   /**
-   * 执行 NPM 命令（带 stdio）
-   * @param {string} subCommand - 子命令
-   * @param {Array} args - 命令参数
-   * @param {Object} options - 执行选项
+   * Execute NPM command with stdio
+   * @param {string} subCommand - Subcommand
+   * @param {Array} args - Command arguments
+   * @param {Object} options - Execution options
    */
   static executeNpmWithStdio(subCommand, args = [], options = {}) {
     const command = `npm ${subCommand} ${args.join(' ')}`.trim();
@@ -174,12 +174,12 @@ class CommandExecutor {
   }
 
   /**
-   * 内部方法：抛出命令错误
+   * Internal method: throw command error
    * @private
    */
   static _throwCommandError(error, command, exitCode = null) {
     const status = exitCode !== null ? exitCode : (error.status || error.code || 1);
-    
+
     throw new CommandError(
       `${Constants.ERROR_MESSAGES.COMMAND_EXECUTION_FAILED}: ${command}`,
       command,
@@ -192,7 +192,7 @@ class CommandExecutor {
   }
 
   /**
-   * 检查 package.json 是否存在
+   * Check if package.json exists
    * @returns {boolean}
    */
   static hasPackageJSON() {
@@ -204,8 +204,8 @@ class CommandExecutor {
   }
 
   /**
-   * 执行环境检查
-   * @returns {Object} 检查结果
+   * Execute environment check
+   * @returns {Object} Check results
    */
   static checkEnvironment() {
     const results = {

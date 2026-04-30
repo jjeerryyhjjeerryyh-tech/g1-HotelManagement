@@ -1,13 +1,13 @@
 /**
- * deployment-refactored.js - 重构后的部署管理器
- * 
- * 改进点：
- * 1. 使用 FileUtils 统一文件操作
- * 2. 使用 CommandExecutor 统一命令执行
- * 3. 使用 Constants 消除硬编码字符串
- * 4. 改进跨平台兼容性（Windows/Linux）
- * 5. 消除与 dependency-manager 的重复代码
- * 6. 使用 AppError 改进错误处理
+ * deployment-refactored.js - Refactored Deployment Manager
+ *
+ * Improvements:
+ * 1. Uses FileUtils for unified file operations
+ * 2. Uses CommandExecutor for unified command execution
+ * 3. Uses Constants to eliminate hardcoded strings
+ * 4. Improved cross-platform compatibility (Windows/Linux)
+ * 5. Eliminates duplicate code with dependency-manager
+ * 6. Improved error handling using AppError
  */
 
 const FileUtils = require('./FileUtils');
@@ -22,8 +22,8 @@ class DeploymentManager {
   }
 
   /**
-   * 环境健康检查
-   * @returns {Object} 检查结果
+   * Environment health check
+   * @returns {Object} Check results
    */
   healthCheck() {
     const checks = {
@@ -32,23 +32,23 @@ class DeploymentManager {
       checks: {}
     };
 
-    // 检查配置文件
+    // Check config file
     checks.checks.config = this._checkConfig();
 
-    // 检查日志目录
+    // Check log directory
     checks.checks.logging = this._checkLogging();
 
-    // 检查服务器配置
+    // Check server config
     checks.checks.server = this._checkServer();
 
-    // 检查依赖
+    // Check dependencies
     checks.checks.dependencies = this._checkDependencies();
 
     return checks;
   }
 
   /**
-   * 检查配置
+   * Check config
    * @private
    */
   _checkConfig() {
@@ -58,25 +58,25 @@ class DeploymentManager {
         const config = FileUtils.readJSON(configPath);
         return {
           status: Constants.HEALTH_CHECK_STATUS.PASS,
-          message: '配置文件加载成功',
+          message: 'Config file loaded successfully',
           environment: this.environment
         };
       } else {
         return {
           status: Constants.HEALTH_CHECK_STATUS.FAIL,
-          message: `配置文件未找到: ${configPath}`
+          message: `Config file not found: ${configPath}`
         };
       }
     } catch (error) {
       return {
         status: Constants.HEALTH_CHECK_STATUS.FAIL,
-        message: `配置错误: ${error.message}`
+        message: `Config error: ${error.message}`
       };
     }
   }
 
   /**
-   * 检查日志目录
+   * Check log directory
    * @private
    */
   _checkLogging() {
@@ -85,38 +85,38 @@ class DeploymentManager {
       FileUtils.ensureDirectory(logPath);
       return {
         status: Constants.HEALTH_CHECK_STATUS.PASS,
-        message: '日志目录可访问',
+        message: 'Log directory accessible',
         path: logPath
       };
     } catch (error) {
       return {
         status: Constants.HEALTH_CHECK_STATUS.FAIL,
-        message: `日志错误: ${error.message}`
+        message: `Log error: ${error.message}`
       };
     }
   }
 
   /**
-   * 检查服务器配置
+   * Check server config
    * @private
    */
   _checkServer() {
     try {
       return {
         status: Constants.HEALTH_CHECK_STATUS.PASS,
-        message: '服务器配置正确',
+        message: 'Server config correct',
         environment: this.environment
       };
     } catch (error) {
       return {
         status: Constants.HEALTH_CHECK_STATUS.FAIL,
-        message: `服务器配置错误: ${error.message}`
+        message: `Server config error: ${error.message}`
       };
     }
   }
 
   /**
-   * 检查依赖
+   * Check dependencies
    * @private
    */
   _checkDependencies() {
@@ -129,26 +129,26 @@ class DeploymentManager {
       }
       return {
         status: Constants.HEALTH_CHECK_STATUS.PASS,
-        message: '依赖已安装'
+        message: 'Dependencies installed'
       };
     } catch (error) {
       return {
         status: Constants.HEALTH_CHECK_STATUS.FAIL,
-        message: `依赖检查失败: ${error.message}`
+        message: `Dependency check failed: ${error.message}`
       };
     }
   }
 
   /**
-   * 部署前检查
-   * @returns {Object} 检查结果 { passed, checks }
+   * Pre-deployment check
+   * @returns {Object} Check result { passed, checks }
    */
   preDeploymentCheck() {
-    console.log('执行部署前检查...');
+    console.log('Running pre-deployment checks...');
 
     const checks = [];
 
-    // 检查环境变量
+    // Check environment variables
     if (this.environment === Constants.ENVIRONMENTS.PRODUCTION) {
       const requiredEnvVars = ['DB_USERNAME', 'DB_PASSWORD'];
       for (const envVar of requiredEnvVars) {
@@ -161,7 +161,7 @@ class DeploymentManager {
       }
     }
 
-    // 检查依赖
+    // Check dependencies
     if (!FileUtils.directoryExists(Constants.FILE_PATHS.NODE_MODULES)) {
       checks.push({
         type: Constants.CHECK_TYPES.WARNING,
@@ -169,7 +169,7 @@ class DeploymentManager {
       });
     }
 
-    // 检查 package.json
+    // Check package.json
     if (!FileUtils.fileExists(Constants.FILE_PATHS.PACKAGE_JSON)) {
       checks.push({
         type: Constants.CHECK_TYPES.ERROR,
@@ -184,9 +184,9 @@ class DeploymentManager {
   }
 
   /**
-   * 生成部署脚本
-   * @returns {string} 脚本文件路径
-   * @throws {DeploymentError} 生成失败时抛出
+   * Generate deployment script
+   * @returns {string} Script file path
+   * @throws {DeploymentError} Thrown when generation fails
    */
   generateDeploymentScript() {
     try {
@@ -195,12 +195,12 @@ class DeploymentManager {
 
       FileUtils.writeFile(scriptName, scriptContent);
 
-      // 在 Unix 系统上使脚本可执行
+      // Make script executable on Unix systems
       if (process.platform !== 'win32') {
         try {
           CommandExecutor.execute(`chmod +x ${scriptName}`);
         } catch (error) {
-          console.warn('无法设置脚本执行权限:', error.message);
+          console.warn('Cannot set script executable permission:', error.message);
         }
       }
 
@@ -208,7 +208,7 @@ class DeploymentManager {
       return scriptName;
     } catch (error) {
       throw new DeploymentError(
-        `部署脚本生成失败`,
+        `Failed to generate deployment script`,
         'SCRIPT_GENERATION',
         { error: error.message }
       );
@@ -216,7 +216,7 @@ class DeploymentManager {
   }
 
   /**
-   * 获取部署脚本名称
+   * Get deployment script name
    * @private
    */
   _getDeploymentScriptName() {
@@ -225,7 +225,7 @@ class DeploymentManager {
   }
 
   /**
-   * 获取部署脚本内容
+   * Get deployment script content
    * @private
    */
   _getDeploymentScriptContent() {
@@ -239,7 +239,7 @@ class DeploymentManager {
   }
 
   /**
-   * 生成开发环境脚本
+   * Generate dev environment script
    * @private
    */
   _generateDevScript() {
@@ -258,7 +258,7 @@ npm run dev`;
   }
 
   /**
-   * 生成测试环境脚本
+   * Generate test environment script
    * @private
    */
   _generateTestScript() {
@@ -279,7 +279,7 @@ npm run test`;
   }
 
   /**
-   * 生成生产环境脚本
+   * Generate production environment script
    * @private
    */
   _generateProdScript() {
@@ -300,26 +300,26 @@ npm start`;
   }
 
   /**
-   * 环境重建
-   * @returns {boolean} 是否重建成功
+   * Rebuild environment
+   * @returns {boolean} Whether rebuild succeeded
    */
   rebuildEnvironment() {
     try {
-      console.log(`重建 ${this.environment} 环境...`);
+      console.log(`Rebuilding ${this.environment} environment...`);
 
-      // 清理旧的构建文件
+      // Clean old build files
       if (FileUtils.directoryExists(Constants.FILE_PATHS.DOT_NEXT)) {
-        console.log('清理构建文件...');
+        console.log('Cleaning build files...');
         FileUtils.deleteDirectory(Constants.FILE_PATHS.DOT_NEXT);
       }
 
-      // 重新安装依赖
-      console.log('安装依赖...');
+      // Reinstall dependencies
+      console.log('Installing dependencies...');
       CommandExecutor.executeNpmWithStdio('install');
 
-      // 构建项目
+      // Build project
       if (this.environment !== Constants.ENVIRONMENTS.DEVELOPMENT) {
-        console.log('构建项目...');
+        console.log('Building project...');
         CommandExecutor.executeNpmWithStdio('run', ['build']);
       }
 
@@ -332,41 +332,41 @@ npm start`;
   }
 
   /**
-   * 执行部署
-   * @returns {boolean} 是否部署成功
+   * Execute deployment
+   * @returns {boolean} Whether deployment succeeded
    */
   deploy() {
     try {
-      console.log(`开始部署到 ${this.environment} 环境...`);
+      console.log(`Starting deployment to ${this.environment} environment...`);
 
-      // 执行部署前检查
+      // Execute pre-deployment check
       const preCheck = this.preDeploymentCheck();
       if (!preCheck.passed) {
-        console.error('部署前检查失败:');
+        console.error('Pre-deployment check failed:');
         preCheck.checks.forEach(check => {
           if (check.type === Constants.CHECK_TYPES.ERROR) {
-            console.error(`❌ ${check.message}`);
+            console.error(`X ${check.message}`);
           }
         });
         return false;
       }
 
-      // 重建环境
+      // Rebuild environment
       if (!this.rebuildEnvironment()) {
         return false;
       }
 
-      console.log(`${this.environment} 环境部署完成`);
+      console.log(`${this.environment} environment deployment complete`);
       return true;
     } catch (error) {
-      console.error('部署失败:', error.message);
+      console.error('Deployment failed:', error.message);
       return false;
     }
   }
 
   /**
-   * 获取部署状态
-   * @returns {Object} 部署状态信息
+   * Get deployment status
+   * @returns {Object} Deployment status info
    */
   getDeploymentStatus() {
     return {
@@ -378,13 +378,13 @@ npm start`;
   }
 
   /**
-   * 设置环境
-   * @param {string} environment - 环境名称
+   * Set environment
+   * @param {string} environment - Environment name
    */
   setEnvironment(environment) {
     if (!Object.values(Constants.ENVIRONMENTS).includes(environment)) {
       throw new DeploymentError(
-        `无效的环境: ${environment}`,
+        `Invalid environment: ${environment}`,
         'INVALID_ENVIRONMENT'
       );
     }

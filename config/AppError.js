@@ -1,13 +1,13 @@
 /**
- * AppError.js - 自定义异常类体系
- * 
- * 定义应用层的异常类层次结构
- * 便于统一的错误处理和日志记录
+ * AppError.js - Custom Exception Class System
+ *
+ * Defines the application-layer exception class hierarchy
+ * Enables unified error handling and logging
  */
 
 /**
- * 基础应用异常类
- * 继承自 Error，提供统一的错误处理接口
+ * Base application exception class
+ * Extends Error, provides unified error handling interface
  */
 class AppError extends Error {
   constructor(message, code = 'APP_ERROR', statusCode = 500, details = {}) {
@@ -18,12 +18,12 @@ class AppError extends Error {
     this.details = details;
     this.timestamp = new Date().toISOString();
 
-    // 保持堆栈跟踪
+    // Preserve stack trace
     Error.captureStackTrace(this, this.constructor);
   }
 
   /**
-   * 转换为日志对象
+   * Convert to log object
    */
   toLog() {
     return {
@@ -38,7 +38,7 @@ class AppError extends Error {
   }
 
   /**
-   * 转换为 JSON 对象
+   * Convert to JSON object
    */
   toJSON() {
     return {
@@ -55,7 +55,7 @@ class AppError extends Error {
 }
 
 /**
- * 配置错误 - 配置加载、解析失败时抛出
+ * Config error - thrown when config loading or parsing fails
  */
 class ConfigError extends AppError {
   constructor(message, details = {}) {
@@ -64,7 +64,7 @@ class ConfigError extends AppError {
 }
 
 /**
- * 日志错误 - 日志写入失败时抛出
+ * Log error - thrown when log writing fails
  */
 class LogError extends AppError {
   constructor(message, details = {}) {
@@ -73,7 +73,7 @@ class LogError extends AppError {
 }
 
 /**
- * 文件错误 - 文件读写失败时抛出
+ * File error - thrown when file read/write fails
  */
 class FileError extends AppError {
   constructor(message, details = {}) {
@@ -82,7 +82,7 @@ class FileError extends AppError {
 }
 
 /**
- * 命令执行错误 - 命令执行失败时抛出
+ * Command execution error - thrown when command execution fails
  */
 class CommandError extends AppError {
   constructor(message, command = '', exitCode = 0, details = {}) {
@@ -98,7 +98,7 @@ class CommandError extends AppError {
 }
 
 /**
- * 部署错误 - 部署检查或部署过程失败时抛出
+ * Deployment error - thrown when deployment check or process fails
  */
 class DeploymentError extends AppError {
   constructor(message, checkType = '', details = {}) {
@@ -113,7 +113,7 @@ class DeploymentError extends AppError {
 }
 
 /**
- * 依赖错误 - 依赖检查失败时抛出
+ * Dependency error - thrown when dependency check fails
  */
 class DependencyError extends AppError {
   constructor(message, missingDeps = [], details = {}) {
@@ -128,7 +128,7 @@ class DependencyError extends AppError {
 }
 
 /**
- * 验证错误 - 输入验证失败时抛出
+ * Validation error - thrown when input validation fails
  */
 class ValidationError extends AppError {
   constructor(message, field = '', details = {}) {
@@ -143,7 +143,7 @@ class ValidationError extends AppError {
 }
 
 /**
- * 环境错误 - 环境变量或环境配置错误时抛出
+ * Environment error - thrown when environment variable or config is wrong
  */
 class EnvironmentError extends AppError {
   constructor(message, envVar = '', details = {}) {
@@ -158,18 +158,18 @@ class EnvironmentError extends AppError {
 }
 
 /**
- * 错误处理工具函数
+ * Error handling utility functions
  */
 const ErrorHandling = {
   /**
-   * 检查错误是否为 AppError 实例
+   * Check if error is an AppError instance
    */
   isAppError(error) {
     return error instanceof AppError;
   },
 
   /**
-   * 获取错误信息
+   * Get error message
    */
   getErrorMessage(error) {
     if (this.isAppError(error)) {
@@ -179,7 +179,7 @@ const ErrorHandling = {
   },
 
   /**
-   * 获取错误代码
+   * Get error code
    */
   getErrorCode(error) {
     if (this.isAppError(error)) {
@@ -189,7 +189,7 @@ const ErrorHandling = {
   },
 
   /**
-   * 包装未知错误为 AppError
+   * Wrap unknown error as AppError
    */
   wrapError(error, type = 'APP_ERROR') {
     if (this.isAppError(error)) {
