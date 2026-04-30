@@ -206,6 +206,7 @@
             langSelect.value = getLang();
             langSelect.addEventListener('change', function (e) {
                 var nextLang = e.target.value;
+                // 统一使用全局设置函数或手动触发事件
                 if (window.setNotifLang) {
                     window.setNotifLang(nextLang);
                 } else {
@@ -214,6 +215,9 @@
                 }
             });
         }
+
+        // 确保全局变量指向当前实例，供外部监听器使用
+        window.__notifPage = this;
 
         this.setupLangDropdown();
 
@@ -273,7 +277,7 @@
             item.addEventListener('click', function (e) {
                 e.preventDefault();
                 var nextLang = e.currentTarget.dataset.lang;
-                if (nextLang === 'zh' || nextLang === 'en') {
+                if (nextLang === 'zh' || nextLang === 'en' || nextLang === 'fr' || nextLang === 'ja') {
                     // 更新激活状态
                     langItems.forEach(function (i) { i.classList.remove('active'); });
                     e.currentTarget.classList.add('active');
