@@ -400,7 +400,11 @@
                         ${reviewHtml}
                         ${isCancellable ? `
                         <div style="margin-top:16px;padding-top:16px;border-top:1px solid #f0f0f0;display:flex;justify-content:flex-end;">
-                            <button class="cancel-btn" onclick="cancelBooking('${b.id}')">
+                            <button class="cancel-btn"
+                                data-roomtype="${(b.roomName && b.roomName[currentLang]) || (b.roomType && b.roomType[currentLang]) || '-'}"
+                                data-checkin="${b.checkIn}"
+                                data-checkout="${b.checkOut}"
+                                onclick="cancelBooking(this, '${b.id}')">
                                 <i class="fas fa-times-circle"></i> ${dict.cancel_booking}
                             </button>
                         </div>` : ''}
@@ -446,9 +450,14 @@
             }
         }
 
-        async function cancelBooking(bookingId) {
+        async function cancelBooking(btn, bookingId) {
             const dict = i18n[currentLang];
             if (!confirm(dict.confirm_cancel)) return;
+            const bookingData = {
+                roomType: btn.dataset.roomtype || '',
+                checkIn:  btn.dataset.checkin  || '',
+                checkOut: btn.dataset.checkout || ''
+            };
             const res  = await fetch(`${API}/api/bookings/${bookingId}/status`, {
                 method:  'PUT',
                 headers: { 'Content-Type': 'application/json' },
@@ -456,6 +465,12 @@
             });
             const data = await res.json();
             if (res.ok) {
+                if (window.notificationSystem) {
+                    window.notificationSystem.notifyBookingCancelled(
+                        JSON.parse(sessionStorage.getItem('user') || '{}').username,
+                        bookingData
+                    );
+                }
                 alert(dict.cancel_success);
                 loadPage();
             } else {
@@ -463,5 +478,7 @@
             }
         }
     </script>
+    <script src="../notifications/notificationSystem.js"></script>
+    <script src="../notifications/autoInject.js"></script>
 </body>
 </html>

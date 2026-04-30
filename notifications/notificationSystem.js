@@ -211,6 +211,25 @@
         return notification;
     }
 
+    function notifyBookingCancelled(username, bookingDetails) {
+        if (!bookingDetails) bookingDetails = {};
+        var notification = {
+            id:          Date.now() + Math.random(),
+            userId:      username,
+            type:        'booking_cancelled',
+            templateKey: 'booking_cancelled',
+            params: {
+                roomType: bookingDetails.roomType || '',
+                checkIn:  bookingDetails.checkIn  || '',
+                checkOut: bookingDetails.checkOut || ''
+            },
+            timestamp: new Date().toISOString(),
+            isRead:    false
+        };
+        addNotification(notification);
+        return notification;
+    }
+
     // ============================================
     // 语言变化时通知所有页面刷新
     // ============================================
@@ -245,8 +264,9 @@
         deleteNotification:    deleteNotification,
         updateNotificationBadge: updateNotificationBadge,
         notifyLoginSuccess:    notifyLoginSuccess,
-        notifyBookingSuccess:  notifyBookingSuccess,
-        notifyProfileUpdate:   notifyProfileUpdate,
+        notifyBookingSuccess:   notifyBookingSuccess,
+        notifyBookingCancelled: notifyBookingCancelled,
+        notifyProfileUpdate:    notifyProfileUpdate,
         notifyAdminLogin:      notifyAdminLogin,
         renderNotification:    renderNotification,
         t:                     t,
