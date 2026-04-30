@@ -139,14 +139,14 @@
                             <input class="form-input" form="checkoutForm" name="cardNumber" required
                                    placeholder="**** **** **** ****" type="tel" pattern="\d{12}" maxlength="12"
                                    inputmode="numeric" oninput="this.value = this.value.replace(/\D/g, '').slice(0, 12)"
-                                   title="请填写12位数字卡号">
+                                   data-i18n-title="cardNumberTitle" title="请填写12位数字卡号">
                         </div>
                         <div class="form-row">
                             <div class="form-group">
                                 <label class="form-label" data-i18n="expiry">有效期 (MM/YY) *</label>
                                 <input class="form-input" form="checkoutForm" name="expiry" required placeholder="MM/YY"
                                        type="tel" maxlength="4" inputmode="numeric" oninput="formatExpiry(this)"
-                                       title="请填写4位数字（MMYY）">
+                                       data-i18n-title="expiryTitle" title="请填写4位数字（MMYY）">
                                 <small style="color: #666; margin-top: 4px;" data-i18n="expiryHint">例如：1228 表示 12/28</small>
                             </div>
                         </div>

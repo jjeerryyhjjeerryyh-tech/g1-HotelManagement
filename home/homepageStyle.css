@@ -316,38 +316,73 @@
 
 @media (max-width: 768px) {
     .navbar {
-        padding: 10px 0;
-    }
-    .logo {
-        font-size: 20px;
-    }
-    .nav-btn {
-        padding: 6px 15px;
-        font-size: 13px;
+        padding: 8px 0;
     }
     .navbar-container {
-        flex-direction: column;
-        align-items: stretch;
-        padding: 0 20px;
+        padding: 0 12px;
+        gap: 8px;
+    }
+    .logo-main {
+        font-size: 16px;
+    }
+    .logo-sub {
+        font-size: 7px;
+    }
+    .nav-btn {
+        padding: 6px 10px;
+        font-size: 11px;
+    }
+    .navbar-center {
+        display: none;
     }
     .navbar-left {
-        justify-content: space-between;
-        width: 100%;
-    }
-    .navbar-links {
-        width: 100%;
-        overflow-x: auto;
-        padding-bottom: 6px;
+        flex: 0 0 auto;
     }
     .navbar-right {
-        width: 100%;
-        justify-content: space-between;
+        flex: 1;
+        justify-content: flex-end;
+    }
+    .navbar-actions {
+        gap: 6px;
+    }
+    .nav-link, .nav-divider {
+        display: none; /* 移动端隐藏联系我们链接和分隔符 */
     }
     .lang-select {
-        padding: 6px 10px;
+        padding: 4px 6px;
     }
-    .hero-section {
-        margin-top: 0;
+    .lang-label {
+        display: none;
+    }
+    .menu-text {
+        display: none; /* 移动端只保留汉堡图标 */
+    }
+    .hero-title {
+        font-size: 28px;
+        margin-bottom: 12px;
+    }
+    .hero-subtitle {
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+    .carousel-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+    }
+    .carousel-dots {
+        bottom: 20px;
+    }
+    .dot {
+        width: 8px;
+        height: 8px;
+    }
+    .features {
+        gap: 12px;
+        margin-top: 20px;
+    }
+    .feature-text {
+        font-size: 13px;
     }
 }
 
@@ -624,9 +659,9 @@ body {
 .sidebar {
     position: fixed;
     top: 0;
-    left: -50vw;
+    left: -100%;
     width: 50vw;
-    min-width: 600px;
+    min-width: 320px;
     max-width: 800px;
     height: 100vh;
     background: rgba(255, 250, 240, 0.98);
@@ -635,6 +670,14 @@ body {
     display: block;
     transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     overflow: hidden;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        max-width: none;
+        left: -100%;
+    }
 }
 
 .sidebar.active {
@@ -1779,6 +1822,46 @@ body {
 }
 
 @media (max-width: 768px) {
+    .search-section {
+        padding: 20px 15px 30px;
+    }
+    .hotel-info {
+        margin-bottom: 15px;
+    }
+    .hotel-name {
+        font-size: 20px;
+    }
+    .hotel-address {
+        font-size: 13px;
+    }
+    .form-group label {
+        font-size: 12px;
+    }
+    .input-wrapper input,
+    .input-wrapper select {
+        padding: 8px 10px 8px 34px;
+        font-size: 13px;
+        border-radius: 8px;
+    }
+    .input-icon {
+        width: 16px;
+        height: 16px;
+        left: 10px;
+    }
+    .search-btn {
+        height: 40px;
+        font-size: 14px;
+        border-radius: 8px;
+    }
+    .room-types {
+        margin-top: 15px;
+        gap: 8px;
+    }
+    .room-type-btn {
+        padding: 5px 12px;
+        font-size: 12px;
+    }
+    /* 以下是恢复被误删的部分 */
     .hp-section {
         padding: 56px 0;
     }

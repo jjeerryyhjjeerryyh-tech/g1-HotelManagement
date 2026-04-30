@@ -93,6 +93,23 @@
         .lang-select:focus { 
             box-shadow: 0 0 0 3px rgba(242, 116, 5, 0.2);
         }
+
+        @media (max-width: 600px) {
+            body { padding: 12px; }
+            .page-header { flex-direction: row; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 15px; }
+            h1 { font-size: 18px; }
+            .back-btn span { display: none; }
+            .lang-select { margin-left: 0; width: auto; padding: 5px 10px; font-size: 12px; }
+            .booking-card { padding: 15px; border-radius: 10px; }
+            .booking-info { grid-template-columns: 1fr; gap: 10px; }
+            .info-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f9f9f9; padding-bottom: 5px; }
+            .info-item label { margin-bottom: 0; }
+            .booking-card-header { flex-direction: row; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px solid #eee; padding-bottom: 8px; }
+            .booking-id { font-size: 11px; }
+            .status-badge { padding: 2px 8px; font-size: 11px; }
+            .review-form textarea { font-size: 14px; }
+            .star-picker i { font-size: 1.3rem; }
+        }
     </style>
 </head>
 <body>

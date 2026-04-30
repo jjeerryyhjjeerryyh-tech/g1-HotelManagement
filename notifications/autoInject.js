@@ -147,15 +147,15 @@
         if (!container) return;
 
         var btnText = getNotifBtnText();
-        var badge = '<span class="notification-badge" style="display:none;background:#e74c3c;color:#fff;border-radius:50%;width:18px;height:18px;font-size:11px;line-height:18px;text-align:center;position:absolute;top:-9px;right:2px;font-weight:bold;">0</span>';
+        var badge = '<span class="notification-badge" style="display:none;background:#ff4d4f;color:#fff;border-radius:10px;min-width:16px;height:16px;padding:0 4px;font-size:10px;line-height:16px;text-align:center;position:absolute;top:-5px;right:-5px;font-weight:bold;box-shadow:0 2px 4px rgba(0,0,0,0.2);border:1px solid #fff;">0</span>';
 
         var a = document.createElement('a');
         a.href = notifBase() + 'notifications.html';
         a.className = 'notif-btn header-link';
         a.id = 'notifBtn';
-        a.setAttribute('data-i18n', 'nav_notifications');
-        a.innerHTML = '&#128231; <span id="notifBtnText" class="notif-text">' + btnText + '</span>' + badge;
-        a.style.cssText = 'position:relative;display:inline-flex;align-items:center;gap:4px;';
+        // a.setAttribute('data-i18n', 'nav_notifications'); // 移除此属性，防止被其他页面的 i18n 脚本误伤
+        a.innerHTML = '<i class="far fa-bell"></i> <span id="notifBtnText" class="notif-text">' + btnText + '</span>' + badge;
+        a.style.cssText = 'position:relative;';
 
         var userMenu = container.querySelector('.user-menu-container');
         if (userMenu && userMenu.parentNode === container) {

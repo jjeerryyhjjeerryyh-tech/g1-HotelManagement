@@ -871,40 +871,42 @@
             <div class="gallery-main">
                 <img src="${gallery[0]}" alt="${roomName}">
             </div>
+            ${gallery.length > 1 ? `
             <div class="gallery-thumbs">
-                ${gallery.length > 1 ? gallery.slice(1).map((img, i) => `
+                ${gallery.slice(1, 3).map((img, i) => `
                     <div class="gallery-thumb ${i === 1 && gallery.length > 3 ? 'more' : ''}">
                         <img src="${img}" alt="">
                     </div>
-                `).join('') : ''}
-            </div>
+                `).join('')}
+            </div>` : ''}
         </div>
         
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
-            <div>
-                <h3>${roomName}</h3>
-                <div class="room-features" style="margin-top: 0.5rem;">
-                    <span><i class="fas fa-ruler-combined"></i> ${currentRoom.size}</span>
+        <div class="room-detail-header">
+            <div class="room-detail-info">
+                <div class="room-detail-spec">
+                    <span><i class="fas fa-ruler-combined"></i> ${currentRoom.size}m²</span>
                     <span><i class="fas fa-bed"></i> ${typeof currentRoom.bed === 'object' ? (currentRoom.bed[currentLang] || currentRoom.bed.zh) : currentRoom.bed}</span>
                     <span><i class="fas fa-user"></i> ${t('up_to_guests', { count: currentRoom.guests })}</span>
                 </div>
             </div>
-            <div class="room-price">
-                <span class="price-original">${formatPrice(currentRoom.originalPrice)}</span>
-                <div>
-                    <span class="price-current" style="font-size: 2rem;">${formatPrice(currentRoom.price)}</span>
+            <div class="room-detail-price">
+                ${currentRoom.originalPrice ? `<span class="price-original">${formatPrice(currentRoom.originalPrice)}</span>` : ''}
+                <div class="price-main">
+                    <span class="price-current">${formatPrice(currentRoom.price)}</span>
                     <span class="price-unit">${t('per_night')}</span>
                 </div>
             </div>
         </div>
         
-        <p style="color: var(--gray-600); line-height: 1.6; margin-bottom: 1rem;">
-            ${description}
-        </p>
+        <div class="room-detail-desc">
+            <p>${description}</p>
+        </div>
         
-        <h4 style="margin-bottom: 0.75rem;">${t('amenities_title')}</h4>
-        <div class="amenities-list">
-            ${(Array.isArray(currentRoom.amenities) ? currentRoom.amenities : (currentRoom.amenities[currentLang] || currentRoom.amenities.zh || [])).map(a => `<span class="amenity-tag"><i class="fas fa-check"></i> ${a}</span>`).join('')}
+        <div class="room-detail-amenities">
+            <h4>${t('amenities_title')}</h4>
+            <div class="amenities-list">
+                ${(Array.isArray(currentRoom.amenities) ? currentRoom.amenities : (currentRoom.amenities[currentLang] || currentRoom.amenities.zh || [])).map(a => `<span class="amenity-tag"><i class="fas fa-check"></i> ${a}</span>`).join('')}
+            </div>
         </div>
         
         <div class="policy-box">
@@ -912,8 +914,8 @@
             <p>${typeof currentRoom.policy === 'object' ? (currentRoom.policy[currentLang] || currentRoom.policy.zh) : (currentRoom.policy || '暂无政策说明。')}</p>
         </div>
 
-        <div id="reviewSection" style="margin-top:1.5rem;border-top:1px solid var(--gray-200);padding-top:1rem;">
-            <h4 style="margin-bottom:0.75rem;">住客评价</h4>
+        <div id="reviewSection" class="room-detail-reviews">
+            <h4>住客评价</h4>
             <div id="reviewList"><p style="color:#9ca3af;font-size:0.875rem;">加载中...</p></div>
             <div id="reviewFormArea"></div>
         </div>
@@ -1098,13 +1100,13 @@ function renderMyBookings() {
     
     tbody.innerHTML = myBookings.map(b => `
         <tr>
-            <td>${b.id}</td>
-            <td>${b.roomName}</td>
-            <td>${b.checkIn}</td>
-            <td>${b.checkOut}</td>
-            <td>${formatPrice(b.totalAmount)}</td>
-            <td><span class="status-badge status-${b.status}">${b.status === 'confirmed' ? t('status_confirmed') : b.status === 'completed' ? t('status_completed') : b.status === 'cancelled' ? t('status_cancelled') : b.status}</span></td>
-            <td>
+            <td data-label="${t('th_booking_id')}">${b.id}</td>
+            <td data-label="${t('th_room')}">${b.roomName}</td>
+            <td data-label="${t('th_checkin')}">${b.checkIn}</td>
+            <td data-label="${t('th_checkout')}">${b.checkOut}</td>
+            <td data-label="${t('th_total')}">${formatPrice(b.totalAmount)}</td>
+            <td data-label="${t('th_status')}"><span class="status-badge status-${b.status}">${b.status === 'confirmed' ? t('status_confirmed') : b.status === 'completed' ? t('status_completed') : b.status === 'cancelled' ? t('status_cancelled') : b.status}</span></td>
+            <td data-label="${t('th_action')}">
                 <button class="btn btn-danger btn-sm" onclick="showToast(t('toast_not_implemented'), 'info')">${t('cancel')}</button>
             </td>
         </tr>

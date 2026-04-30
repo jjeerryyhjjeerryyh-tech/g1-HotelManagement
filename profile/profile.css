@@ -398,6 +398,25 @@ body {
 }
 
 /* 响应式 */
+@media (max-width: 768px) {
+    .pf-navbar-container {
+        padding: 0 15px;
+    }
+    .pf-nav-back span {
+        display: none;
+    }
+    .pf-logo-main {
+        font-size: 1.2rem;
+    }
+    .pf-navbar-right {
+        gap: 2px;
+    }
+    .pf-nav-link {
+        font-size: 0.75rem;
+        padding: 4px 6px;
+    }
+}
+
 @media (max-width: 640px) {
     .form-row {
         flex-direction: column;
@@ -409,7 +428,45 @@ body {
     }
     
     .profile-container {
-        padding: 0 16px;
+        padding: 0 12px;
+        margin: 15px auto;
+    }
+
+    .form-section {
+        padding: 15px 12px;
+        margin-bottom: 20px;
+    }
+
+    .profile-title {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    .avatar-preview {
+        width: 100px;
+        height: 100px;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 30px;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 10px;
+        font-size: 13px;
+    }
+
+    .form-group label {
+        font-size: 12px;
+        margin-bottom: 5px;
+    }
+
+    .form-group input {
+        padding: 10px;
+        font-size: 13px;
     }
 }
 

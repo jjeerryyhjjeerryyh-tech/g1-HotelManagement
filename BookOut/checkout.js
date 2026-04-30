@@ -51,6 +51,8 @@
             expiryHint: "例如：1228 表示 12/28",
             cardholderName: "持卡人姓名 *",
             cardholderNamePlaceholder: "姓名",
+            cardNumberTitle: "请填写12位数字卡号",
+            expiryTitle: "请填写4位数字（MMYY）",
             policies: "政策",
             checkIn: "入住",
             checkInTime: "下午 2:00 之后",
@@ -121,6 +123,8 @@
             expiryHint: "e.g., 1228 for 12/28",
             cardholderName: "Cardholder Name *",
             cardholderNamePlaceholder: "Name",
+            cardNumberTitle: "Please enter a 12-digit card number",
+            expiryTitle: "Please enter 4 digits (MMYY)",
             policies: "Policies",
             checkIn: "Check-in",
             checkInTime: "After 2:00 PM",
@@ -191,6 +195,8 @@
             expiryHint: "例：1228 → 12/28",
             cardholderName: "カード名義人 *",
             cardholderNamePlaceholder: "名義",
+            cardNumberTitle: "12桁のカード番号を入力してください",
+            expiryTitle: "4桁の数字（MMYY）を入力してください",
             policies: "ポリシー",
             checkIn: "チェックイン",
             checkInTime: "14:00以降",
@@ -237,9 +243,12 @@
     // i18n 函数：翻译页面
     function translatePage(lang) {
         const t = translations[lang] || translations.zh;
+        
+        // 1. 翻译带有 data-i18n 的元素（文本内容）
         document.querySelectorAll('[data-i18n]').forEach(el => {
             const key = el.getAttribute('data-i18n');
             let text = t[key] || key;
+            
             // 处理带参数的情况 (如 {nights})
             const argsAttr = el.getAttribute('data-i18n-args');
             if (argsAttr) {
@@ -248,22 +257,32 @@
                     text = text.replace(/\{(\w+)\}/g, (_, k) => args[k] !== undefined ? args[k] : '');
                 } catch(e) {}
             }
-            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-                // 如果是 placeholder 属性
-                if (el.hasAttribute('data-i18n-placeholder')) {
-                    el.placeholder = t[el.getAttribute('data-i18n-placeholder')] || '';
-                } else {
-                    // 值不变
-                }
-            } else if (el.tagName === 'OPTION') {
+            
+            if (el.tagName === 'OPTION') {
                 el.textContent = text;
             } else {
                 el.textContent = text;
             }
         });
-        // 更新动态生成的摘要文本（部分需单独处理）
+
+        // 2. 专门翻译带有 data-i18n-placeholder 的元素（占位符）
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+            const key = el.getAttribute('data-i18n-placeholder');
+            if (t[key]) {
+                el.placeholder = t[key];
+            }
+        });
+
+        // 3. 专门翻译带有 data-i18n-title 的元素（提示文本）
+        document.querySelectorAll('[data-i18n-title]').forEach(el => {
+            const key = el.getAttribute('data-i18n-title');
+            if (t[key]) {
+                el.title = t[key];
+            }
+        });
+
+        // 更新动态生成的摘要文本
         updateNightsDisplay();
-        // 更新摘要中的标签（晚、税费等会在renderSummary中重新生成，因此只需触发重绘）
         if (typeof renderSummary === 'function') renderSummary();
         document.documentElement.lang = lang;
     }
