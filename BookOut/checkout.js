@@ -297,10 +297,11 @@
         }
     };
 
-    let currentLang = localStorage.getItem('language') || 'zh';
+    let currentLang = localStorage.getItem('lang') || 'zh';
 
     // i18n 函数：翻译页面
     function translatePage(lang) {
+        currentLang = lang;
         const t = translations[lang] || translations.zh;
         
         // 1. 翻译带有 data-i18n 的元素（文本内容）
@@ -342,7 +343,7 @@
 
         // 更新动态生成的摘要文本
         updateNightsDisplay();
-        if (typeof renderSummary === 'function') renderSummary();
+        renderSummary();
         document.documentElement.lang = lang;
     }
 
@@ -351,7 +352,7 @@
         const nightsSpan = document.getElementById('nightsDisplay');
         if (nightsSpan && currentParams) {
             const nights = nightsBetween(currentParams.checkIn, currentParams.checkOut);
-            const t = translations[currentLang];
+            const t = translations[currentLang] || translations.zh;
             const text = (t.totalNights || "共 {nights} 晚").replace('{nights}', nights);
             nightsSpan.textContent = text;
         }
@@ -363,11 +364,9 @@
         if (select) {
             select.value = currentLang;
             select.addEventListener('change', (e) => {
-                currentLang = e.target.value;
-                localStorage.setItem('language', currentLang);
-                translatePage(currentLang);
-                // 重新渲染摘要以更新标签
-                if (typeof renderSummary === 'function') renderSummary();
+                const nextLang = e.target.value;
+                localStorage.setItem('lang', nextLang);
+                translatePage(nextLang);
             });
         }
         translatePage(currentLang);
@@ -621,7 +620,6 @@
             if (res.ok) {
                 showToast('toastBookingSuccess', 'success');
                 
-<<<<<<< HEAD
                 // 添加预订成功通知
                 if (window.HotelNotification) {
                     window.HotelNotification.addNotification({
@@ -637,8 +635,6 @@
                     });
                 }
                 
-=======
->>>>>>> 0ed9ad9bc2b2e67e0f1880070f37f875dfba4521
                 sessionStorage.removeItem('checkout_room');
                 sessionStorage.removeItem('checkout_params');
                 setTimeout(() => { window.location.href = 'Book.html'; }, 1800);
