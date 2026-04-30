@@ -13,16 +13,22 @@
         <div class="header-content">
             <a class="logo" href="../homePage/index.html" aria-label="首页">
                 <div class="logo-main">91酒店</div>
+            <a class="logo" href="../home/index.html" aria-label="首页">
+                <div class="logo-main" data-i18n="hotel_name">91酒店</div>
                 <div class="logo-sub">HONG KONG</div>
             </a>
             
             <div class="header-right">
                 <nav class="header-links">
                     <a href="myBookings.html" class="header-link" data-i18n="tab_mybookings">我的订单</a>
+                    <a href="myBookings.html" class="header-link">
+                        <i class="fas fa-list-ul"></i> <span data-i18n="tab_mybookings">我的订单</span>
+                    </a>
                     
                     <div class="currency-menu-container">
                         <a href="#" class="header-link" id="currencyBtn">
                             <span data-i18n="currency">港币</span> <i class="fas fa-chevron-down"></i>
+                            <i class="fas fa-globe"></i> <span data-i18n="currency">港币</span> <i class="fas fa-chevron-down"></i>
                         </a>
                         <!-- Currency Dropdown -->
                         <div class="currency-dropdown" id="currencyDropdown" style="display: none;">
@@ -61,7 +67,7 @@
                     
                     <div class="lang-menu-container">
                         <a href="#" class="header-link" id="langBtn">
-                            <span data-i18n="lang_display">中文</span> <i class="fas fa-chevron-down"></i>
+                            <i class="fas fa-language"></i> <span data-i18n="lang_display">中文</span> <i class="fas fa-chevron-down"></i>
                         </a>
                         <div class="lang-dropdown" id="langDropdown" style="display: none;">
                             <div class="lang-header">
@@ -79,8 +85,10 @@
                         </div>
                     </div>  
                     
+
                     <div id="themeToggleMount"></div>
                     
+
                     <div class="user-menu-container">
                         <button class="icon-btn" id="userBtn" aria-label="User profile">
                             <i class="far fa-user"></i>
@@ -172,7 +180,7 @@
                     </div>
                     <div class="search-field">
                         <label><i class="fas fa-filter"></i> <span data-i18n="room_type">房型筛选</span></label>
-                        <select class="search-select" id="roomTypeFilter" onchange="filterRooms()">
+                        <select class="search-select" id="roomTypeFilter">
                             <option value="all" data-i18n="room_type_all">全部房型</option>
                             <option value="standard" data-i18n="room_type_standard">标准客房</option>
                             <option value="deluxe" data-i18n="room_type_deluxe">豪华客房</option>
@@ -257,6 +265,7 @@
                             <th data-i18n="th_checkout">退房日期</th>
                             <th data-i18n="th_total">总价</th>
                             <th data-i18n="th_status">状态</th>
+                            <th data-i18n="th_rating">评分</th>
                             <th data-i18n="th_action">操作</th>
                         </tr>
                     </thead>
@@ -273,7 +282,11 @@
                     <div class="aside-title" data-i18n="help_title">需要帮助吗？</div>
                     <div class="aside-text" data-i18n="help_text">我们将竭诚为您提供预订协助与咨询服务。</div>
                     <div class="aside-list">
+<<<<<<< HEAD
                         <div class="aside-item"><i class="fas fa-phone"></i><span>+852 4444 5555</span></div>
+=======
+                        <div class="aside-item"><i class="fas fa-phone"></i><span>+852 2910 1628</span></div>
+>>>>>>> f6991b279a3f53a2096a69b079249ec471cb6c38
                         <div class="aside-item"><i class="fas fa-envelope"></i><span>reservation@91hotel.com</span></div>
                     </div>
                 </div>
@@ -480,6 +493,7 @@
                 </form>
 
                 <div class="hp-subscribe-success" id="hpSubscribeSuccess">
+                    <button class="btn btn-link unsubscribe-btn" id="btnUnsubscribe" style="color: rgba(255,255,255,0.6); font-size: 0.8rem; margin-bottom: 1rem; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; padding: 2px 8px; cursor: pointer; background: transparent;" data-i18n="unsubscribe_btn">取消订阅</button>
                     <div class="success-icon-wrapper" id="successIcon">
                         <i class="fas fa-check"></i>
                     </div>
@@ -498,7 +512,11 @@
                     <a href="#" data-i18n="footer_guest_booking">客房预订与咨询</a>
                     <a href="#" data-i18n="footer_guest_membership">会员权益说明</a>
                     <a href="#" data-i18n="footer_guest_transport">交通与周边</a>
+<<<<<<< HEAD
                     <a href="#">+852 4444 5555</a>
+=======
+                    <a href="#">+852 1234 5678</a>
+>>>>>>> f6991b279a3f53a2096a69b079249ec471cb6c38
                     <a href="#">reservations@91hotel.com</a>
                 </div>
                 <div class="hp-footer-col">

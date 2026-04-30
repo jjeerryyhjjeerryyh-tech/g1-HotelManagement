@@ -73,7 +73,11 @@
                     var room   = JSON.parse(roomRaw);
                     var params = JSON.parse(paramsRaw);
                     // 预订详情存到 sessionStorage（checkout.js 会清空原字段，这些不会被清除）
-                    sessionStorage.setItem('__bookingRoom', room.name || '');
+                    // 处理多语言房名：name 可能是 { zh, en, ja } 结构
+                    var roomName = typeof room.name === 'object'
+                        ? (room.name['en'] || room.name.zh || '')
+                        : (room.name || '');
+                    sessionStorage.setItem('__bookingRoom', roomName);
                     sessionStorage.setItem('__bookingCheckIn', params.checkIn || '');
                     sessionStorage.setItem('__bookingCheckOut', params.checkOut || '');
                 } catch (ex) { /* ignore parse errors */ }
@@ -124,13 +128,17 @@
     // ============================================
     function getNotifBtnText() {
         // 优先通过 lang.js 获取语言
+        var lang = 'zh';
         if (window.__notifLang && window.__notifLang.getLang) {
-            var lang = window.__notifLang.getLang();
-            return lang === 'en' ? 'Notifications' : '消息提醒';
+            lang = window.__notifLang.getLang();
+        } else {
+            lang = localStorage.getItem('lang') || 'zh';
         }
-        // 兜底：读 localStorage.lang
-        var lang = localStorage.getItem('lang') || 'zh';
-        return lang === 'en' ? 'Notifications' : '消息提醒';
+
+        if (lang === 'en') return 'Notifications';
+        if (lang === 'fr') return 'Notifications';
+        if (lang === 'ja') return 'お知らせ';
+        return '消息提醒';
     }
 
     function updateNotifBtnText() {
@@ -147,15 +155,15 @@
         if (!container) return;
 
         var btnText = getNotifBtnText();
-        var badge = '<span class="notification-badge" style="display:none;background:#e74c3c;color:#fff;border-radius:50%;width:18px;height:18px;font-size:11px;line-height:18px;text-align:center;position:absolute;top:-9px;right:2px;font-weight:bold;">0</span>';
+        var badge = '<span class="notification-badge" style="display:none;background:#ff4d4f;color:#fff;border-radius:10px;min-width:16px;height:16px;padding:0 4px;font-size:10px;line-height:16px;text-align:center;position:absolute;top:-5px;right:-5px;font-weight:bold;box-shadow:0 2px 4px rgba(0,0,0,0.2);border:1px solid #fff;">0</span>';
 
         var a = document.createElement('a');
         a.href = notifBase() + 'notifications.html';
         a.className = 'notif-btn header-link';
         a.id = 'notifBtn';
-        a.setAttribute('data-i18n', 'nav_notifications');
-        a.innerHTML = '&#128231; <span id="notifBtnText" class="notif-text">' + btnText + '</span>' + badge;
-        a.style.cssText = 'position:relative;display:inline-flex;align-items:center;gap:4px;';
+        // a.setAttribute('data-i18n', 'nav_notifications'); // 移除此属性，防止被其他页面的 i18n 脚本误伤
+        a.innerHTML = '<i class="far fa-bell"></i> <span id="notifBtnText" class="notif-text">' + btnText + '</span>' + badge;
+        a.style.cssText = 'position:relative;';
 
         var userMenu = container.querySelector('.user-menu-container');
         if (userMenu && userMenu.parentNode === container) {

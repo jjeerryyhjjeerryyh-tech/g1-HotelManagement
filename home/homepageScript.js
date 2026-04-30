@@ -103,6 +103,7 @@ const i18n = {
         connect_desc: '订阅酒店电子报，第一时间获取专属优惠、旅行灵感以及精彩活动资讯。',
         subscribe_placeholder: '输入您的邮箱地址',
         subscribe_btn: '注册',
+        hotel_name: '91酒店',
         subscribe_success: '已提交订阅：{email}',
         section_events: '活动',
         meta_group: 'XX酒店集团',
@@ -260,6 +261,7 @@ const i18n = {
         connect_desc: 'Subscribe to our newsletter for exclusive offers, travel inspiration, and event highlights.',
         subscribe_placeholder: 'Enter your email address',
         subscribe_btn: 'Subscribe',
+        hotel_name: '91 Hotel',
         subscribe_success: 'Subscribed: {email}',
         section_events: 'Events',
         meta_group: 'Hotel Group',
@@ -323,6 +325,40 @@ const i18n = {
             connect_desc: 'Subscribe to our newsletter for exclusive offers and updates.',
             subscribe_placeholder: 'Enter email address',
             subscribe_btn: 'Subscribe'
+        },
+        fr: {
+            menu: 'MENU',
+            nav_rooms: 'Chambres',
+            nav_dining: 'Dîner',
+            nav_wellness: 'Bien-être',
+            nav_offers: 'Offres',
+            lang: 'Langue',
+            contact_us: 'CONTACTEZ-NOUS',
+            reserve: 'RÉSERVER',
+            search_rooms: 'Rechercher',
+            hotel_name: '91 Hôtel',
+            checkin: 'Arrivée',
+            checkout: 'Départ',
+            search_available: 'Vérifier la disponibilité',
+            alert_invalid_date: 'La date de départ doit être après la date d\'arrivée.',
+            subscribe_btn: 'S\'abonner'
+        },
+        ja: {
+            menu: 'メニュー',
+            nav_rooms: '客室',
+            nav_dining: 'ダイニング',
+            nav_wellness: 'ウェルネス',
+            nav_offers: 'オファー',
+            lang: '言語',
+            contact_us: 'お問い合わせ',
+            reserve: '予約',
+            search_rooms: '検索',
+            hotel_name: '91ホテル',
+            checkin: 'チェックイン',
+            checkout: 'チェックアウト',
+            search_available: '空室状況を確認',
+            alert_invalid_date: 'チェックアウト日はチェックイン日より後にしてください。',
+            subscribe_btn: '登録'
         }
     };
 
@@ -526,7 +562,9 @@ if (langSelect) {
         const next = langSelect.value;
         currentLang = i18n[next] ? next : 'zh';
         localStorage.setItem('lang', currentLang);
-        document.documentElement.setAttribute('lang', currentLang === 'zh' ? 'zh-CN' : 'en');
+        
+        const htmlLangs = { zh: 'zh-CN', en: 'en', fr: 'fr', ja: 'ja' };
+        document.documentElement.setAttribute('lang', htmlLangs[currentLang] || 'en');
         document.documentElement.setAttribute('data-lang', currentLang);
         applyI18n();
         renderMenuPanel(activeMenuKey);

@@ -11,14 +11,22 @@
     <!-- Header（精简版：语言下拉 + 登出）-->
     <header class="header">
         <div class="header-content">
-            <a class="logo" href="../homePage/index.html" aria-label="首页">
-                <div class="logo-main">91酒店</div>
+            <a class="logo" href="../home/index.html" aria-label="首页">
+                <div class="logo-main" data-i18n="hotel_name">91酒店</div>
                 <div class="logo-sub">HONG KONG</div>
             </a>
 
             <div class="header-right">
                 <nav class="header-links">
-                    <a href="../BookOut/Book.html" class="header-link" id="navBook" data-i18n="tab_book">房型预订</a>
+                    <div class="lang-selector">
+                        <select id="langSelect" class="lang-select" aria-label="选择语言">
+                            <option value="zh">中文</option>
+                            <option value="en">English</option>
+                            <option value="fr">Français</option>
+                            <option value="ja">日本語</option>
+                        </select>
+                    </div>
+                    <a href="../BookOut/Book.html" class="header-link" id="navBook" data-i18n="back">返回</a>
                 </nav>
             </div>
         </div>

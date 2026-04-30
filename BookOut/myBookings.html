@@ -93,21 +93,42 @@
         .lang-select:focus { 
             box-shadow: 0 0 0 3px rgba(242, 116, 5, 0.2);
         }
+
+        @media (max-width: 600px) {
+            body { padding: 12px; }
+            .page-header { flex-direction: row; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 15px; }
+            h1 { font-size: 18px; }
+            .back-btn span { display: none; }
+            .lang-select { margin-left: 0; width: auto; padding: 5px 10px; font-size: 12px; }
+            .booking-card { padding: 15px; border-radius: 10px; }
+            .booking-info { grid-template-columns: 1fr; gap: 10px; }
+            .info-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f9f9f9; padding-bottom: 5px; }
+            .info-item label { margin-bottom: 0; }
+            .booking-card-header { flex-direction: row; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px solid #eee; padding-bottom: 8px; }
+            .booking-id { font-size: 11px; }
+            .status-badge { padding: 2px 8px; font-size: 11px; }
+            .review-form textarea { font-size: 14px; }
+            .star-picker i { font-size: 1.3rem; }
+        }
     </style>
 </head>
 <body>
     <div class="page-header">
         <a href="Book.html" class="back-btn"><i class="fas fa-arrow-left"></i> <span data-i18n="back_to_home">返回</span></a>
         <h1 data-i18n="my_bookings_title">我的订单</h1>
-        <select id="langSelect" class="lang-select">
-            <option value="zh">中文</option>
-            <option value="en">English</option>
-        </select>
+        <div style="display:flex;align-items:center;gap:12px;margin-left:auto;">
+            <select id="langSelect" class="lang-select">
+                <option value="zh">中文</option>
+                <option value="en">English</option>
+                <option value="fr">Français</option>
+                <option value="ja">日本語</option>
+            </select>
+        </div>
     </div>
     <div class="bookings-list" id="bookingsList"></div>
 
     <script>
-        const API      = 'http://localhost:3000';
+        const API      = 'http://43.132.210.15:3000';
         const username = sessionStorage.getItem('username');
 
         const i18n = {
@@ -174,6 +195,70 @@
                 comment_min_length_alert: 'Comment must be at least 5 characters',
                 review_submit_success: 'Review submitted successfully!',
                 review_submit_fail: 'Failed to submit review'
+            },
+            fr: {
+                back_to_home: 'Retour',
+                my_bookings_title: 'Mes Réservations',
+                login_required: 'Veuillez vous connecter pour voir vos réservations',
+                go_to_login: 'Aller à la connexion',
+                no_bookings_found: 'Aucune réservation trouvée',
+                order_id: 'ID Commande',
+                room_type: 'Type de chambre',
+                checkin_date: 'Arrivée',
+                checkout_date: 'Départ',
+                total_amount: 'Montant Total',
+                booking_time: 'Date de réservation',
+                status_confirmed: 'Confirmé',
+                status_pending: 'En attente',
+                status_checked_in: 'Arrivé',
+                status_checked_out: 'Parti',
+                status_cancelled: 'Annulé',
+                your_review: 'Votre Avis',
+                hotel_reply: '🏨 Réponse de l\'hôtel',
+                review_this_stay: 'Évaluer ce séjour',
+                share_experience_placeholder: 'Partagez votre expérience (min 5 caractères)...',
+                submit_review: 'Envoyer l\'avis',
+                review_after_checkout: 'Avis disponible après le départ',
+                cancel_booking: 'Annuler la réservation',
+                confirm_cancel: 'Êtes-vous sûr de vouloir annuler ? Cette action est irréversible.',
+                cancel_success: 'Réservation annulée avec succès',
+                cancel_fail: 'Échec de l\'annulation',
+                select_rating_alert: 'Veuillez choisir une note',
+                comment_min_length_alert: 'Le commentaire doit faire au moins 5 caractères',
+                review_submit_success: 'Avis envoyé avec succès !',
+                review_submit_fail: 'Échec de l\'envoi'
+            },
+            ja: {
+                back_to_home: '戻る',
+                my_bookings_title: 'マイ予約',
+                login_required: '予約を確認するにはログインしてください',
+                go_to_login: 'ログインへ',
+                no_bookings_found: '予約履歴がありません',
+                order_id: '注文番号',
+                room_type: '部屋タイプ',
+                checkin_date: 'チェックイン',
+                checkout_date: 'チェックアウト',
+                total_amount: '合計金額',
+                booking_time: '予約日時',
+                status_confirmed: '確認済み',
+                status_pending: '確認待ち',
+                status_checked_in: 'チェックイン済み',
+                status_checked_out: 'チェックアウト済み',
+                status_cancelled: 'キャンセル済み',
+                your_review: 'あなたの評価',
+                hotel_reply: '🏨 ホテルからの返信',
+                review_this_stay: 'この宿泊を評価する',
+                share_experience_placeholder: '体験を共有してください（5文字以上）...',
+                submit_review: '評価を送信',
+                review_after_checkout: 'チェックアウト後に評価可能です',
+                cancel_booking: '予約をキャンセル',
+                confirm_cancel: 'この予約をキャンセルしてもよろしいですか？取り消しはできません。',
+                cancel_success: '予約をキャンセルしました',
+                cancel_fail: 'キャンセルの送信に失敗しました',
+                select_rating_alert: '星評価を選択してください',
+                comment_min_length_alert: 'コメントは5文字以上で入力してください',
+                review_submit_success: '評価を送信しました！',
+                review_submit_fail: '送信に失敗しました'
             }
         };
 
@@ -233,15 +318,28 @@
 
         async function loadPage() {
             const dict = i18n[currentLang];
-            const [bookRes, revRes] = await Promise.all([
+            const [bookRes, revRes, typesRes] = await Promise.all([
                 fetch(`${API}/api/bookings`),
-                fetch(`${API}/api/reviews`)
+                fetch(`${API}/api/reviews`),
+                fetch(`${API}/api/roomtypes`)
             ]);
-            const bookData = await bookRes.json();
-            const revData  = await revRes.json();
+            const bookData  = await bookRes.json();
+            const revData   = await revRes.json();
+            const typesData = await typesRes.json();
 
             const myList  = (bookData.bookings || []).filter(b => b.username === username).reverse();
             const reviews = revData.reviews || [];
+            const roomTypes = typesData.roomTypes || [];
+
+            // 定义本地多语言字典，用于修正 API 返回的纯中文名
+            const roomI18nMap = {
+                'R001': { zh: '舒适标准间', en: 'Comfort Standard Room', fr: 'Chambre Standard Confort', ja: 'コンフォート標準客室' },
+                'R002': { zh: '豪华海景房', en: 'Deluxe Ocean View Room', fr: 'Chambre Deluxe Vue Mer', ja: 'デラックスオーシャンビュールーム' },
+                'R003': { zh: '行政套房', en: 'Executive Suite', fr: 'Suite Exécutive', ja: 'エグゼクティブスイート' },
+                'R004': { zh: '商务双床房', en: 'Business Twin Room', fr: 'Chambre Affaires à Deux Lits', ja: 'ビジネスツインルーム' },
+                'R005': { zh: '总统套房', en: 'Presidential Suite', fr: 'Suite Présidentielle', ja: 'ロイヤルスイートルーム' },
+                'R006': { zh: '花园景观房', en: 'Garden View Room', fr: 'Chambre Vue Jardin', ja: 'ガーデンビュールーム' }
+            };
 
             const container = document.getElementById('bookingsList');
             if (!myList.length) {
@@ -255,7 +353,13 @@
                 const isCheckedOut = b.status === 'checked-out';
                 const isCancellable = b.status === 'confirmed' || b.status === 'pending';
 
-                // 查找该预订是否已有评价（按 bookingId 或 roomId+username）
+                // 核心修复：优先从本地 i18n 映射表通过 roomId 获取翻译后的房型名
+                const i18nNameObj = roomI18nMap[b.roomId];
+                const displayRoomName = i18nNameObj 
+                    ? (i18nNameObj[currentLang] || i18nNameObj.zh)
+                    : (typeof b.roomName === 'object' ? (b.roomName[currentLang] || b.roomName.zh) : (b.roomName || b.roomType || '-'));
+
+                // 查找该预订是否已有评价
                 const existingReview = reviews.find(r =>
                     r.bookingId === b.id || (r.roomId === b.roomId && r.username === username)
                 );
@@ -291,7 +395,7 @@
                                     </div>
                                     <input type="hidden" id="rating-${b.id}" value="0">
                                     <textarea id="comment-${b.id}" rows="3" placeholder="${dict.share_experience_placeholder}"></textarea>
-                                    <button class="submit-review-btn" onclick="submitReview('${b.id}','${b.roomId}','${(b.roomName && b.roomName[currentLang]) || (b.roomType && b.roomType[currentLang]) || ''}')">
+                                    <button class="submit-review-btn" onclick="submitReview('${b.id}','${b.roomId}','${displayRoomName}')">
                                         ${dict.submit_review}
                                     </button>
                                 </div>
@@ -308,7 +412,7 @@
                             <span class="status-badge ${statusClass}">${statusText}</span>
                         </div>
                         <div class="booking-info">
-                            <div class="info-item"><label>${dict.room_type}</label><span>${(b.roomName && b.roomName[currentLang]) || (b.roomType && b.roomType[currentLang]) || '-'}</span></div>
+                            <div class="info-item"><label>${dict.room_type}</label><span>${displayRoomName}</span></div>
                             <div class="info-item"><label>${dict.checkin_date}</label><span>${b.checkIn}</span></div>
                             <div class="info-item"><label>${dict.checkout_date}</label><span>${b.checkOut}</span></div>
                             <div class="info-item"><label>${dict.total_amount}</label><span>${b.totalDisplay || ('¥' + b.totalAmount)}</span></div>
@@ -317,7 +421,11 @@
                         ${reviewHtml}
                         ${isCancellable ? `
                         <div style="margin-top:16px;padding-top:16px;border-top:1px solid #f0f0f0;display:flex;justify-content:flex-end;">
-                            <button class="cancel-btn" onclick="cancelBooking('${b.id}')">
+                            <button class="cancel-btn"
+                                data-roomtype="${displayRoomName}"
+                                data-checkin="${b.checkIn}"
+                                data-checkout="${b.checkOut}"
+                                onclick="cancelBooking(this, '${b.id}')">
                                 <i class="fas fa-times-circle"></i> ${dict.cancel_booking}
                             </button>
                         </div>` : ''}
@@ -363,9 +471,14 @@
             }
         }
 
-        async function cancelBooking(bookingId) {
+        async function cancelBooking(btn, bookingId) {
             const dict = i18n[currentLang];
             if (!confirm(dict.confirm_cancel)) return;
+            const bookingData = {
+                roomType: btn.dataset.roomtype || '',
+                checkIn:  btn.dataset.checkin  || '',
+                checkOut: btn.dataset.checkout || ''
+            };
             const res  = await fetch(`${API}/api/bookings/${bookingId}/status`, {
                 method:  'PUT',
                 headers: { 'Content-Type': 'application/json' },
@@ -373,12 +486,21 @@
             });
             const data = await res.json();
             if (res.ok) {
+                if (window.notificationSystem) {
+                    window.notificationSystem.notifyBookingCancelled(
+                        sessionStorage.getItem('username') || '',
+                        bookingData
+                    );
+                }
                 alert(dict.cancel_success);
                 loadPage();
             } else {
                 alert(data.message || dict.cancel_fail);
             }
         }
+
     </script>
+    <script src="../notifications/notificationSystem.js"></script>
+    <script src="../notifications/autoInject.js"></script>
 </body>
 </html>

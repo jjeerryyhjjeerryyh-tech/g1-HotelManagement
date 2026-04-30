@@ -169,7 +169,7 @@
             id:          Date.now() + Math.random(),
             userId:      username,
             type:        'booking_success',
-            templateKey: 'booking_success_body',
+            templateKey: 'booking_success',
             params: {
                 roomType:  bookingDetails.roomType  || '',
                 checkIn:   bookingDetails.checkIn   || '',
@@ -188,7 +188,21 @@
             id:          Date.now() + Math.random(),
             userId:      username,
             type:        'profile_update',
-            templateKey: 'profile_update_body',
+            templateKey: 'profile_update',
+            params:      {},
+            timestamp:   new Date().toISOString(),
+            isRead:      false
+        };
+        addNotification(notification);
+        return notification;
+    }
+
+    function notifyNewsletterSubscription(username) {
+        var notification = {
+            id:          Date.now() + Math.random(),
+            userId:      username,
+            type:        'newsletter_subscription',
+            templateKey: 'newsletter_subscription',
             params:      {},
             timestamp:   new Date().toISOString(),
             isRead:      false
@@ -202,10 +216,29 @@
             id:          Date.now() + Math.random(),
             userId:      username,
             type:        'admin_login',
-            templateKey: 'admin_login_body',
+            templateKey: 'admin_login',
             params:      {},
             timestamp:   new Date().toISOString(),
             isRead:      false
+        };
+        addNotification(notification);
+        return notification;
+    }
+
+    function notifyBookingCancelled(username, bookingDetails) {
+        if (!bookingDetails) bookingDetails = {};
+        var notification = {
+            id:          Date.now() + Math.random(),
+            userId:      username,
+            type:        'booking_cancelled',
+            templateKey: 'booking_cancelled',
+            params: {
+                roomType: bookingDetails.roomType || '',
+                checkIn:  bookingDetails.checkIn  || '',
+                checkOut: bookingDetails.checkOut || ''
+            },
+            timestamp: new Date().toISOString(),
+            isRead:    false
         };
         addNotification(notification);
         return notification;
@@ -245,8 +278,10 @@
         deleteNotification:    deleteNotification,
         updateNotificationBadge: updateNotificationBadge,
         notifyLoginSuccess:    notifyLoginSuccess,
-        notifyBookingSuccess:  notifyBookingSuccess,
-        notifyProfileUpdate:   notifyProfileUpdate,
+        notifyBookingSuccess:   notifyBookingSuccess,
+        notifyBookingCancelled: notifyBookingCancelled,
+        notifyProfileUpdate:    notifyProfileUpdate,
+        notifyNewsletterSubscription: notifyNewsletterSubscription,
         notifyAdminLogin:      notifyAdminLogin,
         renderNotification:    renderNotification,
         t:                     t,

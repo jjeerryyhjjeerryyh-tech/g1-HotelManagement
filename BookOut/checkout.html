@@ -12,6 +12,10 @@
 <body>
     <div class="checkout-topbar">
         <div class="checkout-topbar-inner">
+            <a class="logo" href="../home/index.html">
+                <div class="logo-main" data-i18n="hotel_name">91酒店</div>
+                <div class="logo-sub">HONG KONG</div>
+            </a>
             <a class="checkout-back" href="Book.html">
                 <i class="fas fa-arrow-left"></i>
                 <span data-i18n="backToRooms">返回客房</span>
@@ -22,6 +26,7 @@
                     <select id="languageSelect" aria-label="选择语言">
                         <option value="zh">中文</option>
                         <option value="en">English</option>
+                        <option value="fr">Français</option>
                         <option value="ja">日本語</option>
                     </select>
                 </div>
@@ -140,14 +145,21 @@
                                    placeholder="**** **** **** ****" type="tel" pattern="\d{12}" maxlength="12"
                                    inputmode="numeric" oninput="this.value = this.value.replace(/\D/g, '').slice(0, 12)"
                                    title="请填写12位数字卡号">
+                                   data-i18n-title="cardNumberTitle" title="请填写12位数字卡号">
                         </div>
                         <div class="form-row">
                             <div class="form-group">
                                 <label class="form-label" data-i18n="expiry">有效期 (MM/YY) *</label>
                                 <input class="form-input" form="checkoutForm" name="expiry" required placeholder="MM/YY"
+<<<<<<< HEAD
                                        type="tel" maxlength="5" inputmode="numeric" oninput="formatExpiry(this)"
                                        title="请填写4位数字（MMYY）">
                                 
+=======
+                                       type="tel" maxlength="4" inputmode="numeric" oninput="formatExpiry(this)"
+                                       data-i18n-title="expiryTitle" title="请填写4位数字（MMYY）">
+                                <small style="color: #666; margin-top: 4px;" data-i18n="expiryHint">例如：1228 表示 12/28</small>
+>>>>>>> f6991b279a3f53a2096a69b079249ec471cb6c38
                             </div>
                         </div>
                         <div class="form-group">
@@ -235,6 +247,8 @@
     <div class="toast-container" id="toastContainer"></div>
 
     <!-- JavaScript 文件 -->
+    <script src="../notifications/notificationSystem.js"></script>
+    <script src="../notifications/autoInject.js"></script>
     <script src="checkout.js"></script>
 </body>
 </html>

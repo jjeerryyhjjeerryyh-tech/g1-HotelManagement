@@ -198,6 +198,27 @@ body {
 /* ================================
    语言下拉菜单（与 Book.css 完全一致）
 ================================ */
+.lang-selector {
+    margin-right: 15px;
+}
+
+.lang-select {
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    border: 1px solid var(--gray-300);
+    background: var(--surface);
+    color: var(--gray-800);
+    font-size: 0.9rem;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.2s;
+    font-family: inherit;
+}
+
+.lang-select:hover {
+    border-color: var(--primary);
+}
+
 .lang-menu-container {
     position: relative;
 }
@@ -742,13 +763,31 @@ body {
 /* ================================
    响应式
 ================================ */
+@media (max-width: 768px) {
+    .header-content {
+        padding: 0;
+    }
+    .header-links {
+        gap: 12px;
+    }
+    .header-link span {
+        display: none;
+    }
+    .logo-main {
+        font-size: 16px;
+    }
+}
+
 @media (max-width: 640px) {
     .page-wrapper { padding: 1.5rem 1rem 3rem; }
     .page-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .page-actions { width: 100%; }
+    .page-actions .btn { flex: 1; justify-content: center; }
     .message-stats { grid-template-columns: 1fr; }
-    .message-item { flex-wrap: wrap; gap: 0.75rem; }
-    .message-actions { opacity: 1; flex-wrap: wrap; }
-    .header { padding: 1rem; }
+    .message-item { flex-direction: column; align-items: stretch; gap: 0.75rem; padding: 1rem; }
+    .message-icon { position: absolute; right: 1rem; top: 1rem; opacity: 0.2; }
+    .message-actions { opacity: 1; margin-left: 0; margin-top: 0.5rem; justify-content: flex-end; }
+    .header { padding: 0.8rem 1rem; }
     .page-title h1 { font-size: 1.4rem; }
     .stat-number { font-size: 2rem; }
 }

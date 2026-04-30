@@ -241,3 +241,35 @@ input:checked + .slider:before { transform: translateX(18px); }
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+/* 响应式调整 */
+@media (max-width: 480px) {
+    body {
+        padding: 20px;
+        height: auto;
+        min-height: 100vh;
+        display: block;
+    }
+
+    .back-home {
+        position: relative;
+        top: 0;
+        left: 0;
+        margin-bottom: 20px;
+    }
+
+    .theme-switch-wrapper {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+
+    .container {
+        padding: 30px 20px;
+        border-radius: 16px;
+    }
+
+    h2 {
+        font-size: 26px;
+    }
+}

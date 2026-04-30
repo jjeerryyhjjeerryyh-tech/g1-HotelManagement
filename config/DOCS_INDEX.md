@@ -1,351 +1,358 @@
-# 📚 文档总览
+# Documentation Index
 
-**最后更新**: 2026年3月  
-**版本**: 2.0.0
+**Last Updated**: March 2026
+**Version**: 2.0.0
 
 ---
 
-## 📍 所有文档列表
+## All Documents
 
-### ✅ 已创建的文档
+### Already Created
 
 ```
 e:/config-refactored/
-├── README.md                   🏠 项目主入口（本团队）
-├── TEAM_GUIDE.md              👥 团队协作指南（新建）
-├── GETTING_STARTED.md         🚀 5分钟快速开始（新建）
-├── API_REFERENCE.md           📚 API 快速查询（新建）
-├── ARCHITECTURE.md            🏗️  系统设计（待创建）
-├── TROUBLESHOOTING.md         🔧 常见问题（待创建）
-└── MIGRATION_GUIDE.md         🔄 迁移指南（待创建）
+├── README.md                   - Project main entry (this section)
+├── TEAM_GUIDE.md              - Team collaboration guide (new)
+├── GETTING_STARTED.md         - 5-minute quick start (new)
+├── API_REFERENCE.md           - API quick reference (new)
+├── ARCHITECTURE.md            - System design (to be created)
+├── TROUBLESHOOTING.md         - Common issues (to be created)
+└── MIGRATION_GUIDE.md         - Migration guide (to be created)
 ```
 
 ---
 
-## 📖 文档快速导航
+## Quick Navigation
 
-### 🏠 README.md
-**用途**: 项目主入口，适合所有人  
-**时间**: 5 分钟  
-**内容**:
-- 项目快速导航（按角色）
-- 包含什么文件
-- 8 个核心功能速览
-- 文档导航表
+### README.md
+**Purpose**: Project main entry, suitable for everyone
+**Time**: 5 minutes
+**Content**:
+- Project quick navigation (by role)
+- What files are included
+- 8 core features overview
+- Documentation navigation table
 
-**适合**: 第一次接触这个项目
-
----
-
-### 👥 TEAM_GUIDE.md
-**用途**: 团队协作指南  
-**时间**: 10 分钟  
-**内容**:
-- 各角色职责和需要了解的内容
-- 完整命令列表
-- 文件和路径
-- 沟通协议
-- 工作流程
-- 关键指标
-- 最佳实践
-
-**适合**: 想了解团队怎么分工和如何协作
+**Best for**: First time touching this project
 
 ---
 
-### 🚀 GETTING_STARTED.md
-**用途**: 快速上手  
-**时间**: 10 分钟 + 5 分钟集成  
-**内容**:
-- 5 分钟极速开始
-- 8 个常用场景和代码示例
-- 文件结构说明
-- 集成检查清单
-- 常见问题
-- 下一步学习建议
+### TEAM_GUIDE.md
+**Purpose**: Team collaboration guide
+**Time**: 10 minutes
+**Content**:
+- Roles and responsibilities
+- Complete command list
+- Files and paths
+- Communication protocols
+- Workflows
+- Key metrics
+- Best practices
 
-**适合**: 后端开发者想快速开始使用
-
----
-
-### 📚 API_REFERENCE.md
-**用途**: API 快速查询  
-**时间**: 按需查阅  
-**内容**:
-- 8 个模块的所有 API
-- 每个方法的参数、返回值、异常、示例
-- 按场景查询
-- 常见问题
-
-**适合**: 编码时不确定如何使用 API
+**Best for**: Understanding team division and how to collaborate
 
 ---
 
-### 🏗️ ARCHITECTURE.md（待创建）
-**用途**: 理解系统设计  
-**时间**: 30 分钟  
-**内容** (计划):
-- 系统总体设计
-- 为什么这样设计
-- 8 个模块的职责
-- 模块间交互
-- 如何扩展
-- 设计决策和权衡
+### GETTING_STARTED.md
+**Purpose**: Quick start guide
+**Time**: 10 minutes + 5 minutes integration
+**Content**:
+- 5-minute lightning start
+- 8 common scenarios with code examples
+- File structure explanation
+- Integration checklist
+- Common issues
+- Next steps
 
-**适合**: 架构师、高级开发者、想深入理解系统
-
----
-
-### 🔧 TROUBLESHOOTING.md（待创建）
-**用途**: 故障排查和常见问题  
-**时间**: 按需查阅  
-**内容** (计划):
-- 常见错误和解决方案
-- 症状 → 原因 → 解决
-- 日志怎么看
-- 如何调试
-- 性能问题排查
-- 常见 bug 和 workaround
-
-**适合**: 遇到问题时快速查找答案
+**Best for**: Backend developers wanting to get started quickly
 
 ---
 
-### 🔄 MIGRATION_GUIDE.md（待创建）
-**用途**: 从旧系统迁移  
-**时间**: 30 分钟（计划）  
-**内容** (计划):
-- 迁移步骤
-- 时间规划
-- 风险评估
-- 测试计划
-- 回滚方案
-- 成功案例
+### API_REFERENCE.md
+**Purpose**: API quick reference
+**Time**: As needed
+**Content**:
+- All APIs for 8 modules
+- Parameters, return values, exceptions, and examples for each method
+- Search by scenario
+- Common questions
 
-**适合**: 项目经理、计划迁移的人
+**Best for**: When unsure how to use an API during coding
 
 ---
 
-## 📋 按角色推荐阅读
+### ARCHITECTURE.md (To be created)
+**Purpose**: Understanding system design
+**Time**: 30 minutes
+**Content** (planned):
+- Overall system design
+- Why it was designed this way
+- Responsibilities of 8 modules
+- Module interactions
+- How to extend
+- Design decisions and trade-offs
 
-### 👨‍💼 项目经理
-
-**推荐顺序** (20 分钟):
-1. ✅ README.md - 了解项目 (5 分钟)
-2. ✅ TEAM_GUIDE.md - 了解分工 (10 分钟)
-3. ⏳ MIGRATION_GUIDE.md - 迁移计划 (待创建)
-
----
-
-### 👨‍💻 后端开发者
-
-**推荐顺序** (40 分钟):
-1. ✅ README.md - 快速了解 (5 分钟)
-2. ✅ GETTING_STARTED.md - 快速开始 (10 分钟)
-3. ✅ API_REFERENCE.md - 了解所有 API (20 分钟)
-4. ⏳ ARCHITECTURE.md - 理解设计 (待创建)
-
-**日常工作**:
-- 📍 API_REFERENCE.md - 编码时查询 API
-- 📍 TROUBLESHOOTING.md - 遇到问题时查询
+**Best for**: Architects, senior developers, those wanting to deeply understand the system
 
 ---
 
-### 🧪 QA / 测试工程师
+### TROUBLESHOOTING.md (To be created)
+**Purpose**: Troubleshooting and common issues
+**Time**: As needed
+**Content** (planned):
+- Common errors and solutions
+- Symptom -> Cause -> Solution
+- How to read logs
+- How to debug
+- Performance issue troubleshooting
+- Common bugs and workarounds
 
-**推荐顺序** (20 分钟):
-1. ✅ README.md - 了解系统 (5 分钟)
-2. ✅ TEAM_GUIDE.md - 了解命令列表 (10 分钟)
-3. ✅ TROUBLESHOOTING.md - 常见问题 (待创建)
-
----
-
-### 🚀 DevOps / 部署工程师
-
-**推荐顺序** (30 分钟):
-1. ✅ README.md - 快速了解 (5 分钟)
-2. ✅ GETTING_STARTED.md (部署章节) - 如何部署 (10 分钟)
-3. ✅ API_REFERENCE.md (Deployment 部分) - API 查询 (10 分钟)
-4. ⏳ TROUBLESHOOTING.md - 故障排查 (待创建)
+**Best for**: Quick lookup when encountering problems
 
 ---
 
-## 🎯 按场景推荐
+### MIGRATION_GUIDE.md (To be created)
+**Purpose**: Migration from old system
+**Time**: 30 minutes (planned)
+**Content** (planned):
+- Migration steps
+- Timeline
+- Risk assessment
+- Testing plan
+- Rollback plan
+- Success stories
 
-### 场景 1: 我是新人，第一次接触项目
-
-**推荐**:
-1. README.md (5 分钟) - 了解项目
-2. GETTING_STARTED.md (10 分钟) - 快速开始
-3. 开始编码 (5 分钟) - 第一个示例
-
-**总时间**: 20 分钟
-
----
-
-### 场景 2: 我需要了解某个 API
-
-**推荐**:
-1. API_REFERENCE.md - 直接查询
-
-**总时间**: 2 分钟
+**Best for**: Project managers, those planning migration
 
 ---
 
-### 场景 3: 我遇到了一个错误
+## Recommended Reading by Role
 
-**推荐**:
-1. TROUBLESHOOTING.md - 查找错误描述
-2. 查看错误堆栈
-3. 根据建议解决
+### Project Manager
 
-**总时间**: 5-10 分钟
-
----
-
-### 场景 4: 我想理解系统设计
-
-**推荐**:
-1. ARCHITECTURE.md - 系统设计 (待创建)
-2. 查看代码注释
-3. 团队讨论
-
-**总时间**: 1-2 小时
+**Recommended Order** (20 minutes):
+1. README.md - Understand the project (5 minutes)
+2. TEAM_GUIDE.md - Understand division of work (10 minutes)
+3. MIGRATION_GUIDE.md - Migration plan (to be created)
 
 ---
 
-### 场景 5: 我们要从旧系统迁移
+### Backend Developer
 
-**推荐**:
-1. MIGRATION_GUIDE.md - 迁移计划 (待创建)
-2. 风险评估
-3. 分阶段实施
+**Recommended Order** (40 minutes):
+1. README.md - Quick overview (5 minutes)
+2. GETTING_STARTED.md - Quick start (10 minutes)
+3. API_REFERENCE.md - Learn all APIs (20 minutes)
+4. ARCHITECTURE.md - Understand design (to be created)
 
-**总时间**: 1-2 周
-
----
-
-## 📊 文档统计
-
-| 文档 | 字数 | 章节数 | 示例数 | 状态 |
-|------|------|--------|--------|------|
-| README.md | ~2000 | 8 | 5 | ✅ 完成 |
-| TEAM_GUIDE.md | ~2500 | 10 | 3 | ✅ 完成 |
-| GETTING_STARTED.md | ~3000 | 9 | 12 | ✅ 完成 |
-| API_REFERENCE.md | ~4000 | 8 | 30+ | ✅ 完成 |
-| ARCHITECTURE.md | ~3000 | 10 | 5 | ⏳ 待创建 |
-| TROUBLESHOOTING.md | ~2000 | 15 | 20 | ⏳ 待创建 |
-| MIGRATION_GUIDE.md | ~2000 | 8 | 3 | ⏳ 待创建 |
-| **总计** | ~18,500 | 58+ | 78+ | **4/7** |
+**Daily Work**:
+- API_REFERENCE.md - Query APIs during coding
+- TROUBLESHOOTING.md - Query when encountering problems
 
 ---
 
-## 🔄 文档使用流程
+### QA / Test Engineer
+
+**Recommended Order** (20 minutes):
+1. README.md - Understand the system (5 minutes)
+2. TEAM_GUIDE.md - Learn command list (10 minutes)
+3. TROUBLESHOOTING.md - Common issues (to be created)
+
+---
+
+### DevOps / Deployment Engineer
+
+**Recommended Order** (30 minutes):
+1. README.md - Quick overview (5 minutes)
+2. GETTING_STARTED.md (deployment section) - How to deploy (10 minutes)
+3. API_REFERENCE.md (Deployment section) - API reference (10 minutes)
+4. TROUBLESHOOTING.md - Troubleshooting (to be created)
+
+---
+
+## Recommended by Scenario
+
+### Scenario 1: I am new, first time touching the project
+
+**Recommended**:
+1. README.md (5 minutes) - Understand the project
+2. GETTING_STARTED.md (10 minutes) - Quick start
+3. Start coding (5 minutes) - First example
+
+**Total time**: 20 minutes
+
+---
+
+### Scenario 2: I need to understand a certain API
+
+**Recommended**:
+1. API_REFERENCE.md - Query directly
+
+**Total time**: 2 minutes
+
+---
+
+### Scenario 3: I encountered an error
+
+**Recommended**:
+1. TROUBLESHOOTING.md - Find error description
+2. View error stack
+3. Resolve according to suggestions
+
+**Total time**: 5-10 minutes
+
+---
+
+### Scenario 4: I want to understand system design
+
+**Recommended**:
+1. ARCHITECTURE.md - System design (to be created)
+2. View code comments
+3. Team discussion
+
+**Total time**: 1-2 hours
+
+---
+
+### Scenario 5: We are migrating from the old system
+
+**Recommended**:
+1. MIGRATION_GUIDE.md - Migration plan (to be created)
+2. Risk assessment
+3. Phased implementation
+
+**Total time**: 1-2 weeks
+
+---
+
+## Documentation Stats
+
+| Document | Words | Sections | Examples | Status |
+|----------|-------|----------|----------|--------|
+| README.md | ~2000 | 8 | 5 | Complete |
+| TEAM_GUIDE.md | ~2500 | 10 | 3 | Complete |
+| GETTING_STARTED.md | ~3000 | 9 | 12 | Complete |
+| API_REFERENCE.md | ~4000 | 8 | 30+ | Complete |
+| ARCHITECTURE.md | ~3000 | 10 | 5 | Pending |
+| TROUBLESHOOTING.md | ~2000 | 15 | 20 | Pending |
+| MIGRATION_GUIDE.md | ~2000 | 8 | 3 | Pending |
+| **Total** | ~18,500 | 58+ | 78+ | **4/7** |
+
+---
+
+## Documentation Workflow
 
 ```
-第一次使用项目
-    ↓
-查看 README.md (5 分钟)
-    ↓
-选择你的角色
-    ↓
-按照推荐顺序阅读文档
-    ↓
-开始编码 / 部署 / 测试
-    ↓
-遇到问题？ → 查看 TROUBLESHOOTING.md
-    ↓
-不确定 API？ → 查看 API_REFERENCE.md
-    ↓
-想深入理解？ → 查看 ARCHITECTURE.md
+First time using the project
+    |
+    v
+Read README.md (5 minutes)
+    |
+    v
+Choose your role
+    |
+    v
+Read documents in recommended order
+    |
+    v
+Start coding / deploy / test
+    |
+    v
+Encounter problem? -> View TROUBLESHOOTING.md
+    |
+    v
+Unsure about API? -> View API_REFERENCE.md
+    |
+    v
+Want to dive deep? -> View ARCHITECTURE.md
 ```
 
 ---
 
-## 💡 文档特色
+## Documentation Features
 
-### ✨ 以团队为中心
-- 不是对比新旧方案
-- 是帮助团队协作
-- 明确谁负责什么
+### Team-Centered
+- Not comparing old vs new solutions
+- Helping team collaborate
+- Clear who is responsible for what
 
-### ✨ 以场景为导向
-- 每个文档解决具体问题
-- 有清晰的使用场景
-- 包含代码示例
+### Scenario-Oriented
+- Each document solves a specific problem
+- Clear usage scenarios
+- Includes code examples
 
-### ✨ 快速查询
-- 导航清晰
-- 索引完整
-- 支持搜索
+### Quick Search
+- Clear navigation
+- Complete index
+- Supports searching
 
-### ✨ 循序渐进
-- 新人有入门文档
-- 进阶有深入文档
-- 问题有排查文档
-
----
-
-## 🚀 快速链接
-
-| 我想... | 查看文档 | 时间 |
-|---------|--------|------|
-| 了解项目 | README.md | 5分钟 |
-| 快速开始 | GETTING_STARTED.md | 10分钟 |
-| 查询 API | API_REFERENCE.md | 2分钟 |
-| 了解分工 | TEAM_GUIDE.md | 10分钟 |
-| 理解设计 | ARCHITECTURE.md | 30分钟 (待创建) |
-| 排查问题 | TROUBLESHOOTING.md | 按需 (待创建) |
-| 计划迁移 | MIGRATION_GUIDE.md | 30分钟 (待创建) |
+### Progressive
+- Entry documents for newcomers
+- Deep-dive documents for advanced
+- Troubleshooting documents for problems
 
 ---
 
-## ✅ 使用建议
+## Quick Links
 
-### 对于新人
-1. 从 README.md 开始
-2. 阅读 GETTING_STARTED.md
-3. 开始编码
-4. 需要时查看 API_REFERENCE.md
-
-### 对于团队
-1. 分享 README.md 给所有人
-2. 每个人按角色阅读相应文档
-3. 书签保存 API_REFERENCE.md 和 TROUBLESHOOTING.md
-4. 定期更新文档
-
-### 对于维护者
-1. 定期审查和更新文档
-2. 根据用户反馈改进
-3. 添加新的常见问题
-4. 保持示例代码最新
+| I want to... | View Document | Time |
+|--------------|---------------|------|
+| Understand project | README.md | 5 min |
+| Quick start | GETTING_STARTED.md | 10 min |
+| Query API | API_REFERENCE.md | 2 min |
+| Understand division | TEAM_GUIDE.md | 10 min |
+| Understand design | ARCHITECTURE.md | 30 min (pending) |
+| Troubleshoot | TROUBLESHOOTING.md | As needed (pending) |
+| Plan migration | MIGRATION_GUIDE.md | 30 min (pending) |
 
 ---
 
-## 📞 文档反馈
+## Usage Suggestions
 
-有建议或发现错误？
+### For Newcomers
+1. Start with README.md
+2. Read GETTING_STARTED.md
+3. Start coding
+4. View API_REFERENCE.md as needed
 
-1. **小改进** → 直接提 issue
-2. **新章节** → 在 TEAM_GUIDE.md 讨论
-3. **内容更新** → 提交更新请求
+### For Teams
+1. Share README.md with everyone
+2. Each person reads corresponding document by role
+3. Bookmark API_REFERENCE.md and TROUBLESHOOTING.md
+4. Update documentation regularly
+
+### For Maintainers
+1. Review and update documentation regularly
+2. Improve based on user feedback
+3. Add new common issues
+4. Keep example code up to date
 
 ---
 
-## 🎊 总结
+## Documentation Feedback
 
-这套文档旨在帮助团队：
+Have suggestions or found errors?
 
-✅ **快速上手** - 新人 5 分钟内可以开始  
-✅ **高效协作** - 每个人知道自己的角色  
-✅ **快速查询** - 需要时能快速找到答案  
-✅ **持续学习** - 从入门到精通  
-✅ **知识共享** - 团队知识库  
+1. **Minor improvements** -> Submit issue directly
+2. **New sections** -> Discuss in TEAM_GUIDE.md
+3. **Content updates** -> Submit update request
 
 ---
 
-**版本**: 2.0.0  
-**最后更新**: 2026年3月  
-**维护**: 开发团队
+## Summary
 
-👉 **立即开始**: 打开 [README.md](./README.md)
+This documentation suite is designed to help teams:
+
+- **Quick onboarding** - Newcomers can start within 5 minutes
+- **Efficient collaboration** - Everyone knows their role
+- **Quick lookup** - Find answers quickly when needed
+- **Continuous learning** - From entry to mastery
+- **Knowledge sharing** - Team knowledge base
+
+---
+
+**Version**: 2.0.0
+**Last Updated**: March 2026
+**Maintainers**: Development Team
+
+**Get Started Now**: Open [README.md](./README.md)

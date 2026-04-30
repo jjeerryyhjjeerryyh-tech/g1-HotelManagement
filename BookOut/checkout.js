@@ -4,6 +4,7 @@
     // ---------- 多语言配置 ----------
     const translations = {
         zh: {
+            hotel_name: "91酒店",
             pageTitle: "预订信息 · 91酒店",
             backToRooms: "返回客房",
             selectDates: "选择入住 / 退房日期",
@@ -34,6 +35,8 @@
             expiryHint: "例如：1228 表示 12/28",
             cardholderName: "持卡人姓名 *",
             cardholderNamePlaceholder: "姓名",
+            cardNumberTitle: "请填写12位数字卡号",
+            expiryTitle: "请填写4位数字（MMYY）",
             policies: "政策",
             checkIn: "入住",
             checkInTime: "下午 2:00 之后",
@@ -74,6 +77,7 @@
             toastDataParseError: "数据解析失败"
         },
         en: {
+            hotel_name: "91 Hotel",
             pageTitle: "Booking Details · 91 Hotel",
             backToRooms: "Back to Rooms",
             selectDates: "Select Check-in / Check-out Dates",
@@ -104,6 +108,8 @@
             expiryHint: "e.g., 1228 for 12/28",
             cardholderName: "Cardholder Name *",
             cardholderNamePlaceholder: "Name",
+            cardNumberTitle: "Please enter a 12-digit card number",
+            expiryTitle: "Please enter 4 digits (MMYY)",
             policies: "Policies",
             checkIn: "Check-in",
             checkInTime: "After 2:00 PM",
@@ -144,6 +150,7 @@
             toastDataParseError: "Data parsing error"
         },
         ja: {
+            hotel_name: "91ホテル",
             pageTitle: "予約情報 · 91ホテル",
             backToRooms: "客室に戻る",
             selectDates: "チェックイン / チェックアウト日を選択",
@@ -174,6 +181,8 @@
             expiryHint: "例：1228 → 12/28",
             cardholderName: "カード名義人 *",
             cardholderNamePlaceholder: "名義",
+            cardNumberTitle: "12桁のカード番号を入力してください",
+            expiryTitle: "4桁の数字（MMYY）を入力してください",
             policies: "ポリシー",
             checkIn: "チェックイン",
             checkInTime: "14:00以降",
@@ -212,17 +221,94 @@
             toastServerError: "サーバーに接続できません。バックエンドが起動しているか確認してください",
             toastNoData: "予約情報がありません。客室選択画面に戻ります",
             toastDataParseError: "データ解析エラー"
+        },
+        fr: {
+            hotel_name: "91 Hôtel",
+            pageTitle: "Détails de la réservation · 91 Hôtel",
+            backToRooms: "Retour aux chambres",
+            selectDates: "Sélectionner les dates d'arrivée / départ",
+            checkInDate: "Date d'arrivée *",
+            checkOutDate: "Date de départ *",
+            totalNights: "{nights} nuit(s) au total",
+            contactInfo: "Informations de contact",
+            title: "Civilité *",
+            pleaseSelect: "Veuillez sélectionner",
+            mr: "M.",
+            ms: "Mme",
+            fullName: "Nom complet *",
+            fullNamePlaceholder: "Nom (selon pièce d'identité)",
+            email: "Adresse e-mail *",
+            confirmEmail: "Confirmer l'adresse e-mail *",
+            phone: "Numéro de téléphone",
+            phonePlaceholder: "Entrez un numéro à 8 chiffres",
+            phoneHint: "Veuillez entrer un numéro à 8 chiffres",
+            arrivalTime: "Heure d'arrivée estimée",
+            after18: "Après 18h00",
+            specialRequests: "Demandes spéciales (Facultatif)",
+            specialRequestsPlaceholder: "ex: chambre non-fumeur, étage élevé",
+            payment: "Paiement",
+            securityNotice: "Avis de sécurité",
+            securityMessage: "Nous cryptons les informations de paiement. Cette page est une démo.",
+            cardNumber: "Numéro de carte",
+            expiry: "Expiration (MM/YY) *",
+            expiryHint: "ex: 1228 pour 12/28",
+            cardholderName: "Nom du titulaire *",
+            cardholderNamePlaceholder: "Nom",
+            cardNumberTitle: "Veuillez entrer 12 chiffres",
+            expiryTitle: "Veuillez entrer 4 chiffres (MMYY)",
+            policies: "Politiques",
+            checkIn: "Arrivée",
+            checkInTime: "Après 14h00",
+            checkOut: "Départ",
+            checkOutTime: "Avant 12h00",
+            cancellationPolicy: "Politique d'annulation",
+            cancellationMessage: "Annulation gratuite jusqu'à 48h avant l'arrivée.",
+            agreeTermsPrefix: "J'ai lu et j'accepte les",
+            bookingTerms: "Conditions de réservation",
+            and: "et la",
+            privacyPolicy: "Politique de confidentialité",
+            back: "Retour",
+            confirmBooking: "Confirmer la réservation",
+            priceDetails: "Détails du prix",
+            directBookingBenefits: "Avantages de la réservation directe",
+            benefit1: "Heures d'arrivée/départ flexibles",
+            benefit2: "Réservation flexible",
+            benefit3: "Offres et tarifs exclusifs",
+            benefit4: "Expériences uniques",
+            needHelp: "Besoin d'aide ?",
+            helpText: "Notre équipe est à votre service :",
+            room: "Chambre",
+            price: "Prix",
+            nights: "Nuits",
+            tax: "Taxe",
+            total: "Total",
+            adults: "adulte(s)",
+            nightsUnit: "nuit(s)",
+            toastEmailMismatch: "Les adresses e-mail ne correspondent pas",
+            toastPhoneInvalid: "Le numéro doit faire 8 chiffres",
+            toastSelectDates: "Veuillez sélectionner les dates",
+            toastCheckOutBeforeCheckIn: "Le départ doit être après l'arrivée",
+            toastMinOneNight: "Séjour minimum d'une nuit",
+            toastBookingSuccess: "Réservation réussie ! Redirection...",
+            toastBookingFailed: "Échec de la réservation",
+            toastServerError: "Erreur serveur",
+            toastNoData: "Données manquantes",
+            toastDataParseError: "Erreur d'analyse des données"
         }
     };
 
-    let currentLang = localStorage.getItem('language') || 'zh';
+    let currentLang = localStorage.getItem('lang') || 'zh';
 
     // i18n 函数：翻译页面
     function translatePage(lang) {
+        currentLang = lang;
         const t = translations[lang] || translations.zh;
+        
+        // 1. 翻译带有 data-i18n 的元素（文本内容）
         document.querySelectorAll('[data-i18n]').forEach(el => {
             const key = el.getAttribute('data-i18n');
             let text = t[key] || key;
+            
             // 处理带参数的情况 (如 {nights})
             const argsAttr = el.getAttribute('data-i18n-args');
             if (argsAttr) {
@@ -231,23 +317,33 @@
                     text = text.replace(/\{(\w+)\}/g, (_, k) => args[k] !== undefined ? args[k] : '');
                 } catch(e) {}
             }
-            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-                // 如果是 placeholder 属性
-                if (el.hasAttribute('data-i18n-placeholder')) {
-                    el.placeholder = t[el.getAttribute('data-i18n-placeholder')] || '';
-                } else {
-                    // 值不变
-                }
-            } else if (el.tagName === 'OPTION') {
+            
+            if (el.tagName === 'OPTION') {
                 el.textContent = text;
             } else {
                 el.textContent = text;
             }
         });
-        // 更新动态生成的摘要文本（部分需单独处理）
+
+        // 2. 专门翻译带有 data-i18n-placeholder 的元素（占位符）
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+            const key = el.getAttribute('data-i18n-placeholder');
+            if (t[key]) {
+                el.placeholder = t[key];
+            }
+        });
+
+        // 3. 专门翻译带有 data-i18n-title 的元素（提示文本）
+        document.querySelectorAll('[data-i18n-title]').forEach(el => {
+            const key = el.getAttribute('data-i18n-title');
+            if (t[key]) {
+                el.title = t[key];
+            }
+        });
+
+        // 更新动态生成的摘要文本
         updateNightsDisplay();
-        // 更新摘要中的标签（晚、税费等会在renderSummary中重新生成，因此只需触发重绘）
-        if (typeof renderSummary === 'function') renderSummary();
+        renderSummary();
         document.documentElement.lang = lang;
     }
 
@@ -256,7 +352,7 @@
         const nightsSpan = document.getElementById('nightsDisplay');
         if (nightsSpan && currentParams) {
             const nights = nightsBetween(currentParams.checkIn, currentParams.checkOut);
-            const t = translations[currentLang];
+            const t = translations[currentLang] || translations.zh;
             const text = (t.totalNights || "共 {nights} 晚").replace('{nights}', nights);
             nightsSpan.textContent = text;
         }
@@ -268,11 +364,9 @@
         if (select) {
             select.value = currentLang;
             select.addEventListener('change', (e) => {
-                currentLang = e.target.value;
-                localStorage.setItem('language', currentLang);
-                translatePage(currentLang);
-                // 重新渲染摘要以更新标签
-                if (typeof renderSummary === 'function') renderSummary();
+                const nextLang = e.target.value;
+                localStorage.setItem('lang', nextLang);
+                translatePage(nextLang);
             });
         }
         translatePage(currentLang);
@@ -355,13 +449,17 @@
         if (!currentRoom) return;
         const t = translations[currentLang] || translations.zh;
 
+        const roomName = typeof currentRoom.name === 'object' 
+            ? (currentRoom.name[currentLang] || currentRoom.name.zh || '-') 
+            : (currentRoom.name || '-');
+
         const nights = nightsBetween(currentParams.checkIn, currentParams.checkOut);
         const price = Number(currentRoom.price || 0);
         const subtotal = price * nights;
         const tax = subtotal * 0.1;
         const total = subtotal + tax;
 
-        if (summaryName) summaryName.textContent = currentRoom.name || '-';
+        if (summaryName) summaryName.textContent = roomName;
         if (summaryMeta) {
             const checkInShow = currentParams.checkIn || '--';
             const checkOutShow = currentParams.checkOut || '--';
@@ -370,16 +468,12 @@
 
         if (summaryFees) {
             summaryFees.innerHTML = `
-                <div class="fee-row"><span>${t.room}</span><span>${currentRoom.name || '-'}</span></div>
+                <div class="fee-row"><span>${t.room}</span><span>${roomName}</span></div>
                 <div class="fee-row"><span>${t.price}</span><span>${formatMoney(price)} /${t.nightsUnit}</span></div>
                 <div class="fee-row"><span>${t.nights}</span><span>${nights}</span></div>
                 <div class="fee-row"><span>${t.tax}</span><span>${formatMoney(tax)}</span></div>
                 <div class="fee-row" style="font-weight:bold;color:#e07b39"><span>${t.total}</span><span>${formatMoney(total)}</span></div>
             `;
-        }
-
-        if (nightsSpan) {
-            nightsSpan.textContent = (t.totalNights || "共 {nights} 晚").replace('{nights}', nights);
         }
     }
 
@@ -493,11 +587,13 @@
 
         const username = sessionStorage.getItem('username') || sessionStorage.getItem('name') || 'guest';
 
+        const roomNameForDB = typeof currentRoom.name === 'object' ? (currentRoom.name.zh || currentRoom.name.en || '') : (currentRoom.name || '');
+
         const booking = {
             username: username,
             roomId: currentRoom.id || '',
-            roomName: currentRoom.name || '',
-            roomType: currentRoom.name || '',
+            roomName: roomNameForDB,
+            roomType: roomNameForDB,
             guestName: (form.querySelector('input[name="fullName"]')?.value || '').trim(),
             guestPhone: phone,
             guestEmail: email,
@@ -515,7 +611,7 @@
         console.log('[checkout] submitting booking:', booking);
 
         try {
-            const res = await fetch('http://localhost:3000/api/bookings', {
+            const res = await fetch('http://43.132.210.15:3000/api/bookings', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(booking)
@@ -523,6 +619,22 @@
             const data = await res.json();
             if (res.ok) {
                 showToast('toastBookingSuccess', 'success');
+                
+                // 添加预订成功通知
+                if (window.HotelNotification) {
+                    window.HotelNotification.addNotification({
+                        userId: username,
+                        type: 'booking_success',
+                        templateKey: 'booking_success',
+                        params: {
+                            roomName: roomNameForDB || '房间',
+                            checkIn: checkIn,
+                            checkOut: checkOut,
+                            totalAmount: totalDisplay || (currency + ' ' + displayTotal)
+                        }
+                    });
+                }
+                
                 sessionStorage.removeItem('checkout_room');
                 sessionStorage.removeItem('checkout_params');
                 setTimeout(() => { window.location.href = 'Book.html'; }, 1800);
