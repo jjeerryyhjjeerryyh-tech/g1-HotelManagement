@@ -490,7 +490,9 @@
                 footer_cookie: 'Cookie 设置',
                 footer_lang: '语言',
                 lang_link_zh: '中文',
-                lang_link_en: 'English'
+                lang_link_en: 'English',
+                unsubscribe_btn: '取消订阅',
+                toast_unsubscribed: '已取消订阅'
             },
             en: {
                 brand: 'HotelBook Booking',
@@ -653,7 +655,9 @@
                 footer_cookie: 'Cookie Settings',
                 footer_lang: 'Language',
                 lang_link_zh: 'Chinese',
-                lang_link_en: 'English'
+                lang_link_en: 'English',
+                unsubscribe_btn: 'Unsubscribe',
+                toast_unsubscribed: 'Unsubscribed'
             },
             fr: {
                 brand: 'Réservation HotelBook',
@@ -789,7 +793,9 @@
                 currency_jpy: 'JPY',
                 currency_krw: 'KRW',
                 currency_thb: 'THB',
-                currency_myr: 'MYR'
+                currency_myr: 'MYR',
+                unsubscribe_btn: 'Se désabonner',
+                toast_unsubscribed: 'Désabonné'
             },
             ja: {
                 brand: 'HotelBook 予約システム',
