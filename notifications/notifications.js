@@ -201,6 +201,20 @@
         }
 
         // 语言切换下拉
+        var langSelect = document.getElementById('langSelect');
+        if (langSelect) {
+            langSelect.value = getLang();
+            langSelect.addEventListener('change', function (e) {
+                var nextLang = e.target.value;
+                if (window.setNotifLang) {
+                    window.setNotifLang(nextLang);
+                } else {
+                    localStorage.setItem('lang', nextLang);
+                    window.dispatchEvent(new CustomEvent('notifLangChanged', { detail: { lang: nextLang } }));
+                }
+            });
+        }
+
         this.setupLangDropdown();
 
         // 模态框事件

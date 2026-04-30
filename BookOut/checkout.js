@@ -377,13 +377,17 @@
         if (!currentRoom) return;
         const t = translations[currentLang] || translations.zh;
 
+        const roomName = typeof currentRoom.name === 'object' 
+            ? (currentRoom.name[currentLang] || currentRoom.name.zh || '-') 
+            : (currentRoom.name || '-');
+
         const nights = nightsBetween(currentParams.checkIn, currentParams.checkOut);
         const price = Number(currentRoom.price || 0);
         const subtotal = price * nights;
         const tax = subtotal * 0.1;
         const total = subtotal + tax;
 
-        if (summaryName) summaryName.textContent = currentRoom.name || '-';
+        if (summaryName) summaryName.textContent = roomName;
         if (summaryMeta) {
             const checkInShow = currentParams.checkIn || '--';
             const checkOutShow = currentParams.checkOut || '--';
@@ -392,7 +396,7 @@
 
         if (summaryFees) {
             summaryFees.innerHTML = `
-                <div class="fee-row"><span>${t.room}</span><span>${currentRoom.name || '-'}</span></div>
+                <div class="fee-row"><span>${t.room}</span><span>${roomName}</span></div>
                 <div class="fee-row"><span>${t.price}</span><span>${formatMoney(price)} /${t.nightsUnit}</span></div>
                 <div class="fee-row"><span>${t.nights}</span><span>${nights}</span></div>
                 <div class="fee-row"><span>${t.tax}</span><span>${formatMoney(tax)}</span></div>
@@ -515,11 +519,13 @@
 
         const username = sessionStorage.getItem('username') || sessionStorage.getItem('name') || 'guest';
 
+        const roomNameForDB = typeof currentRoom.name === 'object' ? (currentRoom.name.zh || currentRoom.name.en || '') : (currentRoom.name || '');
+
         const booking = {
             username: username,
             roomId: currentRoom.id || '',
-            roomName: currentRoom.name || '',
-            roomType: currentRoom.name || '',
+            roomName: roomNameForDB,
+            roomType: roomNameForDB,
             guestName: (form.querySelector('input[name="fullName"]')?.value || '').trim(),
             guestPhone: phone,
             guestEmail: email,
