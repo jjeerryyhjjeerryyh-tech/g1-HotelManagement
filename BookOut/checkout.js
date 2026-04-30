@@ -21,6 +21,7 @@
     // ---------- 多语言配置 ----------
     const translations = {
         zh: {
+            hotel_name: "91酒店",
             pageTitle: "预订信息 · 91酒店",
             backToRooms: "返回客房",
             selectDates: "选择入住 / 退房日期",
@@ -93,6 +94,7 @@
             toastDataParseError: "数据解析失败"
         },
         en: {
+            hotel_name: "91 Hotel",
             pageTitle: "Booking Details · 91 Hotel",
             backToRooms: "Back to Rooms",
             selectDates: "Select Check-in / Check-out Dates",
@@ -165,6 +167,7 @@
             toastDataParseError: "Data parsing error"
         },
         ja: {
+            hotel_name: "91ホテル",
             pageTitle: "予約情報 · 91ホテル",
             backToRooms: "客室に戻る",
             selectDates: "チェックイン / チェックアウト日を選択",

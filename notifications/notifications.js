@@ -74,6 +74,14 @@
     function applyI18n() {
         document.title = t('page_title');
 
+        // 自动翻译带有 data-i18n 的元素
+        document.querySelectorAll('[data-i18n]').forEach(function(el) {
+            var key = el.getAttribute('data-i18n');
+            if (key && t(key)) {
+                el.textContent = t(key);
+            }
+        });
+
         var pt = document.getElementById('pageTitle');
         if (pt) pt.textContent = t('page_title');
 

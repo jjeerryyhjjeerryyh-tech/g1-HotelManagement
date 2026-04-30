@@ -15,6 +15,7 @@
     // 页面 UI 文本
     var UI = {
         zh: {
+            hotel_name: '91酒店',
             page_title: '消息提醒',
             notifications: 'Notifications',
             mark_all_read: '全部标为已读',
@@ -57,6 +58,7 @@
             logout_login: '登出登入',
         },
         en: {
+            hotel_name: '91 Hotel',
             page_title: 'Notifications',
             notifications: 'Notifications',
             mark_all_read: 'Mark All as Read',

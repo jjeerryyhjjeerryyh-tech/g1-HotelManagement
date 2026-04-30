@@ -184,6 +184,7 @@
                 tab_search: '查询预订',
                 tab_rooms: '客房预订',
                 tab_mybookings: '我的订单',
+                hotel_name: '91酒店',
                 lang: '语言',
                 hero_copy: '直接选择入住与退房日期，即可享受专属礼遇与优惠。',
                 checkin: '入住日期',
@@ -232,6 +233,12 @@
                 perk_wifi: '高速 Wi‑Fi',
                 perk_breakfast: '早餐礼遇',
                 room_detail_title: '客房详情',
+                reviews_title: '住客评价',
+                no_reviews: '暂无评价',
+                no_description: '暂无详细描述。',
+                load_reviews_failed: '加载评价失败',
+                loading: '加载中...',
+                count_reviews: '{count}条评价',
                 close: '关闭',
                 book_now: '立即预订',
                 booking_form_title: '填写预订信息',
@@ -339,6 +346,7 @@
                 tab_search: 'Search',
                 tab_rooms: 'Rooms',
                 tab_mybookings: 'My Bookings',
+                hotel_name: '91 Hotel',
                 lang: 'Language',
                 hero_copy: 'Select check-in and check-out dates to enjoy exclusive privileges.',
                 checkin: 'Check-in',
@@ -387,6 +395,12 @@
                 perk_wifi: 'High-speed Wi‑Fi',
                 perk_breakfast: 'Breakfast',
                 room_detail_title: 'Room Details',
+                reviews_title: 'Guest Reviews',
+                no_reviews: 'No reviews yet',
+                no_description: 'No description available.',
+                load_reviews_failed: 'Failed to load reviews',
+                loading: 'Loading...',
+                count_reviews: '{count} reviews',
                 close: 'Close',
                 book_now: 'Book Now',
                 booking_form_title: 'Booking Details',
@@ -750,8 +764,8 @@
                             ${roomRatings[room.id]
                                 ? `${renderStarHtml(parseFloat(roomRatings[room.id].avg))}
                                    <span style="color:#374151;font-weight:600;">${roomRatings[room.id].avg}</span>
-                                   <span style="color:#9ca3af;">(${roomRatings[room.id].count}条评价)</span>`
-                                : `<span style="color:#9ca3af;">暂无评价</span>`}
+                                   <span style="color:#9ca3af;">(${t('count_reviews', { count: roomRatings[room.id].count })})</span>`
+                                : `<span style="color:#9ca3af;">${t('no_reviews')}</span>`}
                         </div>
                         <div class="room-footer">
                             <div class="room-price">
@@ -864,7 +878,7 @@
     
     // 处理可能缺失的 gallery
     const gallery = currentRoom.gallery || [currentRoom.image];
-    const description = typeof currentRoom.description === 'object' ? (currentRoom.description[currentLang] || currentRoom.description.zh) : (currentRoom.description || '暂无详细描述。');
+    const description = typeof currentRoom.description === 'object' ? (currentRoom.description[currentLang] || currentRoom.description.zh) : (currentRoom.description || t('no_description'));
 
     body.innerHTML = `
         <div class="gallery-grid">
@@ -911,12 +925,12 @@
         
         <div class="policy-box">
             <h4><i class="fas fa-info-circle"></i> ${t('booking_policy_title')}</h4>
-            <p>${typeof currentRoom.policy === 'object' ? (currentRoom.policy[currentLang] || currentRoom.policy.zh) : (currentRoom.policy || '暂无政策说明。')}</p>
+            <p>${typeof currentRoom.policy === 'object' ? (currentRoom.policy[currentLang] || currentRoom.policy.zh) : (currentRoom.policy || t('no_description'))}</p>
         </div>
 
         <div id="reviewSection" class="room-detail-reviews">
-            <h4>住客评价</h4>
-            <div id="reviewList"><p style="color:#9ca3af;font-size:0.875rem;">加载中...</p></div>
+            <h4>${t('reviews_title')}</h4>
+            <div id="reviewList"><p style="color:#9ca3af;font-size:0.875rem;">${t('loading')}</p></div>
             <div id="reviewFormArea"></div>
         </div>
     `;
@@ -944,13 +958,13 @@ async function loadRoomReviews(roomId) {
 
         // 渲染评论列表
         if (reviews.length === 0) {
-            listEl.innerHTML = '<p style="color:#9ca3af;font-size:0.875rem;">暂无评价</p>';
+            listEl.innerHTML = `<p style="color:#9ca3af;font-size:0.875rem;">${t('no_reviews')}</p>`;
         } else {
             listEl.innerHTML = reviews.map(r => `
                 <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;margin-bottom:10px;">
                     <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
                         <span style="font-weight:600;font-size:0.875rem;">${r.username}</span>
-                        <span style="font-size:0.75rem;color:#9ca3af;">${new Date(r.createdAt).toLocaleDateString('zh-CN')}</span>
+                        <span style="font-size:0.75rem;color:#9ca3af;">${new Date(r.createdAt).toLocaleDateString(currentLang === 'en' ? 'en-US' : 'zh-CN')}</span>
                     </div>
                     <div style="margin-bottom:6px;">${renderStarHtml(r.rating)} <span style="font-size:0.8rem;color:#6b7280;">${r.rating}.0</span></div>
                     <p style="font-size:0.875rem;color:#374151;margin:0;">${r.comment}</p>
@@ -965,7 +979,7 @@ async function loadRoomReviews(roomId) {
         await loadAllRatings();
         renderRooms();
     } catch (e) {
-        if (listEl) listEl.innerHTML = '<p style="color:#ef4444;font-size:0.875rem;">加载评价失败</p>';
+        if (listEl) listEl.innerHTML = `<p style="color:#ef4444;font-size:0.875rem;">${t('load_reviews_failed')}</p>`;
     }
 }
 
@@ -974,7 +988,7 @@ function proceedToBook() {
 
     // 未登录则跳转登录页
     if (!sessionStorage.getItem('isLoggedIn')) {
-        showToast('请先登录才能预订房间', 'error');
+        showToast(currentLang === 'en' ? 'Please login first to book a room' : '请先登录才能预订房间', 'error');
         setTimeout(() => { window.location.href = '../login/login.html'; }, 1200);
         return;
     }
