@@ -929,7 +929,9 @@
                 currency_jpy: 'JPY',
                 currency_krw: 'KRW',
                 currency_thb: 'THB',
-                currency_myr: 'MYR'
+                currency_myr: 'MYR',
+                unsubscribe_btn: '購読解除',
+                toast_unsubscribed: '購読を解除しました'
             }
         };
 
